@@ -29,10 +29,10 @@ The project tree will look like this:
 In the tree above:
 - **Abc** is an aggregarte model that implement **IAggregrateRoot<TNotification>**.
 
-```csharp
+```csharp {linenos=false,hl_lines=[1,2,21],linenostart=1}
     using Juice.Domain;
     public class Abc: IAggregrateRoot<INotification>{   // INotification is an interface of MediatR
-        public Abc() { } // parameterless constructor is needed to EF
+        public Abc() { } // parameterless constructor is needed for EF
 
         public Abc(string name, string correlationId)
         {
