@@ -6,3 +6,10 @@ theme = 'learn'
 [params]
     # Change default color scheme with a variant one. Can be "red", "blue", "green".
     themeVariant = "mine"
+    editURL = "https://github.com/creatorflow-io/juice-docs/tree/master/content/"
+
+[[menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/creatorflow-io/juice-docs"
+weight = 10
