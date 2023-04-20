@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logging on Juice&#39;s documentation</title>
+    <link>http://example.org/core/xunit/logging/</link>
+    <description>Recent content in Logging on Juice&#39;s documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Apr 2023 16:08:17 +0700</lastBuildDate><atom:link href="http://example.org/core/xunit/logging/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

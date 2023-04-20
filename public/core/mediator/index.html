@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Mediator :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/core/mediator/">
     <nav id="sidebar" class="">
 
 
@@ -394,7 +394,7 @@
   
     
     <li data-nav-id="/core/" title="Core features" class="dd-item
-        
+        parent
         
         
         ">
@@ -554,7 +554,7 @@
     
     <li data-nav-id="/core/mediator/" title="Mediator" class="dd-item
         
-        
+        active
         
         ">
       <a href="/core/mediator/">
@@ -870,23 +870,134 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/core/'>Core features</a> > Mediator
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#ef-backend">EF backend</a></li>
+        <li><a href="#redis-backend">Redis backend</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Mediator
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<p>We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link <a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/microservice-application-layer-implementation-web-api#implement-idempotent-commands">Implement idempotent Commands</a> for more information.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> mediator.Send(<span style="color:#66d9ef">new</span> IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));
+</span></span></code></pre></div><p>The request manager will verify <em>originCommandId</em> does not exist before sending <em>originCommand</em> to your <strong>OriginCommandHandler</strong>.</p>
+<h3 id="ef-backend">EF backend</h3>
+<p>Please register request management services with your application schema before use.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MediatR.RequestManager.EF.DependencyInjection;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.AddRequestManager(configuration, options =&gt;
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;SqlServer&#34;</span>; <span style="color:#75715e">// PostgreSQL</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.Schema = your-app-schema; 
+</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;SqlServerConnection&#34;</span>;
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// migrate DB if needed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> pendingMigrations = <span style="color:#66d9ef">await</span> context.Database.GetPendingMigrationsAsync();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pendingMigrations.Any())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;</span>);
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;[ClientRequestContext] Applying pending migrations now&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> context.Database.MigrateAsync();
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>The library can be accessed via Nuget:</p>
+<ul>
+<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF">Juice.MediatR.RequestManager.EF</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.SqlServer">Juice.MediatR.RequestManager.EF.SqlServer</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.PostgreSQL">Juice.MediatR.RequestManager.EF.PostgreSQL</a></li>
+</ul>
+<h3 id="redis-backend">Redis backend</h3>
+<p>If you already have Redis so you can use it as a backend.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MediatR.Redis.DependencyInjection;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.AddRedisRequestManager(options =&gt;
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        options.ConnectionString = configuration.GetConnectionString(<span style="color:#e6db74">&#34;Redis&#34;</span>);
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    });
+</span></span></code></pre></div><p>The library can be accessed via Nuget:</p>
+<ul>
+<li><a href="https://www.nuget.org/packages/Juice.MediatR.Redis">Juice.MediatR.Redis</a></li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -1101,6 +1212,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1115,6 +1227,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1196,6 +1311,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1211,6 +1327,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1500,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/core/swagger/" title="Swagger"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/core/eventbus/" title="Event bus" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1535,3 @@
 
   </body>
 </html>
-

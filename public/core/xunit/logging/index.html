@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Logging :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/core/xunit/logging/">
     <nav id="sidebar" class="">
 
 
@@ -394,7 +394,7 @@
   
     
     <li data-nav-id="/core/" title="Core features" class="dd-item
-        
+        parent
         
         
         ">
@@ -657,7 +657,7 @@
   
     
     <li data-nav-id="/core/xunit/" title="xUnit" class="dd-item
-        
+        parent
         
         
         ">
@@ -713,7 +713,7 @@
     
     <li data-nav-id="/core/xunit/logging/" title="Logging" class="dd-item
         
-        
+        active
         
         ">
       <a href="/core/xunit/logging/">
@@ -870,23 +870,113 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/core/'>Core features</a> > <a href='/core/xunit/'>xUnit</a> > Logging
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Logging
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<p>Sometimes we want to show the app logs in unit tests for easier debugging.
+So <strong>TestOutputLoggerProvider</strong> can help us.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.DependencyInjection;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> Microsoft.Extensions.Logging;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> builder = <span style="color:#66d9ef">new</span> DependencyResolver();
+</span></span><span style="display:flex;"><span>    builder.ConfigureServices(services =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> configuration = configService.GetConfiguration();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        services.AddLogging(builder =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            builder.ClearProviders()
+</span></span><span style="display:flex; background-color:#3c3d38"><span>            .AddTestOutputLogger()
+</span></span><span style="display:flex;"><span>            .AddConfiguration(configuration.GetSection(<span style="color:#e6db74">&#34;Logging&#34;</span>));
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// must register an instance of ITestOutputHelper</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        services.AddSingleton(_output);
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// configure other services</span>
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    });
+</span></span></code></pre></div><p>The library can be accessed via Nuget:</p>
+<ul>
+<li><a href="https://www.nuget.org/packages/Juice.XUnit">Juice.XUnit</a></li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -1101,6 +1191,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1115,6 +1206,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1260,6 +1354,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1274,6 +1369,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1291,6 +1389,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1306,6 +1405,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1483,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/core/xunit/di/" title="Dependency Injection"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/core/xunit/priority/" title="Priority" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1518,3 @@
 
   </body>
 </html>
-

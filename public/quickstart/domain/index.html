@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Domain :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/quickstart/domain/">
     <nav id="sidebar" class="">
 
 
@@ -176,7 +176,7 @@
   
     
     <li data-nav-id="/quickstart/" title="Quickstarts" class="dd-item
-        
+        parent
         
         
         ">
@@ -232,7 +232,7 @@
     
     <li data-nav-id="/quickstart/domain/" title="Domain" class="dd-item
         
-        
+        active
         
         ">
       <a href="/quickstart/domain/">
@@ -870,23 +870,138 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/quickstart/'>Quickstarts</a> > Domain
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Domain
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<p>This layer will name <code>{namespace}.{feature}</code>.</p>
+<p>The project tree will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>|-- Domain
+</span></span><span style="display:flex;"><span>|   |-- AggregrateModel
+</span></span><span style="display:flex;"><span>|       |-- AbcAggregrate
+</span></span><span style="display:flex;"><span>|           | Abc.cs
+</span></span><span style="display:flex;"><span>|           | IAbcRepository.cs     <span style="color:#75715e">// suggested</span>
+</span></span><span style="display:flex;"><span>|       |-- XyzAggregrate
+</span></span><span style="display:flex;"><span>|   |-- Commands
+</span></span><span style="display:flex;"><span>|       |-- CreateAbcCommand.cs
+</span></span><span style="display:flex;"><span>|   |-- Events
+</span></span><span style="display:flex;"><span>|       |-- AbcCreatedDomainEvent.cs
+</span></span><span style="display:flex;"><span>|   |-- CommandHandlers     <span style="color:#75715e">// move it into API project if you are not implementing the Repository</span>
+</span></span><span style="display:flex;"><span>|       |-- CreateAbcCommandHandler.cs      <span style="color:#75715e">// to handle create Abc command (as same as Manager)</span>
+</span></span><span style="display:flex;"><span>|-- DependencyInjection     <span style="color:#75715e">// optional</span>
+</span></span><span style="display:flex;"><span>|   |-- YourServiceCollectionExtensions.cs  <span style="color:#75715e">// to register your services</span>
+</span></span></code></pre></div><p>In the tree above:</p>
+<ul>
+<li><strong>Abc</strong> is an aggregarte model that implement <strong>IAggregrateRoot<!-- raw HTML omitted --></strong>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> Juice.Domain;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Abc</span>: IAggregrateRoot&lt;INotification&gt;{   <span style="color:#75715e">// INotification is an interface of MediatR</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Abc() { } <span style="color:#75715e">// parameterless constructor is needed to EF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Abc(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> correlationId)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Name = name;
+</span></span><span style="display:flex;"><span>            CorrelationId = correlationId;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">        
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [Key]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Guid Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CorrelationId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> UpdateName(<span style="color:#66d9ef">string</span> newName){
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> originName = Name;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// validation for new name then update it into Name</span>
+</span></span><span style="display:flex;"><span>            ...
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// add a domain event to notice that name was changed</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.AddDomainEvent(<span style="color:#66d9ef">new</span> AbcNameChangedDomainEvent(originName, newName));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><ul>
+<li><strong>IAbcRepository</strong> will define methods to CRUD Abc (and entities within its boundaries) and all you need.</li>
+<li>The <em>Commands</em> folder will contain commands to process specified use-cases. A command must contains:
+<ul>
+<li><strong>Identifier</strong>: to identify processing object</li>
+<li><strong>Data</strong>: enough to process the use-case</li>
+</ul>
+</li>
+<li>The <em>CommandHandlers</em> folder will contain classes to handle the commands above
+<ul>
+<li>Use <strong>IAbcRepository</strong> to read domain objects by <strong>Identifier</strong> or init domain objects from the command&rsquo;s data</li>
+<li>Call domain method to process the use-case</li>
+<li>Use <strong>IAbcRepository</strong> to persist data back to data backend</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -971,6 +1086,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -985,6 +1101,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1002,6 +1121,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1017,6 +1137,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1504,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/quickstart/overview/" title="Overview"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/quickstart/infrastructure/" title="Infrastructure" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1539,3 @@
 
   </body>
 </html>
-

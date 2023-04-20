@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Application models :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/overview/app_model/">
     <nav id="sidebar" class="">
 
 
@@ -88,7 +88,7 @@
   
     
     <li data-nav-id="/overview/" title="Overview" class="dd-item
-        
+        parent
         
         
         ">
@@ -144,7 +144,7 @@
     
     <li data-nav-id="/overview/app_model/" title="Application models" class="dd-item
         
-        
+        active
         
         ">
       <a href="/overview/app_model/">
@@ -870,23 +870,132 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/overview/'>Overview</a> > Application models
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#monolithic">Monolithic</a></li>
+        <li><a href="#microservices">Microservices</a></li>
+        <li><a href="#saas">SaaS</a></li>
+        <li><a href="#how-we-can-help">How we can help</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Application models
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<h3 id="monolithic">Monolithic</h3>
+<p>If you are starting to build an application without any existing product reference or new products without an idea to start with, monolithic architecture may be a good fit. Be careful with microservices if you are not sure about your product’s size, how many users you have to serve or what specific services need to scale… because it can be complicated and unnecessary.</p>
+<p>The most common problems when we deploy a monolithic application are:</p>
+<ul>
+<li>Synchronizing settings between servers. It can be done manually or configured centrally (via shared folder, shared DB…)</li>
+<li>Shared sessions between servers can be made easy by using distributed cache</li>
+<li>Distributed logs are hard to mine</li>
+<li>In most cases, we have to clone large application to scale out instead of components. It is time to separate components into microservices</li>
+</ul>
+<p>And in large applications, development also matters. Many developers will work independently but consistently, so we must split a big project into many sub-projects for features then use it as reference packages in final project. A modular model can be a good choice; all developers will register their services and configuration at module startup.</p>
+<h3 id="microservices">Microservices</h3>
+<p>Sometimes we need to rebuild all dependent projects to ensure that their references have the same version and the final application will work. Whenever we have a small change, no one can guarantee that the change will work for other features. We only know when it happens and not during build time. So a small change can lead to a large app that must be tested. It can affect multiple teams at once instead of a specific team.</p>
+<p>Besides the problem of scaling the processing capacity of the monolithic application, we may need to scale up more human resources than necessary.</p>
+<p>Microservices are needed when:</p>
+<ul>
+<li>You need to scale up your system or part of it to serve more users</li>
+<li>You don’t have many people to maintain and develop the existing project or you have many people to start a new project and deliver on time</li>
+<li>You want to integrate with 3rd party or internal services easily</li>
+</ul>
+<p>Unfortunatelly, this model has even more problems that need to be resolved besides the traditional problems of monolithic app:</p>
+<ul>
+<li>Notifications between services require an external event bus instead of an internal bus.
+These integration events are added by the domain business follow and sent after the domain process success</li>
+<li>Integrated events may be duplicated lead to repeated event processing</li>
+</ul>
+<h3 id="saas">SaaS</h3>
+<p>Now a day, SaaS is growing up quickly to help ICT companies can provide their products and services to many customers rapidly and easily.
+We can provice multi-tenant services using infrastructure, in-app implementation, or mixed mode.</p>
+<p>In most cases, we need separte tenant configuration, data, and resources. So we have common problems:</p>
+<ul>
+<li>Tenant identification</li>
+<li>Configuration/Option by tenant but centralized</li>
+<li>Data and resources can be either separated or shared between tenants</li>
+</ul>
+<h3 id="how-we-can-help">How we can help</h3>
+<p>Choose the development model according to actual needs and conditions. We provide several application template:</p>
+<ul>
+<li>MVC</li>
+<li>API</li>
+<li>Modular: register and work as a module in MVC and API app</li>
+<li>Microservice: work independently</li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -918,8 +1027,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -936,21 +1043,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
+                        
                     
                 
                 
@@ -963,6 +1057,23 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -970,6 +1081,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1495,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/overview/purpose/" title="Purposes"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/quickstart/" title="Quickstarts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1530,3 @@
 
   </body>
 </html>
-

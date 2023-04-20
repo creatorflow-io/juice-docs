@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Infrastructure :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/quickstart/infrastructure/">
     <nav id="sidebar" class="">
 
 
@@ -176,7 +176,7 @@
   
     
     <li data-nav-id="/quickstart/" title="Quickstarts" class="dd-item
-        
+        parent
         
         
         ">
@@ -258,7 +258,7 @@
     
     <li data-nav-id="/quickstart/infrastructure/" title="Infrastructure" class="dd-item
         
-        
+        active
         
         ">
       <a href="/quickstart/infrastructure/">
@@ -870,23 +870,196 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/quickstart/'>Quickstarts</a> > Infrastructure
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#separate-migrations">Separate migrations</a></li>
+        <li><a href="#cqrs">CQRS</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Infrastructure
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<p>The main purpose of this layer is to implement repository interfaces which were defined in <strong>Domain</strong> layer.
+If you need to customize the entity classes to fit the infrastructure (like EF) or optimize the DB, you can do it here.</p>
+<p>It&rsquo;s named <code>{namespace}.{feature}.{infrastructure}</code>. Eg: <strong>Juice.Abc.EF</strong></p>
+<p>Basically, we will create a DbContext that inherits <a href="/core/entityframework/">DbContextBase</a> to work with the database. Then use the created DbContext to implement repositories.</p>
+<p>The project tree will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>|-- Dtos    <span style="color:#75715e">// optional</span>
+</span></span><span style="display:flex;"><span>|-- Migrations   <span style="color:#75715e">// only if you have selected a DB backend for your application </span>
+</span></span><span style="display:flex;"><span>|-- Repositories
+</span></span><span style="display:flex;"><span>|   |-- AbcRepository.cs   
+</span></span><span style="display:flex;"><span>|-- DependencyInjection     <span style="color:#75715e">// optional</span>
+</span></span><span style="display:flex;"><span>|   |-- YourServiceCollectionExtensions.cs  <span style="color:#75715e">// to register your infrastructure services</span>
+</span></span><span style="display:flex;"><span>|-- YourDbContext.cs
+</span></span></code></pre></div><h3 id="separate-migrations">Separate migrations</h3>
+<p>If you want to support multiple DB backends like SqlServer, PostgreSQL&hellip; then you need to <a href="https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli">separate migrations into other projects</a>. Eg: <strong>Juice.Abc.EF.SqlServer</strong> and  <strong>Juice.Abc.EF.PostgreSQL</strong>.</p>
+<p>These are steps to separete migrations:</p>
+<ul>
+<li>Firstly, you must implement an <strong>IDesignTimeDbContextFactory</strong> for your DBContext</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.DependencyInjection;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AbcDbContextFactory</span> : IDesignTimeDbContextFactory&lt;AbcDbContext&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> WorkflowDbContext CreateDbContext(<span style="color:#66d9ef">string</span>[] args)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Environment.SetEnvironmentVariable(<span style="color:#e6db74">&#34;ASPNETCORE_ENVIRONMENT&#34;</span>, <span style="color:#e6db74">&#34;Development&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> resolver = <span style="color:#66d9ef">new</span> DependencyResolver
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                CurrentDirectory = AppContext.BaseDirectory
+</span></span><span style="display:flex;"><span>            };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            resolver.ConfigureServices(services =&gt;
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Register DbContext class</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>                <span style="color:#66d9ef">var</span> configuration = configService.GetConfiguration(args);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> provider = configuration.GetSection(<span style="color:#e6db74">&#34;Provider&#34;</span>).Get&lt;<span style="color:#66d9ef">string</span>&gt;() ?? <span style="color:#e6db74">&#34;SqlServer&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> connectionName =
+</span></span><span style="display:flex;"><span>                    provider <span style="color:#66d9ef">switch</span>
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;PostgreSQL&#34;</span> =&gt; <span style="color:#e6db74">&#34;PostgreConnection&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;SqlServer&#34;</span> =&gt; <span style="color:#e6db74">&#34;SqlServerConnection&#34;</span>,
+</span></span><span style="display:flex;"><span>                        _ =&gt; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NotSupportedException(<span style="color:#e6db74">$&#34;Unsupported provider: {provider}&#34;</span>)
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                ;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">var</span> connectionString = configuration.GetConnectionString(connectionName);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                services.AddDbContext&lt;AbcDbContext&gt;(options =&gt;
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">switch</span> (provider)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>:
+</span></span><span style="display:flex;"><span>                            AppContext.SetSwitch(<span style="color:#e6db74">&#34;Npgsql.EnableLegacyTimestampBehavior&#34;</span>, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                            options.UseNpgsql(
+</span></span><span style="display:flex;"><span>                               connectionString,
+</span></span><span style="display:flex;"><span>                                x =&gt;
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>                                    x.MigrationsAssembly(<span style="color:#e6db74">&#34;Juice.Abc.EF.PostgreSQL&#34;</span>);
+</span></span><span style="display:flex;"><span>                                });
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;SqlServer&#34;</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                            options.UseSqlServer(
+</span></span><span style="display:flex;"><span>                                connectionString,
+</span></span><span style="display:flex;"><span>                                x =&gt;
+</span></span><span style="display:flex;"><span>                                {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>                                    x.MigrationsAssembly(<span style="color:#e6db74">&#34;Juice.Abc.EF.SqlServer&#34;</span>);
+</span></span><span style="display:flex;"><span>                                });
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NotSupportedException(<span style="color:#e6db74">$&#34;Unsupported provider: {provider}&#34;</span>);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> resolver.ServiceProvider.GetRequiredService&lt;AbcDbContext&gt;();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><ul>
+<li>Create a web application then add references to all infrastructure projects. Eg: <strong>Juice.Abc.Host</strong>
+<ul>
+<li>Register your DbContext into <strong>IServiceCollection</strong></li>
+<li>Set it as a <strong>startup project</strong></li>
+</ul>
+</li>
+<li>In the <strong>Package Manager Console</strong>
+<ul>
+<li>Select the <strong>Default project</strong> to your backend project as same as the provider that you want to generate the migration. Eg: <strong>Juice.Abc.EF.PostgreSQL</strong></li>
+<li>Exec command:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Add-Migration InitDb -Context AbcDbContext -OutputDir Migrations -Args <span style="color:#e6db74">&#34;--provider PostgreSQL&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Well done!</li>
+</ul>
+<h3 id="cqrs">CQRS</h3>
+<p>The typical CQRS implementation will segregate the Read/Write model and also segregate the Read/Write DB. So it can be used together with complex pattern <a href="https://learn.microsoft.com/en-us/previous-versions/msp-n-p/jj591559(v=pandp.10)">Event Sourcing</a> or is it simply complicated to implement for newbies.</p>
+<p>However, a simpler approach is to use ReadOnly DB to query or read models. It&rsquo;s supported by several types of databases.
+So you can create a DBContext intended to be read-only and use it with a read-only connection string.</p>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -971,6 +1144,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -985,6 +1159,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1018,6 +1195,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1033,6 +1211,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1562,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/quickstart/domain/" title="Domain"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/quickstart/contracts/" title="API Contracts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1597,3 @@
 
   </body>
 </html>
-

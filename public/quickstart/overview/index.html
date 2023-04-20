@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title> :: Juice&#39;s documentation</title>
+    <title>Overview :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1681966092" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/quickstart/overview/">
     <nav id="sidebar" class="">
 
 
@@ -176,7 +176,7 @@
   
     
     <li data-nav-id="/quickstart/" title="Quickstarts" class="dd-item
-        
+        parent
         
         
         ">
@@ -206,7 +206,7 @@
     
     <li data-nav-id="/quickstart/overview/" title="Overview" class="dd-item
         
-        
+        active
         
         ">
       <a href="/quickstart/overview/">
@@ -870,23 +870,102 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/quickstart/'>Quickstarts</a> > Overview
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Overview
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h3 id="about-the-documentation">About the documentation</h3>
+
+	<p>In this chapter, we are going to start using <code>Juice</code> to build applications following these patterns:</p>
+<ul>
+<li>Microservice with DDD/CQRS pattern</li>
+<li>Monolithic modular application</li>
+</ul>
+<p>However, if we have a reasonable approach, both of them may have the same structure and implementations but are different in the final target.
+So we will consider the following similar components (equivalent to separate sub-projects) before returning to focus on the patterns above.</p>
+<ul>
+<li>Domain</li>
+<li>Infrastructure</li>
+<li>Api</li>
+</ul>
+<p>Please follow up <a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice#layers-in-ddd-microservices">Layers in DDD microservices</a> for more information and <strong>be careful when considering using the DDD and/or CQRS pattern</strong>. The directory tree will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>|-- src
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}   <span style="color:#75715e">// Juice.Example(.Domain)</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.{infrastructure}  <span style="color:#75715e">// Juice.Example.EF</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.Api.Contracts  <span style="color:#75715e">// Juice.Example.Api.Contracts</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.Api  <span style="color:#75715e">// Juice.Example.Api</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.App  <span style="color:#75715e">// Juice.Example.App (target Microservice)</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.Module  <span style="color:#75715e">// Juice.Example.Module (target Monolithic modular)</span>
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.Extensions.{extension}   <span style="color:#75715e">// optional</span>
+</span></span><span style="display:flex;"><span>|-- test
+</span></span><span style="display:flex;"><span>|   |-- {namespace}.{feature}.Test  <span style="color:#75715e">// Juice.Example.Test</span>
+</span></span></code></pre></div>
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
         
         </div>
         
@@ -971,6 +1050,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -985,6 +1065,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -1001,6 +1082,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1381,8 +1465,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/quickstart/" title="Quickstarts"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/quickstart/domain/" title="Domain" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1414,4 +1500,3 @@
 
   </body>
 </html>
-
