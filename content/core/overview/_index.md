@@ -15,5 +15,8 @@ In this chapter, we will look at common components and extensions:
 - Multi-tenant
 - Audit
 - XUnit
+- Modular
 
 We implemented these extensions and services to resolved common problems that were specified in [Application models]({{< ref "overview/app_model/_index.md" >}}) section. To achieve more value out of this document, please go through [.NET Microservices: Architecture for Containerized .NET Applications](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/).
+
+*NOTE*: `Juice` is currently in beta, so you must select the **Include prerelease** checkbox in the Nuget packages window to browse its packages.
