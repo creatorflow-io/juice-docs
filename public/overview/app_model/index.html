@@ -12,22 +12,22 @@
     <title>Application models :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1694751655" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1694751655" rel="stylesheet">
-    <link href="/css/hybrid.css?1694751655" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1694751655" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1694751655" rel="stylesheet">
-    <link href="/css/auto-complete.css?1694751655" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1694751655" rel="stylesheet">
-    <link href="/css/theme.css?1694751655" rel="stylesheet">
-    <link href="/css/tabs.css?1694751655" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1694751655" rel="stylesheet">
+    <link href="/css/nucleus.css?1695804205" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1695804205" rel="stylesheet">
+    <link href="/css/hybrid.css?1695804205" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1695804205" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1695804205" rel="stylesheet">
+    <link href="/css/auto-complete.css?1695804205" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1695804205" rel="stylesheet">
+    <link href="/css/theme.css?1695804205" rel="stylesheet">
+    <link href="/css/tabs.css?1695804205" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1695804205" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1694751655" rel="stylesheet">
+    <link href="/css/theme-mine.css?1695804205" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1694751655"></script>
+    <script src="/js/jquery-3.3.1.min.js?1695804205"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1694751655"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1694751655"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1695804205"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1695804205"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/example.org\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1694751655"></script>
+<script type="text/javascript" src="/js/search.js?1695804205"></script>
 
     
   </div>
@@ -903,15 +903,8 @@
 
             
           
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
+            
+            
 
 
 
@@ -919,16 +912,25 @@
  
   
     
-    <li data-nav-id="/file_storage/" title="File_storage" class="dd-item
+    <li data-nav-id="/bg_service/managed_service/" title="Manageable services" class="dd-item
         
         
         
         ">
-      <a href="/file_storage/">
-          <b>5. </b>File_storage
+      <a href="/bg_service/managed_service/">
+          Manageable services
           
       </a>
       
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
       
     </li>
   
@@ -949,7 +951,7 @@
         
         ">
       <a href="/other_services/">
-          <b>7. </b>Other services
+          <b>5. </b>Other services
           
       </a>
       
@@ -979,6 +981,58 @@
         ">
       <a href="/other_services/audit/">
           Audit services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/other_services/file_storage/" title="File storage" class="dd-item
+        
+        
+        
+        ">
+      <a href="/other_services/file_storage/">
+          File storage
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/other_services/plugins/" title="Plugins" class="dd-item
+        
+        
+        
+        ">
+      <a href="/other_services/plugins/">
+          Plugins
           
       </a>
       
@@ -1084,10 +1138,7 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#monolithic">Monolithic</a></li>
-        <li><a href="#microservices">Microservices</a></li>
-        <li><a href="#saas">SaaS</a></li>
-        <li><a href="#how-we-can-help">How we can help</a></li>
+        <li></li>
       </ul>
     </li>
   </ul>
@@ -1115,7 +1166,7 @@
 
 
 
-	<h3 id="monolithic">Monolithic</h3>
+	<h4 id="monolithic">Monolithic</h4>
 <p>If you are starting to build an application without any existing product reference or new products without an idea to start with, monolithic architecture may be a good fit. Be careful with microservices if you are not sure about your product’s size, how many users you have to serve or what specific services need to scale… because it can be complicated and unnecessary.</p>
 <p>The most common problems when we deploy a monolithic application are:</p>
 <ul>
@@ -1125,7 +1176,7 @@
 <li>In most cases, we have to clone large application to scale out instead of components. It is time to separate components into microservices</li>
 </ul>
 <p>And in large applications, development also matters. Many developers will work independently but consistently, so we must split a big project into many sub-projects for features then use it as reference packages in final project. A modular model can be a good choice; all developers will register their services and configuration at module startup.</p>
-<h3 id="microservices">Microservices</h3>
+<h4 id="microservices">Microservices</h4>
 <p>Sometimes we need to rebuild all dependent projects to ensure that their references have the same version and the final application will work. Whenever we have a small change, no one can guarantee that the change will work for other features. We only know when it happens and not during build time. So a small change can lead to a large app that must be tested. It can affect multiple teams at once instead of a specific team.</p>
 <p>Besides the problem of scaling the processing capacity of the monolithic application, we may need to scale up more human resources than necessary.</p>
 <p>Microservices are needed when:</p>
@@ -1140,7 +1191,7 @@
 These integration events are added by the domain business follow and sent after the domain process success</li>
 <li>Integrated events may be duplicated lead to repeated event processing</li>
 </ul>
-<h3 id="saas">SaaS</h3>
+<h4 id="saas">SaaS</h4>
 <p>Now a day, SaaS is growing up quickly to help ICT companies can provide their products and services to many customers rapidly and easily.
 We can provice multi-tenant services using infrastructure, in-app implementation, or mixed mode.</p>
 <p>In most cases, we need separte tenant configuration, data, and resources. So we have common problems:</p>
@@ -1149,7 +1200,7 @@ We can provice multi-tenant services using infrastructure, in-app implementation
 <li>Configuration/Option by tenant but centralized</li>
 <li>Data and resources can be either separated or shared between tenants</li>
 </ul>
-<h3 id="how-we-can-help">How we can help</h3>
+<h4 id="how-we-can-help">How we can help</h4>
 <p>Choose the development model according to actual needs and conditions. We provide several application template:</p>
 <ul>
 <li>MVC</li>
@@ -1687,6 +1738,53 @@ We can provice multi-tenant services using infrastructure, in-app implementation
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
             
         
                     
@@ -1705,21 +1803,6 @@ We can provice multi-tenant services using infrastructure, in-app implementation
                     
             
         
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
                     
                         
             
@@ -1762,19 +1845,19 @@ We can provice multi-tenant services using infrastructure, in-app implementation
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1694751655"></script>
-    <script src="/js/perfect-scrollbar.min.js?1694751655"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1694751655"></script>
-    <script src="/js/jquery.sticky.js?1694751655"></script>
-    <script src="/js/featherlight.min.js?1694751655"></script>
-    <script src="/js/highlight.pack.js?1694751655"></script>
+    <script src="/js/clipboard.min.js?1695804205"></script>
+    <script src="/js/perfect-scrollbar.min.js?1695804205"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1695804205"></script>
+    <script src="/js/jquery.sticky.js?1695804205"></script>
+    <script src="/js/featherlight.min.js?1695804205"></script>
+    <script src="/js/highlight.pack.js?1695804205"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1694751655"></script>
-    <script src="/js/learn.js?1694751655"></script>
-    <script src="/js/hugo-learn.js?1694751655"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1695804205"></script>
+    <script src="/js/learn.js?1695804205"></script>
+    <script src="/js/hugo-learn.js?1695804205"></script>
     
         
-            <script src="/mermaid/mermaid.js?1694751655"></script>
+            <script src="/mermaid/mermaid.js?1695804205"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Multi-tenant :: Juice&#39;s documentation</title>
+    <title>Manageable services :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1695804205" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/core/multitenant/">
+  <body class="" data-url="/bg_service/managed_service/">
     <nav id="sidebar" class="">
 
 
@@ -394,7 +394,7 @@
   
     
     <li data-nav-id="/core/" title="Core features" class="dd-item
-        parent
+        
         
         
         ">
@@ -800,7 +800,7 @@
     
     <li data-nav-id="/core/multitenant/" title="Multi-tenant" class="dd-item
         
-        active
+        
         
         ">
       <a href="/core/multitenant/">
@@ -858,7 +858,7 @@
   
     
     <li data-nav-id="/bg_service/" title="Background service" class="dd-item
-        
+        parent
         
         
         ">
@@ -914,7 +914,7 @@
     
     <li data-nav-id="/bg_service/managed_service/" title="Manageable services" class="dd-item
         
-        
+        active
         
         ">
       <a href="/bg_service/managed_service/">
@@ -1090,7 +1090,7 @@
                   
                   
                   <div id="top-github-link">
-                    <a class="github-link" title='Edit this page' href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/multitenant/_index.md" target="blank">
+                    <a class="github-link" title='Edit this page' href="https://github.com/creatorflow-io/juice-docs/tree/master/content/bg_service/managed_service/_index.md" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">Edit this page</span>
                     </a>
@@ -1121,7 +1121,7 @@
             
           
           
-            <a href='/'></a> > <a href='/core/'>Core features</a> > Multi-tenant
+            <a href='/'></a> > <a href='/bg_service/'>Background service</a> > Manageable services
           
         
           
@@ -1138,8 +1138,7 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#multitenant">MultiTenant</a></li>
-        <li><a href="#multitenant-dbcontext">MultiTenant DBContext</a></li>
+        <li></li>
       </ul>
     </li>
   </ul>
@@ -1159,7 +1158,7 @@
           
             <h1>
               
-              Multi-tenant
+              Manageable services
             </h1>
           
 
@@ -1167,145 +1166,115 @@
 
 
 
-	<h3 id="multitenant">MultiTenant</h3>
-<p>This core feature is useful to verify other core features that we have built because it is developed as a microservice.
-It&rsquo;s integrated with <a href="https://www.finbuckle.com/MultiTenant">Finbuckle</a> to identity the tenant. We provide multiple choices for tenant data store:</p>
+	<h4 id="purposes">Purposes</h4>
 <ul>
-<li>File store</li>
-<li>EFCore store</li>
-<li>gRPC store</li>
+<li>Operate background services remotely (<em>Start, Stop, Invoke Job&hellip;</em>)</li>
+<li>Load background service as as plugin dynamically</li>
+<li>Monitor service status</li>
+<li>Custom service logging</li>
 </ul>
-<p>We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:</p>
-<ul>
-<li>MultiTenant DBContext</li>
-<li>UnitOfWork pattern</li>
-<li>Audit</li>
-<li>gRPC API</li>
-<li>DDD/CQRS and Domain Events pattern</li>
-<li>Integration with event bus</li>
-<li>Per-tenant configuration/options</li>
-<li>xUnit helper</li>
-</ul>
-<p>To use multi-tenant, we must register services with <strong>Tenant</strong> type</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> tenantBuilder = builder.Services
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// default Finbuckle services</span>
-</span></span><span style="display:flex;"><span>        .AddMultiTenant&lt;Tenant&gt;(options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// configure tenant options</span>
-</span></span><span style="display:flex;"><span>        })
-</span></span><span style="display:flex;"><span>        .WithBasePathStrategy(options =&gt; options.RebaseAspNetCorePathBase = <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// AND/OR other strategies</span>
-</span></span><span style="display:flex;"><span>        ;
-</span></span></code></pre></div><p>After that, we have 2 choices:</p>
+<h4 id="usage">Usage</h4>
+<p>We provide <em>ServiceManager</em> service to manage and operate <em>IManagedService</em> instances and Web API to access it.</p>
+<figure><img src="/images/services/BackgroundService.svg"/><figcaption>
+            <h4>Background service sequence diagram</h4>
+        </figcaption>
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.BgService.Management;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.BgService.Extensions.Logging;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.Extensions.Options.DependencyInjection;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// see Logging section</span>
+</span></span><span style="display:flex;"><span>builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;Logging:File&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>builder.Services.AddBgService(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;BackgroundService&#34;</span>))
+</span></span><span style="display:flex;"><span>    .UseFileStore(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;File&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// optional use separated appsettings file for background service file store.</span>
+</span></span><span style="display:flex;"><span>builder.SeparateStoreFile(<span style="color:#e6db74">&#34;Store&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> pluginPaths = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">string</span>[]
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// plugin absolute paths</span>
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Optional plugins</span>
+</span></span><span style="display:flex;"><span>builder.Services.AddPlugins(options =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    options.AbsolutePaths = pluginPaths;
+</span></span><span style="display:flex;"><span>    options.ConfigureSharedServices = (services, sp) =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// required for web api</span>
+</span></span><span style="display:flex;"><span>builder.Services.AddControllers();
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>app.MapControllers();
+</span></span></code></pre></div><h4 id="implementation">Implementation</h4>
+<p>We provide <a href="https://www.nuget.org/packages/Juice.BgService.ServiceBase">Juice.BgService.ServiceBase</a> that contains a number of abstract services that you can inherit.</p>
 <ol>
-<li>Use multi-tenant as a separate serice by building a multi-tenant server and use gRPC client to get tenant information.</li>
+<li><strong>BackgroundService</strong></li>
 </ol>
-<p>So we will register services for tenant host inside tenant microservice.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Api.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantHost(builder.Configuration, options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;PostgreConnection&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.Schema = <span style="color:#e6db74">&#34;App&#34;</span>;
-</span></span><span style="display:flex;"><span>        });
-</span></span></code></pre></div><p>Then register services for tenant client inside other microservices.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Grpc.Finbuckle.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantClient(builder.Configuration, builder.Environment.EnvironmentName);
-</span></span></code></pre></div><ol start="2">
-<li>Use multi-tenant service directly.</li>
+<p>This abstract service contains only basic methods that can be managed by <em>ServiceManager</em>, so you can implement anything in your service by overriding the <em>ExecuteAsync()</em> method.</p>
+<ol start="2">
+<li><strong>ScheduledService</strong></li>
 </ol>
+<p>This abstract service is processed according to the schedule options, so you can schedule something to be done by overriding the <em>InvokeAsync()</em> method.</p>
+<p>The <em>ScheduledServiceOptions</em> has <em>Frequencies</em> options to scheduling a task (we can add one or more <em>Frequency</em>):</p>
 <ul>
-<li>Default EF store build</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.EF.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantEFDirectly(builder.Configuration, options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;PostgreConnection&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.Schema = <span style="color:#e6db74">&#34;App&#34;</span>;
-</span></span><span style="display:flex;"><span>        }, builder.Environment.EnvironmentName);
-</span></span></code></pre></div><ul>
-<li>Or manually build tenant service with multiple store options.</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Finbuckle.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    tenantBuilder.JuiceIntegration()
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        .WithGprcStore(tenantGrpcEndpoint)
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        .WithDistributedCacheStore()
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// .WithEFStore(...)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// you can add many stores at the same time</span>
-</span></span><span style="display:flex;"><span>        ;
-</span></span></code></pre></div><p>The library can be accessed via Nuget and npmjs:</p>
+<li><em>RunOnStartup</em>: if <strong>false</strong>, you must start service manually.</li>
+<li><em>Occurs</em>: (<strong>Daily, Weekly, Monthly, Once</strong>)</li>
+<li><em>Daily</em>: describes daily schedule if the <em>Occurs</em> is set to <strong>Daily</strong>
 <ul>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant">Juice.MultiTenant</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF">Juice.MultiTenant.EF</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF.SqlServer">Juice.MultiTenant.EF.SqlServer</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF.PostgreSQL">Juice.MultiTenant.EF.PostgreSQL</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Api.Contracts">Juice.MultiTenant.Api.Contracts</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Api">Juice.MultiTenant.Api</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Grpc">Juice.MultiTenant.Grpc</a></li>
-<li><a href="https://www.npmjs.com/package/@juice-js/tenants">@juice-js/tenants</a></li>
+<li><em>RecursEvery</em>: service will recurs after number of <strong>days</strong></li>
+<li><em>OccursOnceAt</em>: if specified, the <em>InvokeAsync</em> method will be called once at specified time after every <em>RecursEvery</em> day(s).</li>
+<li><em>OccursEvery</em>: if no <em>OccursOnceAt</em> is specified, the <em>InvokeAsync</em> method will be called after every specified interval (30s by default), in the working time and recurs after every <em>RecursEvery</em> day(s).</li>
+<li><em>StartingAt</em>: describes the start time of work during the day</li>
+<li><em>Duration</em>: describes working time of the day</li>
 </ul>
-<h3 id="multitenant-dbcontext">MultiTenant DBContext</h3>
-<p>Please follow up on <a href="https://www.finbuckle.com/MultiTenant/Docs/v6.10.0/EFCore">Data Isolation with Entity Framework Core</a> to understand this section.</p>
-<p>We usually have two options for storing per-tenant application data:</p>
+</li>
+<li><em>Weekly</em>: describes weekly schedule if the <em>Occurs</em> is set to <strong>Weekly</strong>. It is almost the same as the <em>Daily</em> frequency above but has differences:
 <ul>
-<li>Separate DB with different DB connection strings, it can be done by per-tenant setting</li>
-<li>Shared DB with an extra TenantId column to determine tenant data</li>
+<li><em>RecursEvery</em>: service will recurs after number of <strong>weeks</strong></li>
+<li><em>OnDays</em>: describes the days of the week on which the service will execute</li>
+<li><em>StartOfWeek</em>: describes the first day of the week
+Ex: If the schedule is { RecursEvery: 2, OnDays: [Mon, Wed, Fri], StartOfWeek: Tue } and today is Saturday of the week of execution, the next execution will be next Monday. After that, the service will await for 2 weeks.</li>
 </ul>
-<p>In the second way, we will create a TenantDbContext that implement <strong>IMultiTenantDbContext</strong> interface.
-So we provide a <strong>MultiTenantDbContext</strong> abstraction class that implement these interfaces:</p>
+</li>
+<li><em>Monthly</em>: describes monthly schedule if the <em>Occurs</em> is set to <strong>Monthly</strong>. It is almost the same as the <em>Daily</em> frequency above but has more options:
 <ul>
-<li>ISchemaDbContext</li>
-<li>IAuditableDbContext</li>
-<li>IUnitOfWork</li>
-<li>IMultiTenantDbContext</li>
+<li><em>RecursEvery</em>: service will recurs after number of <strong>months</strong></li>
+<li><em>OnDay</em>: service will only be performed on this day of the month (optional)</li>
+<li><em>DayOfWeek</em>: service will only be performed on this day of the week, combined with <em>On</em> to specify the day in month (Ex: the third Friday of month)</li>
+<li><em>On</em>: (<em>First, Second, Third, Fourth, Last</em>) describes the week in month</li>
+<li><em>SpecialDay</em>: (Day, Weekday, Weekend), combined with <em>On</em> to specify the special day in month (Ex: the last weekend of month)</li>
 </ul>
-<p>You can inherit <strong>MultiTenantDbContext</strong> abstraction and mark your entity <strong>IsMultiTenant()</strong>, and/or <strong>IsAuditable()</strong>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EF.Extensions;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EF.MultiTenant;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TenantContentDbContext</span> : MultiTenantDbContext
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> DbSet&lt;TenantContent&gt; TenantContents { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> TenantContentDbContext(IServiceProvider serviceProvider, DbContextOptions options) : <span style="color:#66d9ef">base</span>(options)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            ConfigureServices(serviceProvider);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> ConfigureModel(ModelBuilder modelBuilder)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            modelBuilder.Entity&lt;TenantContent&gt;(options =&gt;
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                options.ToTable(nameof(TenantContent), Schema);
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                options.IsMultiTenant();
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                options.IsAuditable();
-</span></span><span style="display:flex;"><span>            });
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>Or using the <strong>[MultiTenant]</strong> attribute in entity class</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Finbuckle.MultiTenant;
-</span></span><span style="display:flex; background-color:#3c3d38"><span><span style="color:#a6e22e">    [MultiTenant]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TenantContent</span>
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        ...
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>See <a href="/core/entityframework/">DBContextBase</a> for more information.</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>FileWatcherService</strong></li>
+</ol>
+<p>This abstract service will monitor the file changes and invoke these methods:</p>
+<ul>
+<li>OnFileRenamedAsync</li>
+<li>OnFileDeletedAsync</li>
+<li>OnFileReadyAsync</li>
+</ul>
+<p>You will override these method to handle yourself.</p>
+<h4 id="service-repository">Service repository</h4>
+<p>We are implemented a default service repository based on configuration. You can call <em>UseFileStore(configurationSection)</em> to use it, or implement a repository yourself.</p>
+<p>The sample source code is available on <a href="https://github.com/creatorflow-io/Juice/tree/master/services/bgservice/test/">github</a>.</p>
 <p>The library can be accessed via Nuget:</p>
 <ul>
-<li><a href="https://www.nuget.org/packages/Juice.EF.MultiTenant">Juice.EF.MultiTenant</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.BgService">Juice.BgService</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.BgService.ServiceBase">Juice.BgService.ServiceBase</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.BgService.Api">Juice.BgService.Api</a></li>
 </ul>
 
 
@@ -1530,7 +1499,6 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
             
                 
                     
-                    
                 
                 
 
@@ -1546,8 +1514,69 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
                         
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
                         
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -1634,70 +1663,6 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
 
                     
                     
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
                         
                     
                     
@@ -1775,60 +1740,6 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
                 
                 
 
@@ -1863,6 +1774,64 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -1934,10 +1903,10 @@ So we provide a <strong>MultiTenantDbContext</strong> abstraction class that imp
 	 
 	 
 		
-			<a class="nav nav-prev" href="/core/xunit/ci_ignore/" title="CI-Ignore"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/bg_service/logging/" title="Logging"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/core/modular/" title="Modular" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/other_services/" title="Other services" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

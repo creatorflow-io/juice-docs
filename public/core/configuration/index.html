@@ -12,22 +12,22 @@
     <title>Configuration :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1694751655" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1694751655" rel="stylesheet">
-    <link href="/css/hybrid.css?1694751655" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1694751655" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1694751655" rel="stylesheet">
-    <link href="/css/auto-complete.css?1694751655" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1694751655" rel="stylesheet">
-    <link href="/css/theme.css?1694751655" rel="stylesheet">
-    <link href="/css/tabs.css?1694751655" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1694751655" rel="stylesheet">
+    <link href="/css/nucleus.css?1695804205" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1695804205" rel="stylesheet">
+    <link href="/css/hybrid.css?1695804205" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1695804205" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1695804205" rel="stylesheet">
+    <link href="/css/auto-complete.css?1695804205" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1695804205" rel="stylesheet">
+    <link href="/css/theme.css?1695804205" rel="stylesheet">
+    <link href="/css/tabs.css?1695804205" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1695804205" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1694751655" rel="stylesheet">
+    <link href="/css/theme-mine.css?1695804205" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1694751655"></script>
+    <script src="/js/jquery-3.3.1.min.js?1695804205"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1694751655"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1694751655"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1695804205"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1695804205"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/example.org\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1694751655"></script>
+<script type="text/javascript" src="/js/search.js?1695804205"></script>
 
     
   </div>
@@ -903,15 +903,8 @@
 
             
           
-        
-        </ul>
-      
-    </li>
-  
- 
-
-          
-          
+            
+            
 
 
 
@@ -919,16 +912,25 @@
  
   
     
-    <li data-nav-id="/file_storage/" title="File_storage" class="dd-item
+    <li data-nav-id="/bg_service/managed_service/" title="Manageable services" class="dd-item
         
         
         
         ">
-      <a href="/file_storage/">
-          <b>5. </b>File_storage
+      <a href="/bg_service/managed_service/">
+          Manageable services
           
       </a>
       
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
       
     </li>
   
@@ -949,7 +951,7 @@
         
         ">
       <a href="/other_services/">
-          <b>7. </b>Other services
+          <b>5. </b>Other services
           
       </a>
       
@@ -979,6 +981,58 @@
         ">
       <a href="/other_services/audit/">
           Audit services
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/other_services/file_storage/" title="File storage" class="dd-item
+        
+        
+        
+        ">
+      <a href="/other_services/file_storage/">
+          File storage
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/other_services/plugins/" title="Plugins" class="dd-item
+        
+        
+        
+        ">
+      <a href="/other_services/plugins/">
+          Plugins
           
       </a>
       
@@ -1084,8 +1138,7 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#per-tenant-configuration">Per-tenant configuration</a></li>
-        <li><a href="#scalared-configuration">Scalared configuration</a></li>
+        <li></li>
       </ul>
     </li>
   </ul>
@@ -1113,7 +1166,7 @@
 
 
 
-	<h3 id="per-tenant-configuration">Per-tenant configuration</h3>
+	<h4 id="per-tenant-configuration">Per-tenant configuration</h4>
 <p>If you are trying to develop a multi-tenant application, you may need to access the tenant configuration.
 So we provide <em>ITenantsConfiguration</em> interface to access tenant configuration and a default JSON configuration source
 that will read configuration from <em>{ConfigurationDirectory}/tenants/{TenantIdentifier}/{FileName}</em>.</p>
@@ -1134,7 +1187,7 @@ you can inject it and use like <em>IConfiguration</em>.</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.Extensions.Configuration">Juice.Extensions.Configuration</a></li>
 </ul>
-<h3 id="scalared-configuration">Scalared configuration</h3>
+<h4 id="scalared-configuration">Scalared configuration</h4>
 <p>We also provide <em>IConfigurationSection</em> extension methods to get scalared config so you can access a dictionary configuration.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.Configuration;
@@ -1693,6 +1746,53 @@ you can inject it and use like <em>IConfiguration</em>.</p>
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
             
         
                     
@@ -1711,21 +1811,6 @@ you can inject it and use like <em>IConfiguration</em>.</p>
                     
             
         
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
                     
                         
             
@@ -1768,19 +1853,19 @@ you can inject it and use like <em>IConfiguration</em>.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1694751655"></script>
-    <script src="/js/perfect-scrollbar.min.js?1694751655"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1694751655"></script>
-    <script src="/js/jquery.sticky.js?1694751655"></script>
-    <script src="/js/featherlight.min.js?1694751655"></script>
-    <script src="/js/highlight.pack.js?1694751655"></script>
+    <script src="/js/clipboard.min.js?1695804205"></script>
+    <script src="/js/perfect-scrollbar.min.js?1695804205"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1695804205"></script>
+    <script src="/js/jquery.sticky.js?1695804205"></script>
+    <script src="/js/featherlight.min.js?1695804205"></script>
+    <script src="/js/highlight.pack.js?1695804205"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1694751655"></script>
-    <script src="/js/learn.js?1694751655"></script>
-    <script src="/js/hugo-learn.js?1694751655"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1695804205"></script>
+    <script src="/js/learn.js?1695804205"></script>
+    <script src="/js/hugo-learn.js?1695804205"></script>
     
         
-            <script src="/mermaid/mermaid.js?1694751655"></script>
+            <script src="/mermaid/mermaid.js?1695804205"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
