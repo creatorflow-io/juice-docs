@@ -97,7 +97,7 @@ Then register services for tenant client inside other microservices.
 ```
 
 
-The library can be accessed via Nuget:
+The library can be accessed via Nuget and npmjs:
 - [Juice.MultiTenant](https://www.nuget.org/packages/Juice.MultiTenant)
 - [Juice.MultiTenant.EF](https://www.nuget.org/packages/Juice.MultiTenant.EF)
 - [Juice.MultiTenant.EF.SqlServer](https://www.nuget.org/packages/Juice.MultiTenant.EF.SqlServer)
@@ -105,6 +105,7 @@ The library can be accessed via Nuget:
 - [Juice.MultiTenant.Api.Contracts](https://www.nuget.org/packages/Juice.MultiTenant.Api.Contracts)
 - [Juice.MultiTenant.Api](https://www.nuget.org/packages/Juice.MultiTenant.Api)
 - [Juice.MultiTenant.Grpc](https://www.nuget.org/packages/Juice.MultiTenant.Grpc)
+- [@juice-js/tenants](https://www.npmjs.com/package/@juice-js/tenants)
 
 ### MultiTenant DBContext
 

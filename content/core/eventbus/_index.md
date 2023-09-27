@@ -74,7 +74,9 @@ To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus ser
 The library can be accessed via Nuget:
 - [Juice.EventBus.RabbitMQ](https://www.nuget.org/packages/Juice.EventBus.RabbitMQ)
 
-### IntegrationEvent
+### Implementation
+
+#### IntegrationEvent
 You can define your integration event that inherit **IntegrationEvent** record then publish throw **IEventBus**
 ```
     using Juice.EventBus;
@@ -99,7 +101,7 @@ You can define your integration event that inherit **IntegrationEvent** record t
 The library can be accessed via Nuget:
 - [Juice.EventBus](https://www.nuget.org/packages/Juice.EventBus)
 
-### IntegrationEventHandler
+#### IntegrationEventHandler
 Someone will implement an integration handler from **IIntegrationEventHandler<TEvent>** interface in other app to handle your integration event for their purposes.
 
 For example: a handler that print received message and event time.
@@ -180,6 +182,7 @@ We provide **IIntegrationEventLogService** interface with an implementation for 
     }
 ```
 
+#### Usage
 We need to register services and a **DomainDbContext** to use this feature.
 
 ```csharp {linenos=false,hl_lines=[2,3,6,10],linenostart=1}
@@ -198,6 +201,7 @@ Call `.RegisterContext<DomainDbContext>(schema)` will register an **IntegrationE
 
 They will have associated DbConnection and can access the same transaction.
 
+#### Working process
 Step by step, the process goes like this:
 
 1. The application begins a local database transaction.

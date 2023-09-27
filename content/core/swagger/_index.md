@@ -5,7 +5,7 @@ draft: false
 weight: 6
 ---
 
-### Include XML comments
+#### Include XML comments
 
 This is a SwaggerGenOptions' extension to include xml comments from referenced assemblies.
 
@@ -23,7 +23,7 @@ This is a SwaggerGenOptions' extension to include xml comments from referenced a
 The library can be accessed via Nuget:
 - [Juice.AspNetCore](https://www.nuget.org/packages/Juice.AspNetCore)
 
-### SwaggerIgnoreFilter
+#### SwaggerIgnoreFilter
 
 To ignore model properties from Swagger document generator but keep it in serialized JSON, 
 we implement **ApiIgnoreAttribute** and *ISchemaFilter* interface to remove properties
@@ -58,7 +58,7 @@ Register filter into DI
 The library can be accessed via Nuget:
 - [Juice.AspNetCore](https://www.nuget.org/packages/Juice.AspNetCore)
 
-### ApiIgnore attribute
+#### ApiIgnore attribute
 This attribute is useful to Swagger skip generate API for specified properties when combined with the above **SwaggerIgnoreFilter**.
 
 ```csharp {linenos=false,hl_lines=[1,3],linenostart=1}

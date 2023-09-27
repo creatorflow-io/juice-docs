@@ -60,9 +60,21 @@ Then register PooledDbContext
     services.AddScoped<TimerDbContextScopedFactory>();
     services.AddScoped(sp => sp.GetRequiredService<TimerDbContextScopedFactory>().CreateDbContext());
 ```
+#### DbOptions
 
+The abstract class *DbOptions* contains:
+- DatabaseProvider
+- ConnectionName
+- Schema
+- JsonPropertyBehavior: (UpdageCHANGES, UpdateALL)
+
+The *DbOptions\<T\>* class derived from *DbOptions* will specify a DbContext type that it is used for.
+
+#### Working process
 Database context classes derived from **DbContextBase** will:
-- Set **User** infomation from HttpContext if exists
+- Try configure *User* infomation by get from HttpContext if exists
+- Set the *_options* if there is an instance of *DbOptions\<YourDbContext\>* was registered
+- Set the *Schema* if it is specified in *_options*
 - Before call **SaveChanges** or **SaveChangesAsync** of original **DbContext** class
     - Track changes and update to **PendingAuditEntries**
     - Set basic audit info (CreatedUser/ModifiedUser/CreatedDate/ModifiedDate) into auditable entity model
@@ -92,14 +104,15 @@ Database context classes derived from IAuditableDbContext will:
 
 There are two ways to designate an entity type as auditable:
 
-1. Inherit from **IAuditable** interface
+1. Inherit from *IAuditable* interface
 ```csharp {linenos=false,hl_lines=[1,2],linenostart=1}
     using Juice.Domain;
     public class Content: IAuditable{
         ...
     }
 ```
-2. The fluent API entity type builder extension method **IsAuditable()**.
+2. Use fluent API *IsAuditable()*
+
 If your entity does not contain basic audit info properties (CreatedUser/ModifiedUser/CreatedDate/ModifiedDate)
 you can not access them but these columns are still available in your DB table.
 ```csharp {linenos=false,hl_lines=[1,2,9],linenostart=1}
@@ -116,6 +129,8 @@ you can not access them but these columns are still available in your DB table.
         }
     }
 ```
+
+You can see [Audit service]({{<ref "other_services/audit/_index.md" >}}) for more details.
 
 ### ISchemaDbContext
 This interface has only one purpose which is support to migrating the DBContext with an optional schema.

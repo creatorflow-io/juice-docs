@@ -12,7 +12,7 @@ We provide IdentifiedCommand pattern to deduplicate incoming events with built-i
 ```
 The request manager will verify *originCommandId* does not exist before sending *originCommand* to your **OriginCommandHandler**.
 
-### EF backend
+#### EF backend
 Please register request management services with your application schema before use.
 
 ```csharp {linenos=false,hl_lines=[2,"5-10"],linenostart=1}
@@ -44,7 +44,7 @@ The library can be accessed via Nuget:
 - [Juice.MediatR.RequestManager.EF.SqlServer](https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.SqlServer)
 - [Juice.MediatR.RequestManager.EF.PostgreSQL](https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.PostgreSQL)
 
-### Redis backend
+#### Redis backend
 
 If you already have Redis so you can use it as a backend.
 

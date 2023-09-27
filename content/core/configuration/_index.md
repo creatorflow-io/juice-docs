@@ -5,7 +5,7 @@ draft: false
 weight: 3
 ---
 
-### Per-tenant configuration
+#### Per-tenant configuration
 If you are trying to develop a multi-tenant application, you may need to access the tenant configuration.
 So we provide *ITenantsConfiguration* interface to access tenant configuration and a default JSON configuration source
 that will read configuration from *{ConfigurationDirectory}/tenants/{TenantIdentifier}/{FileName}*.
@@ -35,7 +35,7 @@ You can also implement *ITenantsConfigurationSource* interface to use a custom c
 The library can be accessed via Nuget:
 - [Juice.Extensions.Configuration](https://www.nuget.org/packages/Juice.Extensions.Configuration)
 
-### Scalared configuration
+#### Scalared configuration
 
 We also provide *IConfigurationSection* extension methods to get scalared config so you can access a dictionary configuration.
 

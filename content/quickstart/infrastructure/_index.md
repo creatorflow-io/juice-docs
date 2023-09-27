@@ -24,7 +24,7 @@ The project tree will look like this:
 |-- YourDbContext.cs
 ```
 
-### Separate migrations
+#### Separate migrations
 
 If you want to support multiple DB backends like SqlServer, PostgreSQL... then you need to [separate migrations into other projects](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli). Eg: **Juice.Abc.EF.SqlServer** and  **Juice.Abc.EF.PostgreSQL**.
 
@@ -113,9 +113,7 @@ These are steps to separete migrations:
 Add-Migration InitDb -Context AbcDbContext -OutputDir Migrations -Args "--provider PostgreSQL"
 ``` 
 
-- Well done!
-
-### CQRS
+#### CQRS
 
 The typical CQRS implementation will segregate the Read/Write model and also segregate the Read/Write DB. So it can be used together with complex pattern [Event Sourcing](https://learn.microsoft.com/en-us/previous-versions/msp-n-p/jj591559(v=pandp.10)) or is it simply complicated to implement for newbies.
 

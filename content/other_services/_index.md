@@ -1,14 +1,16 @@
 +++
-title = "Other_services"
+title = "Other services"
 date = 2023-03-31T11:00:04+07:00
 weight = 7
 chapter = true
-pre = "<b>7. </b>"
-draft = true
+pre = "<b>5. </b>"
+draft = false
 +++
 
-### Chapter 7
+# Other services
 
-# Some Chapter title
+[Audit service]({{< ref "other_services/audit/_index.md" >}})
 
-Lorem Ipsum.
+[File storage]({{< ref "other_services/file_storage/_index.md" >}})
+
+[Plugins]({{< ref "other_services/plugins/_index.md" >}})
