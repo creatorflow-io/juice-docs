@@ -60,6 +60,7 @@ Then register PooledDbContext
     services.AddScoped<TimerDbContextScopedFactory>();
     services.AddScoped(sp => sp.GetRequiredService<TimerDbContextScopedFactory>().CreateDbContext());
 ```
+
 #### DbOptions
 
 The abstract class *DbOptions* contains:
@@ -195,5 +196,44 @@ We define an **IUnitOfWork** interface to easy to work with DbContext transactio
     }
 ```
 
+### MultiTenantDbContext
+
+This abstract class has similar behaviors to *DbContextBase* above but added *TenantInfo* so we can pass tenant to DB or filter data by tenant.
+It is a bit different from the official [MultiTenantDbContext](https://github.com/Finbuckle/Finbuckle.MultiTenant/blob/main/src/Finbuckle.MultiTenant.EntityFrameworkCore/MultiTenantDbContext.cs) from Finbuckle: **it still works even though *TenantInfo* can not be resolved**.
+
+#### Cross-tenant entity type
+Sometimes we maybe want to have entities that can be shared from the *Root* tenant and accessible to other tenants (*Ex: settings, users...*). So we provide an extension to describe an entity as cross-tenant.
+
+```cs
+// IdentityDbContext.cs
+using Juice.MultiTenant.EF.Extensions;
+...
+
+protected override void OnModelCreating(ModelBuilder builder)
+{
+    base.OnModelCreating(builder);
+    // configure any type that has Multitenant attribute
+    builder.ConfigureMultiTenant();
+    // describe that User is cross tenant
+    builder.Entity<UserIdentity>().ToTable(TableConsts.IdentityUsers).IsCrossTenant();
+    ...
+}
+
+```
+What exactly does it do?
+- Marks the entity with the shadown property **TenantId**, but it is not required
+- Entity settings to filter data that does not have a *TenantId* value or a *TenantId* value that matches *TenantInfo*
+- Some special settings affect to Identity entity types
+    + IdentityUser<>: replace the index of column *NormalizedUserName* with the new index associated with *TenantId*
+    + IdentityRole<>: replace the index of column *NormalizedName* with the new index associated with *TenantId*
+    + IdentityUserLogin<>: replace the primary key with new *Id* column and then add an combined index of *LoginProvider*, *ProviderKey* and *TenantId*
+
+---
+**NOTE**
+- Be careful while using cross-tenant entities
+- Consider using the [Per-tenant authentication convention]({{< ref "core/multitenant/#per-tenant-authentication" >}}) to specify who can access cross-tenant resources
+---
+
 The library can be accessed via Nuget:
 - [Juice.EF](https://www.nuget.org/packages/Juice.EF)
+- [Juice.EF.MultiTenant](https://www.nuget.org/packages/Juice.EF.MultiTenant)

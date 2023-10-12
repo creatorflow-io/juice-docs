@@ -96,9 +96,41 @@ Then register services for tenant client inside other microservices.
         ;
 ```
 
+#### Per-tenant Authentication
+
+We provide a custom *WithPerTenantAuthenticationConventions* extension beside the original *WithPerTenantAuthenticationConventions* from Finbuckle.
+It allows you to handle cross-tenant authorization yourself.
+
+```cs
+using Juice.MultiTenant.AspNetCore;
+...
+ services
+    .AddMultiTenant()
+    .WithBasePathStrategy(options => options.RebaseAspNetCorePathBase = true)
+    .ConfigureTenantEFDirectly(configuration, options =>
+    {
+        options.DatabaseProvider = "PostgreSQL";
+        options.ConnectionName = "TenantDbConnection";
+        options.Schema = "App";
+    }, environment.EnvironmentName)
+    .WithPerTenantOptions<OpenIdConnectOptions>((options, tc) =>
+    {
+        options.Authority = authority + $"/{tc.Identifier}";
+    })
+    .WithPerTenantAuthenticationCore() // it's required
+    .WithPerTenantAuthenticationConventions(crossTenantAuthorize: (authTenant, currentTenant, principal) =>
+        authTenant == null // root tenant
+        && (principal?.Identity?.IsAuthenticated ?? false) // authenticated
+        && principal.IsInRole("admin"))
+    .WithRemoteAuthenticationCallbackStrategy()
+    ;
+
+```
+
 
 The library can be accessed via Nuget and npmjs:
 - [Juice.MultiTenant](https://www.nuget.org/packages/Juice.MultiTenant)
+- [Juice.MultiTenant.AspNetCore](https://www.nuget.org/packages/Juice.MultiTenant.AspNetCore)
 - [Juice.MultiTenant.EF](https://www.nuget.org/packages/Juice.MultiTenant.EF)
 - [Juice.MultiTenant.EF.SqlServer](https://www.nuget.org/packages/Juice.MultiTenant.EF.SqlServer)
 - [Juice.MultiTenant.EF.PostgreSQL](https://www.nuget.org/packages/Juice.MultiTenant.EF.PostgreSQL)
@@ -158,7 +190,7 @@ Or using the **[MultiTenant]** attribute in entity class
     }
 ```
 
-See [DBContextBase]({{< ref "core/entityframework">}}) for more information.
+See [MultiTenantDbContext]({{< ref "core/entityframework/#multitenantdbcontext">}}) for more information.
 
 The library can be accessed via Nuget:
 - [Juice.EF.MultiTenant](https://www.nuget.org/packages/Juice.EF.MultiTenant)

@@ -12,22 +12,22 @@
     <title>Entity framework :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1695804205" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1695804205" rel="stylesheet">
-    <link href="/css/hybrid.css?1695804205" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1695804205" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1695804205" rel="stylesheet">
-    <link href="/css/auto-complete.css?1695804205" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1695804205" rel="stylesheet">
-    <link href="/css/theme.css?1695804205" rel="stylesheet">
-    <link href="/css/tabs.css?1695804205" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1695804205" rel="stylesheet">
+    <link href="/css/nucleus.css?1697070863" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1697070863" rel="stylesheet">
+    <link href="/css/hybrid.css?1697070863" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1697070863" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1697070863" rel="stylesheet">
+    <link href="/css/auto-complete.css?1697070863" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1697070863" rel="stylesheet">
+    <link href="/css/theme.css?1697070863" rel="stylesheet">
+    <link href="/css/tabs.css?1697070863" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1697070863" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1695804205" rel="stylesheet">
+    <link href="/css/theme-mine.css?1697070863" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1695804205"></script>
+    <script src="/js/jquery-3.3.1.min.js?1697070863"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1695804205"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1695804205"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1697070863"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1697070863"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/example.org\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1695804205"></script>
+<script type="text/javascript" src="/js/search.js?1697070863"></script>
 
     
   </div>
@@ -1142,6 +1142,7 @@
         <li><a href="#iauditabledbcontext">IAuditableDbContext</a></li>
         <li><a href="#ischemadbcontext">ISchemaDbContext</a></li>
         <li><a href="#iunitofwork">IUnitOfWork</a></li>
+        <li><a href="#multitenantdbcontext">MultiTenantDbContext</a></li>
       </ul>
     </li>
   </ul>
@@ -1343,9 +1344,47 @@ We define an <strong>IUnitOfWork</strong> interface to easy to work with DbConte
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">void</span> RollbackTransaction();
 </span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>The library can be accessed via Nuget:</p>
+</span></span></code></pre></div><h3 id="multitenantdbcontext">MultiTenantDbContext</h3>
+<p>This abstract class has similar behaviors to <em>DbContextBase</em> above but added <em>TenantInfo</em> so we can pass tenant to DB or filter data by tenant.
+It is a bit different from the official <a href="https://github.com/Finbuckle/Finbuckle.MultiTenant/blob/main/src/Finbuckle.MultiTenant.EntityFrameworkCore/MultiTenantDbContext.cs">MultiTenantDbContext</a> from Finbuckle: <strong>it still works even though <em>TenantInfo</em> can not be resolved</strong>.</p>
+<h4 id="cross-tenant-entity-type">Cross-tenant entity type</h4>
+<p>Sometimes we maybe want to have entities that can be shared from the <em>Root</em> tenant and accessible to other tenants (<em>Ex: settings, users&hellip;</em>). So we provide an extension to describe an entity as cross-tenant.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// IdentityDbContext.cs</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.MultiTenant.EF.Extensions;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder builder)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">base</span>.OnModelCreating(builder);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// configure any type that has Multitenant attribute</span>
+</span></span><span style="display:flex;"><span>    builder.ConfigureMultiTenant();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// describe that User is cross tenant</span>
+</span></span><span style="display:flex;"><span>    builder.Entity&lt;UserIdentity&gt;().ToTable(TableConsts.IdentityUsers).IsCrossTenant();
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What exactly does it do?</p>
+<ul>
+<li>Marks the entity with the shadown property <strong>TenantId</strong>, but it is not required</li>
+<li>Entity settings to filter data that does not have a <em>TenantId</em> value or a <em>TenantId</em> value that matches <em>TenantInfo</em></li>
+<li>Some special settings affect to Identity entity types
+<ul>
+<li>IdentityUser&lt;&gt;: replace the index of column <em>NormalizedUserName</em> with the new index associated with <em>TenantId</em></li>
+<li>IdentityRole&lt;&gt;: replace the index of column <em>NormalizedName</em> with the new index associated with <em>TenantId</em></li>
+<li>IdentityUserLogin&lt;&gt;: replace the primary key with new <em>Id</em> column and then add an combined index of <em>LoginProvider</em>, <em>ProviderKey</em> and <em>TenantId</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>NOTE</strong></p>
+<ul>
+<li>Be careful while using cross-tenant entities</li>
+<li>Consider using the <a href="/core/multitenant/#per-tenant-authentication">Per-tenant authentication convention</a> to specify who can access cross-tenant resources</li>
+</ul>
+<hr>
+<p>The library can be accessed via Nuget:</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.EF">Juice.EF</a></li>
+<li><a href="https://www.nuget.org/packages/Juice.EF.MultiTenant">Juice.EF.MultiTenant</a></li>
 </ul>
 
 
@@ -1987,19 +2026,19 @@ We define an <strong>IUnitOfWork</strong> interface to easy to work with DbConte
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1695804205"></script>
-    <script src="/js/perfect-scrollbar.min.js?1695804205"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1695804205"></script>
-    <script src="/js/jquery.sticky.js?1695804205"></script>
-    <script src="/js/featherlight.min.js?1695804205"></script>
-    <script src="/js/highlight.pack.js?1695804205"></script>
+    <script src="/js/clipboard.min.js?1697070863"></script>
+    <script src="/js/perfect-scrollbar.min.js?1697070863"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1697070863"></script>
+    <script src="/js/jquery.sticky.js?1697070863"></script>
+    <script src="/js/featherlight.min.js?1697070863"></script>
+    <script src="/js/highlight.pack.js?1697070863"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1695804205"></script>
-    <script src="/js/learn.js?1695804205"></script>
-    <script src="/js/hugo-learn.js?1695804205"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1697070863"></script>
+    <script src="/js/learn.js?1697070863"></script>
+    <script src="/js/hugo-learn.js?1697070863"></script>
     
         
-            <script src="/mermaid/mermaid.js?1695804205"></script>
+            <script src="/mermaid/mermaid.js?1697070863"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

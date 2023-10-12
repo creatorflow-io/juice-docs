@@ -18,4 +18,4 @@ pre = "<b>2. </b>"
 
 [Microservice]({{< ref "quickstart/microservice" >}})
 
-[API]({{< ref "quickstart/mono" >}})
+[Monolithic]({{< ref "quickstart/mono" >}})

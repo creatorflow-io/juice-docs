@@ -7,13 +7,16 @@ draft: false
 Different businesses do not have the same work processes, even within an organization there are different work processes. Therefore, there are many workflow tools invented to meet the needs.  
 
 #### Purpose
+- Lightweigh workflow engine
+- Bpmn/ Yaml compatible
+- Sub-workflow support
+- Works with microservices
 
+#### Concept
 
-#### Core concept
+{{< figure src="/images/services/Workflow.svg" title="Audit process" >}}
 
-{{< figure src="/images/services/Audit-process.svg" title="Audit process" >}}
-
-1. ##### subject (use bold or header if needed)
+1. ##### Workflow
 
 Subject content
 
