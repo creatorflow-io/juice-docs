@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/other_services/audit/">
+  <body class="" data-url="/other_services/audit/v7.0.2/">
     <nav id="sidebar" class="">
 
 
@@ -975,8 +975,8 @@
   
     
     <li data-nav-id="/other_services/audit/" title="Audit services" class="dd-item
+        parent
         
-        active
         
         ">
       <a href="/other_services/audit/">
@@ -1026,7 +1026,7 @@
     
     <li data-nav-id="/other_services/audit/v7.0.2/" title="Audit services" class="dd-item
         
-        
+        active
         
         ">
       <a href="/other_services/audit/v7.0.2/">
@@ -1149,7 +1149,7 @@
                   
                   
                   <div id="top-github-link">
-                    <a class="github-link" title='Edit this page' href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/audit/_index.md" target="blank">
+                    <a class="github-link" title='Edit this page' href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/audit/v7.0.2/_index.md" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">Edit this page</span>
                     </a>
@@ -1180,7 +1180,13 @@
             
           
           
-            <a href='/'></a> > <a href='/other_services/'>Other services</a> > Audit services
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/other_services/'>Other services</a> > <a href='/other_services/audit/'>Audit services</a> > Audit services
+          
+        
           
         
           
@@ -1233,12 +1239,12 @@
     
     
     <div style="display: flex;">    
-        <label style="padding-right: 10px;" page-version=latest>Versions</label>
+        <label style="padding-right: 10px;" page-version=7.0.2>Versions</label>
         <select id="versionSelect" style="width: 100px;">
             
-                <option  selected  value=latest>latest</option>
+                <option  value=latest>latest</option>
             
-                <option  value=7.0.2>7.0.2</option>
+                <option  selected  value=7.0.2>7.0.2</option>
             
         </select>
     </div>
@@ -1669,8 +1675,6 @@
 <li><em>Clear</em>: clear all existing filter entries</li>
 <li><em>Include</em>: append a filter entry to include path, methods&hellip;</li>
 <li><em>Exclude</em>: append a filter entry to exclude path, methods&hellip;</li>
-<li><em>Merge</em>: merge new filter entries if they do not already exist</li>
-<li><em>IsExists</em>: check if the filter entry already exists</li>
 <li><em>StoreEmptyRequestHeaders</em>: clear all request header filters</li>
 <li><em>StoreRequestHeaders</em>: add new request header filters</li>
 <li><em>StoreEmptyResponseHeaders</em>: clear all response header filters</li>
@@ -1686,8 +1690,6 @@
 <hr>
 <p>The code blocks below are two ways to configure the audit filter</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">//Program.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> configs = <span style="color:#66d9ef">new</span> AuditFilterOptions();
-</span></span><span style="display:flex;"><span>builder.Configuration.Bind(<span style="color:#e6db74">&#34;Audit&#34;</span>, configs);
 </span></span><span style="display:flex;"><span>app.UseAudit(<span style="color:#e6db74">&#34;yourAppName&#34;</span>, options =&gt;
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// describe the paths and methods to logging user acess and data audit</span>
@@ -1700,8 +1702,9 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Ex: /kernel/foo, /kernel/foo/bar, /kernel/foo/bar/barbar ...</span>
 </span></span><span style="display:flex;"><span>    options.Include(<span style="color:#e6db74">&#34;/kernel/*/#&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;PUT&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// merge filter entries from appsettings</span>
-</span></span><span style="display:flex;"><span>    options.Merge(configs.Filters);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// OR binding from appsettings</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// builder.Configuration.Bind(&#34;Audit&#34;, options);</span>
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Only store the request headers like: accept, accept-encoding, accept-language-x,</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// content-type, content-length... but not content, content-type-y</span>
 </span></span><span style="display:flex;"><span>    options.StoreEmptyRequestHeaders()
@@ -2371,6 +2374,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2389,6 +2393,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2429,10 +2436,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/other_services/" title="Other services"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/other_services/audit/whatsnew/" title="What&#39;s New in Audit 7.0.3"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/other_services/audit/whatsnew/" title="What&#39;s New in Audit 7.0.3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/other_services/file_storage/" title="File storage" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

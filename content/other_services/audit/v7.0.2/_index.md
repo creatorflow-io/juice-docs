@@ -1,9 +1,11 @@
 ---
 title: "Audit services"
+menuTitle: "v7.0.2"
 date: 2023-04-03T20:23:30+07:00
 draft: false
-weight: 1
-version: latest
+hidden: false
+weight: 3
+version: 7.0.2
 ---
 
 {{< versions doc=audit >}}
@@ -395,8 +397,6 @@ Some main methods of *AuditFilterOptions* that help us build the filter options:
 - *Clear*: clear all existing filter entries
 - *Include*: append a filter entry to include path, methods...
 - *Exclude*: append a filter entry to exclude path, methods...
-- *Merge*: merge new filter entries if they do not already exist
-- *IsExists*: check if the filter entry already exists
 - *StoreEmptyRequestHeaders*: clear all request header filters
 - *StoreRequestHeaders*: add new request header filters
 - *StoreEmptyResponseHeaders*: clear all response header filters
@@ -413,8 +413,6 @@ The code blocks below are two ways to configure the audit filter
 
 ```cs
 //Program.cs
-var configs = new AuditFilterOptions();
-builder.Configuration.Bind("Audit", configs);
 app.UseAudit("yourAppName", options =>
 {
     // describe the paths and methods to logging user acess and data audit
@@ -427,8 +425,9 @@ app.UseAudit("yourAppName", options =>
     // Ex: /kernel/foo, /kernel/foo/bar, /kernel/foo/bar/barbar ...
     options.Include("/kernel/*/#", "POST", "PUT");
 
-    // merge filter entries from appsettings
-    options.Merge(configs.Filters);
+    // OR binding from appsettings
+    // builder.Configuration.Bind("Audit", options);
+
     // Only store the request headers like: accept, accept-encoding, accept-language-x,
     // content-type, content-length... but not content, content-type-y
     options.StoreEmptyRequestHeaders()

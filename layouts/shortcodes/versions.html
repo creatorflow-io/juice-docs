@@ -1,0 +1,35 @@
+{{ $versions := .Site.Data.versions }}
+{{ $pageVersion := .Page.Params.version}}
+{{ with .Get "doc" }}
+    {{ $doc_versions := index $versions . }}
+    {{ if $doc_versions }}
+    <div style="display: flex;">    
+        <label style="padding-right: 10px;" page-version={{ $pageVersion }}>Versions</label>
+        <select id="versionSelect" style="width: 100px;">
+            {{ range $doc_versions }}
+                <option {{ if eq . $pageVersion  }} selected {{ end }} value={{ . }}>{{ . }}</option>
+            {{ end }}
+        </select>
+    </div>
+    <script>
+        var select = document.getElementById('versionSelect');
+        select.addEventListener('change', function() {
+            let path = window.location.pathname.trimEnd('/');
+            let version = select.value;
+            if (version == 'latest') {
+                version = '';
+            }else{
+                version = 'v' + version;
+            }
+            
+            // use regex to remove version from path if it exists
+            let regex = new RegExp('\/v[0-9]+.[0-9]+.[0-9]+');
+            path = path.replace(regex, '');
+            
+            window.location.href = window.location.origin + path + '/' + version;
+        });
+    </script>
+    {{ else }}
+        <p>No versions found for {{ . }}</p>
+    {{ end }}
+{{ end }}

@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://example.org/other_services/audit/whatsnew/</loc>
+    <lastmod>2023-10-20T08:21:52+07:00</lastmod>
+  </url><url>
     <loc>http://example.org/quickstart/overview/</loc>
     <lastmod>2023-04-12T21:18:43+07:00</lastmod>
   </url><url>
@@ -40,6 +43,9 @@
   </url><url>
     <loc>http://example.org/core/xunit/priority/</loc>
     <lastmod>2023-04-11T17:20:57+07:00</lastmod>
+  </url><url>
+    <loc>http://example.org/other_services/audit/v7.0.2/</loc>
+    <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
     <loc>http://example.org/core/configuration/</loc>
     <lastmod>2023-04-03T20:23:10+07:00</lastmod>
@@ -102,7 +108,7 @@
     <lastmod>2023-04-14T15:36:00+07:00</lastmod>
   </url><url>
     <loc>http://example.org/</loc>
-    <lastmod>2023-09-23T15:54:24+07:00</lastmod>
+    <lastmod>2023-10-20T08:21:52+07:00</lastmod>
     <priority>0</priority>
   </url><url>
     <loc>http://example.org/other_services/plugins/</loc>
