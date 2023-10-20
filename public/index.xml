@@ -6,6 +6,15 @@
     <description>Recent content on Juice&#39;s documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Sep 2023 15:54:24 +0700</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Oct 2023 08:21:52 +0700</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What&#39;s New in Audit 7.0.3</title>
+      <link>http://example.org/other_services/audit/whatsnew/</link>
+      <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
+      
+      <guid>http://example.org/other_services/audit/whatsnew/</guid>
+      <description>Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream&amp;hellip;. So we have to move the collection of request form data after other middleware is processed to avoid the issue.</description>
+    </item>
+    
   </channel>
 </rss>
