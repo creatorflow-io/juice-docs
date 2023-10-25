@@ -21,3 +21,7 @@ Fixed an error that occurred when you registered AuditMiddleware with the *IAppl
 #### Added more AuditFilterOptions methods
 - *Merge*: merge new filter entries if they do not already exist
 - *IsExists*: check if the filter entry already exists
+
+#### Handle aborted request
+- Added *AuditFilterOptions.RequestAbortedStatusCode* option to specify the status code when the request is aborted
+- Handle aborted request to add *AccessLog*
