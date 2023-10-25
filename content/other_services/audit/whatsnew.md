@@ -23,5 +23,5 @@ Fixed an error that occurred when you registered AuditMiddleware with the *IAppl
 - *IsExists*: check if the filter entry already exists
 
 #### Handle aborted request
-- Added *AuditFilterOptions.RequestAbortedStatusCode* option to specify the status code when the request is aborted
+- Added *AuditFilterOptions.RequestAbortedStatusCode* option to specify the status code when the request is aborted. Default value is **408 Request Timeout**
 - Handle aborted request to add *AccessLog*
