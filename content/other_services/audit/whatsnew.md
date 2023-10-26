@@ -10,6 +10,7 @@ weight: 1
 - [Fixed file upload issue](#fixed-file-upload-issue)
 - [Fixed middleware registration](#fixed-middleware-registration)
 - [Added more AuditFilterOptions methods](#added-more-auditfilteroptions-methods)
+- [Handle aborted request](#handle-aborted-request)
 
 #### Fixed file upload issue
 

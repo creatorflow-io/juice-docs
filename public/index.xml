@@ -13,7 +13,19 @@
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
       
       <guid>http://example.org/other_services/audit/whatsnew/</guid>
-      <description>Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream&amp;hellip;. So we have to move the collection of request form data after other middleware is processed to avoid the issue.</description>
+      <description>Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream&amp;hellip;. So we have to move the collection of request form data after other middleware is processed to avoid the issue.</description>
+    </item>
+    
+    <item>
+      <title>What&#39;s New in BgService Logging 7.0.3</title>
+      <link>http://example.org/bg_service/logging/whatsnew/</link>
+      <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
+      
+      <guid>http://example.org/bg_service/logging/whatsnew/</guid>
+      <description>Quick access Name correction Configurable write interval Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.
+Name correction Correcting directory patterns:
+Unnamed service: {Logging:File:Directory}/General/ Named service: {Logging:File:Directory}/{ServiceDescription}/ Correcting file name patterns:
+Default: {yyyy_MM_dd-HHmm}.log Job: {JobId} - {JobDescription}.log Job has state: {JobId} - {JobDescription}_{JobState}.log Job has re-run: {JobId} - {JobDescription}_{JobState} ({increased number}).log Configurable write interval You can now configure the BufferTime to decide how long to buffer before log entries are written to the file</description>
     </item>
     
   </channel>

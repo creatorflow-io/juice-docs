@@ -1,9 +1,10 @@
 ---
 title: "Logging"
+menuTitle: "v7.0.2"
 date: 2023-04-03T21:02:02+07:00
 draft: false
-weight: 1
-version: latest
+weight: 3
+version: 7.0.2
 ---
 {{< versions doc=bg_logging >}}
 #### Purposes
@@ -15,7 +16,7 @@ version: latest
 
 #### Usage
 
-1. ##### Configure log builder
+1. **Configure log builder**
 Call *AddBgServiceFileLogger()* on the logging builder to add a custom file logger provider.
 ```cs
 using Juice.BgService.Extensions.Logging;
@@ -32,20 +33,7 @@ builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection("Logging
 - *RetainPolicyFileCount*: default value is **50**
 - *MaxFileSize*: default value is **5 * 1024 * 1024**;
 - *ForkJobLog*: default value is **true**
-- *BufferTime*: the log entries will be written to the file after the interval (5 seconds by default)
 
-```json
-// appsettings.json
-{
-  "Logging": {    
-    "File": {
-      "Directory": "C:\\Workspace\\Services\\logs",
-      "BufferTime": "00:00:03",
-      //"ForkJobLog":  false
-    }
-  }
-}
-```
 2. ##### Separate logs by scope
 
 To separate logs folder, we will init new log scope with specified properties:
@@ -77,7 +65,7 @@ using (_logger.BeginScope(new List<KeyValuePair<string, object>>
 }
 
 // {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState}.log
-// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState} ({increased number}).log
+// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState} (attempted).log
 using (_logger.BeginScope(new List<KeyValuePair<string, object>>
 {
     new KeyValuePair<string, object>("JobId", JobId),

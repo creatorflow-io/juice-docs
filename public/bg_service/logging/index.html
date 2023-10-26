@@ -12,22 +12,22 @@
     <title>Logging :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1698233252" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1698233252" rel="stylesheet">
-    <link href="/css/hybrid.css?1698233252" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1698233252" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1698233252" rel="stylesheet">
-    <link href="/css/auto-complete.css?1698233252" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1698233252" rel="stylesheet">
-    <link href="/css/theme.css?1698233252" rel="stylesheet">
-    <link href="/css/tabs.css?1698233252" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1698233252" rel="stylesheet">
+    <link href="/css/nucleus.css?1698292464" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1698292464" rel="stylesheet">
+    <link href="/css/hybrid.css?1698292464" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1698292464" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1698292464" rel="stylesheet">
+    <link href="/css/auto-complete.css?1698292464" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1698292464" rel="stylesheet">
+    <link href="/css/theme.css?1698292464" rel="stylesheet">
+    <link href="/css/tabs.css?1698292464" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1698292464" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1698233252" rel="stylesheet">
+    <link href="/css/theme-mine.css?1698292464" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1698233252"></script>
+    <script src="/js/jquery-3.3.1.min.js?1698292464"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1698233252"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1698233252"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1698292464"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1698292464"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/example.org\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1698233252"></script>
+<script type="text/javascript" src="/js/search.js?1698292464"></script>
 
     
   </div>
@@ -897,6 +897,65 @@
       </a>
       
       
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/bg_service/logging/whatsnew/" title="What&#39;s New in BgService Logging 7.0.3" class="dd-item ">
+        <a href="/bg_service/logging/whatsnew/">
+        What&#39;s new?
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/bg_service/logging/v7.0.2/" title="Logging" class="dd-item
+        
+        
+        
+        ">
+      <a href="/bg_service/logging/v7.0.2/">
+          v7.0.2
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
     </li>
   
  
@@ -1225,7 +1284,43 @@
 
 
 
-	<h4 id="purposes">Purposes</h4>
+	
+
+
+    
+    
+    <div style="display: flex;">    
+        <label style="padding-right: 10px;" page-version=latest>Versions</label>
+        <select id="versionSelect" style="width: 100px;">
+            
+                <option  selected  value=latest>latest</option>
+            
+                <option  value=7.0.2>7.0.2</option>
+            
+        </select>
+    </div>
+    <script>
+        var select = document.getElementById('versionSelect');
+        select.addEventListener('change', function() {
+            let path = window.location.pathname.trimEnd('/');
+            let version = select.value;
+            if (version == 'latest') {
+                version = '';
+            }else{
+                version = 'v' + version;
+            }
+            
+            
+            let regex = new RegExp('\/v[0-9]+.[0-9]+.[0-9]+');
+            path = path.replace(regex, '');
+            
+            window.location.href = window.location.origin + path + '/' + version;
+        });
+    </script>
+    
+
+
+<h4 id="purposes">Purposes</h4>
 <ul>
 <li>Separate log folder for services</li>
 <li>Limit log file size</li>
@@ -1234,9 +1329,11 @@
 </ul>
 <h4 id="usage">Usage</h4>
 <ol>
-<li><strong>Configure log builder</strong>
-Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom file logger provider.</li>
+<li>
+<h5 id="configure-log-builder">Configure log builder</h5>
+</li>
 </ol>
+<p>Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom file logger provider.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.BgService.Extensions.Logging;
 </span></span><span style="display:flex;"><span>...
 </span></span><span style="display:flex;"><span>
@@ -1249,8 +1346,19 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
 <li><em>RetainPolicyFileCount</em>: default value is <strong>50</strong></li>
 <li><em>MaxFileSize</em>: default value is <strong>5 * 1024 * 1024</strong>;</li>
 <li><em>ForkJobLog</em>: default value is <strong>true</strong></li>
+<li><em>BufferTime</em>: the log entries will be written to the file after the interval (5 seconds by default)</li>
 </ul>
-<ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#75715e">// appsettings.json
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Logging&#34;</span>: {    
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;File&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Directory&#34;</span>: <span style="color:#e6db74">&#34;C:\\Workspace\\Services\\logs&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;BufferTime&#34;</span>: <span style="color:#e6db74">&#34;00:00:03&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//&#34;ForkJobLog&#34;:  false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
 <li>
 <h5 id="separate-logs-by-scope">Separate logs by scope</h5>
 </li>
@@ -1261,7 +1369,8 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
 <li><em>ServiceDescription</em>: string value</li>
 </ul>
 <p>You may want to store <em>_logScope</em> to dispose it later.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>_logScope = _logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{yyyy_MM_dd-HHmm}.log</span>
+</span></span><span style="display:flex;"><span>_logScope = _logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;ServiceId&#34;</span>, Id),
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;ServiceDescription&#34;</span>, Description)
@@ -1271,12 +1380,24 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
 <li><em>JobId</em>: string value</li>
 <li><em>JobDescription</em>: string value</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobId&#34;</span>, JobId),
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobDescription&#34;</span>, JobDescription)
 </span></span><span style="display:flex;"><span>})){
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job processing</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState}.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState} ({increased number}).log</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobId&#34;</span>, JobId),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobDescription&#34;</span>, JobDescription),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobState&#34;</span>, JobState)
+</span></span><span style="display:flex;"><span>})){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job is completed with state</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
 
@@ -1799,6 +1920,24 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
 
                     
                     
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
                     
 
                     
@@ -1810,8 +1949,24 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
                         
-                        
+            
+            
+                
                     
                 
                 
@@ -1939,7 +2094,7 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
 			<a class="nav nav-prev" href="/bg_service/" title="Background service"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/bg_service/managed_service/" title="Manageable services" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/bg_service/logging/whatsnew/" title="What&#39;s New in BgService Logging 7.0.3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1949,19 +2104,19 @@ Call <em>AddBgServiceFileLogger()</em> on the logging builder to add a custom fi
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1698233252"></script>
-    <script src="/js/perfect-scrollbar.min.js?1698233252"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1698233252"></script>
-    <script src="/js/jquery.sticky.js?1698233252"></script>
-    <script src="/js/featherlight.min.js?1698233252"></script>
-    <script src="/js/highlight.pack.js?1698233252"></script>
+    <script src="/js/clipboard.min.js?1698292464"></script>
+    <script src="/js/perfect-scrollbar.min.js?1698292464"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1698292464"></script>
+    <script src="/js/jquery.sticky.js?1698292464"></script>
+    <script src="/js/featherlight.min.js?1698292464"></script>
+    <script src="/js/highlight.pack.js?1698292464"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1698233252"></script>
-    <script src="/js/learn.js?1698233252"></script>
-    <script src="/js/hugo-learn.js?1698233252"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1698292464"></script>
+    <script src="/js/learn.js?1698292464"></script>
+    <script src="/js/hugo-learn.js?1698292464"></script>
     
         
-            <script src="/mermaid/mermaid.js?1698233252"></script>
+            <script src="/mermaid/mermaid.js?1698292464"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
