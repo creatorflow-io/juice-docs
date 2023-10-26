@@ -7,5 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 03 Apr 2023 21:02:02 +0700</lastBuildDate><atom:link href="http://example.org/bg_service/logging/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What&#39;s New in BgService Logging 7.0.3</title>
+      <link>http://example.org/bg_service/logging/whatsnew/</link>
+      <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
+      
+      <guid>http://example.org/bg_service/logging/whatsnew/</guid>
+      <description>Quick access Name correction Configurable write interval Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.
+Name correction Correcting directory patterns:
+Unnamed service: {Logging:File:Directory}/General/ Named service: {Logging:File:Directory}/{ServiceDescription}/ Correcting file name patterns:
+Default: {yyyy_MM_dd-HHmm}.log Job: {JobId} - {JobDescription}.log Job has state: {JobId} - {JobDescription}_{JobState}.log Job has re-run: {JobId} - {JobDescription}_{JobState} ({increased number}).log Configurable write interval You can now configure the BufferTime to decide how long to buffer before log entries are written to the file</description>
+    </item>
+    
   </channel>
 </rss>
