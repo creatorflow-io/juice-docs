@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Categories :: Juice&#39;s documentation</title>
+    <title>Breaking changes in BgService Logging 7.0.3 :: Juice&#39;s documentation</title>
 
     
     <link href="/css/nucleus.css?1698465203" rel="stylesheet">
@@ -37,7 +37,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/categories/">
+  <body class="" data-url="/bg_service/logging/breaking/">
     <nav id="sidebar" class="">
 
 
@@ -858,7 +858,7 @@
   
     
     <li data-nav-id="/bg_service/" title="Background service" class="dd-item
-        
+        parent
         
         
         ">
@@ -887,7 +887,7 @@
   
     
     <li data-nav-id="/bg_service/logging/" title="Logging" class="dd-item
-        
+        parent
         
         
         ">
@@ -936,7 +936,7 @@
  
   
     
-      <li data-nav-id="/bg_service/logging/breaking/" title="Breaking changes in BgService Logging 7.0.3" class="dd-item ">
+      <li data-nav-id="/bg_service/logging/breaking/" title="Breaking changes in BgService Logging 7.0.3" class="dd-item active">
         <a href="/bg_service/logging/breaking/">
         Breaking changes
         
@@ -1225,6 +1225,17 @@
               <div>
                 <div id="top-bar">
                 
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/creatorflow-io/juice-docs/tree/master/content/bg_service/logging/breaking.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
                 
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
@@ -1245,7 +1256,19 @@
             
           
           
-            <a href='/'></a> > Categories
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'></a> > <a href='/bg_service/'>Background service</a> > <a href='/bg_service/logging/'>Logging</a> > Breaking changes in BgService Logging 7.0.3
+          
+        
+          
+        
           
         
           
@@ -1256,7 +1279,15 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -1272,24 +1303,25 @@
           
             <h1>
               
-                category ::
-              
-              Categories
+              Breaking changes in BgService Logging 7.0.3
             </h1>
           
 
         
 
 
-
-
-
+<h4 id="quick-access">Quick access</h4>
 <ul>
-	
+<li><a href="#moved-file-logging-provider">Moved file logging provider</a></li>
+<li><a href="#default-service-name">Default service name</a></li>
 </ul>
+<h4 id="moved-file-logging-provider">Moved file logging provider</h4>
+<p>The FileLoggerProvider is not included in <em>Juice.BgService.ServiceBase</em> but moved to new <em>Juice.BgService.Extensions.Logging.File</em> package.</p>
+<h4 id="default-service-name">Default service name</h4>
+<p>The default service name has been changed from <em>Default</em> to <em>General</em>, but it can be configured using the <em>GeneralName</em> option.</p>
 
 
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -1783,20 +1815,6 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1812,6 +1830,25 @@
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -1829,6 +1866,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1844,6 +1882,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1987,8 +2028,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/bg_service/logging/whatsnew/" title="What&#39;s New in BgService Logging 7.0.3"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/overview/" title="Overview" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/bg_service/logging/v7.0.2/" title="Logging" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2020,3 +2063,4 @@
 
   </body>
 </html>
+
