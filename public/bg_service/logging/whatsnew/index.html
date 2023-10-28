@@ -12,22 +12,22 @@
     <title>What&#39;s New in BgService Logging 7.0.3 :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1698292464" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1698292464" rel="stylesheet">
-    <link href="/css/hybrid.css?1698292464" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1698292464" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1698292464" rel="stylesheet">
-    <link href="/css/auto-complete.css?1698292464" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1698292464" rel="stylesheet">
-    <link href="/css/theme.css?1698292464" rel="stylesheet">
-    <link href="/css/tabs.css?1698292464" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1698292464" rel="stylesheet">
+    <link href="/css/nucleus.css?1698465203" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1698465203" rel="stylesheet">
+    <link href="/css/hybrid.css?1698465203" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1698465203" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1698465203" rel="stylesheet">
+    <link href="/css/auto-complete.css?1698465203" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1698465203" rel="stylesheet">
+    <link href="/css/theme.css?1698465203" rel="stylesheet">
+    <link href="/css/tabs.css?1698465203" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1698465203" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1698292464" rel="stylesheet">
+    <link href="/css/theme-mine.css?1698465203" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1698292464"></script>
+    <script src="/js/jquery-3.3.1.min.js?1698465203"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1698292464"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1698292464"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1698465203"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1698465203"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/example.org\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1698292464"></script>
+<script type="text/javascript" src="/js/search.js?1698465203"></script>
 
     
   </div>
@@ -936,6 +936,27 @@
  
   
     
+      <li data-nav-id="/bg_service/logging/breaking/" title="Breaking changes in BgService Logging 7.0.3" class="dd-item ">
+        <a href="/bg_service/logging/breaking/">
+        Breaking changes
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
     <li data-nav-id="/bg_service/logging/v7.0.2/" title="Logging" class="dd-item
         
         
@@ -1263,6 +1284,8 @@
     <li>
       <ul>
         <li></li>
+        <li><a href="#file-logger-provider">File logger provider</a></li>
+        <li><a href="#signalr-logger-provider">SignalR logger provider</a></li>
       </ul>
     </li>
   </ul>
@@ -1291,13 +1314,69 @@
 
 <h4 id="quick-access">Quick access</h4>
 <ul>
-<li></li>
-<li><a href="#name-correction">Name correction</a></li>
+<li><a href="#fixed-unexpected-error-on-stopping-windows-service">Fixed unexpected error on stopping Windows service</a></li>
+<li><a href="#change-scopes-behavior">Change scopes behavior</a></li>
+<li><a href="#write-log-scopes-to-file">Write log scopes to file</a></li>
+<li><a href="#naming-convention">Naming convention</a></li>
 <li><a href="#configurable-write-interval">Configurable write interval</a></li>
+<li><a href="#signalr-logger-provider">SignalR logger provider</a></li>
 </ul>
+<h3 id="file-logger-provider">File logger provider</h3>
 <h4 id="fixed-unexpected-error-on-stopping-windows-service">Fixed unexpected error on stopping Windows service</h4>
 <p>Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.</p>
-<h4 id="name-correction">Name correction</h4>
+<h4 id="change-scopes-behavior">Change scopes behavior</h4>
+<p>You can now use <em>JobState</em> scope inside <em>JobId</em>, so there is two ways to use <em>JobState</em></p>
+<ul>
+<li>Original usage (yes, it still works):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">string?</span> state;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobId&#34;</span>, JobId),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobDescription&#34;</span>, JobDescription)
+</span></span><span style="display:flex;"><span>})){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job processing</span>
+</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Begin invoke&#34;</span>);
+</span></span><span style="display:flex;"><span>    state = <span style="color:#66d9ef">await</span> InvokeAsync();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState}.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState} ({increased number}).log</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobId&#34;</span>, JobId),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobDescription&#34;</span>, JobDescription),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobState&#34;</span>, state)
+</span></span><span style="display:flex;"><span>})){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job is completed with state</span>
+</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Invoke result: {0}&#34;</span>, state);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Now it&rsquo;s more natural:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobId&#34;</span>, JobId),
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobDescription&#34;</span>, JobDescription)
+</span></span><span style="display:flex;"><span>})){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job processing</span>
+</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Begin invoke&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> state = <span style="color:#66d9ef">await</span> InvokeAsync();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState}.log</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{JobId} - {JobDescription}_{JobState} ({increased number}).log</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;JobState&#34;</span>, state)
+</span></span><span style="display:flex;"><span>    })){
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// job is completed with state</span>
+</span></span><span style="display:flex;"><span>        _logger.LogInformation(<span style="color:#e6db74">&#34;Invoke result: {0}&#34;</span>, state);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="write-log-scopes-to-file">Write log scopes to file</h4>
+<p>Any log scopes specified by the string will be written to the log file. See <a href="/bg_service/logging/#write-log-scopes-to-file">Log scopes</a></p>
+<h4 id="naming-convention">Naming convention</h4>
 <p>Correcting directory patterns:</p>
 <ul>
 <li><em>Unnamed service</em>: {Logging:File:Directory}/General/</li>
@@ -1311,7 +1390,9 @@
 <li><em>Job has re-run</em>: {JobId} - {JobDescription}_{JobState} ({increased number}).log</li>
 </ul>
 <h4 id="configurable-write-interval">Configurable write interval</h4>
-<p>You can now configure the <a href="/bg_service/logging/#Configure-log-builder">BufferTime</a> to decide how long to buffer before log entries are written to the file</p>
+<p>You can now configure the <a href="/bg_service/logging/#configure-log-builder">BufferTime</a> to decide how long to buffer before log entries are written to the file</p>
+<h3 id="signalr-logger-provider">SignalR logger provider</h3>
+<p>Supported logging to SignalR hub <a href="/bg_service/logging/#signalr-logger-provider">here</a>.</p>
 
 
 <footer class="footline">
@@ -1871,6 +1952,22 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -2005,7 +2102,7 @@
 			<a class="nav nav-prev" href="/bg_service/logging/" title="Logging"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/bg_service/logging/v7.0.2/" title="Logging" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/bg_service/logging/breaking/" title="Breaking changes in BgService Logging 7.0.3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2015,19 +2112,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1698292464"></script>
-    <script src="/js/perfect-scrollbar.min.js?1698292464"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1698292464"></script>
-    <script src="/js/jquery.sticky.js?1698292464"></script>
-    <script src="/js/featherlight.min.js?1698292464"></script>
-    <script src="/js/highlight.pack.js?1698292464"></script>
+    <script src="/js/clipboard.min.js?1698465203"></script>
+    <script src="/js/perfect-scrollbar.min.js?1698465203"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1698465203"></script>
+    <script src="/js/jquery.sticky.js?1698465203"></script>
+    <script src="/js/featherlight.min.js?1698465203"></script>
+    <script src="/js/highlight.pack.js?1698465203"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1698292464"></script>
-    <script src="/js/learn.js?1698292464"></script>
-    <script src="/js/hugo-learn.js?1698292464"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1698465203"></script>
+    <script src="/js/learn.js?1698465203"></script>
+    <script src="/js/hugo-learn.js?1698465203"></script>
     
         
-            <script src="/mermaid/mermaid.js?1698292464"></script>
+            <script src="/mermaid/mermaid.js?1698465203"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
