@@ -5,7 +5,7 @@
     <loc>http://example.org/other_services/audit/whatsnew/</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/logging/whatsnew/</loc>
+    <loc>http://example.org/other_services/logging/whatsnew/</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url><url>
     <loc>http://example.org/quickstart/overview/</loc>
@@ -14,7 +14,7 @@
     <loc>http://example.org/core/xunit/di/</loc>
     <lastmod>2023-04-11T16:57:00+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/logging/</loc>
+    <loc>http://example.org/other_services/logging/</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url><url>
     <loc>http://example.org/other_services/audit/</loc>
@@ -32,7 +32,10 @@
     <loc>http://example.org/core/xunit/logging/</loc>
     <lastmod>2023-04-04T16:08:17+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/logging/breaking/</loc>
+    <loc>http://example.org/core/logging/breaking/</loc>
+    <lastmod>2023-04-03T20:23:30+07:00</lastmod>
+  </url><url>
+    <loc>http://example.org/other_services/logging/breaking/</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
     <loc>http://example.org/core/logging/</loc>
@@ -50,7 +53,7 @@
     <loc>http://example.org/core/xunit/priority/</loc>
     <lastmod>2023-04-11T17:20:57+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/logging/v7.0.2/</loc>
+    <loc>http://example.org/other_services/logging/v7.0.2/</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url><url>
     <loc>http://example.org/other_services/audit/v7.0.2/</loc>
@@ -58,6 +61,9 @@
   </url><url>
     <loc>http://example.org/core/configuration/</loc>
     <lastmod>2023-04-03T20:23:10+07:00</lastmod>
+  </url><url>
+    <loc>http://example.org/core/logging/v7.0.2/</loc>
+    <lastmod>2023-04-03T20:22:47+07:00</lastmod>
   </url><url>
     <loc>http://example.org/core/</loc>
     <lastmod>2023-03-31T10:54:07+07:00</lastmod>

@@ -6,7 +6,7 @@ draft: false
 weight: 3
 version: 7.0.2
 ---
-{{< versions doc=bg_logging >}}
+{{< versions doc=logging >}}
 #### Purposes
 
 - Separate log folder for services

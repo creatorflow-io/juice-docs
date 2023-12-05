@@ -9,6 +9,8 @@ draft = false
 
 # Other services
 
+[Logging service]({{< ref "other_services/logging/_index.md" >}})
+
 [Audit service]({{< ref "other_services/audit/_index.md" >}})
 
 [File storage]({{< ref "other_services/file_storage/_index.md" >}})

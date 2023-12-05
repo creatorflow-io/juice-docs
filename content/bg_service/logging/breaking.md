@@ -2,9 +2,10 @@
 title: "Breaking changes in BgService Logging 7.0.3"
 menuTitle: "Breaking changes"
 date: 2023-04-03T20:23:30+07:00
-draft: false
+draft: true
 weight: 2
 ---
+
 
 #### Quick access
 - [Moved file logging provider](#moved-file-logging-provider)
