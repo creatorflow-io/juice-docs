@@ -1,11 +1,11 @@
 ---
 title: "Logging"
 date: 2023-04-03T21:02:02+07:00
-draft: false
+draft: true
 weight: 1
 version: latest
 ---
-{{< versions doc=bg_logging >}}
+{{< versions doc=logging >}}
 
 ### File logger provider
 #### Purposes

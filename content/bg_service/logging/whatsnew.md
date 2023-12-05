@@ -50,6 +50,13 @@ using (_logger.BeginScope(new List<KeyValuePair<string, object>>
     _logger.LogInformation("Invoke result: {0}", state);
 }
 
+// scopes ["Task", "Success"]    
+using (_logger.BeginScope("Task"))
+using (_logger.BeginScope("Success"))
+{
+    _logger.LogInformation("Invoked");
+}
+
 ```
 - Now it's more natural:
 
@@ -74,6 +81,11 @@ using (_logger.BeginScope(new List<KeyValuePair<string, object>>
     }
 }
 
+// scopes ["Task", "Success"]
+using (_logger.BeginScope(new string[]{"Task", "Success"}))
+{
+    _logger.LogInformation("Invoked");
+}
 ```
 #### Write log scopes to file
 

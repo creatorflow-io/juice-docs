@@ -3,8 +3,9 @@ title: "Logging"
 date: 2023-04-03T20:22:47+07:00
 draft: false
 weight: 2
+version: latest
 ---
-
+{{< versions doc=bg_logging >}}
 There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog...
 However, if you wish to customize logging system for special purpose, 
 then you can inherit the *LoggerProvider* abstract class:
@@ -64,7 +65,7 @@ Or register to existing application logging builder:
 ```
 
 
-See [Background service logging]({{<ref "bg_service/logging/_index.md" >}}) and [XUnit output logging]({{<ref "core/xunit/logging/_index.md" >}}) for example.
+See [Logging extensions]({{<ref "other_services/logging/_index.md" >}}) [XUnit output logging]({{<ref "core/xunit/logging/_index.md" >}}) for example.
 
 The library can be accessed via Nuget:
 - [Juice.Extensions.Logging](https://www.nuget.org/packages/Juice.Extensions.Logging)
