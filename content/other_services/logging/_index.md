@@ -155,6 +155,7 @@ builder.Logging.AddSignalRLogger(builder.Configuration.GetSection("Logging:Signa
 - *LogMethod*: optional method name to send the log data, default value is *LoggingAsync*
 - *StateMethod*: optional method name to send the state, default value is *StateAsync*
 - *ScopesSupported*: hub is supported scopes logging or not
+- *ExcludedScopes*: excluded scopes to send to the client. We will exclude *ServiceId*, *ServiceDescription*, *TraceId*, *OperationState*, *Contextual* by default, you can override this default by implementing [IScopesFilter](#implement-iscopesfilter) yourself
 - *Disabled*: soft disable this logging channel
 
 ```json
@@ -226,26 +227,45 @@ Any [log scopes specified by the string](#write-log-scopes-to-file) will be sent
 The code block below is an example of signalR hub to handle logging
 
 ```cs
-    public class LogHub : Hub
+    public class LogHub : Hub<ILogClient>
     {
-        public async Task LoggingAsync(Guid serviceId, string? traceId, string category, string message, LogLevel level, string? contextual, string[] scopes)
+        public async Task LoggingAsync(Guid serviceId, string? traceId, string category, string message, LogLevel level, string? contextual, object[] scopes)
         {
-            try
-            {
-                await Clients.Others.SendAsync("LoggingAsync", serviceId, traceId, category, message, level, contextual, scopes);
-            }
-            catch { }
+            await Clients.Others.LoggingAsync(serviceId, traceId, category, message, level, contextual, scopes);
         }
-
         public async Task StateAsync(Guid serviceId, string? traceId, string state, string message)
         {
-            try
-            {
-                await Clients.Others.SendAsync("StateAsync", serviceId, traceId, state, message);
-            }
-            catch { }
+            await Clients.Others.StateAsync(serviceId, traceId, state, message);
+        }
+        public async Task BeginScopeAsync(Guid serviceId, string? traceId, string category, object scope)
+        {
+            await Clients.Others.BeginScopeAsync(serviceId, traceId, category, scope);
+        }
+        public async Task EndScopeAsync(Guid serviceId, string? traceId, string category, object scope)
+        {
+            await Clients.Others.EndScopeAsync(serviceId, traceId, category, scope);
         }
     }
+```
+
+4. ##### Implement *IScopesFilter*
+To custom the log scopes filter to send to SingalR client, you can implement the *IScopesFilter* and register it with DI
+
+```csharp
+// CustomScopesFilter.cs
+using Microsoft.Extensions.Options;
+internal class CustomScopesFilter : IScopesFilter{
+  public bool IsIncluded(string scope)
+  {
+      // your filter
+  }
+}
+```
+
+```c#
+// Program.cs
+using Juice.Extensions.Logging;
+builder.Logging.AddSignalRLogger<CustomScopesFilter>(builder.Configuration.GetSection("Logging:SignalR"));
 ```
 
 ---
@@ -289,7 +309,6 @@ builder.Logging.AddMetricsLogger(builder.Configuration.GetSection("Logging:Metri
 - *Schema*: the DB schema to create the log table
 - *ConnectionName*: the DB connection name
 - *Disabled*: soft disable this logging channel
-
 
 *Logging:Metrics* configuration section is as same as the *Logging:Db* but added:
 - *SampleRate*: the sample rate to collect the log metrics, if not set, the collection time is 5 seconds.
