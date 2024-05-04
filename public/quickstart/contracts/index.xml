@@ -2,10 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>API Contracts on Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/contracts/</link>
+    <link>http://localhost:1313/quickstart/contracts/</link>
     <description>Recent content in API Contracts on Juice&#39;s documentation</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Apr 2023 10:49:57 +0700</lastBuildDate><atom:link href="http://example.org/quickstart/contracts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/quickstart/contracts/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

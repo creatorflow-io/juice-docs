@@ -2,10 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dependency Injection on Juice&#39;s documentation</title>
-    <link>http://example.org/core/xunit/di/</link>
+    <link>http://localhost:1313/core/xunit/di/</link>
     <description>Recent content in Dependency Injection on Juice&#39;s documentation</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Apr 2023 16:57:00 +0700</lastBuildDate><atom:link href="http://example.org/core/xunit/di/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/core/xunit/di/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
