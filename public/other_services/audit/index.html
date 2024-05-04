@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Hugo 0.111.3">
+    <meta name="generator" content="Hugo 0.125.5">
     <meta name="description" content="">
 
 
@@ -12,22 +12,22 @@
     <title>Audit services :: Juice&#39;s documentation</title>
 
     
-    <link href="/css/nucleus.css?1702903889" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1702903889" rel="stylesheet">
-    <link href="/css/hybrid.css?1702903889" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1702903889" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1702903889" rel="stylesheet">
-    <link href="/css/auto-complete.css?1702903889" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1702903889" rel="stylesheet">
-    <link href="/css/theme.css?1702903889" rel="stylesheet">
-    <link href="/css/tabs.css?1702903889" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1702903889" rel="stylesheet">
+    <link href="/css/nucleus.css?1714816249" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1714816249" rel="stylesheet">
+    <link href="/css/hybrid.css?1714816249" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1714816249" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1714816249" rel="stylesheet">
+    <link href="/css/auto-complete.css?1714816249" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1714816249" rel="stylesheet">
+    <link href="/css/theme.css?1714816249" rel="stylesheet">
+    <link href="/css/tabs.css?1714816249" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1714816249" rel="stylesheet">
     
-    <link href="/css/theme-mine.css?1702903889" rel="stylesheet">
+    <link href="/css/theme-mine.css?1714816249" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1702903889"></script>
+    <script src="/js/jquery-3.3.1.min.js?1714816249"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -53,14 +53,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1702903889"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1702903889"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1714816249"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1714816249"></script>
 <script type="text/javascript">
     
-        var baseurl = "http:\/\/example.org\/";
+        var baseurl = "http:\/\/localhost:1313\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1702903889"></script>
+<script type="text/javascript" src="/js/search.js?1714816249"></script>
 
     
   </div>
@@ -1512,12 +1512,12 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleDbContext</span> : DbContext,
 </span></span><span style="display:flex;"><span>        IAuditableDbContext
 </span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region Auditable context</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Auditable context
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string?</span> User { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">set</span>; }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> IHttpContextAccessor? _httpContextAccessor;
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> List&lt;AuditEntry&gt;? PendingAuditEntries { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">set</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endregion
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> IMediator? _mediator;
 </span></span><span style="display:flex;"><span>
@@ -1614,7 +1614,7 @@
 </li>
 </ol>
 <ul>
-<li>Implement your own handler by inheriting <em>MediatR.INotificationHandler&lt;DataEvent&gt;</em>, so you can store anything you need proactively.</li>
+<li>Implement your own handler by inheriting <em>MediatR.INotificationHandler&lt;DataEvent&lt;T&gt;&gt;</em>, so you can store anything you need proactively.</li>
 <li>Use default audit service that we provided below.</li>
 </ul>
 <h3 id="default-audit-service">Default audit service</h3>
@@ -1658,9 +1658,9 @@
 <p>It must be placed after <em>Authentication</em> middleware to have <em>User</em> information.</p>
 <p>NOTE: <strong>It often increases by 30ms - 70ms in request response time because saves the audit information with the EF repository or gRPC</strong> (tested with <em>SQL Server</em> and <em>PostgreSQL</em> on Docker, it depends on whether there are any DataAudit entries or not, and database provider).</p>
 <p>The figure below is the request processing flow with <em>AuditMiddleware</em> injected.</p>
-<figure><img src="/images/services/Audit-process.svg"/><figcaption>
-            <h4>Audit process</h4>
-        </figcaption>
+<figure><img src="/images/services/Audit-process.svg"><figcaption>
+      <h4>Audit process</h4>
+    </figcaption>
 </figure>
 
 <h4 id="usage">Usage</h4>
@@ -2668,19 +2668,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1702903889"></script>
-    <script src="/js/perfect-scrollbar.min.js?1702903889"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1702903889"></script>
-    <script src="/js/jquery.sticky.js?1702903889"></script>
-    <script src="/js/featherlight.min.js?1702903889"></script>
-    <script src="/js/highlight.pack.js?1702903889"></script>
+    <script src="/js/clipboard.min.js?1714816249"></script>
+    <script src="/js/perfect-scrollbar.min.js?1714816249"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1714816249"></script>
+    <script src="/js/jquery.sticky.js?1714816249"></script>
+    <script src="/js/featherlight.min.js?1714816249"></script>
+    <script src="/js/highlight.pack.js?1714816249"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1702903889"></script>
-    <script src="/js/learn.js?1702903889"></script>
-    <script src="/js/hugo-learn.js?1702903889"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1714816249"></script>
+    <script src="/js/learn.js?1714816249"></script>
+    <script src="/js/hugo-learn.js?1714816249"></script>
     
         
-            <script src="/mermaid/mermaid.js?1702903889"></script>
+            <script src="/mermaid/mermaid.js?1714816249"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

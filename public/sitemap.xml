@@ -2,138 +2,146 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/other_services/audit/whatsnew/</loc>
+    <loc>http://localhost:1313/other_services/audit/whatsnew/</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/logging/whatsnew/</loc>
+    <loc>http://localhost:1313/bg_service/logging/whatsnew/</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/overview/</loc>
+    <loc>http://localhost:1313/other_services/logging/whatsnew/</loc>
+    <lastmod>2023-10-20T08:21:52+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/quickstart/overview/</loc>
     <lastmod>2023-04-12T21:18:43+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/xunit/di/</loc>
+    <loc>http://localhost:1313/core/xunit/di/</loc>
     <lastmod>2023-04-11T16:57:00+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/logging/</loc>
+    <loc>http://localhost:1313/other_services/logging/</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/audit/</loc>
+    <loc>http://localhost:1313/other_services/audit/</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/overview/</loc>
+    <loc>http://localhost:1313/core/overview/</loc>
     <lastmod>2023-04-02T10:19:56+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/overview/purpose/</loc>
+    <loc>http://localhost:1313/overview/purpose/</loc>
     <lastmod>2023-03-29T14:44:25+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/overview/</loc>
+    <loc>http://localhost:1313/overview/</loc>
     <lastmod>2023-03-29T14:36:40+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/xunit/logging/</loc>
+    <loc>http://localhost:1313/core/xunit/logging/</loc>
     <lastmod>2023-04-04T16:08:17+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/logging/breaking/</loc>
+    <loc>http://localhost:1313/core/logging/breaking/</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/logging/breaking/</loc>
+    <loc>http://localhost:1313/other_services/logging/breaking/</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/logging/</loc>
+    <loc>http://localhost:1313/core/logging/</loc>
     <lastmod>2023-04-03T20:22:47+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/</loc>
+    <loc>http://localhost:1313/quickstart/</loc>
     <lastmod>2023-03-31T10:50:48+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/overview/app_model/</loc>
+    <loc>http://localhost:1313/overview/app_model/</loc>
     <lastmod>2023-03-31T10:33:27+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/domain/</loc>
+    <loc>http://localhost:1313/quickstart/domain/</loc>
     <lastmod>2023-04-13T10:48:09+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/xunit/priority/</loc>
+    <loc>http://localhost:1313/core/xunit/priority/</loc>
     <lastmod>2023-04-11T17:20:57+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/logging/v7.0.2/</loc>
+    <loc>http://localhost:1313/bg_service/logging/v7.0.2/</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/audit/v7.0.2/</loc>
+    <loc>http://localhost:1313/other_services/logging/v7.0.2/</loc>
+    <lastmod>2023-04-03T21:02:02+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/other_services/audit/v7.0.2/</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/configuration/</loc>
+    <loc>http://localhost:1313/core/configuration/</loc>
     <lastmod>2023-04-03T20:23:10+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/logging/v7.0.2/</loc>
+    <loc>http://localhost:1313/core/logging/v7.0.2/</loc>
     <lastmod>2023-04-03T20:22:47+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/</loc>
+    <loc>http://localhost:1313/core/</loc>
     <lastmod>2023-03-31T10:54:07+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/infrastructure/</loc>
+    <loc>http://localhost:1313/quickstart/infrastructure/</loc>
     <lastmod>2023-04-13T10:49:24+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/xunit/ci_ignore/</loc>
+    <loc>http://localhost:1313/core/xunit/ci_ignore/</loc>
     <lastmod>2023-04-11T17:21:32+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/options/</loc>
+    <loc>http://localhost:1313/core/options/</loc>
     <lastmod>2023-04-03T20:22:57+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/</loc>
+    <loc>http://localhost:1313/bg_service/</loc>
     <lastmod>2023-03-31T10:58:34+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/contracts/</loc>
+    <loc>http://localhost:1313/quickstart/contracts/</loc>
     <lastmod>2023-04-13T10:49:57+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/file_storage/</loc>
+    <loc>http://localhost:1313/other_services/file_storage/</loc>
     <lastmod>2023-03-31T10:58:47+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/api/</loc>
+    <loc>http://localhost:1313/quickstart/api/</loc>
     <lastmod>2023-04-13T10:50:32+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/swagger/</loc>
+    <loc>http://localhost:1313/core/swagger/</loc>
     <lastmod>2023-04-03T20:23:38+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/mediator/</loc>
+    <loc>http://localhost:1313/core/mediator/</loc>
     <lastmod>2023-04-03T20:23:50+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/other_services/</loc>
+    <loc>http://localhost:1313/other_services/</loc>
     <lastmod>2023-03-31T11:00:04+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/eventbus/</loc>
+    <loc>http://localhost:1313/core/eventbus/</loc>
     <lastmod>2023-04-03T20:23:59+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/entityframework/</loc>
+    <loc>http://localhost:1313/core/entityframework/</loc>
     <lastmod>2023-04-11T09:01:19+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/integration/</loc>
+    <loc>http://localhost:1313/core/integration/</loc>
     <lastmod>2023-04-03T20:24:09+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/microservice/</loc>
+    <loc>http://localhost:1313/quickstart/microservice/</loc>
     <lastmod>2023-04-13T10:47:21+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/quickstart/mono/</loc>
+    <loc>http://localhost:1313/quickstart/mono/</loc>
     <lastmod>2023-04-13T10:46:57+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/xunit/</loc>
+    <loc>http://localhost:1313/core/xunit/</loc>
     <lastmod>2023-04-03T20:24:31+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/multitenant/</loc>
+    <loc>http://localhost:1313/core/multitenant/</loc>
     <lastmod>2023-04-03T20:24:21+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/core/modular/</loc>
+    <loc>http://localhost:1313/core/modular/</loc>
     <lastmod>2023-04-14T15:36:00+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
-    <priority>0</priority>
   </url><url>
-    <loc>http://example.org/other_services/plugins/</loc>
+    <loc>http://localhost:1313/workflow/overview/</loc>
+    <lastmod>2023-09-27T14:35:13+07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/other_services/plugins/</loc>
     <lastmod>2023-09-23T15:54:24+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/bg_service/managed_service/</loc>
+    <loc>http://localhost:1313/bg_service/managed_service/</loc>
     <lastmod>2023-09-20T17:22:07+07:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://example.org/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

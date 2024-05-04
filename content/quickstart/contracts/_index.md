@@ -11,5 +11,5 @@ In this project, we will define the document that describes how the API works. I
 - Dtos for REST
 - Protos for gRPC
 - IntegrationEvents for event bus
-- Anything else you need...
+- Anything else that you have to share beetwen services
 

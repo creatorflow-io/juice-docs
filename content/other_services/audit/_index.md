@@ -208,7 +208,7 @@ The code block below is an example for an auditable DbContext.
 ```
 
 3. ##### Handle DataEvent
-- Implement your own handler by inheriting *MediatR.INotificationHandler\<DataEvent\>*, so you can store anything you need proactively.
+- Implement your own handler by inheriting *MediatR.INotificationHandler\<DataEvent\<T\>\>*, so you can store anything you need proactively.
 - Use default audit service that we provided below.
 
 ### Default audit service
