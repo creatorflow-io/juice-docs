@@ -71,6 +71,15 @@ The abstract class *DbOptions* contains:
 
 The *DbOptions\<T\>* class derived from *DbOptions* will specify a DbContext type that it is used for.
 
+
+#### Interfaces
+- *IModificationInfo*: the inheritance model will be updated the *ModifiedUser*, *ModifiedDate* every changes
+- *ICreationInfo*: the inheritance model will be updated the *CreatedUser*, *CreatedDate* on creation
+- *IRemovable*: the inheritance model will be updated the *RemovedUser*, *RemovedDate* or *RestoredUser*, *RestoredDate* depend on *IsRemoved* value changed
+- *IAuditable*: the inheritance model will be fired data AuditEvent every changes
+#### Attributes
+- **Notice**: the class that has this attribue will be fired DataEvent on specified changes
+
 #### Working process
 Database context classes derived from **DbContextBase** will:
 - Try configure *User* infomation by get from HttpContext if exists
@@ -78,7 +87,7 @@ Database context classes derived from **DbContextBase** will:
 - Set the *Schema* if it is specified in *_options*
 - Before call **SaveChanges** or **SaveChangesAsync** of original **DbContext** class
     - Track changes and update to **PendingAuditEntries**
-    - Set basic audit info (CreatedUser/ModifiedUser/CreatedDate/ModifiedDate) into auditable entity model
+    - Set basic audit info (CreatedUser/ModifiedUser/CreatedDate/ModifiedDate) into **ICreationInfo** and **IModificationInfo** entity model
 - Call **base.SaveChanges()** or **base.SaveChangesAsync()**
 - After call base methods
     - Send domain events collected from entities that inherit **IAggregrateRoot** interface
