@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Juice&#39;s documentation</title>
-    <link>http://localhost:1313/</link>
+    <link>http://example.org/</link>
     <description>Recent content on Juice&#39;s documentation</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 20 Oct 2023 08:21:52 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What&#39;s New in Audit 7.0.3</title>
-      <link>http://localhost:1313/other_services/audit/whatsnew/</link>
+      <link>http://example.org/other_services/audit/whatsnew/</link>
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
-      <guid>http://localhost:1313/other_services/audit/whatsnew/</guid>
+      <guid>http://example.org/other_services/audit/whatsnew/</guid>
       <description>Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream&amp;hellip;. So we have to move the collection of request form data after other middleware is processed to avoid the issue.</description>
     </item>
     <item>
       <title>What&#39;s New in BgService Logging 7.0.3</title>
-      <link>http://localhost:1313/bg_service/logging/whatsnew/</link>
+      <link>http://example.org/bg_service/logging/whatsnew/</link>
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
-      <guid>http://localhost:1313/bg_service/logging/whatsnew/</guid>
+      <guid>http://example.org/bg_service/logging/whatsnew/</guid>
       <description>Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.&#xA;Change scopes behavior You can now use JobState scope inside JobId, so there is two ways to use JobState</description>
     </item>
     <item>
       <title>What&#39;s New in Logging 7.0.3</title>
-      <link>http://localhost:1313/other_services/logging/whatsnew/</link>
+      <link>http://example.org/other_services/logging/whatsnew/</link>
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
-      <guid>http://localhost:1313/other_services/logging/whatsnew/</guid>
+      <guid>http://example.org/other_services/logging/whatsnew/</guid>
       <description>We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.</description>
     </item>
     <item>
       <title>Breaking changes in BgService Logging 7.0.3</title>
-      <link>http://localhost:1313/core/logging/breaking/</link>
+      <link>http://example.org/core/logging/breaking/</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>http://localhost:1313/core/logging/breaking/</guid>
+      <guid>http://example.org/core/logging/breaking/</guid>
       <description>Quick access ExternalScopeLoggerProvider Use ExternalScopeLoggerProvider to share scopes The abstract class LoggerProvider should no longer inherit the interface ISupportExternalScope but use the ExternalScopeLoggerProvider instead.</description>
     </item>
     <item>
       <title>Breaking changes in Logging 7.0.3</title>
-      <link>http://localhost:1313/other_services/logging/breaking/</link>
+      <link>http://example.org/other_services/logging/breaking/</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>http://localhost:1313/other_services/logging/breaking/</guid>
+      <guid>http://example.org/other_services/logging/breaking/</guid>
       <description>Quick access Moved file logging provider Default service name Moved file logging provider The FileLoggerProvider is not included in Juice.BgService.ServiceBase but moved to new Juice.Extensions.Logging.File package.&#xA;Default service name The default service name has been changed from Default to General, but it can be configured using the GeneralName option.&#xA;Change the scope property name JobId changed to TraceId JobDescription changed to Operation JobState changed to OprationState </description>
     </item>
   </channel>

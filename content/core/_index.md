@@ -8,6 +8,8 @@ pre = "<b>3. </b>"
 
 # Core features
 
+[Operation result]({{< ref "core/operation_result/_index.md" >}})
+
 [Logging]({{< ref "core/logging/_index.md" >}})
 
 [Configuration]({{< ref "core/configuration/_index.md" >}})

@@ -2,6 +2,7 @@
 title: "Plugins"
 date: 2023-09-23T15:54:24+07:00
 draft: false
+weight: 6
 ---
 
 We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
