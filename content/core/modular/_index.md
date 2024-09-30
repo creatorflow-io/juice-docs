@@ -29,6 +29,12 @@ Firstly, you need to implement the class that inherits from **ModuleStartup** fo
             {
                 // configure application pipeline
             }
+
+            // override OnShutdown
+            public override void OnShutdown(IServiceProvider serviceProvider, IWebHostEnvironment env)
+            {
+                // release resources
+            }
         }
     }
 ```
@@ -46,7 +52,7 @@ The **Feature** attribute's arguments:
 Then in your **Program.cs**
 
 ```csharp {linenos=false,hl_lines=[1,6,16],linenostart=1}
-    using Juice.Conventions.StartupDiscovery.Extensions;
+    using Juice.Modular;
     ...
 
     var builder = WebApplication.CreateBuilder(args);
@@ -61,7 +67,7 @@ Then in your **Program.cs**
 
     // app.UseRouting();
     ... 
-    app.ConfigureDiscoverdModules(app.Environment);
+    app.ConfigureDiscoveredModules();
 
     ...
     app.Run();

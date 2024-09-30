@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Manageable services on Juice&#39;s documentation</title>
-    <link>http://localhost:1313/bg_service/managed_service/</link>
+    <link>http://example.org/bg_service/managed_service/</link>
     <description>Recent content in Manageable services on Juice&#39;s documentation</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/bg_service/managed_service/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/bg_service/managed_service/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
