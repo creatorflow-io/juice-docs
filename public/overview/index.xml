@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Overview :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/overview/index.html</link>
+    <link>http://example.org/overview/index.html</link>
     <description>Overview Purpose&#xA;Application models</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 31 Mar 2023 10:33:27 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/overview/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/overview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Purposes</title>
-      <link>http://localhost:1313/overview/purpose/index.html</link>
+      <link>http://example.org/overview/purpose/index.html</link>
       <pubDate>Wed, 29 Mar 2023 14:44:25 +0700</pubDate>
-      <guid>http://localhost:1313/overview/purpose/index.html</guid>
+      <guid>http://example.org/overview/purpose/index.html</guid>
       <description>Most modern applications look similar like this: Your applications may have more or fewer components:&#xA;The service-bus may or may not be available You may choose single or multi-tenant model You can use local or remote authentication/authorization services So we wanted a simple codebase for beginners. It includes the following characteristics:&#xA;Simple and easy to use, we can start with just what we need Lightweight: it must quick to start and work on low-memory environments Ready to integrate: it can work with third-party libraries without conflict Ready to use: it has some built-in services that we can use right away JUICE is not a complete framework. It cannot help you quickly build an app with less code but provides implementation of some extensions and small tools that you normally use to build your apps. It also contains examples of microservices for beginners.</description>
     </item>
     <item>
       <title>Application models</title>
-      <link>http://localhost:1313/overview/app_model/index.html</link>
+      <link>http://example.org/overview/app_model/index.html</link>
       <pubDate>Fri, 31 Mar 2023 10:33:27 +0700</pubDate>
-      <guid>http://localhost:1313/overview/app_model/index.html</guid>
+      <guid>http://example.org/overview/app_model/index.html</guid>
       <description>Monolithic If you are starting to build an application without any existing product reference or new products without an idea to start with, monolithic architecture may be a good fit. Be careful with microservices if you are not sure about your product’s size, how many users you have to serve or what specific services need to scale… because it can be complicated and unnecessary.&#xA;The most common problems when we deploy a monolithic application are:</description>
     </item>
   </channel>

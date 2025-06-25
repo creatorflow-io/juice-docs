@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Event bus :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/eventbus/index.html</link>
+    <link>http://example.org/core/eventbus/index.html</link>
     <description>Versions&#xD;latest&#xD;7.x&#xD;To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 24 Jun 2025 20:23:30 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/core/eventbus/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/core/eventbus/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Breaking changes</title>
-      <link>http://localhost:1313/core/eventbus/breaking/index.html</link>
+      <link>http://example.org/core/eventbus/breaking/index.html</link>
       <pubDate>Tue, 24 Jun 2025 20:23:30 +0700</pubDate>
-      <guid>http://localhost:1313/core/eventbus/breaking/index.html</guid>
+      <guid>http://example.org/core/eventbus/breaking/index.html</guid>
       <description>Change RabbitMQ default behavior on handling failure From version 8.4.x, we added AckOnProcessed option in the RabbitMQOptions and change default behavior when IIntegrationEventHandler service found for incoming integration event but it throws an exception.&#xA;Before: the Nack message will be sent back to the broker, so the integration event will be processed repeatedly util it’s done. From 8.4.x: the Ack message will be sent back to the broker, so the integration event will be processed once, even if it fails. Tenant intended when publish message IEventBus now added tenantId parameter into PublishAsync method to supports multi-tenant.</description>
     </item>
     <item>
       <title>Event bus</title>
-      <link>http://localhost:1313/core/eventbus/v7.x/index.html</link>
+      <link>http://example.org/core/eventbus/v7.x/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:59 +0700</pubDate>
-      <guid>http://localhost:1313/core/eventbus/v7.x/index.html</guid>
+      <guid>http://example.org/core/eventbus/v7.x/index.html</guid>
       <description>To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.&#xA;namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }&#xD;RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension</description>
     </item>
   </channel>

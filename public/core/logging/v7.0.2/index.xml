@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logging :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/logging/v7.0.2/index.html</link>
-    <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope { ... public IExternalScopeProvider ScopeProvider { get; } /// &lt;summary&gt; /// Writes the specified log information to a log file. /// &lt;/summary&gt; public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage); #region IDisposable Support /// &lt;summary&gt; /// Cleanup resources on disposing. /// &lt;/summary&gt; protected abstract void Cleanup(); ... #endregion }&#xD;Once you have an implementation, you can register it when you add logging:</description>
+    <link>http://example.org/core/logging/v7.0.2/index.html</link>
+    <description>Versions&#xD;latest&#xD;7.0.2&#xD;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/core/logging/v7.0.2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/core/logging/v7.0.2/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

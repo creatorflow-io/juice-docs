@@ -6,7 +6,7 @@ weight: 3
 version: 7.0.2
 linktitle: "v7.0.2"
 ---
-{{< versions doc=bg_logging >}}
+{{< versions doc=core_logging >}}
 There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog...
 However, if you wish to customize logging system for special purpose, 
 then you can inherit the *LoggerProvider* abstract class:

@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>File storage :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/other_services/file_storage/index.html</link>
+    <link>http://example.org/other_services/file_storage/index.html</link>
     <description>In this section, we introduce File storage to build a file management system.&#xA;Purposes Provides a web API for large file uploads and a javascript library to working on web client Resumeable upload process Easily integrated with MAM system Multiple file transfer protocols on the backend Multiple storages on the same backend Concept File storage sequence diagram IStorageResolver This service will resolves Storage according to its identity (it is storage’s web endpoint by default).</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/other_services/file_storage/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/other_services/file_storage/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

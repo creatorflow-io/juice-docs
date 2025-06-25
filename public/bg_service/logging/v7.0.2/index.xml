@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logging :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/bg_service/logging/v7.0.2/index.html</link>
+    <link>http://example.org/bg_service/logging/v7.0.2/index.html</link>
     <description>Versions&#xD;latest&#xD;7.0.2&#xD;Purposes Separate log folder for services Limit log file size Limit the number of log files Separate log file for job Usage Configure log builder Call AddBgServiceFileLogger() on the logging builder to add a custom file logger provider. using Juice.BgService.Extensions.Logging; ... var builder = WebApplication.CreateBuilder(args); builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;));&#xD;Logging:File configuration section may be present:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/bg_service/logging/v7.0.2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/bg_service/logging/v7.0.2/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
