@@ -96,7 +96,7 @@ Database context classes derived from **DbContextBase** will:
 ### IAuditableDbContext
 
 We provide **IAuditableDbContext** interface and its extensions to track changes, update audit columns, and finally, dispatch data change events.
-```
+```cs
     public interface IAuditableDbContext
     {
         List<AuditEntry>? PendingAuditEntries { get; }

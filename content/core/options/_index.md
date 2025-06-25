@@ -9,7 +9,7 @@ weight: 4
 
 To change options in the application, we can use *IOptionsMutable\<T\>* interface:
 
-```
+```csharp {linenos=false,linenostart=1}
     public interface IOptionsMutable<out T> : IOptionsSnapshot<T> where T : class, new()
     {
         // Update T field by field
@@ -37,7 +37,7 @@ To use *IOptionsMutable\<T\>* we must also register some required services.
 After that, we can inject *IOptionsMutable\<Options\>* and use it like *IOptionsSnapshot\<Options\>*.
 We can also call *UpdateAsync* method to update options.
 
-```
+```csharp
     var options = serviceProvider.GetRequiredService<IOptionsMutable<Options>>();
     await options.UpdateAsync(o => {
         //o.Something = "something else";
@@ -48,7 +48,7 @@ We can also call *UpdateAsync* method to update options.
 
 Use *ITenantsOptions\<T\>* to access per-tenant configured options.
 
-```
+```cs
     // Per-tenant options snapshot
     public interface ITenantsOptions<T> : IOptionsSnapshot<T> where T : class, new()
     {
@@ -77,7 +77,7 @@ NOTE: It requires [ITenant service]({{< ref "core/multitenant/_index.md" >}})
 #### Per-tenant Mutable Options
 
 This is combined of per-tenant options and mutable options.
-```
+```cs
     public interface ITenantsOptionsMutable<T> : ITenantsOptions<T>, IOptionsMutable<T>
         where T : class, new()
     {

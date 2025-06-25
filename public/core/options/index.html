@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
@@ -14,7 +14,7 @@ public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where 
     <meta name="twitter:description" content="Mutable Options To change options in the application, we can use IOptionsMutable&lt;T&gt; interface:
 public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where T : class, new() { // Update T field by field Task&lt;bool&gt; UpdateAsync(Action&lt;T&gt; applyChanges); }To use IOptionsMutable&lt;T&gt; we must also register some required services.
 ... using Juice.Extensions.Options.DependencyInjection; ... // your changed options will be write to {WorkingDirectory}/appsettings.Development.json services.UseOptionsMutableFileStore(&#34;appsettings.Development.json&#34;); // OR separated appsettings file for strongly typed // services.UseOptionsMutableFileStore&lt;Options&gt;($&#34;appsettings.Separated.Development.json&#34;); // configure your Options class before use services.ConfigureMutable&lt;Options&gt;(configuration.GetSection(&#34;Options&#34;));After that, we can inject IOptionsMutable&lt;Options&gt; and use it like IOptionsSnapshot&lt;Options&gt;. We can also call UpdateAsync method to update options.">
-    <meta property="og:url" content="http://example.org/core/options/index.html">
+    <meta property="og:url" content="http://localhost:1313/core/options/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Options :: Juice&#39;s documentation">
     <meta property="og:description" content="Mutable Options To change options in the application, we can use IOptionsMutable&lt;T&gt; interface:
@@ -31,29 +31,29 @@ public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where 
     <meta itemprop="wordCount" content="262">
     <title>Options :: Juice&#39;s documentation</title>
     <link href="/core/options/index.xml" rel="alternate" type="application/rss+xml" title="Options :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1750824110" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1750824110" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750824110" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750824110" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750824110" rel="stylesheet">
-    <link href="/css/theme.min.css?1750824110" rel="stylesheet">
-    <link href="/css/format-html.min.css?1750824110" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1750824110" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1750824110" defer></script>
-    <script src="/js/search.min.js?1750824110" defer></script>
+    <link href="/images/favicon.png?1750826068" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1750826068" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826068" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826068" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750826068" rel="stylesheet">
+    <link href="/css/theme.css?1750826068" rel="stylesheet">
+    <link href="/css/format-html.css?1750826068" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1750826068" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1750826068" defer></script>
+    <script src="/js/search.js?1750826068" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = `.min`;
+      window.relearn.min = ``;
       window.relearn.path='\/core\/options\/index.html';
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='http:\/\/example.org';
+      window.relearn.absBaseUri='http:\/\/localhost:1313';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1750824110";
+      window.relearn.index_js_url="/searchindex.en.js?1750826068";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -150,11 +150,11 @@ public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where 
 
 <h4 id="mutable-options">Mutable Options</h4>
 <p>To change options in the application, we can use <em>IOptionsMutable&lt;T&gt;</em> interface:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where T : class, new()
-    {
-        // Update T field by field
-        Task&lt;bool&gt; UpdateAsync(Action&lt;T&gt; applyChanges);
-    }</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IOptionsMutable</span>&lt;<span style="color:#66d9ef">out</span> T&gt; : IOptionsSnapshot&lt;T&gt; <span style="color:#66d9ef">where</span> T : class, <span style="color:#66d9ef">new</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Update T field by field</span>
+</span></span><span style="display:flex;"><span>        Task&lt;<span style="color:#66d9ef">bool</span>&gt; UpdateAsync(Action&lt;T&gt; applyChanges);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 <p>To use <em>IOptionsMutable&lt;T&gt;</em> we must also register some required services.</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.Options.DependencyInjection;
@@ -169,16 +169,16 @@ public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where 
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    services.ConfigureMutable&lt;Options&gt;(configuration.GetSection(<span style="color:#e6db74">&#34;Options&#34;</span>));</span></span></code></pre></div>
 <p>After that, we can inject <em>IOptionsMutable&lt;Options&gt;</em> and use it like <em>IOptionsSnapshot&lt;Options&gt;</em>.
 We can also call <em>UpdateAsync</em> method to update options.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    var options = serviceProvider.GetRequiredService&lt;IOptionsMutable&lt;Options&gt;&gt;();
-    await options.UpdateAsync(o =&gt; {
-        //o.Something = &#34;something else&#34;;
-    });</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> options = serviceProvider.GetRequiredService&lt;IOptionsMutable&lt;Options&gt;&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> options.UpdateAsync(o =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//o.Something = &#34;something else&#34;;</span>
+</span></span><span style="display:flex;"><span>    });</span></span></code></pre></div>
 <h4 id="per-tenant-options">Per-tenant Options</h4>
 <p>Use <em>ITenantsOptions&lt;T&gt;</em> to access per-tenant configured options.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    // Per-tenant options snapshot
-    public interface ITenantsOptions&lt;T&gt; : IOptionsSnapshot&lt;T&gt; where T : class, new()
-    {
-    }</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>    <span style="color:#75715e">// Per-tenant options snapshot</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ITenantsOptions</span>&lt;T&gt; : IOptionsSnapshot&lt;T&gt; <span style="color:#66d9ef">where</span> T : class, <span style="color:#66d9ef">new</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 <p>We will register tenant configuration services to use per-tenant options accessor.</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.Options.DependencyInjection;
@@ -194,13 +194,13 @@ We can also call <em>UpdateAsync</em> method to update options.</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// use ITenantsOptions like IOptionsSnapshot</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> options = serviceProvider.GetRequiredService&lt;ITenantsOptions&lt;Options&gt;&gt;();</span></span></code></pre></div>
-<p>NOTE: It requires <a href="http://example.org/core/multitenant/">ITenant service</a></p>
+<p>NOTE: It requires <a href="http://localhost:1313/core/multitenant/">ITenant service</a></p>
 <h4 id="per-tenant-mutable-options">Per-tenant Mutable Options</h4>
 <p>This is combined of per-tenant options and mutable options.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    public interface ITenantsOptionsMutable&lt;T&gt; : ITenantsOptions&lt;T&gt;, IOptionsMutable&lt;T&gt;
-        where T : class, new()
-    {
-    }</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ITenantsOptionsMutable</span>&lt;T&gt; : ITenantsOptions&lt;T&gt;, IOptionsMutable&lt;T&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> T : class, <span style="color:#66d9ef">new</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Extensions.Options.DependencyInjection;
 </span></span><span style="display:flex;"><span>    ...
@@ -223,7 +223,7 @@ We can also call <em>UpdateAsync</em> method to update options.</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> options.UpdateAsync(o =&gt; {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">//o.Something = &#34;something else&#34;;</span>
 </span></span><span style="display:flex;"><span>    });</span></span></code></pre></div>
-<p>NOTE: It requires <a href="http://example.org/core/multitenant/">ITenant service</a></p>
+<p>NOTE: It requires <a href="http://localhost:1313/core/multitenant/">ITenant service</a></p>
 <p>The library can be accessed via Nuget:</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.Extensions.Options" rel="external" target="_blank">Juice.Extensions.Options</a></li>
@@ -310,8 +310,8 @@ We can also call <em>UpdateAsync</em> method to update options.</p>
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1750824110" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750824110" defer></script>
-    <script src="/js/theme.min.js?1750824110" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1750826068" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750826068" defer></script>
+    <script src="/js/theme.js?1750826068" defer></script>
   </body>
 </html>

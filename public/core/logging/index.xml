@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logging :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/logging/index.html</link>
-    <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable,&#xD;ILoggerProvider, ISupportExternalScope&#xD;{&#xD;...&#xD;public IExternalScopeProvider ScopeProvider { get; }&#xD;/// &lt;summary&gt;&#xD;/// Writes the specified log information to a log file.&#xD;/// &lt;/summary&gt;&#xD;public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage);&#xD;#region IDisposable Support&#xD;/// &lt;summary&gt;&#xD;/// Cleanup resources on disposing.&#xD;/// &lt;/summary&gt;&#xD;protected abstract void Cleanup();&#xD;...&#xD;#endregion&#xD;}&#xD;Once you have an implementation, you can register it when you add logging:</description>
+    <link>http://localhost:1313/core/logging/index.html</link>
+    <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope { ... public IExternalScopeProvider ScopeProvider { get; } /// &lt;summary&gt; /// Writes the specified log information to a log file. /// &lt;/summary&gt; public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage); #region IDisposable Support /// &lt;summary&gt; /// Cleanup resources on disposing. /// &lt;/summary&gt; protected abstract void Cleanup(); ... #endregion }&#xD;Once you have an implementation, you can register it when you add logging:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 03 Apr 2023 20:23:30 +0700</lastBuildDate>
-    <atom:link href="http://example.org/core/logging/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/core/logging/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Breaking changes</title>
-      <link>http://example.org/core/logging/breaking/index.html</link>
+      <link>http://localhost:1313/core/logging/breaking/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>http://example.org/core/logging/breaking/index.html</guid>
+      <guid>http://localhost:1313/core/logging/breaking/index.html</guid>
       <description>Quick access ExternalScopeLoggerProvider Use ExternalScopeLoggerProvider to share scopes (since 7.0.3) The abstract class LoggerProvider should no longer inherit the interface ISupportExternalScope but use the ExternalScopeLoggerProvider instead.</description>
     </item>
     <item>
       <title>Logging</title>
-      <link>http://example.org/core/logging/v7.0.2/index.html</link>
+      <link>http://localhost:1313/core/logging/v7.0.2/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:22:47 +0700</pubDate>
-      <guid>http://example.org/core/logging/v7.0.2/index.html</guid>
-      <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable,&#xD;ILoggerProvider, ISupportExternalScope&#xD;{&#xD;...&#xD;public IExternalScopeProvider ScopeProvider { get; }&#xD;/// &lt;summary&gt;&#xD;/// Writes the specified log information to a log file.&#xD;/// &lt;/summary&gt;&#xD;public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage);&#xD;#region IDisposable Support&#xD;/// &lt;summary&gt;&#xD;/// Cleanup resources on disposing.&#xD;/// &lt;/summary&gt;&#xD;protected abstract void Cleanup();&#xD;...&#xD;#endregion&#xD;}&#xD;Once you have an implementation, you can register it when you add logging:</description>
+      <guid>http://localhost:1313/core/logging/v7.0.2/index.html</guid>
+      <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope { ... public IExternalScopeProvider ScopeProvider { get; } /// &lt;summary&gt; /// Writes the specified log information to a log file. /// &lt;/summary&gt; public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage); #region IDisposable Support /// &lt;summary&gt; /// Cleanup resources on disposing. /// &lt;/summary&gt; protected abstract void Cleanup(); ... #endregion }&#xD;Once you have an implementation, you can register it when you add logging:</description>
     </item>
   </channel>
 </rss>

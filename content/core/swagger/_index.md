@@ -29,7 +29,7 @@ To ignore model properties from Swagger document generator but keep it in serial
 we implement **ApiIgnoreAttribute** and *ISchemaFilter* interface to remove properties
 those have **ApiIgnoreAttribute** from **OpenApiSchema**
 
-```
+```cs
     public class SwaggerIgnoreFilter : ISchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)

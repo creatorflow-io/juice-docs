@@ -10,7 +10,7 @@ If you are trying to develop a multi-tenant application, you may need to access 
 So we provide *ITenantsConfiguration* interface to access tenant configuration and a default JSON configuration source
 that will read configuration from *{ConfigurationDirectory}/tenants/{TenantIdentifier}/{FileName}*.
 
-```
+```csharp {linenos=false,linenostart=1}
     public interface ITenantsConfiguration : IConfiguration
     {
     }

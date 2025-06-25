@@ -5,11 +5,11 @@ draft: false
 weight: 8
 version: latest
 ---
-
+{{< versions doc=core_eventbus >}}
 To communicate between services we defined an **IEventBus** interface with a built-in RabbitMQ broker.
 Please follow up [Implementing event-based communication between microservices](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/integration-event-based-microservice-communications) for details.
 
-```
+```csharp {linenos=false,hl_lines=[13],linenostart=1}
 namespace Juice.EventBus
 {
     /// <summary>
@@ -49,7 +49,7 @@ namespace Juice.EventBus
 
 To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via *IServiceCollection extension*
 
-```csharp {linenos=false,hl_lines=[2,4],linenostart=1}
+```csharp {linenos=false,hl_lines=[2,5],linenostart=1}
     ...
     using Juice.EventBus.RabbitMQ.DependencyInjection
     ...
@@ -88,7 +88,7 @@ The library can be accessed via Nuget:
 
 #### IntegrationEvent
 You can define your integration event that inherit **IntegrationEvent** record then publish throw **IEventBus**
-```
+```csharp {linenos=false,hl_lines=[1],linenostart=1}
     using Juice.EventBus;
     public record ContentPublishedIntegrationEvent : IntegrationEvent
     {
@@ -99,8 +99,7 @@ You can define your integration event that inherit **IntegrationEvent** record t
         public string Message { get; set; }
     }
 ```
-```
-    ...
+```csharp {linenos=false,hl_lines=[1, 4],linenostart=1}
     using Juice.EventBus;
     ...
 
@@ -115,7 +114,7 @@ The library can be accessed via Nuget:
 Someone will implement an integration handler from **IIntegrationEventHandler<TEvent>** interface in other app to handle your integration event for their purposes.
 
 For example: a handler that print received message and event time.
-```
+```csharp {linenos=false,hl_lines=[2],linenostart=1}
     ...
     using Juice.EventBus;
     ...
@@ -137,7 +136,7 @@ For example: a handler that print received message and event time.
 
 Then register into DI and subscribe event
 
-```
+```csharp {linenos=false,hl_lines=[2],linenostart=1}
     // configure services
     services.AddTransient<ContentPublishedIntegrationEventHandler>();
 
@@ -157,7 +156,7 @@ It is a part of balanced approach for atomicity and resiliency when publishing t
 You can follow [Designing atomicity and resiliency when publishing to the event bus](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/subscribe-events#designing-atomicity-and-resiliency-when-publishing-to-the-event-bus) topic for more information.
 We provide **IIntegrationEventLogService** interface with an implementation for EF backend use SQLServer or PostgreSQL.
 
-```
+```csharp {linenos=false,linenostart=1}
     public interface IIntegrationEventLogService : IDisposable
     {
         IntegrationEventLogContext LogContext { get; }

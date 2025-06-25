@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Event bus :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/eventbus/v7.x/index.html</link>
+    <link>http://localhost:1313/core/eventbus/v7.x/index.html</link>
     <description>To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.&#xA;namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }&#xD;RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/eventbus/v7.x/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/core/eventbus/v7.x/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
