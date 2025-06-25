@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Integration service on Juice&#39;s documentation</title>
-    <link>http://example.org/core/integration/</link>
-    <description>Recent content in Integration service on Juice&#39;s documentation</description>
+    <title>Integration service :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/integration/index.html</link>
+    <description>Integration event service In the IntegrationEventLog section, we talked about atomicity and resiliency when publishing to the event bus, followed by each step of the process. In this section, we will package the steps of publishing events and updating event states into IIntegrationEventService service, and then combine them with MediatR behavior for transaction processing.&#xA;public interface IIntegrationEventService { Task PublishEventsThroughEventBusAsync(Guid transactionId); Task AddAndSaveEventAsync(IntegrationEvent evt); } public interface IIntegrationEventService&lt;out TContext&gt; : IIntegrationEventService where TContext : DbContext, IUnitOfWork { TContext DomainContext { get; } /// &lt;summary&gt; /// Use specified transaction when working with transient DbContext /// &lt;/summary&gt; /// &lt;param name=&#34;evt&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;transaction&#34;&gt;&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; Task AddAndSaveEventAsync(IntegrationEvent evt, IDbContextTransaction transaction); }&#xD;Now the process steps will look like this:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

@@ -5,6 +5,7 @@ draft: false
 weight: 2
 version: latest
 ---
+
 {{< versions doc=bg_logging >}}
 There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog...
 However, if you wish to customize logging system for special purpose, 

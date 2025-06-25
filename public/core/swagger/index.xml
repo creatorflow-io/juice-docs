@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Swagger on Juice&#39;s documentation</title>
-    <link>http://example.org/core/swagger/</link>
-    <description>Recent content in Swagger on Juice&#39;s documentation</description>
+    <title>Swagger :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/swagger/index.html</link>
+    <description>Include XML comments This is a SwaggerGenOptions’ extension to include xml comments from referenced assemblies.&#xA;... using Juice.Extensions.Swagger; ... services.ConfigureSwaggerGen(c =&gt; { ... c.IncludeReferencedXmlComments(); });&#xD;The library can be accessed via Nuget:&#xA;Juice.AspNetCore SwaggerIgnoreFilter To ignore model properties from Swagger document generator but keep it in serialized JSON, we implement ApiIgnoreAttribute and ISchemaFilter interface to remove properties those have ApiIgnoreAttribute from OpenApiSchema</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
