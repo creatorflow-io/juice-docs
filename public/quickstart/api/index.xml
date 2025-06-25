@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>API :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/quickstart/api/index.html</link>
+    <link>http://example.org/quickstart/api/index.html</link>
     <description>This project will be named {namespace}.{feature}.Api.&#xA;In this project, we will implement API that is defined in contracts and other integration services.&#xA;Swagger SignalR gRPC implementation Integration event subscribing and handling Handle domain events to publish integration events If you are building a monolithic application, then you can use the internal event bus instead of external. You can also handle domain events from other domains directly instead of implementing integration events.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/quickstart/api/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/quickstart/api/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

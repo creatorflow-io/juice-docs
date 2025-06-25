@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>xUnit :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/xunit/index.html</link>
+    <link>http://example.org/core/xunit/index.html</link>
     <description>Dependency Injection&#xA;Logging&#xA;Priority&#xA;CI-Ignore</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 11 Apr 2023 17:21:32 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/core/xunit/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/core/xunit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Dependency Injection</title>
-      <link>http://localhost:1313/core/xunit/di/index.html</link>
+      <link>http://example.org/core/xunit/di/index.html</link>
       <pubDate>Tue, 11 Apr 2023 16:57:00 +0700</pubDate>
-      <guid>http://localhost:1313/core/xunit/di/index.html</guid>
+      <guid>http://example.org/core/xunit/di/index.html</guid>
       <description>To run complex unit tests with a full dependency injection pattern, we provide a simple DependencyResolver.&#xA;using Juice.Extensions.DependencyInjection; ... var resolver = new DependencyResolver { CurrentDirectory = AppContext.BaseDirectory }; resolver.ConfigureServices(services =&gt; { var configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;(); // IConfigurationRoot var configuration = configService.GetConfiguration(args); // configure options // register services }); // access IServiceProvider var serviceProvider = resolver.ServiceProvider;&#xD;The library can be accessed via Nuget:</description>
     </item>
     <item>
       <title>Logging</title>
-      <link>http://localhost:1313/core/xunit/logging/index.html</link>
+      <link>http://example.org/core/xunit/logging/index.html</link>
       <pubDate>Tue, 04 Apr 2023 16:08:17 +0700</pubDate>
-      <guid>http://localhost:1313/core/xunit/logging/index.html</guid>
+      <guid>http://example.org/core/xunit/logging/index.html</guid>
       <description>Sometimes we want to show the app logs in unit tests for easier debugging. So TestOutputLoggerProvider can help us.&#xA;using Juice.Extensions.DependencyInjection; using Microsoft.Extensions.Logging; ... var builder = new DependencyResolver(); builder.ConfigureServices(services =&gt; { var configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;(); var configuration = configService.GetConfiguration(); services.AddLogging(builder =&gt; { builder.ClearProviders() .AddTestOutputLogger() .AddConfiguration(configuration.GetSection(&#34;Logging&#34;)); }); // must register an instance of ITestOutputHelper services.AddSingleton(_output); // configure other services ... });&#xD;The library can be accessed via Nuget:</description>
     </item>
     <item>
       <title>Priority</title>
-      <link>http://localhost:1313/core/xunit/priority/index.html</link>
+      <link>http://example.org/core/xunit/priority/index.html</link>
       <pubDate>Tue, 11 Apr 2023 17:20:57 +0700</pubDate>
-      <guid>http://localhost:1313/core/xunit/priority/index.html</guid>
+      <guid>http://example.org/core/xunit/priority/index.html</guid>
       <description>Here is an approach for in-order testing.&#xA;First, we add the [TestCaseOrderer] attribute to the xUnit test class then add the [TestPriority] attribute to the test method. The test method with higher Priority will run first.&#xA;using Juice.XUnit; [TestCaseOrderer(&#34;Juice.XUnit.PriorityOrderer&#34;, &#34;Juice.XUnit&#34;)] public class EFTest { [Fact(TestPriority(99)] public async Task Shoud_run_first() { } [Fact(TestPriority(98)] public async Task Shoud_run_second() { } }&#xD;The library can be accessed via Nuget:</description>
     </item>
     <item>
       <title>CI-Ignore</title>
-      <link>http://localhost:1313/core/xunit/ci_ignore/index.html</link>
+      <link>http://example.org/core/xunit/ci_ignore/index.html</link>
       <pubDate>Tue, 11 Apr 2023 17:21:32 +0700</pubDate>
-      <guid>http://localhost:1313/core/xunit/ci_ignore/index.html</guid>
+      <guid>http://example.org/core/xunit/ci_ignore/index.html</guid>
       <description>Some special tests require special conditions so we have to ignore them in the CI test. So we can add [IgnoreOnCIFact] or [IgnoreOnCITheory] attribute to specified tests to bypass.&#xA;using Juice.XUnit; public class EFTest { [IgnoreOnCIFact(TestPriority(99)] public async Task Shoud_run_first() { } [IgnoreOnCITheory(TestPriority(98)] [InlineData(&#34;SqlServer&#34;)] [InlineData(&#34;PostgreSQL&#34;)] public async Task Shoud_run_second(string provider) { } }&#xD;The library can be accessed via Nuget:</description>
     </item>
   </channel>

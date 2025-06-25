@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Measurement :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/other_services/measurement/index.html</link>
+    <link>http://example.org/other_services/measurement/index.html</link>
     <description>This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.&#xA;ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope(&#34;Test&#34;)) { // Do something await Task.Delay(12); timeTracker.Checkpoint(&#34;Checkpoint 0&#34;); using (timeTracker.BeginScope(&#34;Inner Test&#34;)) { // Do something await Task.Delay(15); using (timeTracker.BeginScope(&#34;Inner Inner Test&#34;)) { // Do something timeTracker.Checkpoint(&#34;Checkpoint 1.1&#34;); await Task.Delay(20); timeTracker.Checkpoint(&#34;Checkpoint 1.2&#34;); } } timeTracker.Checkpoint(&#34;Checkpoint 1&#34;); using (timeTracker.BeginScope(&#34;Inner Test 2&#34;)) { // Do something await Task.Delay(10); timeTracker.Checkpoint(&#34;Checkpoint 1.3&#34;); timeTracker.Checkpoint(&#34;Checkpoint 1.4&#34;); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | + 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | + 4.2 µs | | › Checkpoint 1.2 | 3 | + 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | + 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | + 15.07 ms | | › Checkpoint 1.4 | 2 | + 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;&#xD;Inside the Elapsed Time column:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/other_services/measurement/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/other_services/measurement/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -2,94 +2,94 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Core features :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/index.html</link>
+    <link>http://example.org/core/index.html</link>
     <description>Core features Operation result&#xA;Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 14 Apr 2023 15:36:00 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/core/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://example.org/core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Overview</title>
-      <link>http://localhost:1313/core/overview/index.html</link>
+      <link>http://example.org/core/overview/index.html</link>
       <pubDate>Sun, 02 Apr 2023 10:19:56 +0700</pubDate>
-      <guid>http://localhost:1313/core/overview/index.html</guid>
+      <guid>http://example.org/core/overview/index.html</guid>
       <description>In this chapter, we will look at common components and extensions:&#xA;Logging Options Configuration Swagger MediatR Event bus Integration service Multi-tenant Audit XUnit Modular We implemented these extensions and services to resolved common problems that were specified in Application models section. To achieve more value out of this document, please go through .NET Microservices: Architecture for Containerized .NET Applications.&#xA;NOTE: Juice is currently in beta, so you must select the Include prerelease checkbox in the Nuget packages window to browse its packages.</description>
     </item>
     <item>
       <title>Logging</title>
-      <link>http://localhost:1313/core/logging/index.html</link>
+      <link>http://example.org/core/logging/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:22:47 +0700</pubDate>
-      <guid>http://localhost:1313/core/logging/index.html</guid>
-      <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable, ILoggerProvider, ISupportExternalScope { ... public IExternalScopeProvider ScopeProvider { get; } /// &lt;summary&gt; /// Writes the specified log information to a log file. /// &lt;/summary&gt; public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage); #region IDisposable Support /// &lt;summary&gt; /// Cleanup resources on disposing. /// &lt;/summary&gt; protected abstract void Cleanup(); ... #endregion }&#xD;Once you have an implementation, you can register it when you add logging:</description>
+      <guid>http://example.org/core/logging/index.html</guid>
+      <description>Versions&#xD;latest&#xD;7.0.2&#xD;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description>
     </item>
     <item>
       <title>Configuration</title>
-      <link>http://localhost:1313/core/configuration/index.html</link>
+      <link>http://example.org/core/configuration/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:10 +0700</pubDate>
-      <guid>http://localhost:1313/core/configuration/index.html</guid>
+      <guid>http://example.org/core/configuration/index.html</guid>
       <description>Per-tenant configuration If you are trying to develop a multi-tenant application, you may need to access the tenant configuration. So we provide ITenantsConfiguration interface to access tenant configuration and a default JSON configuration source that will read configuration from {ConfigurationDirectory}/tenants/{TenantIdentifier}/{FileName}.&#xA;public interface ITenantsConfiguration : IConfiguration { }&#xD;The ITenantsConfiguration is inherited from IConfiguration. So after registering the service on application startup you can inject it and use like IConfiguration.</description>
     </item>
     <item>
       <title>Options</title>
-      <link>http://localhost:1313/core/options/index.html</link>
+      <link>http://example.org/core/options/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:22:57 +0700</pubDate>
-      <guid>http://localhost:1313/core/options/index.html</guid>
+      <guid>http://example.org/core/options/index.html</guid>
       <description>Mutable Options To change options in the application, we can use IOptionsMutable&lt;T&gt; interface:&#xA;public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where T : class, new() { // Update T field by field Task&lt;bool&gt; UpdateAsync(Action&lt;T&gt; applyChanges); }&#xD;To use IOptionsMutable&lt;T&gt; we must also register some required services.&#xA;... using Juice.Extensions.Options.DependencyInjection; ... // your changed options will be write to {WorkingDirectory}/appsettings.Development.json services.UseOptionsMutableFileStore(&#34;appsettings.Development.json&#34;); // OR separated appsettings file for strongly typed // services.UseOptionsMutableFileStore&lt;Options&gt;($&#34;appsettings.Separated.Development.json&#34;); // configure your Options class before use services.ConfigureMutable&lt;Options&gt;(configuration.GetSection(&#34;Options&#34;));&#xD;After that, we can inject IOptionsMutable&lt;Options&gt; and use it like IOptionsSnapshot&lt;Options&gt;. We can also call UpdateAsync method to update options.</description>
     </item>
     <item>
       <title>Swagger</title>
-      <link>http://localhost:1313/core/swagger/index.html</link>
+      <link>http://example.org/core/swagger/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:38 +0700</pubDate>
-      <guid>http://localhost:1313/core/swagger/index.html</guid>
+      <guid>http://example.org/core/swagger/index.html</guid>
       <description>Include XML comments This is a SwaggerGenOptions’ extension to include xml comments from referenced assemblies.&#xA;... using Juice.Extensions.Swagger; ... services.ConfigureSwaggerGen(c =&gt; { ... c.IncludeReferencedXmlComments(); });&#xD;The library can be accessed via Nuget:&#xA;Juice.AspNetCore SwaggerIgnoreFilter To ignore model properties from Swagger document generator but keep it in serialized JSON, we implement ApiIgnoreAttribute and ISchemaFilter interface to remove properties those have ApiIgnoreAttribute from OpenApiSchema</description>
     </item>
     <item>
       <title>Mediator</title>
-      <link>http://localhost:1313/core/mediator/index.html</link>
+      <link>http://example.org/core/mediator/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:50 +0700</pubDate>
-      <guid>http://localhost:1313/core/mediator/index.html</guid>
+      <guid>http://example.org/core/mediator/index.html</guid>
       <description>We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.&#xA;await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));&#xD;The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.&#xA;EF backend Please register request management services with your application schema before use.&#xA;... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }&#xD;The library can be accessed via Nuget:</description>
     </item>
     <item>
       <title>Event bus</title>
-      <link>http://localhost:1313/core/eventbus/index.html</link>
+      <link>http://example.org/core/eventbus/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:59 +0700</pubDate>
-      <guid>http://localhost:1313/core/eventbus/index.html</guid>
+      <guid>http://example.org/core/eventbus/index.html</guid>
       <description>Versions&#xD;latest&#xD;7.x&#xD;To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.</description>
     </item>
     <item>
       <title>Entity framework</title>
-      <link>http://localhost:1313/core/entityframework/index.html</link>
+      <link>http://example.org/core/entityframework/index.html</link>
       <pubDate>Tue, 11 Apr 2023 09:01:19 +0700</pubDate>
-      <guid>http://localhost:1313/core/entityframework/index.html</guid>
+      <guid>http://example.org/core/entityframework/index.html</guid>
       <description>DbContextBase We resolved Audit, UnitOfWork and dynamic schema problems with an abstract DbContext that implemented these interfaces:&#xA;IAuditableDbContext IUnitOfWork IScehmaDbContext We’ll explain these interfaces below, but remember to call ConfigureServices( serviceProvider ) for your legacy DbContext in two ways:&#xA;Inside constructor // call inside constructor public TimerDbContext(IServiceProvider serviceProvider, DbContextOptions&lt;TimerDbContext&gt; options) : base(options) { ConfigureServices(serviceProvider); }&#xD;Or inside context factory if you are using pooled DbContext public class TimerDbContextScopedFactory : IDbContextFactory&lt;TimerDbContext&gt; { private readonly IDbContextFactory&lt;TimerDbContext&gt; _pooledFactory; private readonly IServiceProvider _serviceProvider; public TimerDbContextScopedFactory( IDbContextFactory&lt;TimerDbContext&gt; pooledFactory, IServiceProvider serviceProvider) { _pooledFactory = pooledFactory; _serviceProvider = serviceProvider; } public TimerDbContext CreateDbContext() { var context = _pooledFactory.CreateDbContext(); context.ConfigureServices(_serviceProvider); return context; } }&#xD;Then register PooledDbContext</description>
     </item>
     <item>
       <title>Integration service</title>
-      <link>http://localhost:1313/core/integration/index.html</link>
+      <link>http://example.org/core/integration/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:24:09 +0700</pubDate>
-      <guid>http://localhost:1313/core/integration/index.html</guid>
+      <guid>http://example.org/core/integration/index.html</guid>
       <description>Integration event service In the IntegrationEventLog section, we talked about atomicity and resiliency when publishing to the event bus, followed by each step of the process. In this section, we will package the steps of publishing events and updating event states into IIntegrationEventService service, and then combine them with MediatR behavior for transaction processing.&#xA;public interface IIntegrationEventService { Task PublishEventsThroughEventBusAsync(Guid transactionId); Task AddAndSaveEventAsync(IntegrationEvent evt); } public interface IIntegrationEventService&lt;out TContext&gt; : IIntegrationEventService where TContext : DbContext, IUnitOfWork { TContext DomainContext { get; } /// &lt;summary&gt; /// Use specified transaction when working with transient DbContext /// &lt;/summary&gt; /// &lt;param name=&#34;evt&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;transaction&#34;&gt;&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; Task AddAndSaveEventAsync(IntegrationEvent evt, IDbContextTransaction transaction); }&#xD;Now the process steps will look like this:</description>
     </item>
     <item>
       <title>xUnit</title>
-      <link>http://localhost:1313/core/xunit/index.html</link>
+      <link>http://example.org/core/xunit/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:24:31 +0700</pubDate>
-      <guid>http://localhost:1313/core/xunit/index.html</guid>
+      <guid>http://example.org/core/xunit/index.html</guid>
       <description>Dependency Injection&#xA;Logging&#xA;Priority&#xA;CI-Ignore</description>
     </item>
     <item>
       <title>Multi-tenant</title>
-      <link>http://localhost:1313/core/multitenant/index.html</link>
+      <link>http://example.org/core/multitenant/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:24:21 +0700</pubDate>
-      <guid>http://localhost:1313/core/multitenant/index.html</guid>
+      <guid>http://example.org/core/multitenant/index.html</guid>
       <description>MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:&#xA;File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:&#xA;MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type</description>
     </item>
     <item>
       <title>Modular</title>
-      <link>http://localhost:1313/core/modular/index.html</link>
+      <link>http://example.org/core/modular/index.html</link>
       <pubDate>Fri, 14 Apr 2023 15:36:00 +0700</pubDate>
-      <guid>http://localhost:1313/core/modular/index.html</guid>
+      <guid>http://example.org/core/modular/index.html</guid>
       <description>This small feature is useful for build a monolithic application from multiple separated features. Developers can register services and configure their modules by themselves.&#xA;Firstly, you need to implement the class that inherits from ModuleStartup for your features.&#xA;using Juice.Modular; ... namespace Juice.Test { [Feature(Required = true)] public class TestModuleStartup : ModuleStartup{ // override ConfigureServices public override void ConfigureServices(IServiceCollection services, IMvcBuilder mvc, IWebHostEnvironment env, IConfigurationRoot configuration) { // configure your services } // override Configure public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IWebHostEnvironment env) { // configure application pipeline } // override OnShutdown public override void OnShutdown(IServiceProvider serviceProvider, IWebHostEnvironment env) { // release resources } } }&#xD;The Feature attribute’s arguments:</description>
     </item>
   </channel>
