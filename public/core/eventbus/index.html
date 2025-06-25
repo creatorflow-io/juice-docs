@@ -1,55 +1,51 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
     <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.
-namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event, string? tenantId = default); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension">
+    <meta name="description" content="Versionslatest7.xTo communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Event bus :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.
-namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event, string? tenantId = default); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension">
-    <meta property="og:url" content="http://example.org/core/eventbus/index.html">
+    <meta name="twitter:description" content="Versionslatest7.xTo communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.">
+    <meta property="og:url" content="http://localhost:1313/core/eventbus/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Event bus :: Juice&#39;s documentation">
-    <meta property="og:description" content="To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.
-namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event, string? tenantId = default); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension">
+    <meta property="og:description" content="Versionslatest7.xTo communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.">
     <meta property="og:locale" content="en_us">
     <meta property="og:type" content="website">
     <meta itemprop="name" content="Event bus :: Juice&#39;s documentation">
-    <meta itemprop="description" content="To communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.
-namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt; public interface IEventBus { /// &lt;summary&gt; /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus... /// &lt;/summary&gt; /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt; /// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt; Task PublishAsync(IntegrationEvent @event, string? tenantId = default); /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Subscribe&lt;T, TH&gt;(string? key = default) where T : IntegrationEvent where TH : IIntegrationEventHandler&lt;T&gt;; /// &lt;summary&gt; /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt; /// &lt;/summary&gt; /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt; void Unsubscribe&lt;T, TH&gt;(string? key = default) where TH : IIntegrationEventHandler&lt;T&gt; where T : IntegrationEvent; } }RabbitMQ broker To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via IServiceCollection extension">
+    <meta itemprop="description" content="Versionslatest7.xTo communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.">
     <meta itemprop="datePublished" content="2023-04-03T20:23:59+07:00">
     <meta itemprop="dateModified" content="2023-04-03T20:23:59+07:00">
-    <meta itemprop="wordCount" content="1032">
+    <meta itemprop="wordCount" content="1034">
     <title>Event bus :: Juice&#39;s documentation</title>
     <link href="/core/eventbus/index.xml" rel="alternate" type="application/rss+xml" title="Event bus :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1750824110" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1750824110" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750824110" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750824110" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750824110" rel="stylesheet">
-    <link href="/css/theme.min.css?1750824110" rel="stylesheet">
-    <link href="/css/format-html.min.css?1750824110" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1750824110" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1750824110" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1750824110" defer></script>
-    <script src="/js/search.min.js?1750824110" defer></script>
+    <link href="/images/favicon.png?1750826068" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1750826068" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826068" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826068" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750826068" rel="stylesheet">
+    <link href="/css/theme.css?1750826068" rel="stylesheet">
+    <link href="/css/format-html.css?1750826068" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1750826068" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1750826068" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1750826068" defer></script>
+    <script src="/js/search.js?1750826068" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = `.min`;
+      window.relearn.min = ``;
       window.relearn.path='\/core\/eventbus\/index.html';
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='http:\/\/example.org';
+      window.relearn.absBaseUri='http:\/\/localhost:1313';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1750824110";
+      window.relearn.index_js_url="/searchindex.en.js?1750826068";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -156,48 +152,84 @@ namespace Juice.EventBus { /// &lt;summary&gt; /// Event bus /// &lt;/summary&gt
 
 <h1 id="event-bus">Event bus</h1>
 
-<p>To communicate between services we defined an <strong>IEventBus</strong> interface with a built-in RabbitMQ broker.
+<p>
+
+
+    
+    
+    <div style="display: flex;">    
+        <label style="padding-right: 10px;" page-version=latest>Versions</label>
+        <select id="versionSelect" style="width: 100px;">
+            
+                <option  selected  value=latest>latest</option>
+            
+                <option  value=7.x>7.x</option>
+            
+        </select>
+    </div>
+    <script>
+        var select = document.getElementById('versionSelect');
+        select.addEventListener('change', function() {
+            let path = window.location.pathname.trimEnd('/');
+            let version = select.value;
+            if (version == 'latest') {
+                version = '';
+            }else{
+                version = 'v' + version;
+            }
+            
+            
+            let regex = new RegExp('\/v[0-9]+.[0-9]+.[0-9]+');
+            path = path.replace(regex, '');
+            
+            window.location.href = window.location.origin + path + '/' + version;
+        });
+    </script>
+    
+
+
+To communicate between services we defined an <strong>IEventBus</strong> interface with a built-in RabbitMQ broker.
 Please follow up <a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/integration-event-based-microservice-communications" rel="external" target="_blank">Implementing event-based communication between microservices</a> for details.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>namespace Juice.EventBus
-{
-    /// &lt;summary&gt;
-    /// Event bus
-    /// &lt;/summary&gt;
-    public interface IEventBus
-    {
-        /// &lt;summary&gt;
-        /// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus...
-        /// &lt;/summary&gt;
-        /// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt;
-        /// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt;
-        Task PublishAsync(IntegrationEvent @event, string? tenantId = default);
-
-        /// &lt;summary&gt;
-        /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt;
-        /// &lt;/summary&gt;
-        /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;
-        /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt;
-        void Subscribe&lt;T, TH&gt;(string? key = default)
-            where T : IntegrationEvent
-            where TH : IIntegrationEventHandler&lt;T&gt;;
-
-        /// &lt;summary&gt;
-        /// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt;
-        /// &lt;/summary&gt;
-        /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;
-        /// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt;
-        void Unsubscribe&lt;T, TH&gt;(string? key = default)
-            where TH : IIntegrationEventHandler&lt;T&gt;
-            where T : IntegrationEvent;
-    }
-}</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> Juice.EventBus
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// Event bus</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IEventBus</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Publish &lt;see cref=&#34;IntegrationEvent&#34;/&gt; to implemented broker like RabbitMQ, ServiceBus...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;param name=&#34;event&#34;&gt;&lt;/param&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;param name=&#34;tenantId&#34;&gt;&lt;/param&gt;</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        Task PublishAsync(IntegrationEvent @event, <span style="color:#66d9ef">string?</span> tenantId = <span style="color:#66d9ef">default</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">void</span> Subscribe&lt;T, TH&gt;(<span style="color:#66d9ef">string?</span> key = <span style="color:#66d9ef">default</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">where</span> T : IntegrationEvent
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">where</span> TH : IIntegrationEventHandler&lt;T&gt;;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Subscribe an &lt;see cref=&#34;IntegrationEvent&#34;/&gt; with specified &lt;see cref=&#34;IIntegrationEventHandler{T}&#34;/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;typeparam name=&#34;TH&#34;&gt;&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">void</span> Unsubscribe&lt;T, TH&gt;(<span style="color:#66d9ef">string?</span> key = <span style="color:#66d9ef">default</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">where</span> TH : IIntegrationEventHandler&lt;T&gt;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">where</span> T : IntegrationEvent;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
 <h3 id="rabbitmq-broker">RabbitMQ broker</h3>
 <p>To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus services via <em>IServiceCollection extension</em></p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus.RabbitMQ.DependencyInjection
 </span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#75715e">// Register IEventBus service</span>
-</span></span><span style="display:flex;"><span>    services.RegisterRabbitMQEventBus(configuration.GetSection(<span style="color:#e6db74">&#34;RabbitMQ&#34;</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Register IEventBus service</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.RegisterRabbitMQEventBus(configuration.GetSection(<span style="color:#e6db74">&#34;RabbitMQ&#34;</span>));
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// OR</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Register strongly typed service</span>
@@ -229,20 +261,19 @@ Please follow up <a href="https://learn.microsoft.com/en-us/dotnet/architecture/
 <h3 id="implementation">Implementation</h3>
 <h4 id="integrationevent">IntegrationEvent</h4>
 <p>You can define your integration event that inherit <strong>IntegrationEvent</strong> record then publish throw <strong>IEventBus</strong></p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    using Juice.EventBus;
-    public record ContentPublishedIntegrationEvent : IntegrationEvent
-    {
-        public ContentPublishedIntegrationEvent(string message)
-        {
-            Message = message;
-        }
-        public string Message { get; set; }
-    }</code></pre></div>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    ...
-    using Juice.EventBus;
-    ...
-
-    await eventBus.PublishAsync(new ContentPublishedIntegrationEvent($&#34;Hello&#34;));</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">ContentPublishedIntegrationEvent</span> : IntegrationEvent
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> ContentPublishedIntegrationEvent(<span style="color:#66d9ef">string</span> message)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Message = message;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Message { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">await</span> eventBus.PublishAsync(<span style="color:#66d9ef">new</span> ContentPublishedIntegrationEvent(<span style="color:#e6db74">$&#34;Hello&#34;</span>));</span></span></code></pre></div>
 <p>The library can be accessed via Nuget:</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.EventBus" rel="external" target="_blank">Juice.EventBus</a></li>
@@ -250,32 +281,32 @@ Please follow up <a href="https://learn.microsoft.com/en-us/dotnet/architecture/
 <h4 id="integrationeventhandler">IntegrationEventHandler</h4>
 <p>Someone will implement an integration handler from <strong>IIntegrationEventHandler<!-- raw HTML omitted --></strong> interface in other app to handle your integration event for their purposes.</p>
 <p>For example: a handler that print received message and event time.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    ...
-    using Juice.EventBus;
-    ...
-
-    public class ContentPublishedIntegrationEventHandler : IIntegrationEventHandler&lt;ContentPublishedIntegrationEvent&gt;
-    {
-        private ILogger _logger;
-        public ContentPublishedIntegrationEventHandler(ILogger&lt;ContentPublishedIntegrationEventHandler&gt; logger)
-        {
-            _logger = logger;
-        }
-        public async Task HandleAsync(ContentPublishedIntegrationEvent @event)
-        {
-            await Task.Yield();
-            _logger.LogInformation(&#34;[X] Received {0} at {1}&#34;, @event.Message, @event.CreationDate);
-        }
-    }</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ContentPublishedIntegrationEventHandler</span> : IIntegrationEventHandler&lt;ContentPublishedIntegrationEvent&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> ILogger _logger;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> ContentPublishedIntegrationEventHandler(ILogger&lt;ContentPublishedIntegrationEventHandler&gt; logger)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            _logger = logger;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task HandleAsync(ContentPublishedIntegrationEvent @event)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Yield();
+</span></span><span style="display:flex;"><span>            _logger.LogInformation(<span style="color:#e6db74">&#34;[X] Received {0} at {1}&#34;</span>, @event.Message, @event.CreationDate);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 <p>Then register into DI and subscribe event</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    // configure services
-    services.AddTransient&lt;ContentPublishedIntegrationEventHandler&gt;();
-
-    ...
-    // configure WebApplication 
-    var eventBus = app.Services.GetRequiredService&lt;IEventBus&gt;();
-
-    eventBus.Subscribe&lt;ContentPublishedIntegrationEvent, ContentPublishedIntegrationEventHandler&gt;();</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#75715e">// configure services</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.AddTransient&lt;ContentPublishedIntegrationEventHandler&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// configure WebApplication </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> eventBus = app.Services.GetRequiredService&lt;IEventBus&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    eventBus.Subscribe&lt;ContentPublishedIntegrationEvent, ContentPublishedIntegrationEventHandler&gt;();</span></span></code></pre></div>
 <p>The library can be accessed via Nuget:</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.EventBus" rel="external" target="_blank">Juice.EventBus</a></li>
@@ -284,38 +315,38 @@ Please follow up <a href="https://learn.microsoft.com/en-us/dotnet/architecture/
 <p>It is a part of balanced approach for atomicity and resiliency when publishing to the event bus.
 You can follow <a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/subscribe-events#designing-atomicity-and-resiliency-when-publishing-to-the-event-bus" rel="external" target="_blank">Designing atomicity and resiliency when publishing to the event bus</a> topic for more information.
 We provide <strong>IIntegrationEventLogService</strong> interface with an implementation for EF backend use SQLServer or PostgreSQL.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>    public interface IIntegrationEventLogService : IDisposable
-    {
-        IntegrationEventLogContext LogContext { get; }
-        
-        // Use to process pending events
-        Task&lt;IEnumerable&lt;IntegrationEventLogEntry&gt;&gt; RetrieveEventLogsPendingToPublishAsync(Guid transactionId);
-
-        // Save an integration event within a same transaction with domain DBContext
-        Task SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction);
-
-        // Change event state after publish it to the service bus
-        Task MarkEventAsPublishedAsync(Guid eventId);
-
-        // Change event state before publish it to the service bus
-        Task MarkEventAsInProgressAsync(Guid eventId);
-
-        // Change event state on failure publising
-        Task MarkEventAsFailedAsync(Guid eventId);
-
-    }
-
-    public interface IIntegrationEventLogService&lt;out TContext&gt; : IIntegrationEventLogService
-        where TContext : DbContext
-    {
-        /// &lt;summary&gt;
-        /// Ensure event log context has an associated connection with input &lt;see cref=&#34;T&#34;/&gt; context.
-        /// &lt;para&gt;Throw &lt;see cref=&#34;ArgumentException&#34;/&gt; if input context has not same type with &lt;see cref=&#34;TContext&#34;/&gt;&lt;/para&gt;
-        /// &lt;/summary&gt;
-        /// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;
-        /// &lt;param name=&#34;context&#34;&gt;&lt;/param&gt;
-        void EnsureAssociatedConnection&lt;T&gt;(T context) where T : DbContext;
-    }</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IIntegrationEventLogService</span> : IDisposable
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        IntegrationEventLogContext LogContext { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Use to process pending events</span>
+</span></span><span style="display:flex;"><span>        Task&lt;IEnumerable&lt;IntegrationEventLogEntry&gt;&gt; RetrieveEventLogsPendingToPublishAsync(Guid transactionId);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Save an integration event within a same transaction with domain DBContext</span>
+</span></span><span style="display:flex;"><span>        Task SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Change event state after publish it to the service bus</span>
+</span></span><span style="display:flex;"><span>        Task MarkEventAsPublishedAsync(Guid eventId);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Change event state before publish it to the service bus</span>
+</span></span><span style="display:flex;"><span>        Task MarkEventAsInProgressAsync(Guid eventId);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Change event state on failure publising</span>
+</span></span><span style="display:flex;"><span>        Task MarkEventAsFailedAsync(Guid eventId);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IIntegrationEventLogService</span>&lt;<span style="color:#66d9ef">out</span> TContext&gt; : IIntegrationEventLogService
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> TContext : DbContext
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Ensure event log context has an associated connection with input &lt;see cref=&#34;T&#34;/&gt; context.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;para&gt;Throw &lt;see cref=&#34;ArgumentException&#34;/&gt; if input context has not same type with &lt;see cref=&#34;TContext&#34;/&gt;&lt;/para&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;typeparam name=&#34;T&#34;&gt;&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;param name=&#34;context&#34;&gt;&lt;/param&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">void</span> EnsureAssociatedConnection&lt;T&gt;(T context) <span style="color:#66d9ef">where</span> T : DbContext;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
 <h4 id="usage">Usage</h4>
 <p>We need to register services and a <strong>DomainDbContext</strong> to use this feature.</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
@@ -509,8 +540,8 @@ We provide <strong>IIntegrationEventLogService</strong> interface with an implem
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1750824110" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750824110" defer></script>
-    <script src="/js/theme.min.js?1750824110" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1750826068" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750826068" defer></script>
+    <script src="/js/theme.js?1750826068" defer></script>
   </body>
 </html>

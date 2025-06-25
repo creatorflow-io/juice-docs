@@ -11,7 +11,7 @@ There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLo
 However, if you wish to customize logging system for special purpose, 
 then you can inherit the *LoggerProvider* abstract class:
 
-```
+```csharp {linenos=false,linenostart=1}
     public abstract class LoggerProvider : IDisposable,
         ILoggerProvider, ISupportExternalScope
     {

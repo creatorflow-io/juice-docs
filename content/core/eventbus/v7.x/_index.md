@@ -10,7 +10,7 @@ linktitle: "v7.x"
 To communicate between services we defined an **IEventBus** interface with a built-in RabbitMQ broker.
 Please follow up [Implementing event-based communication between microservices](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/integration-event-based-microservice-communications) for details.
 
-```
+```cs
 namespace Juice.EventBus
 {
     /// <summary>
@@ -80,7 +80,7 @@ The library can be accessed via Nuget:
 
 #### IntegrationEvent
 You can define your integration event that inherit **IntegrationEvent** record then publish throw **IEventBus**
-```
+```cs
     using Juice.EventBus;
     public record ContentPublishedIntegrationEvent : IntegrationEvent
     {
@@ -91,7 +91,7 @@ You can define your integration event that inherit **IntegrationEvent** record t
         public string Message { get; set; }
     }
 ```
-```
+```cs
     ...
     using Juice.EventBus;
     ...
@@ -107,7 +107,7 @@ The library can be accessed via Nuget:
 Someone will implement an integration handler from **IIntegrationEventHandler<TEvent>** interface in other app to handle your integration event for their purposes.
 
 For example: a handler that print received message and event time.
-```
+```cs
     ...
     using Juice.EventBus;
     ...
@@ -129,7 +129,7 @@ For example: a handler that print received message and event time.
 
 Then register into DI and subscribe event
 
-```
+```cs
     // configure services
     services.AddTransient<ContentPublishedIntegrationEventHandler>();
 
@@ -149,7 +149,7 @@ It is a part of balanced approach for atomicity and resiliency when publishing t
 You can follow [Designing atomicity and resiliency when publishing to the event bus](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/subscribe-events#designing-atomicity-and-resiliency-when-publishing-to-the-event-bus) topic for more information.
 We provide **IIntegrationEventLogService** interface with an implementation for EF backend use SQLServer or PostgreSQL.
 
-```
+```cs
     public interface IIntegrationEventLogService : IDisposable
     {
         IntegrationEventLogContext LogContext { get; }

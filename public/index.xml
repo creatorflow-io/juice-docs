@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Juice&#39;s documentation</title>
-    <link>http://example.org/index.html</link>
+    <link>http://localhost:1313/index.html</link>
     <description>About the documentation This document guides developers to develop an application focused on its domain but can be deployed as a microservice or a monolithic model.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 31 Mar 2023 11:00:04 +0700</lastBuildDate>
-    <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Overview</title>
-      <link>http://example.org/overview/index.html</link>
+      <link>http://localhost:1313/overview/index.html</link>
       <pubDate>Wed, 29 Mar 2023 14:36:40 +0700</pubDate>
-      <guid>http://example.org/overview/index.html</guid>
+      <guid>http://localhost:1313/overview/index.html</guid>
       <description>Overview Purpose&#xA;Application models</description>
     </item>
     <item>
       <title>Quickstarts</title>
-      <link>http://example.org/quickstart/index.html</link>
+      <link>http://localhost:1313/quickstart/index.html</link>
       <pubDate>Fri, 31 Mar 2023 10:50:48 +0700</pubDate>
-      <guid>http://example.org/quickstart/index.html</guid>
+      <guid>http://localhost:1313/quickstart/index.html</guid>
       <description>Quickstarts Domain&#xA;Infrastructure&#xA;API Contracts&#xA;API&#xA;Microservice&#xA;Monolithic</description>
     </item>
     <item>
       <title>Core features</title>
-      <link>http://example.org/core/index.html</link>
+      <link>http://localhost:1313/core/index.html</link>
       <pubDate>Fri, 31 Mar 2023 10:54:07 +0700</pubDate>
-      <guid>http://example.org/core/index.html</guid>
+      <guid>http://localhost:1313/core/index.html</guid>
       <description>Core features Operation result&#xA;Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
     </item>
     <item>
       <title>Background service</title>
-      <link>http://example.org/bg_service/index.html</link>
+      <link>http://localhost:1313/bg_service/index.html</link>
       <pubDate>Fri, 31 Mar 2023 10:58:34 +0700</pubDate>
-      <guid>http://example.org/bg_service/index.html</guid>
+      <guid>http://localhost:1313/bg_service/index.html</guid>
       <description>Background service Logging&#xA;Managed service</description>
     </item>
     <item>
       <title>Other services</title>
-      <link>http://example.org/other_services/index.html</link>
+      <link>http://localhost:1313/other_services/index.html</link>
       <pubDate>Fri, 31 Mar 2023 11:00:04 +0700</pubDate>
-      <guid>http://example.org/other_services/index.html</guid>
+      <guid>http://localhost:1313/other_services/index.html</guid>
       <description>Other services Logging service&#xA;Audit service&#xA;File storage&#xA;Plugins</description>
     </item>
   </channel>

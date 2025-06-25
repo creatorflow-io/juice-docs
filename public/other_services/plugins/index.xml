@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Plugins :: Juice&#39;s documentation</title>
-    <link>http://example.org/other_services/plugins/index.html</link>
+    <link>http://localhost:1313/other_services/plugins/index.html</link>
     <description>We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.&#xA;Plugin sequence diagram To implement plugin pattern, you first understanding the AssemblyLoadContext.&#xA;Core concept Application The application will host all services including the IPluginServiceProvider and IPluginsManager services. Application accesses Plugin services through IPluginServiceProvider, and manages plugins (Load/Unload) via IPluginsManager.&#xA;PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/other_services/plugins/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/other_services/plugins/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

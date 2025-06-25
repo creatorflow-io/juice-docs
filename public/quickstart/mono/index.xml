@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Monolithic :: Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/mono/index.html</link>
+    <link>http://localhost:1313/quickstart/mono/index.html</link>
     <description>We will only be interested in building application here, there are two options:&#xA;Build your app by register services and configure application manually Use Modular to register module’s services and configure modules.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/quickstart/mono/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/quickstart/mono/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

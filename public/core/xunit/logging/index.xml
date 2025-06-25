@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logging :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/xunit/logging/index.html</link>
+    <link>http://localhost:1313/core/xunit/logging/index.html</link>
     <description>Sometimes we want to show the app logs in unit tests for easier debugging. So TestOutputLoggerProvider can help us.&#xA;using Juice.Extensions.DependencyInjection; using Microsoft.Extensions.Logging; ... var builder = new DependencyResolver(); builder.ConfigureServices(services =&gt; { var configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;(); var configuration = configService.GetConfiguration(); services.AddLogging(builder =&gt; { builder.ClearProviders() .AddTestOutputLogger() .AddConfiguration(configuration.GetSection(&#34;Logging&#34;)); }); // must register an instance of ITestOutputHelper services.AddSingleton(_output); // configure other services ... });&#xD;The library can be accessed via Nuget:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/xunit/logging/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/core/xunit/logging/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

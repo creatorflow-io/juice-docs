@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Multi-tenant :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/multitenant/index.html</link>
+    <link>http://localhost:1313/core/multitenant/index.html</link>
     <description>MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:&#xA;File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:&#xA;MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/multitenant/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/core/multitenant/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

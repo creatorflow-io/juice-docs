@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Audit services :: Juice&#39;s documentation</title>
-    <link>http://example.org/other_services/audit/index.html</link>
+    <link>http://localhost:1313/other_services/audit/index.html</link>
     <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 20 Oct 2023 08:21:52 +0700</lastBuildDate>
-    <atom:link href="http://example.org/other_services/audit/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/other_services/audit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What&#39;s New in Audit 7.0.3</title>
-      <link>http://example.org/other_services/audit/whatsnew/index.html</link>
+      <link>http://localhost:1313/other_services/audit/whatsnew/index.html</link>
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
-      <guid>http://example.org/other_services/audit/whatsnew/index.html</guid>
+      <guid>http://localhost:1313/other_services/audit/whatsnew/index.html</guid>
       <description>Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream…. So we have to move the collection of request form data after other middleware is processed to avoid the issue.</description>
     </item>
     <item>
       <title>Audit services</title>
-      <link>http://example.org/other_services/audit/v7.0.2/index.html</link>
+      <link>http://localhost:1313/other_services/audit/v7.0.2/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>http://example.org/other_services/audit/v7.0.2/index.html</guid>
+      <guid>http://localhost:1313/other_services/audit/v7.0.2/index.html</guid>
       <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description>
     </item>
   </channel>
