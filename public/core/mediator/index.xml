@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mediator on Juice&#39;s documentation</title>
-    <link>http://example.org/core/mediator/</link>
-    <description>Recent content in Mediator on Juice&#39;s documentation</description>
+    <title>Mediator :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/mediator/index.html</link>
+    <description>We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.&#xA;await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));&#xD;The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.&#xA;EF backend Please register request management services with your application schema before use.&#xA;... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }&#xD;The library can be accessed via Nuget:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Logging on Juice&#39;s documentation</title>
-    <link>http://example.org/core/logging/v7.0.2/</link>
-    <description>Recent content in Logging on Juice&#39;s documentation</description>
+    <title>Logging :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/logging/v7.0.2/index.html</link>
+    <description>No versions found for bg_logging&#xA;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:&#xA;public abstract class LoggerProvider : IDisposable,&#xD;ILoggerProvider, ISupportExternalScope&#xD;{&#xD;...&#xD;public IExternalScopeProvider ScopeProvider { get; }&#xD;/// &lt;summary&gt;&#xD;/// Writes the specified log information to a log file.&#xD;/// &lt;/summary&gt;&#xD;public abstract void WriteLog&lt;TState&gt;(LogEntry&lt;TState&gt; entry, string formattedMessage);&#xD;#region IDisposable Support&#xD;/// &lt;summary&gt;&#xD;/// Cleanup resources on disposing.&#xD;/// &lt;/summary&gt;&#xD;protected abstract void Cleanup();&#xD;...&#xD;#endregion&#xD;}&#xD;Once you have an implementation, you can register it when you add logging:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

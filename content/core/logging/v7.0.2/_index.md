@@ -4,7 +4,7 @@ date: 2023-04-03T20:22:47+07:00
 draft: false
 weight: 3
 version: 7.0.2
-menuTitle: "v7.0.2"
+linktitle: "v7.0.2"
 ---
 {{< versions doc=bg_logging >}}
 There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog...

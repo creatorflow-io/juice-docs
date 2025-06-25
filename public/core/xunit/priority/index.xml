@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Priority on Juice&#39;s documentation</title>
-    <link>http://example.org/core/xunit/priority/</link>
-    <description>Recent content in Priority on Juice&#39;s documentation</description>
+    <title>Priority :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/xunit/priority/index.html</link>
+    <description>Here is an approach for in-order testing.&#xA;First, we add the [TestCaseOrderer] attribute to the xUnit test class then add the [TestPriority] attribute to the test method. The test method with higher Priority will run first.&#xA;using Juice.XUnit; [TestCaseOrderer(&#34;Juice.XUnit.PriorityOrderer&#34;, &#34;Juice.XUnit&#34;)] public class EFTest { [Fact(TestPriority(99)] public async Task Shoud_run_first() { } [Fact(TestPriority(98)] public async Task Shoud_run_second() { } }&#xD;The library can be accessed via Nuget:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

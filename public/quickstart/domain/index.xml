@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Domain on Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/domain/</link>
-    <description>Recent content in Domain on Juice&#39;s documentation</description>
+    <title>Domain :: Juice&#39;s documentation</title>
+    <link>http://example.org/quickstart/domain/index.html</link>
+    <description>This layer will name {namespace}.{feature}.&#xA;The project tree will look like this:&#xA;|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your services&#xD;In the tree above:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

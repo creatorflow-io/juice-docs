@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Configuration on Juice&#39;s documentation</title>
-    <link>http://example.org/core/configuration/</link>
-    <description>Recent content in Configuration on Juice&#39;s documentation</description>
+    <title>Configuration :: Juice&#39;s documentation</title>
+    <link>http://example.org/core/configuration/index.html</link>
+    <description>Per-tenant configuration If you are trying to develop a multi-tenant application, you may need to access the tenant configuration. So we provide ITenantsConfiguration interface to access tenant configuration and a default JSON configuration source that will read configuration from {ConfigurationDirectory}/tenants/{TenantIdentifier}/{FileName}.&#xA;public interface ITenantsConfiguration : IConfiguration { }&#xD;The ITenantsConfiguration is inherited from IConfiguration. So after registering the service on application startup you can inject it and use like IConfiguration.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

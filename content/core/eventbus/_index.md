@@ -3,6 +3,7 @@ title: "Event bus"
 date: 2023-04-03T20:23:59+07:00
 draft: false
 weight: 8
+version: latest
 ---
 
 To communicate between services we defined an **IEventBus** interface with a built-in RabbitMQ broker.
@@ -20,7 +21,8 @@ namespace Juice.EventBus
         /// Publish <see cref="IntegrationEvent"/> to implemented broker like RabbitMQ, ServiceBus...
         /// </summary>
         /// <param name="event"></param>
-        Task PublishAsync(IntegrationEvent @event);
+        /// <param name="tenantId"></param>
+        Task PublishAsync(IntegrationEvent @event, string? tenantId = default);
 
         /// <summary>
         /// Subscribe an <see cref="IntegrationEvent"/> with specified <see cref="IIntegrationEventHandler{T}"/>
@@ -51,7 +53,12 @@ To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus ser
     ...
     using Juice.EventBus.RabbitMQ.DependencyInjection
     ...
+    // Register IEventBus service
     services.RegisterRabbitMQEventBus(configuration.GetSection("RabbitMQ"));
+
+    // OR
+    // Register strongly typed service
+    // services.RegisterRabbitMQEventBus<Typed>(configuration.GetSection("RabbitMQ"));
 
     // OR
     // services.RegisterRabbitMQEventBus(configuration.GetSection("RabbitMQ"), options=> {
@@ -67,7 +74,10 @@ To use RabbitMQ broker as an event bus backend, we register RabbitMQEventBus ser
     //      "Port": 5672,
     //      "VirtualHost": null,
     //      "UserName": null,
-    //      "Password": null
+    //      "Password": null,
+    //      "ExchangeType: null,
+    //      "QueueType": null,
+    //      "AckOnProcessed": null
     // }
 ```
 
@@ -258,6 +268,35 @@ When implementing the steps of publishing the events, you have these choices:
         logger.LogError(ex, "ERROR Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})", evt.Id, nameof(IntegrationEventLogTest), evt);
         await eventLogService.MarkEventAsFailedAsync(evt.Id);
     }
+```
+
+### EventBusWrapper
+This class wraps original `IEventBus` service to re-use. It's helpful when we want to use the self-defined event bus interface like `IMyEventBus` instead of using `IEventBus<MyType>`
+
+```csharp {linenos=false,hl_lines=[2,3],linenostart=1}
+    ...
+    using Juice.EventBus;
+    using Juice.EventBus.IntegrationEventLog.EF;
+    ...
+
+    internal class TypedBroker1;
+
+    internal interface ITypedBroker1 : IEventBus<TypedBroker1>
+    {
+    }
+
+    internal class MyEventBusWrapper : EventBusWrapper, ITypedBroker1
+    {
+        public MyEventBusWrapper(IEventBus<TypedBroker1> eventBus) : base(eventBus)
+        {
+        }
+    }
+
+    // Register
+    services.AddEventBusWrapper<ITypedBroker1, MyEventBusWrapper>();
+
+    // Injection
+    var eventBus = serviceProvider.GetRequiredService<ITypedBroker1>();
 ```
 
 The library can be accessed via Nuget:

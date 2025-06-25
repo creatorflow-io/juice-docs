@@ -78,7 +78,7 @@ The *DbOptions\<T\>* class derived from *DbOptions* will specify a DbContext typ
 - *IRemovable*: the inheritance model will be updated the *RemovedUser*, *RemovedDate* or *RestoredUser*, *RestoredDate* depend on *IsRemoved* value changed
 - *IAuditable*: the inheritance model will be fired data AuditEvent every changes
 #### Attributes
-- **Notice**: the class that has this attribue will be fired DataEvent on specified changes
+- **Notice**: the class that has this attribue will be fired DataEvent on specified changes (*Created*, *Modified*, )
 
 #### Working process
 Database context classes derived from **DbContextBase** will:

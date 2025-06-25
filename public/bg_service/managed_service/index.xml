@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Manageable services on Juice&#39;s documentation</title>
-    <link>http://example.org/bg_service/managed_service/</link>
-    <description>Recent content in Manageable services on Juice&#39;s documentation</description>
+    <title>Manageable services :: Juice&#39;s documentation</title>
+    <link>http://example.org/bg_service/managed_service/index.html</link>
+    <description>Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.&#xA;Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;)); builder.Services.AddBgService(builder.Configuration.GetSection(&#34;BackgroundService&#34;)) .UseFileStore(builder.Configuration.GetSection(&#34;File&#34;)); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile(&#34;Store&#34;); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options =&gt; { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) =&gt; { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();&#xD;Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
