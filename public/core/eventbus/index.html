@@ -20,22 +20,22 @@
     <meta itemprop="description" content="Versionslatest7.xTo communicate between services we defined an IEventBus interface with a built-in RabbitMQ broker. Please follow up Implementing event-based communication between microservices for details.">
     <meta itemprop="datePublished" content="2023-04-03T20:23:59+07:00">
     <meta itemprop="dateModified" content="2023-04-03T20:23:59+07:00">
-    <meta itemprop="wordCount" content="1034">
+    <meta itemprop="wordCount" content="966">
     <title>Event bus :: Juice&#39;s documentation</title>
     <link href="/core/eventbus/index.xml" rel="alternate" type="application/rss+xml" title="Event bus :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1750826625" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1750826625" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826625" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750826625" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750826625" rel="stylesheet">
-    <link href="/css/theme.min.css?1750826625" rel="stylesheet">
-    <link href="/css/format-html.min.css?1750826625" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1750826625" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1750826625" defer></script>
-    <script src="/js/lunr/lunr.min.js?1750826625" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1750826625" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1750826625" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1750826625" defer></script>
-    <script src="/js/search.min.js?1750826625" defer></script>
+    <link href="/images/favicon.png?1750913207" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1750913207" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750913207" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1750913207" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1750913207" rel="stylesheet">
+    <link href="/css/theme.min.css?1750913207" rel="stylesheet">
+    <link href="/css/format-html.min.css?1750913207" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1750913207" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1750913207" defer></script>
+    <script src="/js/lunr/lunr.min.js?1750913207" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1750913207" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1750913207" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1750913207" defer></script>
+    <script src="/js/search.min.js?1750913207" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
@@ -45,7 +45,7 @@
       window.relearn.relBaseUri='..\/..';
       window.relearn.absBaseUri='http:\/\/example.org';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1750826625";
+      window.relearn.index_js_url="/searchindex.en.js?1750913207";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -111,7 +111,6 @@
         <li><a href="#rabbitmq-broker">RabbitMQ broker</a></li>
         <li><a href="#implementation">Implementation</a></li>
         <li><a href="#integrationeventlog">IntegrationEventLog</a></li>
-        <li><a href="#eventbuswrapper">EventBusWrapper</a></li>
       </ul>
     </li>
   </ul>
@@ -425,31 +424,6 @@ We provide <strong>IIntegrationEventLogService</strong> interface with an implem
 </span></span><span style="display:flex;"><span>        logger.LogError(ex, <span style="color:#e6db74">&#34;ERROR Publishing integration event: {IntegrationEventId} from {AppName} - ({@IntegrationEvent})&#34;</span>, evt.Id, nameof(IntegrationEventLogTest), evt);
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> eventLogService.MarkEventAsFailedAsync(evt.Id);
 </span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<h3 id="eventbuswrapper">EventBusWrapper</h3>
-<p>This class wraps original <code>IEventBus</code> service to re-use. It&rsquo;s helpful when we want to use the self-defined event bus interface like <code>IMyEventBus</code> instead of using <code>IEventBus&lt;MyType&gt;</code></p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EventBus.IntegrationEventLog.EF;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TypedBroker1</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ITypedBroker1</span> : IEventBus&lt;TypedBroker1&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyEventBusWrapper</span> : EventBusWrapper, ITypedBroker1
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> MyEventBusWrapper(IEventBus&lt;TypedBroker1&gt; eventBus) : <span style="color:#66d9ef">base</span>(eventBus)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Register</span>
-</span></span><span style="display:flex;"><span>    services.AddEventBusWrapper&lt;ITypedBroker1, MyEventBusWrapper&gt;();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Injection</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> eventBus = serviceProvider.GetRequiredService&lt;ITypedBroker1&gt;();</span></span></code></pre></div>
 <p>The library can be accessed via Nuget:</p>
 <ul>
 <li><a href="https://www.nuget.org/packages/Juice.EventBus.IntegrationEventLog.EF" rel="external" target="_blank">Juice.EventBus.IntegrationEventLog.EF</a></li>
@@ -540,8 +514,8 @@ We provide <strong>IIntegrationEventLogService</strong> interface with an implem
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1750826625" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750826625" defer></script>
-    <script src="/js/theme.min.js?1750826625" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1750913207" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1750913207" defer></script>
+    <script src="/js/theme.min.js?1750913207" defer></script>
   </body>
 </html>

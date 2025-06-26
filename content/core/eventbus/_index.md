@@ -269,35 +269,6 @@ When implementing the steps of publishing the events, you have these choices:
     }
 ```
 
-### EventBusWrapper
-This class wraps original `IEventBus` service to re-use. It's helpful when we want to use the self-defined event bus interface like `IMyEventBus` instead of using `IEventBus<MyType>`
-
-```csharp {linenos=false,hl_lines=[2,3],linenostart=1}
-    ...
-    using Juice.EventBus;
-    using Juice.EventBus.IntegrationEventLog.EF;
-    ...
-
-    internal class TypedBroker1;
-
-    internal interface ITypedBroker1 : IEventBus<TypedBroker1>
-    {
-    }
-
-    internal class MyEventBusWrapper : EventBusWrapper, ITypedBroker1
-    {
-        public MyEventBusWrapper(IEventBus<TypedBroker1> eventBus) : base(eventBus)
-        {
-        }
-    }
-
-    // Register
-    services.AddEventBusWrapper<ITypedBroker1, MyEventBusWrapper>();
-
-    // Injection
-    var eventBus = serviceProvider.GetRequiredService<ITypedBroker1>();
-```
-
 The library can be accessed via Nuget:
 - [Juice.EventBus.IntegrationEventLog.EF](https://www.nuget.org/packages/Juice.EventBus.IntegrationEventLog.EF)
 - [Juice.EventBus.IntegrationEventLog.EF.SqlServer](https://www.nuget.org/packages/Juice.EventBus.IntegrationEventLog.EF.SqlServer)
