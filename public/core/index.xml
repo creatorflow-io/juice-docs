@@ -3,7 +3,7 @@
   <channel>
     <title>Core features :: Juice&#39;s documentation</title>
     <link>https://juice-docs.creatorflow.io/core/index.html</link>
-    <description>Core features Operation result&#xA;Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
+    <description>Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 14 Apr 2023 15:36:00 +0700</lastBuildDate>

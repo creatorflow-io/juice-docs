@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Operation result on Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/operation_result/</link>
-    <description>Recent content in Operation result on Juice&#39;s documentation</description>
+    <title>Operation result :: Juice&#39;s documentation</title>
+    <link>http://localhost:1313/core/operation_result/index.html</link>
+    <description>The exception system is low performance, so we consider using the OperationResult when trying perform actions/ operations and get their results.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>

@@ -5,3 +5,5 @@ draft: true
 weight: 2
 ---
 
+The exception system is low performance, so we consider using the OperationResult when trying perform actions/ operations and get their results.
+
