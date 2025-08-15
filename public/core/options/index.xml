@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Options :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/options/index.html</link>
+    <link>https://juice-docs.creatorflow.io/core/options/index.html</link>
     <description>Mutable Options To change options in the application, we can use IOptionsMutable&lt;T&gt; interface:&#xA;public interface IOptionsMutable&lt;out T&gt; : IOptionsSnapshot&lt;T&gt; where T : class, new() { // Update T field by field Task&lt;bool&gt; UpdateAsync(Action&lt;T&gt; applyChanges); }&#xD;To use IOptionsMutable&lt;T&gt; we must also register some required services.&#xA;... using Juice.Extensions.Options.DependencyInjection; ... // your changed options will be write to {WorkingDirectory}/appsettings.Development.json services.UseOptionsMutableFileStore(&#34;appsettings.Development.json&#34;); // OR separated appsettings file for strongly typed // services.UseOptionsMutableFileStore&lt;Options&gt;($&#34;appsettings.Separated.Development.json&#34;); // configure your Options class before use services.ConfigureMutable&lt;Options&gt;(configuration.GetSection(&#34;Options&#34;));&#xD;After that, we can inject IOptionsMutable&lt;Options&gt; and use it like IOptionsSnapshot&lt;Options&gt;. We can also call UpdateAsync method to update options.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/options/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/core/options/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

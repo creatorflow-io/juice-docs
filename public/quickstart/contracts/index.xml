@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>API Contracts :: Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/contracts/index.html</link>
+    <link>https://juice-docs.creatorflow.io/quickstart/contracts/index.html</link>
     <description>This project will be named {namespace}.{feature}.Api.Contracts.&#xA;In this project, we will define the document that describes how the API works. Its components depend on what you choose to implement your API.&#xA;Dtos for REST Protos for gRPC IntegrationEvents for event bus Anything else that you have to share beetwen services</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/quickstart/contracts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/quickstart/contracts/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

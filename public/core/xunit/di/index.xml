@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dependency Injection :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/xunit/di/index.html</link>
+    <link>https://juice-docs.creatorflow.io/core/xunit/di/index.html</link>
     <description>To run complex unit tests with a full dependency injection pattern, we provide a simple DependencyResolver.&#xA;using Juice.Extensions.DependencyInjection; ... var resolver = new DependencyResolver { CurrentDirectory = AppContext.BaseDirectory }; resolver.ConfigureServices(services =&gt; { var configService = services.BuildServiceProvider().GetRequiredService&lt;IConfigurationService&gt;(); // IConfigurationRoot var configuration = configService.GetConfiguration(args); // configure options // register services }); // access IServiceProvider var serviceProvider = resolver.ServiceProvider;&#xD;The library can be accessed via Nuget:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/xunit/di/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/core/xunit/di/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

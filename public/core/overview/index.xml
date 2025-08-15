@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Overview :: Juice&#39;s documentation</title>
-    <link>http://example.org/core/overview/index.html</link>
+    <link>https://juice-docs.creatorflow.io/core/overview/index.html</link>
     <description>In this chapter, we will look at common components and extensions:&#xA;Logging Options Configuration Swagger MediatR Event bus Integration service Multi-tenant Audit XUnit Modular We implemented these extensions and services to resolved common problems that were specified in Application models section. To achieve more value out of this document, please go through .NET Microservices: Architecture for Containerized .NET Applications.&#xA;NOTE: Juice is currently in beta, so you must select the Include prerelease checkbox in the Nuget packages window to browse its packages.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/core/overview/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/core/overview/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

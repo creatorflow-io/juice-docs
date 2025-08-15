@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logging :: Juice&#39;s documentation</title>
-    <link>http://example.org/other_services/logging/index.html</link>
+    <link>https://juice-docs.creatorflow.io/other_services/logging/index.html</link>
     <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access File logger SignalR logger Db logger File logger provider Purposes Separate log folder for services Limit log file size Limit the number of log files Separate log file for job Usage Configure log builder Call AddFileLogger() on the logging builder to add a customized file logger provider.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 20 Oct 2023 08:21:52 +0700</lastBuildDate>
-    <atom:link href="http://example.org/other_services/logging/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/other_services/logging/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What&#39;s New in Logging 7.0.3</title>
-      <link>http://example.org/other_services/logging/whatsnew/index.html</link>
+      <link>https://juice-docs.creatorflow.io/other_services/logging/whatsnew/index.html</link>
       <pubDate>Fri, 20 Oct 2023 08:21:52 +0700</pubDate>
-      <guid>http://example.org/other_services/logging/whatsnew/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/other_services/logging/whatsnew/index.html</guid>
       <description>We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.</description>
     </item>
     <item>
       <title>Breaking changes in Logging 7.0.3</title>
-      <link>http://example.org/other_services/logging/breaking/index.html</link>
+      <link>https://juice-docs.creatorflow.io/other_services/logging/breaking/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>http://example.org/other_services/logging/breaking/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/other_services/logging/breaking/index.html</guid>
       <description>Quick access Moved file logging provider Default service name Moved file logging provider The FileLoggerProvider is not included in Juice.BgService.ServiceBase but moved to new Juice.Extensions.Logging.File package.&#xA;Default service name The default service name has been changed from Default to General, but it can be configured using the GeneralName option.&#xA;Change the scope property name JobId changed to TraceId JobDescription changed to Operation JobState changed to OprationState</description>
     </item>
     <item>
       <title>Logging</title>
-      <link>http://example.org/other_services/logging/v7.0.2/index.html</link>
+      <link>https://juice-docs.creatorflow.io/other_services/logging/v7.0.2/index.html</link>
       <pubDate>Mon, 03 Apr 2023 21:02:02 +0700</pubDate>
-      <guid>http://example.org/other_services/logging/v7.0.2/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/other_services/logging/v7.0.2/index.html</guid>
       <description>Versions&#xD;latest&#xD;7.0.2&#xD;This is original doc of BgService Logging but now moved to new project.&#xA;Purposes Separate log folder for services Limit log file size Limit the number of log files Separate log file for job Usage Configure log builder Call AddBgServiceFileLogger() on the logging builder to add a custom file logger provider. using Juice.BgService.Extensions.Logging; ... var builder = WebApplication.CreateBuilder(args); builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;));&#xD;Logging:File configuration section may be present:</description>
     </item>
   </channel>
