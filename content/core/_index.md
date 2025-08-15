@@ -6,9 +6,7 @@ chapter = true
 pre = "<b>3. </b>"
 +++
 
-# Core features
-
-[Operation result]({{< ref "core/operation_result/_index.md" >}})
+<!-- [Operation result]({{< ref "core/operation_result/_index.md" >}}) -->
 
 [Logging]({{< ref "core/logging/_index.md" >}})
 

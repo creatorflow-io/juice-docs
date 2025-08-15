@@ -27,7 +27,7 @@
       <link>https://juice-docs.creatorflow.io/core/index.html</link>
       <pubDate>Fri, 31 Mar 2023 10:54:07 +0700</pubDate>
       <guid>https://juice-docs.creatorflow.io/core/index.html</guid>
-      <description>Core features Operation result&#xA;Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
+      <description>Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
     </item>
     <item>
       <title>Background service</title>

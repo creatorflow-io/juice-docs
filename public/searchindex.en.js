@@ -193,8 +193,8 @@ var relearn_searchindex = [
   },
   {
     "breadcrumb": "Juice's documentation",
-    "content": "Core features Operation result\nLogging\nConfiguration\nOptions\nSwagger\nMediator\nEvent bus\nEntity framework\nIntegration services\nxUnit\nMulti-tenant\nModular",
-    "description": "Core features Operation result\nLogging\nConfiguration\nOptions\nSwagger\nMediator\nEvent bus\nEntity framework\nIntegration services\nxUnit\nMulti-tenant\nModular",
+    "content": "Logging\nConfiguration\nOptions\nSwagger\nMediator\nEvent bus\nEntity framework\nIntegration services\nxUnit\nMulti-tenant\nModular",
+    "description": "Logging\nConfiguration\nOptions\nSwagger\nMediator\nEvent bus\nEntity framework\nIntegration services\nxUnit\nMulti-tenant\nModular",
     "tags": [],
     "title": "Core features",
     "uri": "/core/index.html"
