@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Overview :: Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/overview/index.html</link>
+    <link>https://juice-docs.creatorflow.io/quickstart/overview/index.html</link>
     <description>In this chapter, we are going to start using Juice to build applications following these patterns:&#xA;Microservice with DDD/CQRS pattern Monolithic modular application However, if we have a reasonable approach, both of them may have the same structure and implementations but are different in the final target. So we will consider the following similar components (equivalent to separate sub-projects) before returning to focus on the patterns above.&#xA;Domain Infrastructure Api Please follow up Layers in DDD microservices for more information and be careful when considering using the DDD and/or CQRS pattern. The directory tree will look like this:</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://example.org/quickstart/overview/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/quickstart/overview/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

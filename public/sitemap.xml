@@ -1,201 +1,201 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/other_services/audit/whatsnew/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/audit/whatsnew/index.html</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/bg_service/logging/whatsnew/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/bg_service/logging/whatsnew/index.html</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/logging/whatsnew/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/logging/whatsnew/index.html</loc>
     <lastmod>2023-10-20T08:21:52+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/overview/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/overview/index.html</loc>
     <lastmod>2023-04-12T21:18:43+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/xunit/di/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/xunit/di/index.html</loc>
     <lastmod>2023-04-11T16:57:00+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/logging/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/logging/index.html</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/audit/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/audit/index.html</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/overview/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/overview/index.html</loc>
     <lastmod>2023-04-02T10:19:56+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/overview/purpose/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/overview/purpose/index.html</loc>
     <lastmod>2023-03-29T14:44:25+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/overview/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/overview/index.html</loc>
     <lastmod>2023-03-29T14:36:40+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/eventbus/breaking/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/eventbus/breaking/index.html</loc>
     <lastmod>2025-06-24T20:23:30+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/xunit/logging/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/xunit/logging/index.html</loc>
     <lastmod>2023-04-04T16:08:17+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/logging/breaking/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/logging/breaking/index.html</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/logging/breaking/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/logging/breaking/index.html</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/logging/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/logging/index.html</loc>
     <lastmod>2023-04-03T20:22:47+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/index.html</loc>
     <lastmod>2023-03-31T10:50:48+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/overview/app_model/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/overview/app_model/index.html</loc>
     <lastmod>2023-03-31T10:33:27+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/domain/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/domain/index.html</loc>
     <lastmod>2023-04-13T10:48:09+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/xunit/priority/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/xunit/priority/index.html</loc>
     <lastmod>2023-04-11T17:20:57+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/bg_service/logging/v7.0.2/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/bg_service/logging/v7.0.2/index.html</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/logging/v7.0.2/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/logging/v7.0.2/index.html</loc>
     <lastmod>2023-04-03T21:02:02+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/audit/v7.0.2/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/audit/v7.0.2/index.html</loc>
     <lastmod>2023-04-03T20:23:30+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/configuration/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/configuration/index.html</loc>
     <lastmod>2023-04-03T20:23:10+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/logging/v7.0.2/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/logging/v7.0.2/index.html</loc>
     <lastmod>2023-04-03T20:22:47+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/index.html</loc>
     <lastmod>2023-03-31T10:54:07+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/infrastructure/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/infrastructure/index.html</loc>
     <lastmod>2023-04-13T10:49:24+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/xunit/ci_ignore/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/xunit/ci_ignore/index.html</loc>
     <lastmod>2023-04-11T17:21:32+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/options/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/options/index.html</loc>
     <lastmod>2023-04-03T20:22:57+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/bg_service/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/bg_service/index.html</loc>
     <lastmod>2023-03-31T10:58:34+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/contracts/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/contracts/index.html</loc>
     <lastmod>2023-04-13T10:49:57+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/file_storage/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/file_storage/index.html</loc>
     <lastmod>2023-03-31T10:58:47+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/plugins/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/plugins/index.html</loc>
     <lastmod>2023-09-23T15:54:24+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/api/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/api/index.html</loc>
     <lastmod>2023-04-13T10:50:32+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/swagger/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/swagger/index.html</loc>
     <lastmod>2023-04-03T20:23:38+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/measurement/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/measurement/index.html</loc>
     <lastmod>2024-09-30T08:36:48+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/mediator/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/mediator/index.html</loc>
     <lastmod>2023-04-03T20:23:50+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/other_services/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/other_services/index.html</loc>
     <lastmod>2023-03-31T11:00:04+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/eventbus/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/eventbus/index.html</loc>
     <lastmod>2023-04-03T20:23:59+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/eventbus/v7.x/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/eventbus/v7.x/index.html</loc>
     <lastmod>2023-04-03T20:23:59+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/entityframework/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/entityframework/index.html</loc>
     <lastmod>2023-04-11T09:01:19+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/integration/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/integration/index.html</loc>
     <lastmod>2023-04-03T20:24:09+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/microservice/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/microservice/index.html</loc>
     <lastmod>2023-04-13T10:47:21+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/quickstart/mono/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/quickstart/mono/index.html</loc>
     <lastmod>2023-04-13T10:46:57+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/xunit/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/xunit/index.html</loc>
     <lastmod>2023-04-03T20:24:31+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/multitenant/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/multitenant/index.html</loc>
     <lastmod>2023-04-03T20:24:21+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/core/modular/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/core/modular/index.html</loc>
     <lastmod>2023-04-14T15:36:00+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/workflow/overview/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/workflow/overview/index.html</loc>
     <lastmod>2023-09-27T14:35:13+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/bg_service/managed_service/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/bg_service/managed_service/index.html</loc>
     <lastmod>2023-09-20T17:22:07+07:00</lastmod>
   </url>
   <url>
-    <loc>http://example.org/categories/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/categories/index.html</loc>
   </url>
   <url>
-    <loc>http://example.org/tags/index.html</loc>
+    <loc>https://juice-docs.creatorflow.io/tags/index.html</loc>
   </url>
 </urlset>

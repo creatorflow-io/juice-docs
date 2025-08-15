@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories :: Juice&#39;s documentation</title>
-    <link>http://example.org/categories/index.html</link>
+    <link>https://juice-docs.creatorflow.io/categories/index.html</link>
     <description></description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="http://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

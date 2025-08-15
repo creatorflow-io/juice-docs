@@ -2,59 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Quickstarts :: Juice&#39;s documentation</title>
-    <link>http://example.org/quickstart/index.html</link>
+    <link>https://juice-docs.creatorflow.io/quickstart/index.html</link>
     <description>Quickstarts Domain&#xA;Infrastructure&#xA;API Contracts&#xA;API&#xA;Microservice&#xA;Monolithic</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 13 Apr 2023 10:50:32 +0700</lastBuildDate>
-    <atom:link href="http://example.org/quickstart/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/quickstart/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Overview</title>
-      <link>http://example.org/quickstart/overview/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/overview/index.html</link>
       <pubDate>Wed, 12 Apr 2023 21:18:43 +0700</pubDate>
-      <guid>http://example.org/quickstart/overview/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/overview/index.html</guid>
       <description>In this chapter, we are going to start using Juice to build applications following these patterns:&#xA;Microservice with DDD/CQRS pattern Monolithic modular application However, if we have a reasonable approach, both of them may have the same structure and implementations but are different in the final target. So we will consider the following similar components (equivalent to separate sub-projects) before returning to focus on the patterns above.&#xA;Domain Infrastructure Api Please follow up Layers in DDD microservices for more information and be careful when considering using the DDD and/or CQRS pattern. The directory tree will look like this:</description>
     </item>
     <item>
       <title>Domain</title>
-      <link>http://example.org/quickstart/domain/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/domain/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:48:09 +0700</pubDate>
-      <guid>http://example.org/quickstart/domain/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/domain/index.html</guid>
       <description>This layer will name {namespace}.{feature}.&#xA;The project tree will look like this:&#xA;|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your services&#xD;In the tree above:</description>
     </item>
     <item>
       <title>Infrastructure</title>
-      <link>http://example.org/quickstart/infrastructure/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/infrastructure/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:49:24 +0700</pubDate>
-      <guid>http://example.org/quickstart/infrastructure/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/infrastructure/index.html</guid>
       <description>The main purpose of this layer is to implement repository interfaces which were defined in Domain layer. If you need to customize the entity classes to fit the infrastructure (like EF) or optimize the DB, you can do it here.&#xA;It’s named {namespace}.{feature}.{infrastructure}. Eg: Juice.Abc.EF&#xA;Basically, we will create a DbContext that inherits DbContextBase to work with the database. Then use the created DbContext to implement repositories.&#xA;The project tree will look like this:</description>
     </item>
     <item>
       <title>API Contracts</title>
-      <link>http://example.org/quickstart/contracts/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/contracts/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:49:57 +0700</pubDate>
-      <guid>http://example.org/quickstart/contracts/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/contracts/index.html</guid>
       <description>This project will be named {namespace}.{feature}.Api.Contracts.&#xA;In this project, we will define the document that describes how the API works. Its components depend on what you choose to implement your API.&#xA;Dtos for REST Protos for gRPC IntegrationEvents for event bus Anything else that you have to share beetwen services</description>
     </item>
     <item>
       <title>API</title>
-      <link>http://example.org/quickstart/api/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/api/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:50:32 +0700</pubDate>
-      <guid>http://example.org/quickstart/api/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/api/index.html</guid>
       <description>This project will be named {namespace}.{feature}.Api.&#xA;In this project, we will implement API that is defined in contracts and other integration services.&#xA;Swagger SignalR gRPC implementation Integration event subscribing and handling Handle domain events to publish integration events If you are building a monolithic application, then you can use the internal event bus instead of external. You can also handle domain events from other domains directly instead of implementing integration events.</description>
     </item>
     <item>
       <title>Microservice</title>
-      <link>http://example.org/quickstart/microservice/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/microservice/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:47:21 +0700</pubDate>
-      <guid>http://example.org/quickstart/microservice/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/microservice/index.html</guid>
       <description>If you are completed implementing your app with all necessary functions, we will only be interested in integrating with other services here.&#xA;Build your minimal app based on implemented domain features Integrate with the authentication/authorization services Integration testing with an event bus like RabbitMQ or another service bus Again, we will accept that there is no standard layout for microservices, it depends on the situation and purpose of the service. It may be complex or simple like the images below.</description>
     </item>
     <item>
       <title>Monolithic</title>
-      <link>http://example.org/quickstart/mono/index.html</link>
+      <link>https://juice-docs.creatorflow.io/quickstart/mono/index.html</link>
       <pubDate>Thu, 13 Apr 2023 10:46:57 +0700</pubDate>
-      <guid>http://example.org/quickstart/mono/index.html</guid>
+      <guid>https://juice-docs.creatorflow.io/quickstart/mono/index.html</guid>
       <description>We will only be interested in building application here, there are two options:&#xA;Build your app by register services and configure application manually Use Modular to register module’s services and configure modules.</description>
     </item>
   </channel>
