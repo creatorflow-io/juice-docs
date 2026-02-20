@@ -1,338 +1,58 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="What&#39;s New in Logging 7.0.3 :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/logging/whatsnew/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="What&#39;s New in Logging 7.0.3 :: Juice&#39;s documentation">
-    <meta property="og:description" content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="article">
-    <meta property="article:section" content="Other services">
-    <meta property="article:published_time" content="2023-10-20T08:21:52+07:00">
-    <meta property="article:modified_time" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="name" content="What&#39;s New in Logging 7.0.3 :: Juice&#39;s documentation">
-    <meta itemprop="description" content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.">
-    <meta itemprop="datePublished" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="dateModified" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="wordCount" content="353">
-    <title>What&#39;s New in Logging 7.0.3 :: Juice&#39;s documentation</title>
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/other_services\/logging\/whatsnew\/index.html';
-      window.relearn.relBasePath='..\/..\/..';
-      window.relearn.relBaseUri='..\/..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/other_services/logging/whatsnew/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-<nav class="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li></li>
-        <li><a href="#file-logger-provider">File logger provider</a></li>
-        <li><a href="#signalr-logger-provider">SignalR logger provider</a></li>
-        <li><a href="#db-logger-provider">Db logger provider</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/index.html"><span itemprop="name">Other services</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/logging/index.html"><span itemprop="name">Logging</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">What&#39;s New in Logging 7.0.3</span><meta itemprop="position" content="4"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/logging/whatsnew.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/logging/index.html" title="Logging (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/logging/breaking/index.html" title="Breaking changes in Logging 7.0.3 (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable other_services" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="whats-new-in-logging-703">What&#39;s New in Logging 7.0.3</h1>
-
-<h4 id="we-moved-logging-extensions-from-backgroundservice-project-to-new-logging-project-to-maintain-it-in-general">We moved logging extensions from BackgroundService project to new Logging project to maintain it in general.</h4>
-<h4 id="quick-access">Quick access</h4>
-<ul>
-<li><a href="/other_services/logging/whatsnew/index.html#fixed-unexpected-error-on-stopping-windows-service">Fixed unexpected error on stopping Windows service</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#change-scopes-behavior">Change scopes behavior</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#write-log-scopes-to-file">Write log scopes to file</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#naming-convention">Naming convention</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#configurable-write-interval">Configurable write interval</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#signalr-logger-provider">SignalR logger provider</a></li>
-<li><a href="/other_services/logging/whatsnew/index.html#db-logger-provider">DB logger provider</a></li>
-</ul>
-<h3 id="file-logger-provider">File logger provider</h3>
-<h4 id="fixed-unexpected-error-on-stopping-windows-service">Fixed unexpected error on stopping Windows service</h4>
-<p>Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.</p>
-<h4 id="change-scopes-behavior">Change scopes behavior</h4>
-<p>You can now use <em>OperationState</em> scope inside <em>TraceId</em>, so there is two ways to use <em>OperationState</em></p>
-<ul>
-<li>Original usage (yes, it still works):</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">string?</span> state;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}.log</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;TraceId&#34;</span>, TraceId),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;Operation&#34;</span>, Operation)
-</span></span><span style="display:flex;"><span>})){
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job processing</span>
-</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Begin invoke&#34;</span>);
-</span></span><span style="display:flex;"><span>    state = <span style="color:#66d9ef">await</span> InvokeAsync();
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState}.log</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState} ({increased number}).log</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;TraceId&#34;</span>, TraceId),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;Operation&#34;</span>, Operation),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;OperationState&#34;</span>, state)
-</span></span><span style="display:flex;"><span>})){
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job is completed with state</span>
-</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Invoke result: {0}&#34;</span>, state);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// scopes [&#34;Task&#34;, &#34;Success&#34;]    </span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#e6db74">&#34;Task&#34;</span>))
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#e6db74">&#34;Success&#34;</span>))
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Invoked&#34;</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<ul>
-<li>Now it&rsquo;s more natural:</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}.log</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;TraceId&#34;</span>, TraceId),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;Operation&#34;</span>, Operation)
-</span></span><span style="display:flex;"><span>})){
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// job processing</span>
-</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Begin invoke&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> state = <span style="color:#66d9ef">await</span> InvokeAsync();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState}.log</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState} ({increased number}).log</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> List&lt;KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">new</span> KeyValuePair&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">object</span>&gt;(<span style="color:#e6db74">&#34;OperationState&#34;</span>, state)
-</span></span><span style="display:flex;"><span>    })){
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// job is completed with state</span>
-</span></span><span style="display:flex;"><span>        _logger.LogInformation(<span style="color:#e6db74">&#34;Invoke result: {0}&#34;</span>, state);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// scopes [&#34;Task&#34;, &#34;Success&#34;]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (_logger.BeginScope(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">string</span>[]{<span style="color:#e6db74">&#34;Task&#34;</span>, <span style="color:#e6db74">&#34;Success&#34;</span>}))
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    _logger.LogInformation(<span style="color:#e6db74">&#34;Invoked&#34;</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h4 id="write-log-scopes-to-file">Write log scopes to file</h4>
-<p>Any log scopes specified by the string will be written to the log file. See <a href="https://juice-docs.creatorflow.io/other_services/logging/#write-log-scopes-to-file">Log scopes</a></p>
-<h4 id="naming-convention">Naming convention</h4>
-<p>Correcting directory patterns:</p>
-<ul>
-<li><em>Unnamed service</em>: {Logging:File:Directory}/General/</li>
-<li><em>Named service</em>: {Logging:File:Directory}/{ServiceDescription}/</li>
-</ul>
-<p>Correcting file name patterns:</p>
-<ul>
-<li><em>Default</em>: {yyyy_MM_dd-HHmm}.log</li>
-<li><em>Job</em>: {TraceId} - {Operation}.log</li>
-<li><em>Job has state</em>: {TraceId} - {Operation}_{OperationState}.log</li>
-<li><em>Job has re-run</em>: {TraceId} - {Operation}_{OperationState} ({increased number}).log</li>
-</ul>
-<h4 id="configurable-write-interval">Configurable write interval</h4>
-<p>You can now configure the <a href="https://juice-docs.creatorflow.io/other_services/logging/#configure-log-builder">BufferTime</a> to decide how long to buffer before log entries are written to the file</p>
-<h3 id="signalr-logger-provider">SignalR logger provider</h3>
-<p>Supported logging to SignalR hub <a href="https://juice-docs.creatorflow.io/other_services/logging/#signalr-logger-provider">here</a>.</p>
-<h3 id="db-logger-provider">Db logger provider</h3>
-<p>Supported logging to SignalR hub <a href="https://juice-docs.creatorflow.io/other_services/logging/#db-logger-provider">here</a>.</p>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Oct 20, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu">
-            <li class="parent alwaysopen " data-nav-id="/other_services/logging/index.html"><a class="padding" href="/other_services/logging/index.html">Logging</a><ul id="R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6" class="collapsible-menu">
-            <li class="active " data-nav-id="/other_services/logging/whatsnew/index.html"><a class="padding" href="/other_services/logging/whatsnew/index.html">What&#39;s New in Logging 7.0.3</a></li>
-            <li class="" data-nav-id="/other_services/logging/breaking/index.html"><a class="padding" href="/other_services/logging/breaking/index.html">Breaking changes in Logging 7.0.3</a></li>
-            <li class="" data-nav-id="/other_services/logging/v7.0.2/index.html"><a class="padding" href="/other_services/logging/v7.0.2/index.html">v7.0.2</a></li></ul></li>
-            <li class="alwaysopen " data-nav-id="/other_services/audit/index.html"><a class="padding" href="/other_services/audit/index.html">Audit services</a><ul id="R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/file_storage/index.html"><a class="padding" href="/other_services/file_storage/index.html">File storage</a></li>
-            <li class="" data-nav-id="/other_services/plugins/index.html"><a class="padding" href="/other_services/plugins/index.html">Plugins</a></li>
-            <li class="" data-nav-id="/other_services/measurement/index.html"><a class="padding" href="/other_services/measurement/index.html">Measurement</a></li></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly."><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="What's New in Logging 7.0.3 :: Juice's documentation"><meta name=twitter:description content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly."><meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/logging/whatsnew/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="What's New in Logging 7.0.3 :: Juice's documentation"><meta property="og:description" content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="Other services"><meta property="article:published_time" content="2023-10-20T08:21:52+07:00"><meta property="article:modified_time" content="2023-10-20T08:21:52+07:00"><meta itemprop=name content="What's New in Logging 7.0.3 :: Juice's documentation"><meta itemprop=description content="We moved logging extensions from BackgroundService project to new Logging project to maintain it in general. Quick access Fixed unexpected error on stopping Windows service Change scopes behavior Write log scopes to file Naming convention Configurable write interval SignalR logger provider DB logger provider File logger provider Fixed unexpected error on stopping Windows service Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly."><meta itemprop=datePublished content="2023-10-20T08:21:52+07:00"><meta itemprop=dateModified content="2023-10-20T08:21:52+07:00"><meta itemprop=wordCount content="353"><title>What's New in Logging 7.0.3 :: Juice's documentation</title>
+<link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/other_services/logging/whatsnew/index.html",window.relearn.relBasePath="../../..",window.relearn.relBaseUri="../../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/other_services/logging/whatsnew/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper><nav class=TableOfContents><ul><li><ul><li></li><li><a href=#file-logger-provider>File logger provider</a></li><li><a href=#signalr-logger-provider>SignalR logger provider</a></li><li><a href=#db-logger-provider>Db logger provider</a></li></ul></li></ul></nav></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/other_services/index.html><span itemprop=name>Other services</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/other_services/logging/index.html><span itemprop=name>Logging</span></a><meta itemprop=position content="3">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>What's New in Logging 7.0.3</span><meta itemprop=position content="4"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/logging/whatsnew.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/logging/index.html title="Logging (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/logging/breaking/index.html title="Breaking changes in Logging 7.0.3 (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable other_services" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=whats-new-in-logging-703>What's New in Logging 7.0.3</h1><h4 id=we-moved-logging-extensions-from-backgroundservice-project-to-new-logging-project-to-maintain-it-in-general>We moved logging extensions from BackgroundService project to new Logging project to maintain it in general.</h4><h4 id=quick-access>Quick access</h4><ul><li><a href=/other_services/logging/whatsnew/index.html#fixed-unexpected-error-on-stopping-windows-service>Fixed unexpected error on stopping Windows service</a></li><li><a href=/other_services/logging/whatsnew/index.html#change-scopes-behavior>Change scopes behavior</a></li><li><a href=/other_services/logging/whatsnew/index.html#write-log-scopes-to-file>Write log scopes to file</a></li><li><a href=/other_services/logging/whatsnew/index.html#naming-convention>Naming convention</a></li><li><a href=/other_services/logging/whatsnew/index.html#configurable-write-interval>Configurable write interval</a></li><li><a href=/other_services/logging/whatsnew/index.html#signalr-logger-provider>SignalR logger provider</a></li><li><a href=/other_services/logging/whatsnew/index.html#db-logger-provider>DB logger provider</a></li></ul><h3 id=file-logger-provider>File logger provider</h3><h4 id=fixed-unexpected-error-on-stopping-windows-service>Fixed unexpected error on stopping Windows service</h4><p>Sometimes you may receive an error message when trying to stop a service on Windows because it cannot be stopped properly.</p><h4 id=change-scopes-behavior>Change scopes behavior</h4><p>You can now use <em>OperationState</em> scope inside <em>TraceId</em>, so there is two ways to use <em>OperationState</em></p><ul><li>Original usage (yes, it still works):</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>string?</span> state;
+</span></span><span style=display:flex><span><span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}.log</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#66d9ef>new</span> List&lt;KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;TraceId&#34;</span>, TraceId),
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;Operation&#34;</span>, Operation)
+</span></span><span style=display:flex><span>})){
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// job processing</span>
+</span></span><span style=display:flex><span>    _logger.LogInformation(<span style=color:#e6db74>&#34;Begin invoke&#34;</span>);
+</span></span><span style=display:flex><span>    state = <span style=color:#66d9ef>await</span> InvokeAsync();
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState}.log</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState} ({increased number}).log</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#66d9ef>new</span> List&lt;KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;TraceId&#34;</span>, TraceId),
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;Operation&#34;</span>, Operation),
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;OperationState&#34;</span>, state)
+</span></span><span style=display:flex><span>})){
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// job is completed with state</span>
+</span></span><span style=display:flex><span>    _logger.LogInformation(<span style=color:#e6db74>&#34;Invoke result: {0}&#34;</span>, state);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// scopes [&#34;Task&#34;, &#34;Success&#34;]    </span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#e6db74>&#34;Task&#34;</span>))
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#e6db74>&#34;Success&#34;</span>))
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    _logger.LogInformation(<span style=color:#e6db74>&#34;Invoked&#34;</span>);
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><ul><li>Now it&rsquo;s more natural:</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}.log</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#66d9ef>new</span> List&lt;KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;TraceId&#34;</span>, TraceId),
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;Operation&#34;</span>, Operation)
+</span></span><span style=display:flex><span>})){
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// job processing</span>
+</span></span><span style=display:flex><span>    _logger.LogInformation(<span style=color:#e6db74>&#34;Begin invoke&#34;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> state = <span style=color:#66d9ef>await</span> InvokeAsync();
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState}.log</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// {Logging:File:Directory}/{ServiceDescription}/{TraceId} - {Operation}_{OperationState} ({increased number}).log</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#66d9ef>new</span> List&lt;KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>new</span> KeyValuePair&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>object</span>&gt;(<span style=color:#e6db74>&#34;OperationState&#34;</span>, state)
+</span></span><span style=display:flex><span>    })){
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// job is completed with state</span>
+</span></span><span style=display:flex><span>        _logger.LogInformation(<span style=color:#e6db74>&#34;Invoke result: {0}&#34;</span>, state);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// scopes [&#34;Task&#34;, &#34;Success&#34;]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> (_logger.BeginScope(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[]{<span style=color:#e6db74>&#34;Task&#34;</span>, <span style=color:#e6db74>&#34;Success&#34;</span>}))
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    _logger.LogInformation(<span style=color:#e6db74>&#34;Invoked&#34;</span>);
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><h4 id=write-log-scopes-to-file>Write log scopes to file</h4><p>Any log scopes specified by the string will be written to the log file. See <a href=https://juice-docs.creatorflow.io/other_services/logging/#write-log-scopes-to-file>Log scopes</a></p><h4 id=naming-convention>Naming convention</h4><p>Correcting directory patterns:</p><ul><li><em>Unnamed service</em>: {Logging:File:Directory}/General/</li><li><em>Named service</em>: {Logging:File:Directory}/{ServiceDescription}/</li></ul><p>Correcting file name patterns:</p><ul><li><em>Default</em>: {yyyy_MM_dd-HHmm}.log</li><li><em>Job</em>: {TraceId} - {Operation}.log</li><li><em>Job has state</em>: {TraceId} - {Operation}_{OperationState}.log</li><li><em>Job has re-run</em>: {TraceId} - {Operation}_{OperationState} ({increased number}).log</li></ul><h4 id=configurable-write-interval>Configurable write interval</h4><p>You can now configure the <a href=https://juice-docs.creatorflow.io/other_services/logging/#configure-log-builder>BufferTime</a> to decide how long to buffer before log entries are written to the file</p><h3 id=signalr-logger-provider>SignalR logger provider</h3><p>Supported logging to SignalR hub <a href=https://juice-docs.creatorflow.io/other_services/logging/#signalr-logger-provider>here</a>.</p><h3 id=db-logger-provider>Db logger provider</h3><p>Supported logging to SignalR hub <a href=https://juice-docs.creatorflow.io/other_services/logging/#db-logger-provider>here</a>.</p><footer class=footline><i class='fa-fw fas fa-calendar'></i> Oct 20, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li class=parent data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu><li class="parent alwaysopen" data-nav-id=/other_services/logging/index.html><a class=padding href=/other_services/logging/index.html>Logging</a><ul id=R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6 class=collapsible-menu><li class=active data-nav-id=/other_services/logging/whatsnew/index.html><a class=padding href=/other_services/logging/whatsnew/index.html>What's New in Logging 7.0.3</a></li><li data-nav-id=/other_services/logging/breaking/index.html><a class=padding href=/other_services/logging/breaking/index.html>Breaking changes in Logging 7.0.3</a></li><li data-nav-id=/other_services/logging/v7.0.2/index.html><a class=padding href=/other_services/logging/v7.0.2/index.html>v7.0.2</a></li></ul></li><li class=alwaysopen data-nav-id=/other_services/audit/index.html><a class=padding href=/other_services/audit/index.html>Audit services</a><ul id=R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328 class=collapsible-menu></ul></li><li data-nav-id=/other_services/file_storage/index.html><a class=padding href=/other_services/file_storage/index.html>File storage</a></li><li data-nav-id=/other_services/plugins/index.html><a class=padding href=/other_services/plugins/index.html>Plugins</a></li><li data-nav-id=/other_services/measurement/index.html><a class=padding href=/other_services/measurement/index.html>Measurement</a></li></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

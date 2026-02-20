@@ -4,6 +4,10 @@ date: 2023-04-03T20:24:09+07:00
 draft: false
 weight: 9
 ---
+> **ℹ v9 update**
+> This feature has been updated in Juice v9.
+> See [Messaging]({{< ref "core/messaging/_index.md" >}}) for the current API.
+> The original v8.5.0 content is preserved [here]({{< ref "v8.5.0" >}}).
 
 ### Integration event service
 In the [IntegrationEventLog]({{< ref "core/eventbus/#integrationeventlog">}}) section, we talked about atomicity and resiliency when publishing to the event bus, followed by each step of the process. 

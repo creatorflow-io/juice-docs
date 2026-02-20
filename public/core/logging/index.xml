@@ -1,26 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Logging :: Juice&#39;s documentation</title>
-    <link>https://juice-docs.creatorflow.io/core/logging/index.html</link>
-    <description>Versions&#xD;latest&#xD;7.0.2&#xD;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 03 Apr 2023 20:23:30 +0700</lastBuildDate>
-    <atom:link href="https://juice-docs.creatorflow.io/core/logging/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Breaking changes</title>
-      <link>https://juice-docs.creatorflow.io/core/logging/breaking/index.html</link>
-      <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
-      <guid>https://juice-docs.creatorflow.io/core/logging/breaking/index.html</guid>
-      <description>Quick access ExternalScopeLoggerProvider Use ExternalScopeLoggerProvider to share scopes (since 7.0.3) The abstract class LoggerProvider should no longer inherit the interface ISupportExternalScope but use the ExternalScopeLoggerProvider instead.</description>
-    </item>
-    <item>
-      <title>Logging</title>
-      <link>https://juice-docs.creatorflow.io/core/logging/v7.0.2/index.html</link>
-      <pubDate>Mon, 03 Apr 2023 20:22:47 +0700</pubDate>
-      <guid>https://juice-docs.creatorflow.io/core/logging/v7.0.2/index.html</guid>
-      <description>Versions&#xD;latest&#xD;7.0.2&#xD;There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Logging :: Juice's documentation</title><link>https://juice-docs.creatorflow.io/core/logging/index.html</link><description>Versionslatest7.0.2There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 03 Apr 2023 20:23:30 +0700</lastBuildDate><atom:link href="https://juice-docs.creatorflow.io/core/logging/index.xml" rel="self" type="application/rss+xml"/><item><title>Breaking changes</title><link>https://juice-docs.creatorflow.io/core/logging/breaking/index.html</link><pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate><guid>https://juice-docs.creatorflow.io/core/logging/breaking/index.html</guid><description>Quick access ExternalScopeLoggerProvider Use ExternalScopeLoggerProvider to share scopes (since 7.0.3) The abstract class LoggerProvider should no longer inherit the interface ISupportExternalScope but use the ExternalScopeLoggerProvider instead.</description></item><item><title>Logging</title><link>https://juice-docs.creatorflow.io/core/logging/v7.0.2/index.html</link><pubDate>Mon, 03 Apr 2023 20:22:47 +0700</pubDate><guid>https://juice-docs.creatorflow.io/core/logging/v7.0.2/index.html</guid><description>Versionslatest7.0.2There are many great logging frameworks for .Net Core like Log4Net, SeriLog, NLog… However, if you wish to customize logging system for special purpose, then you can inherit the LoggerProvider abstract class:</description></item></channel></rss>

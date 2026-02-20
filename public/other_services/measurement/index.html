@@ -1,285 +1,61 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
-ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope(&#34;Test&#34;)) { // Do something await Task.Delay(12); timeTracker.Checkpoint(&#34;Checkpoint 0&#34;); using (timeTracker.BeginScope(&#34;Inner Test&#34;)) { // Do something await Task.Delay(15); using (timeTracker.BeginScope(&#34;Inner Inner Test&#34;)) { // Do something timeTracker.Checkpoint(&#34;Checkpoint 1.1&#34;); await Task.Delay(20); timeTracker.Checkpoint(&#34;Checkpoint 1.2&#34;); } } timeTracker.Checkpoint(&#34;Checkpoint 1&#34;); using (timeTracker.BeginScope(&#34;Inner Test 2&#34;)) { // Do something await Task.Delay(10); timeTracker.Checkpoint(&#34;Checkpoint 1.3&#34;); timeTracker.Checkpoint(&#34;Checkpoint 1.4&#34;); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | &#43; 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | &#43; 4.2 µs | | › Checkpoint 1.2 | 3 | &#43; 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | &#43; 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | &#43; 15.07 ms | | › Checkpoint 1.4 | 2 | &#43; 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Measurement :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
-ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope(&#34;Test&#34;)) { // Do something await Task.Delay(12); timeTracker.Checkpoint(&#34;Checkpoint 0&#34;); using (timeTracker.BeginScope(&#34;Inner Test&#34;)) { // Do something await Task.Delay(15); using (timeTracker.BeginScope(&#34;Inner Inner Test&#34;)) { // Do something timeTracker.Checkpoint(&#34;Checkpoint 1.1&#34;); await Task.Delay(20); timeTracker.Checkpoint(&#34;Checkpoint 1.2&#34;); } } timeTracker.Checkpoint(&#34;Checkpoint 1&#34;); using (timeTracker.BeginScope(&#34;Inner Test 2&#34;)) { // Do something await Task.Delay(10); timeTracker.Checkpoint(&#34;Checkpoint 1.3&#34;); timeTracker.Checkpoint(&#34;Checkpoint 1.4&#34;); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | &#43; 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | &#43; 4.2 µs | | › Checkpoint 1.2 | 3 | &#43; 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | &#43; 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | &#43; 15.07 ms | | › Checkpoint 1.4 | 2 | &#43; 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/measurement/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Measurement :: Juice&#39;s documentation">
-    <meta property="og:description" content="This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
-ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope(&#34;Test&#34;)) { // Do something await Task.Delay(12); timeTracker.Checkpoint(&#34;Checkpoint 0&#34;); using (timeTracker.BeginScope(&#34;Inner Test&#34;)) { // Do something await Task.Delay(15); using (timeTracker.BeginScope(&#34;Inner Inner Test&#34;)) { // Do something timeTracker.Checkpoint(&#34;Checkpoint 1.1&#34;); await Task.Delay(20); timeTracker.Checkpoint(&#34;Checkpoint 1.2&#34;); } } timeTracker.Checkpoint(&#34;Checkpoint 1&#34;); using (timeTracker.BeginScope(&#34;Inner Test 2&#34;)) { // Do something await Task.Delay(10); timeTracker.Checkpoint(&#34;Checkpoint 1.3&#34;); timeTracker.Checkpoint(&#34;Checkpoint 1.4&#34;); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | &#43; 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | &#43; 4.2 µs | | › Checkpoint 1.2 | 3 | &#43; 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | &#43; 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | &#43; 15.07 ms | | › Checkpoint 1.4 | 2 | &#43; 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Measurement :: Juice&#39;s documentation">
-    <meta itemprop="description" content="This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
-ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope(&#34;Test&#34;)) { // Do something await Task.Delay(12); timeTracker.Checkpoint(&#34;Checkpoint 0&#34;); using (timeTracker.BeginScope(&#34;Inner Test&#34;)) { // Do something await Task.Delay(15); using (timeTracker.BeginScope(&#34;Inner Inner Test&#34;)) { // Do something timeTracker.Checkpoint(&#34;Checkpoint 1.1&#34;); await Task.Delay(20); timeTracker.Checkpoint(&#34;Checkpoint 1.2&#34;); } } timeTracker.Checkpoint(&#34;Checkpoint 1&#34;); using (timeTracker.BeginScope(&#34;Inner Test 2&#34;)) { // Do something await Task.Delay(10); timeTracker.Checkpoint(&#34;Checkpoint 1.3&#34;); timeTracker.Checkpoint(&#34;Checkpoint 1.4&#34;); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | &#43; 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | &#43; 4.2 µs | | › Checkpoint 1.2 | 3 | &#43; 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | &#43; 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | &#43; 15.07 ms | | › Checkpoint 1.4 | 2 | &#43; 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:">
-    <meta itemprop="datePublished" content="2024-09-30T08:36:48+07:00">
-    <meta itemprop="dateModified" content="2024-09-30T08:36:48+07:00">
-    <meta itemprop="wordCount" content="326">
-    <title>Measurement :: Juice&#39;s documentation</title>
-    <link href="/other_services/measurement/index.xml" rel="alternate" type="application/rss+xml" title="Measurement :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/other_services\/measurement\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/other_services/measurement/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/index.html"><span itemprop="name">Other services</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Measurement</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/measurement/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/plugins/index.html" title="Plugins (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><span class="topbar-control"><i class="fa-fw fas fa-chevron-right"></i></span>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable other_services" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="measurement">Measurement</h1>
-
-<p>This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code.
-You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ITimeTracker timeTracker = <span style="color:#66d9ef">new</span> TimeTracker();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (timeTracker.BeginScope(<span style="color:#e6db74">&#34;Test&#34;</span>))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Do something</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">12</span>);
-</span></span><span style="display:flex;"><span>        timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 0&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (timeTracker.BeginScope(<span style="color:#e6db74">&#34;Inner Test&#34;</span>))
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Do something</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">15</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">using</span> (timeTracker.BeginScope(<span style="color:#e6db74">&#34;Inner Inner Test&#34;</span>))
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Do something</span>
-</span></span><span style="display:flex;"><span>                timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 1.1&#34;</span>);
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">20</span>);
-</span></span><span style="display:flex;"><span>                timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 1.2&#34;</span>);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 1&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (timeTracker.BeginScope(<span style="color:#e6db74">&#34;Inner Test 2&#34;</span>))
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Do something</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>            timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 1.3&#34;</span>);
-</span></span><span style="display:flex;"><span>            timeTracker.Checkpoint(<span style="color:#e6db74">&#34;Checkpoint 1.4&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    Console.WriteLine(timeTracker.ToString());
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Output:</span>
-</span></span><span style="display:flex;"><span>     _______________________________________________________
-</span></span><span style="display:flex;"><span>    |         Scope         |  Depth   |    Elapsed Time    |
-</span></span><span style="display:flex;"><span>    |-------------------------------------------------------|
-</span></span><span style="display:flex;"><span>    | <span style="color:#960050;background-color:#1e0010">«</span> Test                |    <span style="color:#ae81ff">1</span>     |        <span style="color:#960050;background-color:#1e0010">›</span>  <span style="color:#ae81ff">429.7</span> <span style="color:#960050;background-color:#1e0010">µ</span>s |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">0</span>       |    <span style="color:#ae81ff">1</span>     |         + <span style="color:#ae81ff">16.21</span> ms |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">«</span> Inner Test         |    <span style="color:#ae81ff">2</span>     |        <span style="color:#960050;background-color:#1e0010">›</span>  <span style="color:#ae81ff">16.67</span> ms |
-</span></span><span style="display:flex;"><span>    |   <span style="color:#960050;background-color:#1e0010">«</span> Inner Inner Test  |    <span style="color:#ae81ff">3</span>     |        <span style="color:#960050;background-color:#1e0010">›</span>  <span style="color:#ae81ff">31.08</span> ms |
-</span></span><span style="display:flex;"><span>    |    <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">1.1</span>   |    <span style="color:#ae81ff">3</span>     |           + <span style="color:#ae81ff">4.2</span> <span style="color:#960050;background-color:#1e0010">µ</span>s |
-</span></span><span style="display:flex;"><span>    |    <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">1.2</span>   |    <span style="color:#ae81ff">3</span>     |         + <span style="color:#ae81ff">31.89</span> ms |
-</span></span><span style="display:flex;"><span>    |   <span style="color:#960050;background-color:#1e0010">»</span> Inner Inner Test  |    <span style="color:#ae81ff">3</span>     |           <span style="color:#ae81ff">32.10</span> ms |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">»</span> Inner Test         |    <span style="color:#ae81ff">2</span>     |           <span style="color:#ae81ff">46.77</span> ms |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">1</span>       |    <span style="color:#ae81ff">1</span>     |         + <span style="color:#ae81ff">46.83</span> ms |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">«</span> Inner Test <span style="color:#ae81ff">2</span>       |    <span style="color:#ae81ff">2</span>     |        <span style="color:#960050;background-color:#1e0010">›</span>  <span style="color:#ae81ff">63.46</span> ms |
-</span></span><span style="display:flex;"><span>    |   <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">1.3</span>    |    <span style="color:#ae81ff">2</span>     |         + <span style="color:#ae81ff">15.07</span> ms |
-</span></span><span style="display:flex;"><span>    |   <span style="color:#960050;background-color:#1e0010">›</span> Checkpoint <span style="color:#ae81ff">1.4</span>    |    <span style="color:#ae81ff">2</span>     |           + <span style="color:#ae81ff">2.1</span> <span style="color:#960050;background-color:#1e0010">µ</span>s |
-</span></span><span style="display:flex;"><span>    |  <span style="color:#960050;background-color:#1e0010">»</span> Inner Test <span style="color:#ae81ff">2</span>       |    <span style="color:#ae81ff">2</span>     |           <span style="color:#ae81ff">15.07</span> ms |
-</span></span><span style="display:flex;"><span>    | <span style="color:#960050;background-color:#1e0010">»</span> Test                |    <span style="color:#ae81ff">1</span>     |           <span style="color:#ae81ff">78.13</span> ms |
-</span></span><span style="display:flex;"><span>    |-------------------------------------------------------|
-</span></span><span style="display:flex;"><span>    | Total                 |          |           <span style="color:#ae81ff">79.36</span> ms |
-</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">&#39;</span>-------------------------------------------------------<span style="color:#960050;background-color:#1e0010">&#39;</span></span></span></code></pre></div>
-<p>Inside the <strong>Elapsed Time</strong> column:</p>
-<ul>
-<li>&lsquo;›&rsquo; symbol means the time elapsed from begin of the measurement</li>
-<li>&lsquo;+&rsquo; symbol means the time elapsed from begin of the scope or the last checkpoint</li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Sep 30, 2024
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu">
-            <li class="alwaysopen " data-nav-id="/other_services/logging/index.html"><a class="padding" href="/other_services/logging/index.html">Logging</a><ul id="R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6" class="collapsible-menu"></ul></li>
-            <li class="alwaysopen " data-nav-id="/other_services/audit/index.html"><a class="padding" href="/other_services/audit/index.html">Audit services</a><ul id="R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/file_storage/index.html"><a class="padding" href="/other_services/file_storage/index.html">File storage</a></li>
-            <li class="" data-nav-id="/other_services/plugins/index.html"><a class="padding" href="/other_services/plugins/index.html">Plugins</a></li>
-            <li class="active " data-nav-id="/other_services/measurement/index.html"><a class="padding" href="/other_services/measurement/index.html">Measurement</a></li></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content='This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
+ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope("Test")) { // Do something await Task.Delay(12); timeTracker.Checkpoint("Checkpoint 0"); using (timeTracker.BeginScope("Inner Test")) { // Do something await Task.Delay(15); using (timeTracker.BeginScope("Inner Inner Test")) { // Do something timeTracker.Checkpoint("Checkpoint 1.1"); await Task.Delay(20); timeTracker.Checkpoint("Checkpoint 1.2"); } } timeTracker.Checkpoint("Checkpoint 1"); using (timeTracker.BeginScope("Inner Test 2")) { // Do something await Task.Delay(10); timeTracker.Checkpoint("Checkpoint 1.3"); timeTracker.Checkpoint("Checkpoint 1.4"); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | + 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | + 4.2 µs | | › Checkpoint 1.2 | 3 | + 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | + 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | + 15.07 ms | | › Checkpoint 1.4 | 2 | + 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:'><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Measurement :: Juice's documentation"><meta name=twitter:description content='This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
+ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope("Test")) { // Do something await Task.Delay(12); timeTracker.Checkpoint("Checkpoint 0"); using (timeTracker.BeginScope("Inner Test")) { // Do something await Task.Delay(15); using (timeTracker.BeginScope("Inner Inner Test")) { // Do something timeTracker.Checkpoint("Checkpoint 1.1"); await Task.Delay(20); timeTracker.Checkpoint("Checkpoint 1.2"); } } timeTracker.Checkpoint("Checkpoint 1"); using (timeTracker.BeginScope("Inner Test 2")) { // Do something await Task.Delay(10); timeTracker.Checkpoint("Checkpoint 1.3"); timeTracker.Checkpoint("Checkpoint 1.4"); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | + 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | + 4.2 µs | | › Checkpoint 1.2 | 3 | + 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | + 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | + 15.07 ms | | › Checkpoint 1.4 | 2 | + 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:'><meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/measurement/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Measurement :: Juice's documentation"><meta property="og:description" content='This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
+ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope("Test")) { // Do something await Task.Delay(12); timeTracker.Checkpoint("Checkpoint 0"); using (timeTracker.BeginScope("Inner Test")) { // Do something await Task.Delay(15); using (timeTracker.BeginScope("Inner Inner Test")) { // Do something timeTracker.Checkpoint("Checkpoint 1.1"); await Task.Delay(20); timeTracker.Checkpoint("Checkpoint 1.2"); } } timeTracker.Checkpoint("Checkpoint 1"); using (timeTracker.BeginScope("Inner Test 2")) { // Do something await Task.Delay(10); timeTracker.Checkpoint("Checkpoint 1.3"); timeTracker.Checkpoint("Checkpoint 1.4"); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | + 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | + 4.2 µs | | › Checkpoint 1.2 | 3 | + 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | + 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | + 15.07 ms | | › Checkpoint 1.4 | 2 | + 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:'><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Measurement :: Juice's documentation"><meta itemprop=description content='This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code. You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.
+ITimeTracker timeTracker = new TimeTracker(); using (timeTracker.BeginScope("Test")) { // Do something await Task.Delay(12); timeTracker.Checkpoint("Checkpoint 0"); using (timeTracker.BeginScope("Inner Test")) { // Do something await Task.Delay(15); using (timeTracker.BeginScope("Inner Inner Test")) { // Do something timeTracker.Checkpoint("Checkpoint 1.1"); await Task.Delay(20); timeTracker.Checkpoint("Checkpoint 1.2"); } } timeTracker.Checkpoint("Checkpoint 1"); using (timeTracker.BeginScope("Inner Test 2")) { // Do something await Task.Delay(10); timeTracker.Checkpoint("Checkpoint 1.3"); timeTracker.Checkpoint("Checkpoint 1.4"); } } Console.WriteLine(timeTracker.ToString()); // Output: _______________________________________________________ | Scope | Depth | Elapsed Time | |-------------------------------------------------------| | « Test | 1 | › 429.7 µs | | › Checkpoint 0 | 1 | + 16.21 ms | | « Inner Test | 2 | › 16.67 ms | | « Inner Inner Test | 3 | › 31.08 ms | | › Checkpoint 1.1 | 3 | + 4.2 µs | | › Checkpoint 1.2 | 3 | + 31.89 ms | | » Inner Inner Test | 3 | 32.10 ms | | » Inner Test | 2 | 46.77 ms | | › Checkpoint 1 | 1 | + 46.83 ms | | « Inner Test 2 | 2 | › 63.46 ms | | › Checkpoint 1.3 | 2 | + 15.07 ms | | › Checkpoint 1.4 | 2 | + 2.1 µs | | » Inner Test 2 | 2 | 15.07 ms | | » Test | 1 | 78.13 ms | |-------------------------------------------------------| | Total | | 79.36 ms | &#39;-------------------------------------------------------&#39;Inside the Elapsed Time column:'><meta itemprop=datePublished content="2024-09-30T08:36:48+07:00"><meta itemprop=dateModified content="2024-09-30T08:36:48+07:00"><meta itemprop=wordCount content="326"><title>Measurement :: Juice's documentation</title>
+<link href=/other_services/measurement/index.xml rel=alternate type=application/rss+xml title="Measurement :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/other_services/measurement/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/other_services/measurement/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/other_services/index.html><span itemprop=name>Other services</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Measurement</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/measurement/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/plugins/index.html title="Plugins (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><span class=topbar-control><i class="fa-fw fas fa-chevron-right"></i></span></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable other_services" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=measurement>Measurement</h1><p>This service is useful for measure the execution time of a method by create the execution scopes and checkpoints in your code, and then print the details of execution time step by step to determine where is the slowly code.
+You can use it with new transient instance to meansure inside a class, method, or use dependency injection pattern to meansure cross services.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    ITimeTracker timeTracker = <span style=color:#66d9ef>new</span> TimeTracker();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>using</span> (timeTracker.BeginScope(<span style=color:#e6db74>&#34;Test&#34;</span>))
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Do something</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>12</span>);
+</span></span><span style=display:flex><span>        timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 0&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>using</span> (timeTracker.BeginScope(<span style=color:#e6db74>&#34;Inner Test&#34;</span>))
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Do something</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>15</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>using</span> (timeTracker.BeginScope(<span style=color:#e6db74>&#34;Inner Inner Test&#34;</span>))
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#75715e>// Do something</span>
+</span></span><span style=display:flex><span>                timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 1.1&#34;</span>);
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>20</span>);
+</span></span><span style=display:flex><span>                timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 1.2&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 1&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>using</span> (timeTracker.BeginScope(<span style=color:#e6db74>&#34;Inner Test 2&#34;</span>))
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Do something</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>10</span>);
+</span></span><span style=display:flex><span>            timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 1.3&#34;</span>);
+</span></span><span style=display:flex><span>            timeTracker.Checkpoint(<span style=color:#e6db74>&#34;Checkpoint 1.4&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    Console.WriteLine(timeTracker.ToString());
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Output:</span>
+</span></span><span style=display:flex><span>     _______________________________________________________
+</span></span><span style=display:flex><span>    |         Scope         |  Depth   |    Elapsed Time    |
+</span></span><span style=display:flex><span>    |-------------------------------------------------------|
+</span></span><span style=display:flex><span>    | <span style=color:#960050;background-color:#1e0010>«</span> Test                |    <span style=color:#ae81ff>1</span>     |        <span style=color:#960050;background-color:#1e0010>›</span>  <span style=color:#ae81ff>429.7</span> <span style=color:#960050;background-color:#1e0010>µ</span>s |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>0</span>       |    <span style=color:#ae81ff>1</span>     |         + <span style=color:#ae81ff>16.21</span> ms |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>«</span> Inner Test         |    <span style=color:#ae81ff>2</span>     |        <span style=color:#960050;background-color:#1e0010>›</span>  <span style=color:#ae81ff>16.67</span> ms |
+</span></span><span style=display:flex><span>    |   <span style=color:#960050;background-color:#1e0010>«</span> Inner Inner Test  |    <span style=color:#ae81ff>3</span>     |        <span style=color:#960050;background-color:#1e0010>›</span>  <span style=color:#ae81ff>31.08</span> ms |
+</span></span><span style=display:flex><span>    |    <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>1.1</span>   |    <span style=color:#ae81ff>3</span>     |           + <span style=color:#ae81ff>4.2</span> <span style=color:#960050;background-color:#1e0010>µ</span>s |
+</span></span><span style=display:flex><span>    |    <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>1.2</span>   |    <span style=color:#ae81ff>3</span>     |         + <span style=color:#ae81ff>31.89</span> ms |
+</span></span><span style=display:flex><span>    |   <span style=color:#960050;background-color:#1e0010>»</span> Inner Inner Test  |    <span style=color:#ae81ff>3</span>     |           <span style=color:#ae81ff>32.10</span> ms |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>»</span> Inner Test         |    <span style=color:#ae81ff>2</span>     |           <span style=color:#ae81ff>46.77</span> ms |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>1</span>       |    <span style=color:#ae81ff>1</span>     |         + <span style=color:#ae81ff>46.83</span> ms |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>«</span> Inner Test <span style=color:#ae81ff>2</span>       |    <span style=color:#ae81ff>2</span>     |        <span style=color:#960050;background-color:#1e0010>›</span>  <span style=color:#ae81ff>63.46</span> ms |
+</span></span><span style=display:flex><span>    |   <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>1.3</span>    |    <span style=color:#ae81ff>2</span>     |         + <span style=color:#ae81ff>15.07</span> ms |
+</span></span><span style=display:flex><span>    |   <span style=color:#960050;background-color:#1e0010>›</span> Checkpoint <span style=color:#ae81ff>1.4</span>    |    <span style=color:#ae81ff>2</span>     |           + <span style=color:#ae81ff>2.1</span> <span style=color:#960050;background-color:#1e0010>µ</span>s |
+</span></span><span style=display:flex><span>    |  <span style=color:#960050;background-color:#1e0010>»</span> Inner Test <span style=color:#ae81ff>2</span>       |    <span style=color:#ae81ff>2</span>     |           <span style=color:#ae81ff>15.07</span> ms |
+</span></span><span style=display:flex><span>    | <span style=color:#960050;background-color:#1e0010>»</span> Test                |    <span style=color:#ae81ff>1</span>     |           <span style=color:#ae81ff>78.13</span> ms |
+</span></span><span style=display:flex><span>    |-------------------------------------------------------|
+</span></span><span style=display:flex><span>    | Total                 |          |           <span style=color:#ae81ff>79.36</span> ms |
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>&#39;</span>-------------------------------------------------------<span style=color:#960050;background-color:#1e0010>&#39;</span></span></span></code></pre></div><p>Inside the <strong>Elapsed Time</strong> column:</p><ul><li>&lsquo;›&rsquo; symbol means the time elapsed from begin of the measurement</li><li>&lsquo;+&rsquo; symbol means the time elapsed from begin of the scope or the last checkpoint</li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Sep 30, 2024</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li class=parent data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu><li class=alwaysopen data-nav-id=/other_services/logging/index.html><a class=padding href=/other_services/logging/index.html>Logging</a><ul id=R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/other_services/audit/index.html><a class=padding href=/other_services/audit/index.html>Audit services</a><ul id=R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328 class=collapsible-menu></ul></li><li data-nav-id=/other_services/file_storage/index.html><a class=padding href=/other_services/file_storage/index.html>File storage</a></li><li data-nav-id=/other_services/plugins/index.html><a class=padding href=/other_services/plugins/index.html>Plugins</a></li><li class=active data-nav-id=/other_services/measurement/index.html><a class=padding href=/other_services/measurement/index.html>Measurement</a></li></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

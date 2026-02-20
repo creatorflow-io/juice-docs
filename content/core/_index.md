@@ -16,6 +16,8 @@ pre = "<b>3. </b>"
 
 [Swagger]({{< ref "core/swagger/_index.md" >}})
 
+[Messaging]({{< ref "core/messaging/_index.md" >}})
+
 [Mediator]({{< ref "core/mediator/_index.md" >}})
 
 [Event bus]({{< ref "core/eventbus/_index.md" >}})

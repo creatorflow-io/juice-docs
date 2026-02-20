@@ -1,778 +1,282 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Audit services :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/audit/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Audit services :: Juice&#39;s documentation">
-    <meta property="og:description" content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Audit services :: Juice&#39;s documentation">
-    <meta itemprop="description" content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:">
-    <meta itemprop="datePublished" content="2023-04-03T20:23:30+07:00">
-    <meta itemprop="dateModified" content="2023-04-03T20:23:30+07:00">
-    <meta itemprop="wordCount" content="1802">
-    <title>Audit services :: Juice&#39;s documentation</title>
-    <link href="/other_services/audit/index.xml" rel="alternate" type="application/rss+xml" title="Audit services :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/other_services\/audit\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/other_services/audit/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-<nav class="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#quick-access">Quick access</a></li>
-        <li><a href="#data-audit">Data audit</a></li>
-        <li><a href="#default-audit-service">Default audit service</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/index.html"><span itemprop="name">Other services</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Audit services</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/audit/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/logging/v7.0.2/index.html" title="Logging (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/audit/whatsnew/index.html" title="What's New in Audit 7.0.3 (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable other_services" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="audit-services">Audit services</h1>
-
-
-
-
-    
-    
-    <div style="display: flex;">    
-        <label style="padding-right: 10px;" page-version=latest>Versions</label>
-        <select id="versionSelect" style="width: 100px;">
-            
-                <option  selected  value=latest>latest</option>
-            
-                <option  value=7.0.2>7.0.2</option>
-            
-        </select>
-    </div>
-    <script>
-        var select = document.getElementById('versionSelect');
-        select.addEventListener('change', function() {
-            let path = window.location.pathname.trimEnd('/');
-            let version = select.value;
-            if (version == 'latest') {
-                version = '';
-            }else{
-                version = 'v' + version;
-            }
-            
-            
-            let regex = new RegExp('\/v[0-9]+.[0-9]+.[0-9]+');
-            path = path.replace(regex, '');
-            
-            window.location.href = window.location.origin + path + '/' + version;
-        });
-    </script>
-    
-
-
-<h3 id="quick-access">Quick access</h3>
-<ul>
-<li><a href="/other_services/audit/index.html#data-audit">Data audit</a>
-<ul>
-<li><a href="/other_services/audit/index.html#configure-entity-model">Configure entity model</a></li>
-<li><a href="/other_services/audit/index.html#implement-an-auditable-dbcontext">Implement an auditable DbContext</a></li>
-<li><a href="/other_services/audit/index.html#handle-dataevent">Handle DataEvent</a></li>
-</ul>
-</li>
-<li><a href="/other_services/audit/index.html#default-audit-service">Default audit service</a>
-<ul>
-<li><a href="/other_services/audit/index.html#core-concept">Core concept</a></li>
-<li><a href="/other_services/audit/index.html#usage">Usage</a></li>
-<li><a href="/other_services/audit/index.html#configuration">Configuration</a></li>
-<li><a href="/other_services/audit/index.html#programming-api">Programming API</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="data-audit">Data audit</h3>
-<p>We already have a data audit framework based on EF Core and fully implemented in the <em>DbContextBase</em> abstract class. It will send a <em>DataEvent</em> via MediatR&rsquo;s notification, the object contains:</p>
-<ul>
-<li><em>Name</em>: type of change (<strong>Inserted/ Modified/ Deleted</strong>)</li>
-<li><em>AuditRecord</em>: contains all needed data audit information (<strong>User, Database, Schema, Table, KeyValues, OriginalValues, CurrentValues</strong>)</li>
-</ul>
-<h4 id="what-will-you-do">What will you do?</h4>
-<ol>
-<li>
-<h5 id="configure-entity-model">Configure entity model</h5>
-</li>
-</ol>
-<p>Only entities marked as auditable will have audit events triggeredd on their changes. You can mark an entity as auditable by two ways:</p>
-<ul>
-<li>Inherit from <em>IAuditable</em> interface</li>
-<li>Call <strong>IsAuditable()</strong> on <em>EntityTypeBuilder</em> for your entity</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleEntity</span>: IAuditable{
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// OR</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Inside DbContext</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        modelBuilder.Entity&lt;SampleEntity&gt;(entity =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            ...
-</span></span><span style="display:flex;"><span>            entity.IsAuditable();
-</span></span><span style="display:flex;"><span>            ...
-</span></span><span style="display:flex;"><span>        });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<ol start="2">
-<li>
-<h5 id="implement-an-auditable-dbcontext">Implement an auditable DbContext</h5>
-</li>
-</ol>
-<p><strong>If your DbContext inherits from the abstract class <em>DbContextBase</em>, please bypass this step</strong>. But if you want to implement a DbContext yourself, it must inherit <em>IAuditableDbContext</em> interface and you can follow these steps to configure:</p>
-<ul>
-<li>
-<p>ConfigureServices: we need <em>User</em> info and <em>IMediator</em> service to function.</p>
-<ul>
-<li>If you are using pooled DbContext, your DbContext&rsquo;s <em>constructor</em> must clean, it must contains only DbContextOptions argurment. So we will use PooledDbContextFactory pattern and implement a factory that inherit <em>IDbContextFactory</em> and call ConfigureServices() inside.</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#75715e">// Dependency injection</span>
-</span></span><span style="display:flex;"><span>    services.AddPooledDbContextFactory&lt;SampleDbContext&gt;();
-</span></span><span style="display:flex;"><span>    services.AddScoped&lt;SampleDbContextScopedFactory&gt;();
-</span></span><span style="display:flex;"><span>    services.AddScoped(sp =&gt; sp.GetRequiredService&lt;SampleDbContextScopedFactory&gt;().CreateDbContext());</span></span></code></pre></div>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#75715e">// Factory</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleDbContextScopedFactory</span> : IDbContextFactory&lt;SampleDbContext&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IDbContextFactory&lt;SampleDbContext&gt; _pooledFactory;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IServiceProvider _serviceProvider;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> SampleDbContextScopedFactory(
-</span></span><span style="display:flex;"><span>            IDbContextFactory&lt;SampleDbContext&gt; pooledFactory,
-</span></span><span style="display:flex;"><span>            IServiceProvider serviceProvider)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            _pooledFactory = pooledFactory;
-</span></span><span style="display:flex;"><span>            _serviceProvider = serviceProvider;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> SampleDbContext CreateDbContext()
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> context = _pooledFactory.CreateDbContext();
-</span></span><span style="display:flex;"><span>            context.ConfigureServices(_serviceProvider);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> context;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<ul>
-<li>Otherwise, we can call <em>ConfigureServices()</em> in DbContext&rsquo;s constructor directly.</li>
-</ul>
-</li>
-<li>
-<p>Configure model to mark auditable entities.</p>
-<ul>
-<li>Call <em>modelBuilder.ConfigureAuditableEntities()</em> inside <em>OnModelCreating(ModelBuilder modelBuilder)</em> to mark all entities that inherit <em>IAuditable</em> as auditable.</li>
-<li>Call <strong>IsAuditable()</strong> on <em>EntityTypeBuilder</em> for your entity (step 1).</li>
-</ul>
-</li>
-<li>
-<p>Store the audit information before you <em>SaveChanges</em> and finally dispatch data change events.</p>
-</li>
-</ul>
-<p>The code block below is an example for an auditable DbContext.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SampleDbContext</span> : DbContext,
-</span></span><span style="display:flex;"><span>        IAuditableDbContext
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#region</span> Auditable context
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string?</span> User { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">set</span>; }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> IHttpContextAccessor? _httpContextAccessor;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> List&lt;AuditEntry&gt;? PendingAuditEntries { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">set</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endregion</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> IMediator? _mediator;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> ILogger? _logger;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> DbOptions? _options;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;summary&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// Please call &lt;c&gt;ConfigureServices(IServiceProvider serviceProvider)&lt;/c&gt; directly in your constructor</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// or inside &lt;c&gt;IDbContextFactory.CreateDbContext()&lt;/c&gt; if you are using PooledDbContextFactory&lt;/para&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// to init internal services&lt;/para&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;/summary&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/// &lt;param name=&#34;options&#34;&gt;&lt;/param&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> SampleDbContext(DbContextOptions options)
-</span></span><span style="display:flex;"><span>            : <span style="color:#66d9ef">base</span>(options)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceProvider serviceProvider)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Get user from HttpContext</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> httpContextAccessor = serviceProvider.GetService&lt;IHttpContextAccessor&gt;();
-</span></span><span style="display:flex;"><span>            User = httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                _mediator = serviceProvider.GetService&lt;IMediator&gt;();
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">catch</span> (Exception ex)
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> OnModelCreating(ModelBuilder modelBuilder)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">base</span>.OnModelCreating(modelBuilder);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Mark all entities that inherit IAuditable as auditable</span>
-</span></span><span style="display:flex;"><span>            modelBuilder.ConfigureAuditableEntities();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// OR/ AND</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Mark specified entities as auditable</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            modelBuilder.Entity&lt;SampleEntity&gt;(entity =&gt;
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                ...
-</span></span><span style="display:flex;"><span>                entity.IsAuditable();
-</span></span><span style="display:flex;"><span>                ...
-</span></span><span style="display:flex;"><span>            });
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> ProcessingChanges()
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (PendingAuditEntries == <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>            { <span style="color:#66d9ef">return</span>; }
-</span></span><span style="display:flex;"><span>            _mediator.DispatchDataChangeEventsAsync(<span style="color:#66d9ef">this</span>).GetAwaiter().GetResult();
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; SaveChangesAsync(<span style="color:#66d9ef">bool</span> acceptAllChangesOnSuccess, CancellationToken cancellationToken = <span style="color:#66d9ef">default</span>(CancellationToken))
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.SetAuditInformation(_logger);
-</span></span><span style="display:flex;"><span>            PendingAuditEntries = _mediator != <span style="color:#66d9ef">null</span> ? <span style="color:#66d9ef">this</span>.TrackingChanges(_logger)?.ToList() : <span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">base</span>.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">finally</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                ProcessingChanges();
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">int</span> SaveChanges(<span style="color:#66d9ef">bool</span> acceptAllChangesOnSuccess)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.SetAuditInformation(_logger);
-</span></span><span style="display:flex;"><span>            PendingAuditEntries = _mediator != <span style="color:#66d9ef">null</span> ? <span style="color:#66d9ef">this</span>.TrackingChanges(_logger)?.ToList() : <span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">base</span>.SaveChanges(acceptAllChangesOnSuccess);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">finally</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                ProcessingChanges();
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<ol start="3">
-<li>
-<h5 id="handle-dataevent">Handle DataEvent</h5>
-</li>
-</ol>
-<ul>
-<li>Implement your own handler by inheriting <em>MediatR.INotificationHandler&lt;DataEvent&lt;T&gt;&gt;</em>, so you can store anything you need proactively.</li>
-<li>Use default audit service that we provided below.</li>
-</ul>
-<h3 id="default-audit-service">Default audit service</h3>
-<p>In this part, we provide not only data audit service but access logging service.</p>
-<h4 id="core-concept">Core concept</h4>
-<ol>
-<li>
-<h5 id="auditcontext">AuditContext</h5>
-</li>
-</ol>
-<p>The AuditContext contains information about user access log, data audit entries. It will be initialized while a request is starting, be fulfilled while the request pipeline is invoking, and be committed by the <em>IAuditService</em> when the request pipeline is finished.</p>
-<ol start="2">
-<li>
-<h5 id="iauditcontextaccessor">IAuditContextAccessor</h5>
-</li>
-</ol>
-<p>The accessor to access AuditContext in the scope.</p>
-<ol start="3">
-<li>
-<h5 id="iauditservice">IAuditService</h5>
-</li>
-</ol>
-<p>The service that processes the audited information to store or send it to other systems.</p>
-<ol start="4">
-<li>
-<h5 id="auditmiddleware">AuditMiddleware</h5>
-</li>
-</ol>
-<p>The middleware that inits the AuditContext at the start of the request. It also collects the important information about the request:</p>
-<ul>
-<li><em>User</em>, <em>DateTime</em>, <em>Action</em></li>
-<li><strong>RequestInfo</strong>: <em>RequestId</em>, <em>Headers</em>, <em>Host</em>, <em>Method</em>, <em>Path</em>, <em>RemoteIpAddress</em></li>
-<li><strong>ServerInfo</strong>: <em>MachineName</em>, <em>OSVersion</em>, <em>SoftwareVersion</em>, <em>AppName</em></li>
-<li><strong>ResponseInfo</strong>: <em>StatusCode</em>, <em>Headers</em>, <em>ElapsedMilliseconds</em>.
-<ul>
-<li>The <em>Data</em> was intended to be filled by other middleware that you will implement yourself.</li>
-<li>The <em>Message</em>, <em>Error</em> may be set by this middleware if an exception was thrown while invoking the next steps of the pipeline and there is no other middleware filling it. Otherwise, it may be filled by a custom middleware like the <em>Data</em>.</li>
-</ul>
-</li>
-</ul>
-<p>It must be placed after <em>Authentication</em> middleware to have <em>User</em> information.</p>
-<p>NOTE: <strong>It often increases by 30ms - 70ms in request response time because saves the audit information with the EF repository or gRPC</strong> (tested with <em>SQL Server</em> and <em>PostgreSQL</em> on Docker, it depends on whether there are any DataAudit entries or not, and database provider).</p>
-<p>The figure below is the request processing flow with <em>AuditMiddleware</em> injected.</p>
-<figure><img src="/images/services/Audit-process.svg"><figcaption>
-      <h4>Audit process</h4>
-    </figcaption>
-</figure>
-
-<h4 id="usage">Usage</h4>
-<p>We currently provide two ways to use the audit services.</p>
-<ol>
-<li><strong>EF repository</strong></li>
-</ol>
-<p>Use the <em>AuditMiddleware</em> to collect audit information and directly persist into the EF repository.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Minimal application Program.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.Audit.AspNetCore.Extensions;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// configure Audit services with default usage</span>
-</span></span><span style="display:flex;"><span>builder.Services.ConfigureAuditDefault(builder.Configuration, options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// configure database options</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//options.DatabaseProvider = &#34;PostgreSQL&#34;;</span>
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// MediatR service is required for Audit services</span>
-</span></span><span style="display:flex;"><span>builder.Services.AddMediatR(<span style="color:#66d9ef">typeof</span>(Program));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// if specified, the authentication middleware must place before the AuditMiddleware to have User info.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// app.UseAuthentication();</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// use AuditMiddleware to handle audit for specified request</span>
-</span></span><span style="display:flex;"><span>app.UseAudit(<span style="color:#e6db74">&#34;yourAppName&#34;</span>, options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    options.Include(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;GET&#34;</span>);
-</span></span><span style="display:flex;"><span>    options.Exclude(<span style="color:#e6db74">&#34;/Index&#34;</span>);
-</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
-<ol start="2">
-<li><strong>gRPC repository</strong></li>
-</ol>
-<p>Use the <em>AuditMiddleware</em> to collect audit information and remotely persist to the audit server by gRPC.</p>
-<p>In this usage, we will use <em>ConfigureAuditGrpcClient()</em> instead of <em>ConfigureAuditDefault()</em> for the application.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Minimal application Program.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.Audit.AspNetCore.Extensions;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// configure Audit services to use gRPC client</span>
-</span></span><span style="display:flex;"><span>builder.Services.ConfigureAuditGrpcClient(options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    options.Address = <span style="color:#66d9ef">new</span> Uri(<span style="color:#e6db74">&#34;https://localhost:7285&#34;</span>); <span style="color:#75715e">// the audit server endpoint</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// configure grpc client factory options</span>
-</span></span><span style="display:flex;"><span>    options.ChannelOptionsActions.Add(o =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        o.HttpHandler = <span style="color:#66d9ef">new</span> SocketsHttpHandler
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
-</span></span><span style="display:flex;"><span>            KeepAlivePingDelay = TimeSpan.FromSeconds(<span style="color:#ae81ff">60</span>),
-</span></span><span style="display:flex;"><span>            KeepAlivePingTimeout = TimeSpan.FromSeconds(<span style="color:#ae81ff">30</span>),
-</span></span><span style="display:flex;"><span>            EnableMultipleHttp2Connections = <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>        };
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// MediatR service is required for Audit services</span>
-</span></span><span style="display:flex;"><span>builder.Services.AddMediatR(<span style="color:#66d9ef">typeof</span>(Program));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// if specified, the authentication middleware must place before the AuditMiddleware to have User info.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// app.UseAuthentication();</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// use AuditMiddleware to handle audit for specified request</span>
-</span></span><span style="display:flex;"><span>app.UseAudit(<span style="color:#e6db74">&#34;yourAppName&#34;</span>, options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    options.Include(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;GET&#34;</span>);
-</span></span><span style="display:flex;"><span>    options.Exclude(<span style="color:#e6db74">&#34;/Index&#34;</span>);
-</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
-<p>We also need an audit server to handle the audit messages.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Audit server Program.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.Audit.AspNetCore.Extensions;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// configure Audit services as a server</span>
-</span></span><span style="display:flex;"><span>builder.Services.ConfigureAuditGrpcHost(builder.Configuration,
-</span></span><span style="display:flex;"><span>    options =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// MediatR and Grpc services is required for Audit services</span>
-</span></span><span style="display:flex;"><span>builder.Services.AddMediatR(<span style="color:#66d9ef">typeof</span>(Program));
-</span></span><span style="display:flex;"><span>builder.Services.AddGrpc(o =&gt; o.EnableDetailedErrors = <span style="color:#66d9ef">true</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// map gPRC endpoint to handle audit messages</span>
-</span></span><span style="display:flex;"><span>app.MapAuditGrpcServer();</span></span></code></pre></div>
-<p>Please follow this <a href="https://learn.microsoft.com/en-us/aspnet/core/grpc/performance?view=aspnetcore-7.0" rel="external" target="_blank">link</a> to read about rRPC performance tips.</p>
-<h4 id="configuration">Configuration</h4>
-<ol>
-<li>
-<h5 id="ef-repositories">EF repositories</h5>
-</li>
-</ol>
-<p>You can configure <em>DbOptions</em> to specify database provider, schema&hellip; See <a href="https://juice-docs.creatorflow.io/core/entityframework/#dboptions">DbOptions</a> for more information.</p>
-<ol start="2">
-<li>
-<h5 id="audit-filters">Audit filters</h5>
-</li>
-</ol>
-<p>You can configure <em>AuditFilterOptions</em> to specify the paths and methods you want to audit, as well as request/response headers to store in the access log.</p>
-<ul>
-<li>Path and method filtering to processing
-<ul>
-<li>You can describe multiple paths, zero or more methods per path. The path and method are <strong>case insensitive</strong></li>
-<li>You can define a rule with specified priority and then add it to <em>Filters</em> or load the rule from configuration</li>
-<li>You can use <strong>*</strong> to describe a single segment</li>
-<li>You can use <strong>#</strong> to describe zero or more segments</li>
-</ul>
-</li>
-<li>Response status filtering
-<ul>
-<li>You can describe multiple response status codes so that <em>AuditMiddleware</em> will process the request upon completion</li>
-<li>The status codes described will be associated with the filter path at the same time</li>
-</ul>
-</li>
-<li>Request/response headers filtering to store
-<ul>
-<li>You can use <strong>*</strong> to describe a single segment</li>
-<li>You can use <strong>#</strong> to describe zero or more segments</li>
-<li>Request headers will be stored by default: <strong>:authority:, accept-#, content-*, x-forwarded-#, referer, user-agent</strong></li>
-<li>Response headers will be stored by default: <strong>content-*</strong></li>
-</ul>
-</li>
-</ul>
-<p>Some main methods of <em>AuditFilterOptions</em> that help us build the filter options:</p>
-<ul>
-<li><em>Clear</em>: clear all existing filter entries</li>
-<li><em>Include</em>: append a filter entry to include path, methods&hellip;</li>
-<li><em>Exclude</em>: append a filter entry to exclude path, methods&hellip;</li>
-<li><em>Merge</em>: merge new filter entries if they do not already exist</li>
-<li><em>IsExists</em>: check if the filter entry already exists</li>
-<li><em>StoreEmptyRequestHeaders</em>: clear all request header filters</li>
-<li><em>StoreRequestHeaders</em>: add new request header filters</li>
-<li><em>StoreEmptyResponseHeaders</em>: clear all response header filters</li>
-<li><em>StoreResponseHeaders</em>: add new response header filters</li>
-</ul>
-<hr>
-<p><strong>NOTE</strong></p>
-<ul>
-<li>Leave <strong>blank</strong> (of <em>Path</em>, <em>Methods</em>, <em>StatusCodes</em>) will have the same meaning as <strong>any</strong></li>
-<li>Rules added <strong>later</strong> by filter builder will have <strong>higher priority</strong> by default</li>
-<li>Rules added by configuration section will have the same priority level of 0 by default</li>
-</ul>
-<hr>
-<p>The code blocks below are two ways to configure the audit filter</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">//Program.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> configs = <span style="color:#66d9ef">new</span> AuditFilterOptions();
-</span></span><span style="display:flex;"><span>builder.Configuration.Bind(<span style="color:#e6db74">&#34;Audit&#34;</span>, configs);
-</span></span><span style="display:flex;"><span>app.UseAudit(<span style="color:#e6db74">&#34;yourAppName&#34;</span>, options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// describe the paths and methods to logging user acess and data audit</span>
-</span></span><span style="display:flex;"><span>    options.Include(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;GET&#34;</span>); <span style="color:#75715e">// include any GET request</span>
-</span></span><span style="display:flex;"><span>    options.Exclude(<span style="color:#e6db74">&#34;/Index&#34;</span>); <span style="color:#75715e">// exclude requests to /Index</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// include all POST, PUT request to the path that:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// - starts with /kernel</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// - has one or more segment after</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Ex: /kernel/foo, /kernel/foo/bar, /kernel/foo/bar/barbar ...</span>
-</span></span><span style="display:flex;"><span>    options.Include(<span style="color:#e6db74">&#34;/kernel/*/#&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;PUT&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// merge filter entries from appsettings</span>
-</span></span><span style="display:flex;"><span>    options.Merge(configs.Filters);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Only store the request headers like: accept, accept-encoding, accept-language-x,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// content-type, content-length... but not content, content-type-y</span>
-</span></span><span style="display:flex;"><span>    options.StoreEmptyRequestHeaders()
-</span></span><span style="display:flex;"><span>        .StoreRequestHeaders(<span style="color:#e6db74">&#34;accept-#&#34;</span>, <span style="color:#e6db74">&#34;content-*&#34;</span>);
-</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">//appsettings.json</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Audit:Filters&#34;</span>: [ <span style="color:#75715e">// path filter antries</span>
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Methods&#34;</span>: [ <span style="color:#e6db74">&#34;POST&#34;</span>, <span style="color:#e6db74">&#34;PUT&#34;</span>, <span style="color:#e6db74">&#34;DELETE&#34;</span> ],
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Priority&#34;</span>: -<span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    },
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;IsExcluded&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Path&#34;</span>: <span style="color:#e6db74">&#34;/#/negotiate&#34;</span>
-</span></span><span style="display:flex;"><span>    },
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;IsExcluded&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Path&#34;</span>: <span style="color:#e6db74">&#34;/error/*&#34;</span>
-</span></span><span style="display:flex;"><span>    },
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;StatusCodes&#34;</span>: [<span style="color:#ae81ff">400</span>, <span style="color:#ae81ff">500</span>]
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>]</span></span></code></pre></div>
-<p>The model presents the filter entry here</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PathFilterEntry</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Priority { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsExcluded { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Path { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = <span style="color:#66d9ef">string</span>.Empty;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span>[] Methods { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = Array.Empty&lt;<span style="color:#66d9ef">string</span>&gt;();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span>[] StatusCodes { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; } = Array.Empty&lt;<span style="color:#66d9ef">int</span>&gt;();
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h4 id="programming-api">Programming API</h4>
-<ol>
-<li>
-<h5 id="fulfill-response-information">Fulfill response information</h5>
-</li>
-</ol>
-<p>The <em>Data</em>, <em>Msg</em>, <em>Err</em> of <em>ResponseInfo</em> can only be assigned values <strong>once</strong>. In <em>AuditMiddleware</em>, we do not try to set <em>Data</em> but rather <em>Msg</em> and <em>Err</em> by handling the pipeline call exception. To set <em>Msg</em>, <em>Err</em>, <em>Data</em> in other middlewares or action filter, we can use <em>IAuditContextAccessor</em> service to access the <em>AuditContext</em> and then try to set the response information.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    auditContextAccessor.AuditContext?.UpdateResponseInfo(response =&gt; 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        response.TrySetMessage(<span style="color:#e6db74">&#34;An useful message&#34;</span>);
-</span></span><span style="display:flex;"><span>        response.TrySetData(<span style="color:#e6db74">&#34;{\&#34;foo\&#34;:\&#34;bar\&#34;}&#34;</span>);
-</span></span><span style="display:flex;"><span>    });</span></span></code></pre></div>
-<ol start="2">
-<li>
-<h5 id="add-more-audit-entries">Add more audit entries</h5>
-</li>
-</ol>
-<p>By default, we use <em>DataEvenNotificationtHandler</em> to handle <em>DataEvent</em> and add <em>DataAudit</em> entries, but you can add <em>DataAudit</em> entries manually by access the <em>AuditContext</em>.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    auditContextAccessor.AuditContext?.AddAuditEntries(entry1, entry2...);</span></span></code></pre></div>
-<ol start="3">
-<li>
-<h5 id="additional-metadata">Additional metadata</h5>
-</li>
-</ol>
-<p>If the current audit information is not enough, you can add more information to the <em>Metadata</em> by access the <em>AuditContext</em>.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    auditContextAccessor.AuditContext?.AccessRecord?.SetMetadata(key, <span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// OR</span>
-</span></span><span style="display:flex;"><span>    auditContextAccessor.AuditContext?.AccessRecord?.SetMetadataJson(jsonString);</span></span></code></pre></div>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.Audit" rel="external" target="_blank">Juice.Audit</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.Audit.Api.Contracts" rel="external" target="_blank">Juice.Audit.Api.Contracts</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.Audit.Api" rel="external" target="_blank">Juice.Audit.Api</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.Audit.EF" rel="external" target="_blank">Juice.Audit.EF</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.Audit.EF.SqlServer" rel="external" target="_blank">Juice.Audit.EF.SqlServer</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.Audit.EF.PostgreSQL" rel="external" target="_blank">Juice.Audit.EF.PostgreSQL</a></li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Apr 3, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu">
-            <li class="alwaysopen " data-nav-id="/other_services/logging/index.html"><a class="padding" href="/other_services/logging/index.html">Logging</a><ul id="R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6" class="collapsible-menu"></ul></li>
-            <li class="active parent alwaysopen " data-nav-id="/other_services/audit/index.html"><a class="padding" href="/other_services/audit/index.html">Audit services</a><ul id="R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328" class="collapsible-menu">
-            <li class="" data-nav-id="/other_services/audit/whatsnew/index.html"><a class="padding" href="/other_services/audit/whatsnew/index.html">What&#39;s New in Audit 7.0.3</a></li>
-            <li class="" data-nav-id="/other_services/audit/v7.0.2/index.html"><a class="padding" href="/other_services/audit/v7.0.2/index.html">v7.0.2</a></li></ul></li>
-            <li class="" data-nav-id="/other_services/file_storage/index.html"><a class="padding" href="/other_services/file_storage/index.html">File storage</a></li>
-            <li class="" data-nav-id="/other_services/plugins/index.html"><a class="padding" href="/other_services/plugins/index.html">Plugins</a></li>
-            <li class="" data-nav-id="/other_services/measurement/index.html"><a class="padding" href="/other_services/measurement/index.html">Measurement</a></li></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:"><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Audit services :: Juice's documentation"><meta name=twitter:description content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:"><meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/audit/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Audit services :: Juice's documentation"><meta property="og:description" content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:"><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Audit services :: Juice's documentation"><meta itemprop=description content="Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:"><meta itemprop=datePublished content="2023-04-03T20:23:30+07:00"><meta itemprop=dateModified content="2023-04-03T20:23:30+07:00"><meta itemprop=wordCount content="1802"><title>Audit services :: Juice's documentation</title>
+<link href=/other_services/audit/index.xml rel=alternate type=application/rss+xml title="Audit services :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/other_services/audit/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/other_services/audit/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper><nav class=TableOfContents><ul><li><ul><li><a href=#quick-access>Quick access</a></li><li><a href=#data-audit>Data audit</a></li><li><a href=#default-audit-service>Default audit service</a></li></ul></li></ul></nav></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/other_services/index.html><span itemprop=name>Other services</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Audit services</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/audit/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/logging/v7.0.2/index.html title="Logging (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/audit/whatsnew/index.html title="What's New in Audit 7.0.3 (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable other_services" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=audit-services>Audit services</h1><div style=display:flex><label style=padding-right:10px page-version=latest>Versions</label>
+<select id=versionSelect style=width:100px><option selected value=latest>latest</option><option value=7.0.2>7.0.2</option></select></div><script>var select=document.getElementById("versionSelect");select.addEventListener("change",function(){let t=window.location.pathname.trimEnd("/"),e=select.value;e=="latest"?e="":e="v"+e;let n=new RegExp("/v[0-9]+.[0-9]+.[0-9]+");t=t.replace(n,""),window.location.href=window.location.origin+t+"/"+e})</script><h3 id=quick-access>Quick access</h3><ul><li><a href=/other_services/audit/index.html#data-audit>Data audit</a><ul><li><a href=/other_services/audit/index.html#configure-entity-model>Configure entity model</a></li><li><a href=/other_services/audit/index.html#implement-an-auditable-dbcontext>Implement an auditable DbContext</a></li><li><a href=/other_services/audit/index.html#handle-dataevent>Handle DataEvent</a></li></ul></li><li><a href=/other_services/audit/index.html#default-audit-service>Default audit service</a><ul><li><a href=/other_services/audit/index.html#core-concept>Core concept</a></li><li><a href=/other_services/audit/index.html#usage>Usage</a></li><li><a href=/other_services/audit/index.html#configuration>Configuration</a></li><li><a href=/other_services/audit/index.html#programming-api>Programming API</a></li></ul></li></ul><h3 id=data-audit>Data audit</h3><p>We already have a data audit framework based on EF Core and fully implemented in the <em>DbContextBase</em> abstract class. It will send a <em>DataEvent</em> via MediatR&rsquo;s notification, the object contains:</p><ul><li><em>Name</em>: type of change (<strong>Inserted/ Modified/ Deleted</strong>)</li><li><em>AuditRecord</em>: contains all needed data audit information (<strong>User, Database, Schema, Table, KeyValues, OriginalValues, CurrentValues</strong>)</li></ul><h4 id=what-will-you-do>What will you do?</h4><ol><li><h5 id=configure-entity-model>Configure entity model</h5></li></ol><p>Only entities marked as auditable will have audit events triggeredd on their changes. You can mark an entity as auditable by two ways:</p><ul><li>Inherit from <em>IAuditable</em> interface</li><li>Call <strong>IsAuditable()</strong> on <em>EntityTypeBuilder</em> for your entity</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SampleEntity</span>: IAuditable{
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// OR</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Inside DbContext</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>void</span> OnModelCreating(ModelBuilder modelBuilder)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        modelBuilder.Entity&lt;SampleEntity&gt;(entity =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            ...
+</span></span><span style=display:flex><span>            entity.IsAuditable();
+</span></span><span style=display:flex><span>            ...
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><ol start=2><li><h5 id=implement-an-auditable-dbcontext>Implement an auditable DbContext</h5></li></ol><p><strong>If your DbContext inherits from the abstract class <em>DbContextBase</em>, please bypass this step</strong>. But if you want to implement a DbContext yourself, it must inherit <em>IAuditableDbContext</em> interface and you can follow these steps to configure:</p><ul><li><p>ConfigureServices: we need <em>User</em> info and <em>IMediator</em> service to function.</p><ul><li>If you are using pooled DbContext, your DbContext&rsquo;s <em>constructor</em> must clean, it must contains only DbContextOptions argurment. So we will use PooledDbContextFactory pattern and implement a factory that inherit <em>IDbContextFactory</em> and call ConfigureServices() inside.</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    <span style=color:#75715e>// Dependency injection</span>
+</span></span><span style=display:flex><span>    services.AddPooledDbContextFactory&lt;SampleDbContext&gt;();
+</span></span><span style=display:flex><span>    services.AddScoped&lt;SampleDbContextScopedFactory&gt;();
+</span></span><span style=display:flex><span>    services.AddScoped(sp =&gt; sp.GetRequiredService&lt;SampleDbContextScopedFactory&gt;().CreateDbContext());</span></span></code></pre></div><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    <span style=color:#75715e>// Factory</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SampleDbContextScopedFactory</span> : IDbContextFactory&lt;SampleDbContext&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> IDbContextFactory&lt;SampleDbContext&gt; _pooledFactory;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> IServiceProvider _serviceProvider;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> SampleDbContextScopedFactory(
+</span></span><span style=display:flex><span>            IDbContextFactory&lt;SampleDbContext&gt; pooledFactory,
+</span></span><span style=display:flex><span>            IServiceProvider serviceProvider)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            _pooledFactory = pooledFactory;
+</span></span><span style=display:flex><span>            _serviceProvider = serviceProvider;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> SampleDbContext CreateDbContext()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> context = _pooledFactory.CreateDbContext();
+</span></span><span style=display:flex><span>            context.ConfigureServices(_serviceProvider);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> context;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><ul><li>Otherwise, we can call <em>ConfigureServices()</em> in DbContext&rsquo;s constructor directly.</li></ul></li><li><p>Configure model to mark auditable entities.</p><ul><li>Call <em>modelBuilder.ConfigureAuditableEntities()</em> inside <em>OnModelCreating(ModelBuilder modelBuilder)</em> to mark all entities that inherit <em>IAuditable</em> as auditable.</li><li>Call <strong>IsAuditable()</strong> on <em>EntityTypeBuilder</em> for your entity (step 1).</li></ul></li><li><p>Store the audit information before you <em>SaveChanges</em> and finally dispatch data change events.</p></li></ul><p>The code block below is an example for an auditable DbContext.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SampleDbContext</span> : DbContext,
+</span></span><span style=display:flex><span>        IAuditableDbContext
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>#region</span> Auditable context
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string?</span> User { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> IHttpContextAccessor? _httpContextAccessor;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> List&lt;AuditEntry&gt;? PendingAuditEntries { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#75715e>#endregion</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>protected</span> IMediator? _mediator;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>protected</span> ILogger? _logger;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>protected</span> DbOptions? _options;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// &lt;summary&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// Please call &lt;c&gt;ConfigureServices(IServiceProvider serviceProvider)&lt;/c&gt; directly in your constructor</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// or inside &lt;c&gt;IDbContextFactory.CreateDbContext()&lt;/c&gt; if you are using PooledDbContextFactory&lt;/para&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// to init internal services&lt;/para&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// &lt;/summary&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/// &lt;param name=&#34;options&#34;&gt;&lt;/param&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> SampleDbContext(DbContextOptions options)
+</span></span><span style=display:flex><span>            : <span style=color:#66d9ef>base</span>(options)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> ConfigureServices(IServiceProvider serviceProvider)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Get user from HttpContext</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> httpContextAccessor = serviceProvider.GetService&lt;IHttpContextAccessor&gt;();
+</span></span><span style=display:flex><span>            User = httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                _mediator = serviceProvider.GetService&lt;IMediator&gt;();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>catch</span> (Exception ex)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>void</span> OnModelCreating(ModelBuilder modelBuilder)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>base</span>.OnModelCreating(modelBuilder);
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Mark all entities that inherit IAuditable as auditable</span>
+</span></span><span style=display:flex><span>            modelBuilder.ConfigureAuditableEntities();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// OR/ AND</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Mark specified entities as auditable</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            modelBuilder.Entity&lt;SampleEntity&gt;(entity =&gt;
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                ...
+</span></span><span style=display:flex><span>                entity.IsAuditable();
+</span></span><span style=display:flex><span>                ...
+</span></span><span style=display:flex><span>            });
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> ProcessingChanges()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (PendingAuditEntries == <span style=color:#66d9ef>null</span>)
+</span></span><span style=display:flex><span>            { <span style=color:#66d9ef>return</span>; }
+</span></span><span style=display:flex><span>            _mediator.DispatchDataChangeEventsAsync(<span style=color:#66d9ef>this</span>).GetAwaiter().GetResult();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>async</span> Task&lt;<span style=color:#66d9ef>int</span>&gt; SaveChangesAsync(<span style=color:#66d9ef>bool</span> acceptAllChangesOnSuccess, CancellationToken cancellationToken = <span style=color:#66d9ef>default</span>(CancellationToken))
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>this</span>.SetAuditInformation(_logger);
+</span></span><span style=display:flex><span>            PendingAuditEntries = _mediator != <span style=color:#66d9ef>null</span> ? <span style=color:#66d9ef>this</span>.TrackingChanges(_logger)?.ToList() : <span style=color:#66d9ef>default</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>base</span>.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>finally</span>
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                ProcessingChanges();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>int</span> SaveChanges(<span style=color:#66d9ef>bool</span> acceptAllChangesOnSuccess)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>this</span>.SetAuditInformation(_logger);
+</span></span><span style=display:flex><span>            PendingAuditEntries = _mediator != <span style=color:#66d9ef>null</span> ? <span style=color:#66d9ef>this</span>.TrackingChanges(_logger)?.ToList() : <span style=color:#66d9ef>default</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>base</span>.SaveChanges(acceptAllChangesOnSuccess);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>finally</span>
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                ProcessingChanges();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><ol start=3><li><h5 id=handle-dataevent>Handle DataEvent</h5></li></ol><ul><li>Implement your own handler by inheriting <em>MediatR.INotificationHandler&lt;DataEvent&lt;T>></em>, so you can store anything you need proactively.</li><li>Use default audit service that we provided below.</li></ul><h3 id=default-audit-service>Default audit service</h3><p>In this part, we provide not only data audit service but access logging service.</p><h4 id=core-concept>Core concept</h4><ol><li><h5 id=auditcontext>AuditContext</h5></li></ol><p>The AuditContext contains information about user access log, data audit entries. It will be initialized while a request is starting, be fulfilled while the request pipeline is invoking, and be committed by the <em>IAuditService</em> when the request pipeline is finished.</p><ol start=2><li><h5 id=iauditcontextaccessor>IAuditContextAccessor</h5></li></ol><p>The accessor to access AuditContext in the scope.</p><ol start=3><li><h5 id=iauditservice>IAuditService</h5></li></ol><p>The service that processes the audited information to store or send it to other systems.</p><ol start=4><li><h5 id=auditmiddleware>AuditMiddleware</h5></li></ol><p>The middleware that inits the AuditContext at the start of the request. It also collects the important information about the request:</p><ul><li><em>User</em>, <em>DateTime</em>, <em>Action</em></li><li><strong>RequestInfo</strong>: <em>RequestId</em>, <em>Headers</em>, <em>Host</em>, <em>Method</em>, <em>Path</em>, <em>RemoteIpAddress</em></li><li><strong>ServerInfo</strong>: <em>MachineName</em>, <em>OSVersion</em>, <em>SoftwareVersion</em>, <em>AppName</em></li><li><strong>ResponseInfo</strong>: <em>StatusCode</em>, <em>Headers</em>, <em>ElapsedMilliseconds</em>.<ul><li>The <em>Data</em> was intended to be filled by other middleware that you will implement yourself.</li><li>The <em>Message</em>, <em>Error</em> may be set by this middleware if an exception was thrown while invoking the next steps of the pipeline and there is no other middleware filling it. Otherwise, it may be filled by a custom middleware like the <em>Data</em>.</li></ul></li></ul><p>It must be placed after <em>Authentication</em> middleware to have <em>User</em> information.</p><p>NOTE: <strong>It often increases by 30ms - 70ms in request response time because saves the audit information with the EF repository or gRPC</strong> (tested with <em>SQL Server</em> and <em>PostgreSQL</em> on Docker, it depends on whether there are any DataAudit entries or not, and database provider).</p><p>The figure below is the request processing flow with <em>AuditMiddleware</em> injected.</p><figure><img src=/images/services/Audit-process.svg><figcaption><h4>Audit process</h4></figcaption></figure><h4 id=usage>Usage</h4><p>We currently provide two ways to use the audit services.</p><ol><li><strong>EF repository</strong></li></ol><p>Use the <em>AuditMiddleware</em> to collect audit information and directly persist into the EF repository.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#75715e>// Minimal application Program.cs</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.Audit.AspNetCore.Extensions;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// configure Audit services with default usage</span>
+</span></span><span style=display:flex><span>builder.Services.ConfigureAuditDefault(builder.Configuration, options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// configure database options</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//options.DatabaseProvider = &#34;PostgreSQL&#34;;</span>
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// MediatR service is required for Audit services</span>
+</span></span><span style=display:flex><span>builder.Services.AddMediatR(<span style=color:#66d9ef>typeof</span>(Program));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> app = builder.Build();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// if specified, the authentication middleware must place before the AuditMiddleware to have User info.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// app.UseAuthentication();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// use AuditMiddleware to handle audit for specified request</span>
+</span></span><span style=display:flex><span>app.UseAudit(<span style=color:#e6db74>&#34;yourAppName&#34;</span>, options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    options.Include(<span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#e6db74>&#34;GET&#34;</span>);
+</span></span><span style=display:flex><span>    options.Exclude(<span style=color:#e6db74>&#34;/Index&#34;</span>);
+</span></span><span style=display:flex><span>});</span></span></code></pre></div><ol start=2><li><strong>gRPC repository</strong></li></ol><p>Use the <em>AuditMiddleware</em> to collect audit information and remotely persist to the audit server by gRPC.</p><p>In this usage, we will use <em>ConfigureAuditGrpcClient()</em> instead of <em>ConfigureAuditDefault()</em> for the application.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#75715e>// Minimal application Program.cs</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.Audit.AspNetCore.Extensions;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// configure Audit services to use gRPC client</span>
+</span></span><span style=display:flex><span>builder.Services.ConfigureAuditGrpcClient(options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    options.Address = <span style=color:#66d9ef>new</span> Uri(<span style=color:#e6db74>&#34;https://localhost:7285&#34;</span>); <span style=color:#75715e>// the audit server endpoint</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// configure grpc client factory options</span>
+</span></span><span style=display:flex><span>    options.ChannelOptionsActions.Add(o =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        o.HttpHandler = <span style=color:#66d9ef>new</span> SocketsHttpHandler
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
+</span></span><span style=display:flex><span>            KeepAlivePingDelay = TimeSpan.FromSeconds(<span style=color:#ae81ff>60</span>),
+</span></span><span style=display:flex><span>            KeepAlivePingTimeout = TimeSpan.FromSeconds(<span style=color:#ae81ff>30</span>),
+</span></span><span style=display:flex><span>            EnableMultipleHttp2Connections = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// MediatR service is required for Audit services</span>
+</span></span><span style=display:flex><span>builder.Services.AddMediatR(<span style=color:#66d9ef>typeof</span>(Program));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> app = builder.Build();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// if specified, the authentication middleware must place before the AuditMiddleware to have User info.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// app.UseAuthentication();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// use AuditMiddleware to handle audit for specified request</span>
+</span></span><span style=display:flex><span>app.UseAudit(<span style=color:#e6db74>&#34;yourAppName&#34;</span>, options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    options.Include(<span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#e6db74>&#34;GET&#34;</span>);
+</span></span><span style=display:flex><span>    options.Exclude(<span style=color:#e6db74>&#34;/Index&#34;</span>);
+</span></span><span style=display:flex><span>});</span></span></code></pre></div><p>We also need an audit server to handle the audit messages.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#75715e>// Audit server Program.cs</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.Audit.AspNetCore.Extensions;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// configure Audit services as a server</span>
+</span></span><span style=display:flex><span>builder.Services.ConfigureAuditGrpcHost(builder.Configuration,
+</span></span><span style=display:flex><span>    options =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        options.DatabaseProvider = <span style=color:#e6db74>&#34;PostgreSQL&#34;</span>;
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// MediatR and Grpc services is required for Audit services</span>
+</span></span><span style=display:flex><span>builder.Services.AddMediatR(<span style=color:#66d9ef>typeof</span>(Program));
+</span></span><span style=display:flex><span>builder.Services.AddGrpc(o =&gt; o.EnableDetailedErrors = <span style=color:#66d9ef>true</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> app = builder.Build();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#75715e>// map gPRC endpoint to handle audit messages</span>
+</span></span><span style=display:flex><span>app.MapAuditGrpcServer();</span></span></code></pre></div><p>Please follow this <a href="https://learn.microsoft.com/en-us/aspnet/core/grpc/performance?view=aspnetcore-7.0" rel=external target=_blank>link</a> to read about rRPC performance tips.</p><h4 id=configuration>Configuration</h4><ol><li><h5 id=ef-repositories>EF repositories</h5></li></ol><p>You can configure <em>DbOptions</em> to specify database provider, schema&mldr; See <a href=https://juice-docs.creatorflow.io/core/entityframework/#dboptions>DbOptions</a> for more information.</p><ol start=2><li><h5 id=audit-filters>Audit filters</h5></li></ol><p>You can configure <em>AuditFilterOptions</em> to specify the paths and methods you want to audit, as well as request/response headers to store in the access log.</p><ul><li>Path and method filtering to processing<ul><li>You can describe multiple paths, zero or more methods per path. The path and method are <strong>case insensitive</strong></li><li>You can define a rule with specified priority and then add it to <em>Filters</em> or load the rule from configuration</li><li>You can use <strong>*</strong> to describe a single segment</li><li>You can use <strong>#</strong> to describe zero or more segments</li></ul></li><li>Response status filtering<ul><li>You can describe multiple response status codes so that <em>AuditMiddleware</em> will process the request upon completion</li><li>The status codes described will be associated with the filter path at the same time</li></ul></li><li>Request/response headers filtering to store<ul><li>You can use <strong>*</strong> to describe a single segment</li><li>You can use <strong>#</strong> to describe zero or more segments</li><li>Request headers will be stored by default: <strong>:authority:, accept-#, content-*, x-forwarded-#, referer, user-agent</strong></li><li>Response headers will be stored by default: <strong>content-*</strong></li></ul></li></ul><p>Some main methods of <em>AuditFilterOptions</em> that help us build the filter options:</p><ul><li><em>Clear</em>: clear all existing filter entries</li><li><em>Include</em>: append a filter entry to include path, methods&mldr;</li><li><em>Exclude</em>: append a filter entry to exclude path, methods&mldr;</li><li><em>Merge</em>: merge new filter entries if they do not already exist</li><li><em>IsExists</em>: check if the filter entry already exists</li><li><em>StoreEmptyRequestHeaders</em>: clear all request header filters</li><li><em>StoreRequestHeaders</em>: add new request header filters</li><li><em>StoreEmptyResponseHeaders</em>: clear all response header filters</li><li><em>StoreResponseHeaders</em>: add new response header filters</li></ul><hr><p><strong>NOTE</strong></p><ul><li>Leave <strong>blank</strong> (of <em>Path</em>, <em>Methods</em>, <em>StatusCodes</em>) will have the same meaning as <strong>any</strong></li><li>Rules added <strong>later</strong> by filter builder will have <strong>higher priority</strong> by default</li><li>Rules added by configuration section will have the same priority level of 0 by default</li></ul><hr><p>The code blocks below are two ways to configure the audit filter</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#75715e>//Program.cs</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> configs = <span style=color:#66d9ef>new</span> AuditFilterOptions();
+</span></span><span style=display:flex><span>builder.Configuration.Bind(<span style=color:#e6db74>&#34;Audit&#34;</span>, configs);
+</span></span><span style=display:flex><span>app.UseAudit(<span style=color:#e6db74>&#34;yourAppName&#34;</span>, options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// describe the paths and methods to logging user acess and data audit</span>
+</span></span><span style=display:flex><span>    options.Include(<span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#e6db74>&#34;GET&#34;</span>); <span style=color:#75715e>// include any GET request</span>
+</span></span><span style=display:flex><span>    options.Exclude(<span style=color:#e6db74>&#34;/Index&#34;</span>); <span style=color:#75715e>// exclude requests to /Index</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// include all POST, PUT request to the path that:</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// - starts with /kernel</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// - has one or more segment after</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Ex: /kernel/foo, /kernel/foo/bar, /kernel/foo/bar/barbar ...</span>
+</span></span><span style=display:flex><span>    options.Include(<span style=color:#e6db74>&#34;/kernel/*/#&#34;</span>, <span style=color:#e6db74>&#34;POST&#34;</span>, <span style=color:#e6db74>&#34;PUT&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// merge filter entries from appsettings</span>
+</span></span><span style=display:flex><span>    options.Merge(configs.Filters);
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Only store the request headers like: accept, accept-encoding, accept-language-x,</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// content-type, content-length... but not content, content-type-y</span>
+</span></span><span style=display:flex><span>    options.StoreEmptyRequestHeaders()
+</span></span><span style=display:flex><span>        .StoreRequestHeaders(<span style=color:#e6db74>&#34;accept-#&#34;</span>, <span style=color:#e6db74>&#34;content-*&#34;</span>);
+</span></span><span style=display:flex><span>});</span></span></code></pre></div><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#75715e>//appsettings.json</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;Audit:Filters&#34;</span>: [ <span style=color:#75715e>// path filter antries</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Methods&#34;</span>: [ <span style=color:#e6db74>&#34;POST&#34;</span>, <span style=color:#e6db74>&#34;PUT&#34;</span>, <span style=color:#e6db74>&#34;DELETE&#34;</span> ],
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Priority&#34;</span>: -<span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;IsExcluded&#34;</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Path&#34;</span>: <span style=color:#e6db74>&#34;/#/negotiate&#34;</span>
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;IsExcluded&#34;</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Path&#34;</span>: <span style=color:#e6db74>&#34;/error/*&#34;</span>
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;StatusCodes&#34;</span>: [<span style=color:#ae81ff>400</span>, <span style=color:#ae81ff>500</span>]
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>]</span></span></code></pre></div><p>The model presents the filter entry here</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PathFilterEntry</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Priority { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; } = <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>bool</span> IsExcluded { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; } = <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Path { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; } = <span style=color:#66d9ef>string</span>.Empty;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span>[] Methods { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; } = Array.Empty&lt;<span style=color:#66d9ef>string</span>&gt;();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span>[] StatusCodes { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; } = Array.Empty&lt;<span style=color:#66d9ef>int</span>&gt;();
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><h4 id=programming-api>Programming API</h4><ol><li><h5 id=fulfill-response-information>Fulfill response information</h5></li></ol><p>The <em>Data</em>, <em>Msg</em>, <em>Err</em> of <em>ResponseInfo</em> can only be assigned values <strong>once</strong>. In <em>AuditMiddleware</em>, we do not try to set <em>Data</em> but rather <em>Msg</em> and <em>Err</em> by handling the pipeline call exception. To set <em>Msg</em>, <em>Err</em>, <em>Data</em> in other middlewares or action filter, we can use <em>IAuditContextAccessor</em> service to access the <em>AuditContext</em> and then try to set the response information.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    auditContextAccessor.AuditContext?.UpdateResponseInfo(response =&gt; 
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        response.TrySetMessage(<span style=color:#e6db74>&#34;An useful message&#34;</span>);
+</span></span><span style=display:flex><span>        response.TrySetData(<span style=color:#e6db74>&#34;{\&#34;foo\&#34;:\&#34;bar\&#34;}&#34;</span>);
+</span></span><span style=display:flex><span>    });</span></span></code></pre></div><ol start=2><li><h5 id=add-more-audit-entries>Add more audit entries</h5></li></ol><p>By default, we use <em>DataEvenNotificationtHandler</em> to handle <em>DataEvent</em> and add <em>DataAudit</em> entries, but you can add <em>DataAudit</em> entries manually by access the <em>AuditContext</em>.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    auditContextAccessor.AuditContext?.AddAuditEntries(entry1, entry2...);</span></span></code></pre></div><ol start=3><li><h5 id=additional-metadata>Additional metadata</h5></li></ol><p>If the current audit information is not enough, you can add more information to the <em>Metadata</em> by access the <em>AuditContext</em>.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    auditContextAccessor.AuditContext?.AccessRecord?.SetMetadata(key, <span style=color:#66d9ef>value</span>);
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// OR</span>
+</span></span><span style=display:flex><span>    auditContextAccessor.AuditContext?.AccessRecord?.SetMetadataJson(jsonString);</span></span></code></pre></div><p>The library can be accessed via Nuget:</p><ul><li><a href=https://www.nuget.org/packages/Juice.Audit rel=external target=_blank>Juice.Audit</a></li><li><a href=https://www.nuget.org/packages/Juice.Audit.Api.Contracts rel=external target=_blank>Juice.Audit.Api.Contracts</a></li><li><a href=https://www.nuget.org/packages/Juice.Audit.Api rel=external target=_blank>Juice.Audit.Api</a></li><li><a href=https://www.nuget.org/packages/Juice.Audit.EF rel=external target=_blank>Juice.Audit.EF</a></li><li><a href=https://www.nuget.org/packages/Juice.Audit.EF.SqlServer rel=external target=_blank>Juice.Audit.EF.SqlServer</a></li><li><a href=https://www.nuget.org/packages/Juice.Audit.EF.PostgreSQL rel=external target=_blank>Juice.Audit.EF.PostgreSQL</a></li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Apr 3, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li class=parent data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu><li class=alwaysopen data-nav-id=/other_services/logging/index.html><a class=padding href=/other_services/logging/index.html>Logging</a><ul id=R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6 class=collapsible-menu></ul></li><li class="active parent alwaysopen" data-nav-id=/other_services/audit/index.html><a class=padding href=/other_services/audit/index.html>Audit services</a><ul id=R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328 class=collapsible-menu><li data-nav-id=/other_services/audit/whatsnew/index.html><a class=padding href=/other_services/audit/whatsnew/index.html>What's New in Audit 7.0.3</a></li><li data-nav-id=/other_services/audit/v7.0.2/index.html><a class=padding href=/other_services/audit/v7.0.2/index.html>v7.0.2</a></li></ul></li><li data-nav-id=/other_services/file_storage/index.html><a class=padding href=/other_services/file_storage/index.html>File storage</a></li><li data-nav-id=/other_services/plugins/index.html><a class=padding href=/other_services/plugins/index.html>Plugins</a></li><li data-nav-id=/other_services/measurement/index.html><a class=padding href=/other_services/measurement/index.html>Measurement</a></li></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

@@ -1,291 +1,48 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="This layer will name {namespace}.{feature}.
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="This layer will name {namespace}.{feature}.
 The project tree will look like this:
-|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Domain :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="This layer will name {namespace}.{feature}.
+|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:"><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Domain :: Juice's documentation"><meta name=twitter:description content="This layer will name {namespace}.{feature}.
 The project tree will look like this:
-|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/quickstart/domain/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Domain :: Juice&#39;s documentation">
-    <meta property="og:description" content="This layer will name {namespace}.{feature}.
+|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:"><meta property="og:url" content="https://juice-docs.creatorflow.io/quickstart/domain/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Domain :: Juice's documentation"><meta property="og:description" content="This layer will name {namespace}.{feature}.
 The project tree will look like this:
-|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Domain :: Juice&#39;s documentation">
-    <meta itemprop="description" content="This layer will name {namespace}.{feature}.
+|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:"><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Domain :: Juice's documentation"><meta itemprop=description content="This layer will name {namespace}.{feature}.
 The project tree will look like this:
-|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:">
-    <meta itemprop="datePublished" content="2023-04-13T10:48:09+07:00">
-    <meta itemprop="dateModified" content="2023-04-13T10:48:09+07:00">
-    <meta itemprop="wordCount" content="274">
-    <title>Domain :: Juice&#39;s documentation</title>
-    <link href="/quickstart/domain/index.xml" rel="alternate" type="application/rss+xml" title="Domain :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/quickstart\/domain\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/quickstart/domain/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/quickstart/index.html"><span itemprop="name">Quickstarts</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Domain</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/quickstart/domain/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/quickstart/overview/index.html" title="Overview (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/quickstart/infrastructure/index.html" title="Infrastructure (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable quickstart" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="domain">Domain</h1>
-
-<p>This layer will name <code>{namespace}.{feature}</code>.</p>
-<p>The project tree will look like this:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>|-- Domain
-</span></span><span style="display:flex;"><span>|   |-- AggregrateModel
-</span></span><span style="display:flex;"><span>|       |-- AbcAggregrate
-</span></span><span style="display:flex;"><span>|           | Abc.cs
-</span></span><span style="display:flex;"><span>|           | IAbcRepository.cs     <span style="color:#75715e">// suggested</span>
-</span></span><span style="display:flex;"><span>|       |-- XyzAggregrate
-</span></span><span style="display:flex;"><span>|   |-- Commands
-</span></span><span style="display:flex;"><span>|       |-- CreateAbcCommand.cs
-</span></span><span style="display:flex;"><span>|   |-- Events
-</span></span><span style="display:flex;"><span>|       |-- AbcCreatedDomainEvent.cs
-</span></span><span style="display:flex;"><span>|   |-- CommandHandlers     <span style="color:#75715e">// move it into API project if you are not implementing the Repository</span>
-</span></span><span style="display:flex;"><span>|       |-- CreateAbcCommandHandler.cs      <span style="color:#75715e">// to handle create Abc command (as same as Manager)</span>
-</span></span><span style="display:flex;"><span>|-- DependencyInjection     <span style="color:#75715e">// optional</span>
-</span></span><span style="display:flex;"><span>|   |-- YourServiceCollectionExtensions.cs  <span style="color:#75715e">// to register your services</span></span></span></code></pre></div>
-<p>In the tree above:</p>
-<ul>
-<li><strong>Abc</strong> is an aggregarte model that implement <strong>IAggregrateRoot<!-- raw HTML omitted --></strong>.</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.Domain;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Abc</span>: IAggregrateRoot&lt;INotification&gt;{   <span style="color:#75715e">// INotification is an interface of MediatR</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Abc() { } <span style="color:#75715e">// parameterless constructor is needed for EF</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Abc(<span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> correlationId)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            Name = name;
-</span></span><span style="display:flex;"><span>            CorrelationId = correlationId;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">        
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">        [Key]</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Guid Id { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> CorrelationId { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> UpdateName(<span style="color:#66d9ef">string</span> newName){
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> originName = Name;
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// validation for new name then update it into Name</span>
-</span></span><span style="display:flex;"><span>            ...
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// add a domain event to notice that name was changed</span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            <span style="color:#66d9ef">this</span>.AddDomainEvent(<span style="color:#66d9ef">new</span> AbcNameChangedDomainEvent(originName, newName));
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<ul>
-<li><strong>IAbcRepository</strong> will define methods to CRUD Abc (and entities within its boundaries) and all you need.</li>
-<li>The <em>Commands</em> folder will contain commands to process specified use-cases. A command must contains:
-<ul>
-<li><strong>Identifier</strong>: to identify processing object</li>
-<li><strong>Data</strong>: enough to process the use-case</li>
-</ul>
-</li>
-<li>The <em>CommandHandlers</em> folder will contain classes to handle the commands above
-<ul>
-<li>Use <strong>IAbcRepository</strong> to read domain objects by <strong>Identifier</strong> or init domain objects from the command&rsquo;s data</li>
-<li>Call domain method to process the use-case</li>
-<li>Use <strong>IAbcRepository</strong> to persist data back to data backend</li>
-</ul>
-</li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Apr 13, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu">
-            <li class="" data-nav-id="/quickstart/overview/index.html"><a class="padding" href="/quickstart/overview/index.html">Overview</a></li>
-            <li class="active " data-nav-id="/quickstart/domain/index.html"><a class="padding" href="/quickstart/domain/index.html">Domain</a></li>
-            <li class="" data-nav-id="/quickstart/infrastructure/index.html"><a class="padding" href="/quickstart/infrastructure/index.html">Infrastructure</a></li>
-            <li class="" data-nav-id="/quickstart/contracts/index.html"><a class="padding" href="/quickstart/contracts/index.html">API Contracts</a></li>
-            <li class="" data-nav-id="/quickstart/api/index.html"><a class="padding" href="/quickstart/api/index.html">API</a></li>
-            <li class="" data-nav-id="/quickstart/microservice/index.html"><a class="padding" href="/quickstart/microservice/index.html">Microservice</a></li>
-            <li class="" data-nav-id="/quickstart/mono/index.html"><a class="padding" href="/quickstart/mono/index.html">Monolithic</a></li></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+|-- Domain | |-- AggregrateModel | |-- AbcAggregrate | | Abc.cs | | IAbcRepository.cs // suggested | |-- XyzAggregrate | |-- Commands | |-- CreateAbcCommand.cs | |-- Events | |-- AbcCreatedDomainEvent.cs | |-- CommandHandlers // move it into API project if you are not implementing the Repository | |-- CreateAbcCommandHandler.cs // to handle create Abc command (as same as Manager) |-- DependencyInjection // optional | |-- YourServiceCollectionExtensions.cs // to register your servicesIn the tree above:"><meta itemprop=datePublished content="2023-04-13T10:48:09+07:00"><meta itemprop=dateModified content="2023-04-13T10:48:09+07:00"><meta itemprop=wordCount content="274"><title>Domain :: Juice's documentation</title>
+<link href=/quickstart/domain/index.xml rel=alternate type=application/rss+xml title="Domain :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/quickstart/domain/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/quickstart/domain/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/quickstart/index.html><span itemprop=name>Quickstarts</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Domain</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/quickstart/domain/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/quickstart/overview/index.html title="Overview (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/quickstart/infrastructure/index.html title="Infrastructure (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable quickstart" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=domain>Domain</h1><p>This layer will name <code>{namespace}.{feature}</code>.</p><p>The project tree will look like this:</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>|-- Domain
+</span></span><span style=display:flex><span>|   |-- AggregrateModel
+</span></span><span style=display:flex><span>|       |-- AbcAggregrate
+</span></span><span style=display:flex><span>|           | Abc.cs
+</span></span><span style=display:flex><span>|           | IAbcRepository.cs     <span style=color:#75715e>// suggested</span>
+</span></span><span style=display:flex><span>|       |-- XyzAggregrate
+</span></span><span style=display:flex><span>|   |-- Commands
+</span></span><span style=display:flex><span>|       |-- CreateAbcCommand.cs
+</span></span><span style=display:flex><span>|   |-- Events
+</span></span><span style=display:flex><span>|       |-- AbcCreatedDomainEvent.cs
+</span></span><span style=display:flex><span>|   |-- CommandHandlers     <span style=color:#75715e>// move it into API project if you are not implementing the Repository</span>
+</span></span><span style=display:flex><span>|       |-- CreateAbcCommandHandler.cs      <span style=color:#75715e>// to handle create Abc command (as same as Manager)</span>
+</span></span><span style=display:flex><span>|-- DependencyInjection     <span style=color:#75715e>// optional</span>
+</span></span><span style=display:flex><span>|   |-- YourServiceCollectionExtensions.cs  <span style=color:#75715e>// to register your services</span></span></span></code></pre></div><p>In the tree above:</p><ul><li><strong>Abc</strong> is an aggregarte model that implement <strong>IAggregrateRoot</strong>.</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.Domain;
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Abc</span>: IAggregrateRoot&lt;INotification&gt;{   <span style=color:#75715e>// INotification is an interface of MediatR</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Abc() { } <span style=color:#75715e>// parameterless constructor is needed for EF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Abc(<span style=color:#66d9ef>string</span> name, <span style=color:#66d9ef>string</span> correlationId)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Name = name;
+</span></span><span style=display:flex><span>            CorrelationId = correlationId;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [Key]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Guid Id { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>init</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Name { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>init</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> CorrelationId { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>init</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> UpdateName(<span style=color:#66d9ef>string</span> newName){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> originName = Name;
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// validation for new name then update it into Name</span>
+</span></span><span style=display:flex><span>            ...
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// add a domain event to notice that name was changed</span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>            <span style=color:#66d9ef>this</span>.AddDomainEvent(<span style=color:#66d9ef>new</span> AbcNameChangedDomainEvent(originName, newName));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><ul><li><strong>IAbcRepository</strong> will define methods to CRUD Abc (and entities within its boundaries) and all you need.</li><li>The <em>Commands</em> folder will contain commands to process specified use-cases. A command must contains:<ul><li><strong>Identifier</strong>: to identify processing object</li><li><strong>Data</strong>: enough to process the use-case</li></ul></li><li>The <em>CommandHandlers</em> folder will contain classes to handle the commands above<ul><li>Use <strong>IAbcRepository</strong> to read domain objects by <strong>Identifier</strong> or init domain objects from the command&rsquo;s data</li><li>Call domain method to process the use-case</li><li>Use <strong>IAbcRepository</strong> to persist data back to data backend</li></ul></li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Apr 13, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li class=parent data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu><li data-nav-id=/quickstart/overview/index.html><a class=padding href=/quickstart/overview/index.html>Overview</a></li><li class=active data-nav-id=/quickstart/domain/index.html><a class=padding href=/quickstart/domain/index.html>Domain</a></li><li data-nav-id=/quickstart/infrastructure/index.html><a class=padding href=/quickstart/infrastructure/index.html>Infrastructure</a></li><li data-nav-id=/quickstart/contracts/index.html><a class=padding href=/quickstart/contracts/index.html>API Contracts</a></li><li data-nav-id=/quickstart/api/index.html><a class=padding href=/quickstart/api/index.html>API</a></li><li data-nav-id=/quickstart/microservice/index.html><a class=padding href=/quickstart/microservice/index.html>Microservice</a></li><li data-nav-id=/quickstart/mono/index.html><a class=padding href=/quickstart/mono/index.html>Monolithic</a></li></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

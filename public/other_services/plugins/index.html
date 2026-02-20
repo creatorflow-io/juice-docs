@@ -1,338 +1,74 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
 Plugin sequence diagram To implement plugin pattern, you first understanding the AssemblyLoadContext.
 Core concept Application The application will host all services including the IPluginServiceProvider and IPluginsManager services. Application accesses Plugin services through IPluginServiceProvider, and manages plugins (Load/Unload) via IPluginsManager.
-PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them.">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Plugins :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
+PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them."><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Plugins :: Juice's documentation"><meta name=twitter:description content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
 Plugin sequence diagram To implement plugin pattern, you first understanding the AssemblyLoadContext.
 Core concept Application The application will host all services including the IPluginServiceProvider and IPluginsManager services. Application accesses Plugin services through IPluginServiceProvider, and manages plugins (Load/Unload) via IPluginsManager.
-PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them.">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/plugins/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Plugins :: Juice&#39;s documentation">
-    <meta property="og:description" content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
+PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them."><meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/plugins/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Plugins :: Juice's documentation"><meta property="og:description" content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
 Plugin sequence diagram To implement plugin pattern, you first understanding the AssemblyLoadContext.
 Core concept Application The application will host all services including the IPluginServiceProvider and IPluginsManager services. Application accesses Plugin services through IPluginServiceProvider, and manages plugins (Load/Unload) via IPluginsManager.
-PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them.">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Plugins :: Juice&#39;s documentation">
-    <meta itemprop="description" content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
+PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Plugins :: Juice's documentation"><meta itemprop=description content="We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.
 Plugin sequence diagram To implement plugin pattern, you first understanding the AssemblyLoadContext.
 Core concept Application The application will host all services including the IPluginServiceProvider and IPluginsManager services. Application accesses Plugin services through IPluginServiceProvider, and manages plugins (Load/Unload) via IPluginsManager.
-PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them.">
-    <meta itemprop="datePublished" content="2023-09-23T15:54:24+07:00">
-    <meta itemprop="dateModified" content="2023-09-23T15:54:24+07:00">
-    <meta itemprop="wordCount" content="388">
-    <title>Plugins :: Juice&#39;s documentation</title>
-    <link href="/other_services/plugins/index.xml" rel="alternate" type="application/rss+xml" title="Plugins :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/other_services\/plugins\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/other_services/plugins/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/index.html"><span itemprop="name">Other services</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Plugins</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/plugins/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/file_storage/index.html" title="File storage (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/measurement/index.html" title="Measurement (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable other_services" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="plugins">Plugins</h1>
-
-<p>We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.</p>
-<figure><img src="/images/services/Plugins-process.svg"><figcaption>
-      <h4>Plugin sequence diagram</h4>
-    </figcaption>
-</figure>
-
-<p>To implement plugin pattern, you first understanding the <a href="https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext" rel="external" target="_blank">AssemblyLoadContext</a>.</p>
-<h4 id="core-concept">Core concept</h4>
-<ol>
-<li><strong>Application</strong></li>
-</ol>
-<p>The application will host all services including the <em>IPluginServiceProvider</em> and <em>IPluginsManager</em> services. Application accesses <em>Plugin</em> services through <em>IPluginServiceProvider</em>, and manages plugins (<strong>Load/Unload</strong>) via <em>IPluginsManager</em>.</p>
-<ol start="2">
-<li><strong>PluginsManager</strong></li>
-</ol>
-<p>This service manages all plugins by Load/Unload them. Some <em>Shared Services</em> can be shared between <em>Application</em> and <em>Plugins</em> when we load them.</p>
-<hr>
-<p><strong>NOTE</strong></p>
-<ul>
-<li>Any service tha can be called from <em>Application</em> or passed from <em>Application</em> is a shared service</li>
-<li>Any services shared with plugin must be excluded from the plugin directory</li>
-<li>We can share the service instead of its implementation classes, so we can use different implementations between <em>Application</em> and <em>Plugins</em></li>
-</ul>
-<hr>
-<p>These services will be shared with plugin by default:</p>
-<ul>
-<li>IServiceCollection</li>
-<li>IConfiguration</li>
-</ul>
-<ol start="3">
-<li><strong>Plugin</strong></li>
-</ol>
-<p>The plugin will implement our shared services. To avoid libraries version conflicts and easy of implementation, it should have a reference to the <strong>Microsoft.AspNetCore.App</strong> so <em>Application</em> and <em>Plugin</em> will share this framework.</p>
-<p>On load, all <em>Startup</em> classes will be discovered and their <em>ConfigureServices()</em> method called with <em>IServiceCollection</em> and <em>IConfiguration</em> argurments. So the plugin can have an owned appsettings file.</p>
-<p>After loaded, plugin will have its own <em>ServiceProvider</em>, which is useful when resolving services from the plugin.</p>
-<h4 id="usage">Usage</h4>
-<p>To use plugin services, please call the <em>AddPlugins()</em> on <em>IServiceCollection</em> instance.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Microsoft.Extensions.DependencyInjection;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>builder.Services.AddPlugins(options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    options.AbsolutePaths = pluginPaths;
-</span></span><span style="display:flex;"><span>    options.ConfigureSharedServices = (services, sp) =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// SharedService will be shared to plugins</span>
-</span></span><span style="display:flex;"><span>        services.AddScoped(sp1 =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> s = sp.GetRequiredService&lt;SharedService&gt;();
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">var</span> l = sp.GetRequiredService&lt;ILoggerFactory&gt;().CreateLogger(<span style="color:#e6db74">&#34;shared&#34;</span>);
-</span></span><span style="display:flex;"><span>            l.LogInformation(<span style="color:#e6db74">&#34;Shared service created {0}&#34;</span>, s.Id);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> s;
-</span></span><span style="display:flex;"><span>        });
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
-<h4 id="plugin-implementation">Plugin implementation</h4>
-<p>The quote below is a simple project file of a plugin. Please refer to <a href="https://learn.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support" rel="external" target="_blank">Dotnet tutorials</a> for details.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// Plugin.csprj</span>
-</span></span><span style="display:flex;"><span>&lt;Project Sdk=<span style="color:#e6db74">&#34;Microsoft.NET.Sdk&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  &lt;PropertyGroup&gt;
-</span></span><span style="display:flex;"><span>    &lt;TargetFrameworks&gt;net6.<span style="color:#ae81ff">0</span>,net7.<span style="color:#ae81ff">0</span>&lt;/TargetFrameworks&gt;
-</span></span><span style="display:flex;"><span>    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
-</span></span><span style="display:flex;"><span>    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-</span></span><span style="display:flex;"><span>    &lt;EnableDynamicLoading&gt;<span style="color:#66d9ef">true</span>&lt;/EnableDynamicLoading&gt; &lt;!-- This element <span style="color:#66d9ef">is</span> important --&gt;
-</span></span><span style="display:flex;"><span>  &lt;/PropertyGroup&gt;
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  &lt;ItemGroup Label=<span style="color:#e6db74">&#34;AspNetCore&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;FrameworkReference Include=<span style="color:#e6db74">&#34;Microsoft.AspNetCore.App&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>  &lt;/ItemGroup&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  &lt;ItemGroup&gt;
-</span></span><span style="display:flex;"><span>    &lt;ProjectReference Include=<span style="color:#e6db74">&#34;..\Juice.Plugins.Tests.Common\Juice.Plugins.Tests.Common.csproj&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    &lt;ProjectReference Include=<span style="color:#e6db74">&#34;..\Juice.Plugins.Tests.PluginBase\Juice.Plugins.Tests.PluginBase.csproj&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>      &lt;Private&gt;<span style="color:#66d9ef">false</span>&lt;/Private&gt; &lt;!-- This element <span style="color:#66d9ef">is</span> important --&gt;
-</span></span><span style="display:flex;"><span>      &lt;ExcludeAssets&gt;runtime&lt;/ExcludeAssets&gt; &lt;!-- This element <span style="color:#66d9ef">is</span> important --&gt;
-</span></span><span style="display:flex;"><span>    &lt;/ProjectReference&gt;
-</span></span><span style="display:flex;"><span>  &lt;/ItemGroup&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&lt;/Project&gt;</span></span></code></pre></div>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// Plugin Startup.cs</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Startup</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services, IConfiguration configuration)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        services.AddLogging(builder =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            builder.AddConsole();
-</span></span><span style="display:flex;"><span>            builder.AddConfiguration(configuration.GetSection(<span style="color:#e6db74">&#34;Logging&#34;</span>));
-</span></span><span style="display:flex;"><span>        });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        services.AddScoped&lt;MessageService&gt;();
-</span></span><span style="display:flex;"><span>        services.AddScoped&lt;ICommand, HelloCommand&gt;();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>The full source code for this sample is available on <a href="https://github.com/creatorflow-io/Juice/tree/master/services/plugins/test/" rel="external" target="_blank">github</a>.</p>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.Plugins" rel="external" target="_blank">Juice.Plugins</a></li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Sep 23, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu">
-            <li class="alwaysopen " data-nav-id="/other_services/logging/index.html"><a class="padding" href="/other_services/logging/index.html">Logging</a><ul id="R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6" class="collapsible-menu"></ul></li>
-            <li class="alwaysopen " data-nav-id="/other_services/audit/index.html"><a class="padding" href="/other_services/audit/index.html">Audit services</a><ul id="R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/file_storage/index.html"><a class="padding" href="/other_services/file_storage/index.html">File storage</a></li>
-            <li class="active " data-nav-id="/other_services/plugins/index.html"><a class="padding" href="/other_services/plugins/index.html">Plugins</a></li>
-            <li class="" data-nav-id="/other_services/measurement/index.html"><a class="padding" href="/other_services/measurement/index.html">Measurement</a></li></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+PluginsManager This service manages all plugins by Load/Unload them. Some Shared Services can be shared between Application and Plugins when we load them."><meta itemprop=datePublished content="2023-09-23T15:54:24+07:00"><meta itemprop=dateModified content="2023-09-23T15:54:24+07:00"><meta itemprop=wordCount content="388"><title>Plugins :: Juice's documentation</title>
+<link href=/other_services/plugins/index.xml rel=alternate type=application/rss+xml title="Plugins :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/other_services/plugins/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/other_services/plugins/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/other_services/index.html><span itemprop=name>Other services</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Plugins</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/plugins/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/file_storage/index.html title="File storage (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/measurement/index.html title="Measurement (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable other_services" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=plugins>Plugins</h1><p>We have implemented a plugin management service that supports application load and execute service from plugin by load its assembly dynamically.</p><figure><img src=/images/services/Plugins-process.svg><figcaption><h4>Plugin sequence diagram</h4></figcaption></figure><p>To implement plugin pattern, you first understanding the <a href=https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext rel=external target=_blank>AssemblyLoadContext</a>.</p><h4 id=core-concept>Core concept</h4><ol><li><strong>Application</strong></li></ol><p>The application will host all services including the <em>IPluginServiceProvider</em> and <em>IPluginsManager</em> services. Application accesses <em>Plugin</em> services through <em>IPluginServiceProvider</em>, and manages plugins (<strong>Load/Unload</strong>) via <em>IPluginsManager</em>.</p><ol start=2><li><strong>PluginsManager</strong></li></ol><p>This service manages all plugins by Load/Unload them. Some <em>Shared Services</em> can be shared between <em>Application</em> and <em>Plugins</em> when we load them.</p><hr><p><strong>NOTE</strong></p><ul><li>Any service tha can be called from <em>Application</em> or passed from <em>Application</em> is a shared service</li><li>Any services shared with plugin must be excluded from the plugin directory</li><li>We can share the service instead of its implementation classes, so we can use different implementations between <em>Application</em> and <em>Plugins</em></li></ul><hr><p>These services will be shared with plugin by default:</p><ul><li>IServiceCollection</li><li>IConfiguration</li></ul><ol start=3><li><strong>Plugin</strong></li></ol><p>The plugin will implement our shared services. To avoid libraries version conflicts and easy of implementation, it should have a reference to the <strong>Microsoft.AspNetCore.App</strong> so <em>Application</em> and <em>Plugin</em> will share this framework.</p><p>On load, all <em>Startup</em> classes will be discovered and their <em>ConfigureServices()</em> method called with <em>IServiceCollection</em> and <em>IConfiguration</em> argurments. So the plugin can have an owned appsettings file.</p><p>After loaded, plugin will have its own <em>ServiceProvider</em>, which is useful when resolving services from the plugin.</p><h4 id=usage>Usage</h4><p>To use plugin services, please call the <em>AddPlugins()</em> on <em>IServiceCollection</em> instance.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.Extensions.DependencyInjection;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>builder.Services.AddPlugins(options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    options.AbsolutePaths = pluginPaths;
+</span></span><span style=display:flex><span>    options.ConfigureSharedServices = (services, sp) =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// SharedService will be shared to plugins</span>
+</span></span><span style=display:flex><span>        services.AddScoped(sp1 =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> s = sp.GetRequiredService&lt;SharedService&gt;();
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> l = sp.GetRequiredService&lt;ILoggerFactory&gt;().CreateLogger(<span style=color:#e6db74>&#34;shared&#34;</span>);
+</span></span><span style=display:flex><span>            l.LogInformation(<span style=color:#e6db74>&#34;Shared service created {0}&#34;</span>, s.Id);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> s;
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>    };
+</span></span><span style=display:flex><span>});</span></span></code></pre></div><h4 id=plugin-implementation>Plugin implementation</h4><p>The quote below is a simple project file of a plugin. Please refer to <a href=https://learn.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support rel=external target=_blank>Dotnet tutorials</a> for details.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#75715e>// Plugin.csprj</span>
+</span></span><span style=display:flex><span>&lt;Project Sdk=<span style=color:#e6db74>&#34;Microsoft.NET.Sdk&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  &lt;PropertyGroup&gt;
+</span></span><span style=display:flex><span>    &lt;TargetFrameworks&gt;net6.<span style=color:#ae81ff>0</span>,net7.<span style=color:#ae81ff>0</span>&lt;/TargetFrameworks&gt;
+</span></span><span style=display:flex><span>    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
+</span></span><span style=display:flex><span>    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+</span></span><span style=display:flex><span>    &lt;EnableDynamicLoading&gt;<span style=color:#66d9ef>true</span>&lt;/EnableDynamicLoading&gt; &lt;!-- This element <span style=color:#66d9ef>is</span> important --&gt;
+</span></span><span style=display:flex><span>  &lt;/PropertyGroup&gt;
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  &lt;ItemGroup Label=<span style=color:#e6db74>&#34;AspNetCore&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;FrameworkReference Include=<span style=color:#e6db74>&#34;Microsoft.AspNetCore.App&#34;</span> /&gt;
+</span></span><span style=display:flex><span>  &lt;/ItemGroup&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  &lt;ItemGroup&gt;
+</span></span><span style=display:flex><span>    &lt;ProjectReference Include=<span style=color:#e6db74>&#34;..\Juice.Plugins.Tests.Common\Juice.Plugins.Tests.Common.csproj&#34;</span> /&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    &lt;ProjectReference Include=<span style=color:#e6db74>&#34;..\Juice.Plugins.Tests.PluginBase\Juice.Plugins.Tests.PluginBase.csproj&#34;</span>&gt;
+</span></span><span style=display:flex><span>      &lt;Private&gt;<span style=color:#66d9ef>false</span>&lt;/Private&gt; &lt;!-- This element <span style=color:#66d9ef>is</span> important --&gt;
+</span></span><span style=display:flex><span>      &lt;ExcludeAssets&gt;runtime&lt;/ExcludeAssets&gt; &lt;!-- This element <span style=color:#66d9ef>is</span> important --&gt;
+</span></span><span style=display:flex><span>    &lt;/ProjectReference&gt;
+</span></span><span style=display:flex><span>  &lt;/ItemGroup&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/Project&gt;</span></span></code></pre></div><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#75715e>// Plugin Startup.cs</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Startup</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> ConfigureServices(IServiceCollection services, IConfiguration configuration)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        services.AddLogging(builder =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            builder.AddConsole();
+</span></span><span style=display:flex><span>            builder.AddConfiguration(configuration.GetSection(<span style=color:#e6db74>&#34;Logging&#34;</span>));
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        services.AddScoped&lt;MessageService&gt;();
+</span></span><span style=display:flex><span>        services.AddScoped&lt;ICommand, HelloCommand&gt;();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>The full source code for this sample is available on <a href=https://github.com/creatorflow-io/Juice/tree/master/services/plugins/test/ rel=external target=_blank>github</a>.</p><p>The library can be accessed via Nuget:</p><ul><li><a href=https://www.nuget.org/packages/Juice.Plugins rel=external target=_blank>Juice.Plugins</a></li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Sep 23, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li class=parent data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu><li class=alwaysopen data-nav-id=/other_services/logging/index.html><a class=padding href=/other_services/logging/index.html>Logging</a><ul id=R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/other_services/audit/index.html><a class=padding href=/other_services/audit/index.html>Audit services</a><ul id=R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328 class=collapsible-menu></ul></li><li data-nav-id=/other_services/file_storage/index.html><a class=padding href=/other_services/file_storage/index.html>File storage</a></li><li class=active data-nav-id=/other_services/plugins/index.html><a class=padding href=/other_services/plugins/index.html>Plugins</a></li><li data-nav-id=/other_services/measurement/index.html><a class=padding href=/other_services/measurement/index.html>Measurement</a></li></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

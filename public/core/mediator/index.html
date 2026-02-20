@@ -1,287 +1,80 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.
-await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.
-EF backend Please register request management services with your application schema before use.
-... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }The library can be accessed via Nuget:">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Mediator :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.
-await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.
-EF backend Please register request management services with your application schema before use.
-... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }The library can be accessed via Nuget:">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/mediator/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Mediator :: Juice&#39;s documentation">
-    <meta property="og:description" content="We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.
-await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.
-EF backend Please register request management services with your application schema before use.
-... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }The library can be accessed via Nuget:">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Mediator :: Juice&#39;s documentation">
-    <meta itemprop="description" content="We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.
-await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.
-EF backend Please register request management services with your application schema before use.
-... using Juice.MediatR.RequestManager.EF.DependencyInjection; ... services.AddRequestManager(configuration, options =&gt; { options.DatabaseProvider = &#34;SqlServer&#34;; // PostgreSQL options.Schema = your-app-schema; options.ConnectionName = &#34;SqlServerConnection&#34;; }); // migrate DB if needed var context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;(); var pendingMigrations = await context.Database.GetPendingMigrationsAsync(); if (pendingMigrations.Any()) { Console.WriteLine($&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;); Console.WriteLine(&#34;[ClientRequestContext] Applying pending migrations now&#34;); await context.Database.MigrateAsync(); }The library can be accessed via Nuget:">
-    <meta itemprop="datePublished" content="2023-04-03T20:23:50+07:00">
-    <meta itemprop="dateModified" content="2023-04-03T20:23:50+07:00">
-    <meta itemprop="wordCount" content="155">
-    <title>Mediator :: Juice&#39;s documentation</title>
-    <link href="/core/mediator/index.xml" rel="alternate" type="application/rss+xml" title="Mediator :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/core\/mediator\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/core/mediator/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Mediator</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/mediator/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/swagger/index.html" title="Swagger (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/eventbus/index.html" title="Event bus (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable core" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="mediator">Mediator</h1>
-
-<p>We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link <a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/microservice-application-layer-implementation-web-api#implement-idempotent-commands" rel="external" target="_blank">Implement idempotent Commands</a> for more information.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> mediator.Send(<span style="color:#66d9ef">new</span> IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));</span></span></code></pre></div>
-<p>The request manager will verify <em>originCommandId</em> does not exist before sending <em>originCommand</em> to your <strong>OriginCommandHandler</strong>.</p>
-<h4 id="ef-backend">EF backend</h4>
-<p>Please register request management services with your application schema before use.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MediatR.RequestManager.EF.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.AddRequestManager(configuration, options =&gt;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;SqlServer&#34;</span>; <span style="color:#75715e">// PostgreSQL</span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.Schema = your-app-schema; 
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;SqlServerConnection&#34;</span>;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        });
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// migrate DB if needed</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> context = resolver.ServiceProvider.GetRequiredService&lt;ClientRequestContext&gt;();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> pendingMigrations = <span style="color:#66d9ef">await</span> context.Database.GetPendingMigrationsAsync();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (pendingMigrations.Any())
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;[{schema}][ClientRequestContext] You have {pendingMigrations.Count()} pending migrations to apply.&#34;</span>);
-</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;[ClientRequestContext] Applying pending migrations now&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> context.Database.MigrateAsync();
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF" rel="external" target="_blank">Juice.MediatR.RequestManager.EF</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.SqlServer" rel="external" target="_blank">Juice.MediatR.RequestManager.EF.SqlServer</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MediatR.RequestManager.EF.PostgreSQL" rel="external" target="_blank">Juice.MediatR.RequestManager.EF.PostgreSQL</a></li>
-</ul>
-<h4 id="redis-backend">Redis backend</h4>
-<p>If you already have Redis so you can use it as a backend.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MediatR.Redis.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    services.AddRedisRequestManager(options =&gt;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        options.ConnectionString = configuration.GetConnectionString(<span style="color:#e6db74">&#34;Redis&#34;</span>);
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    });</span></span></code></pre></div>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.MediatR.Redis" rel="external" target="_blank">Juice.MediatR.Redis</a></li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Apr 3, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
-            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
-            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
-            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
-            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
-            <li class="active " data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a></li>
-            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
-            <li class="" data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a></li>
-            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a></li>
-            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="MediatR provides three in-process messaging patterns. In Juice v9 all three can extend MessageBase so every message carries MessageId, CreatedAt, and TenantId automatically.
+Pattern Interface Handler interface Use when Request/Response IRequest<TResponse> IRequestHandler<T, TResponse> Command or query — exactly one handler, returns a result Notification INotification INotificationHandler<T> In-process fan-out — multiple handlers, no return value Stream Request IStreamRequest<TResponse> IStreamRequestHandler<T, TResponse> Async streaming — handler yields items one at a time NuGet Package Package Purpose MediatR Core MediatR library Juice.MediatR.Behaviors IdempotencyRequestBehavior<,>, TransactionBehavior<,,> Juice.MediatR.Contracts IIdempotentRequest interface Request / Response — Commands and Queries A request routes to exactly one handler and always returns a result. Use it for commands (state-changing operations) and queries (read-only operations)."><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Mediator :: Juice's documentation"><meta name=twitter:description content="MediatR provides three in-process messaging patterns. In Juice v9 all three can extend MessageBase so every message carries MessageId, CreatedAt, and TenantId automatically.
+Pattern Interface Handler interface Use when Request/Response IRequest<TResponse> IRequestHandler<T, TResponse> Command or query — exactly one handler, returns a result Notification INotification INotificationHandler<T> In-process fan-out — multiple handlers, no return value Stream Request IStreamRequest<TResponse> IStreamRequestHandler<T, TResponse> Async streaming — handler yields items one at a time NuGet Package Package Purpose MediatR Core MediatR library Juice.MediatR.Behaviors IdempotencyRequestBehavior<,>, TransactionBehavior<,,> Juice.MediatR.Contracts IIdempotentRequest interface Request / Response — Commands and Queries A request routes to exactly one handler and always returns a result. Use it for commands (state-changing operations) and queries (read-only operations)."><meta property="og:url" content="https://juice-docs.creatorflow.io/core/mediator/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Mediator :: Juice's documentation"><meta property="og:description" content="MediatR provides three in-process messaging patterns. In Juice v9 all three can extend MessageBase so every message carries MessageId, CreatedAt, and TenantId automatically.
+Pattern Interface Handler interface Use when Request/Response IRequest<TResponse> IRequestHandler<T, TResponse> Command or query — exactly one handler, returns a result Notification INotification INotificationHandler<T> In-process fan-out — multiple handlers, no return value Stream Request IStreamRequest<TResponse> IStreamRequestHandler<T, TResponse> Async streaming — handler yields items one at a time NuGet Package Package Purpose MediatR Core MediatR library Juice.MediatR.Behaviors IdempotencyRequestBehavior<,>, TransactionBehavior<,,> Juice.MediatR.Contracts IIdempotentRequest interface Request / Response — Commands and Queries A request routes to exactly one handler and always returns a result. Use it for commands (state-changing operations) and queries (read-only operations)."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Mediator :: Juice's documentation"><meta itemprop=description content="MediatR provides three in-process messaging patterns. In Juice v9 all three can extend MessageBase so every message carries MessageId, CreatedAt, and TenantId automatically.
+Pattern Interface Handler interface Use when Request/Response IRequest<TResponse> IRequestHandler<T, TResponse> Command or query — exactly one handler, returns a result Notification INotification INotificationHandler<T> In-process fan-out — multiple handlers, no return value Stream Request IStreamRequest<TResponse> IStreamRequestHandler<T, TResponse> Async streaming — handler yields items one at a time NuGet Package Package Purpose MediatR Core MediatR library Juice.MediatR.Behaviors IdempotencyRequestBehavior<,>, TransactionBehavior<,,> Juice.MediatR.Contracts IIdempotentRequest interface Request / Response — Commands and Queries A request routes to exactly one handler and always returns a result. Use it for commands (state-changing operations) and queries (read-only operations)."><meta itemprop=datePublished content="2023-04-03T20:23:50+07:00"><meta itemprop=dateModified content="2023-04-03T20:23:50+07:00"><meta itemprop=wordCount content="553"><title>Mediator :: Juice's documentation</title>
+<link href=/core/mediator/index.xml rel=alternate type=application/rss+xml title="Mediator :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/core/mediator/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/core/mediator/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper><nav class=TableOfContents><ul><li><a href=#nuget-package>NuGet Package</a></li><li><a href=#request--response--commands-and-queries>Request / Response — Commands and Queries</a></li><li><a href=#notification--in-process-events>Notification — In-Process Events</a></li><li><a href=#stream-request--async-streaming>Stream Request — Async Streaming</a></li><li><a href=#registration>Registration</a></li><li><a href=#see-also>See also</a></li></ul></nav></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/core/index.html><span itemprop=name>Core features</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Mediator</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/core/mediator/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/messaging/full-setup/index.html title="Full Pipeline Setup (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/mediator/v8.5.0/index.html title="MediatR (v8.5.0) (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable core" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=mediator>Mediator</h1><p>MediatR provides three in-process messaging patterns. In Juice v9 all three can extend
+<code>MessageBase</code> so every message carries <code>MessageId</code>, <code>CreatedAt</code>, and <code>TenantId</code> automatically.</p><table><thead><tr><th>Pattern</th><th>Interface</th><th>Handler interface</th><th>Use when</th></tr></thead><tbody><tr><td><strong>Request/Response</strong></td><td><code>IRequest&lt;TResponse></code></td><td><code>IRequestHandler&lt;T, TResponse></code></td><td>Command or query — exactly one handler, returns a result</td></tr><tr><td><strong>Notification</strong></td><td><code>INotification</code></td><td><code>INotificationHandler&lt;T></code></td><td>In-process fan-out — multiple handlers, no return value</td></tr><tr><td><strong>Stream Request</strong></td><td><code>IStreamRequest&lt;TResponse></code></td><td><code>IStreamRequestHandler&lt;T, TResponse></code></td><td>Async streaming — handler yields items one at a time</td></tr></tbody></table><hr><h2 id=nuget-package>NuGet Package</h2><table><thead><tr><th>Package</th><th>Purpose</th></tr></thead><tbody><tr><td><a href=https://www.nuget.org/packages/MediatR rel=external target=_blank>MediatR</a></td><td>Core MediatR library</td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.MediatR.Behaviors rel=external target=_blank>Juice.MediatR.Behaviors</a></td><td><code>IdempotencyRequestBehavior&lt;,></code>, <code>TransactionBehavior&lt;,,></code></td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.MediatR.Contracts rel=external target=_blank>Juice.MediatR.Contracts</a></td><td><code>IIdempotentRequest</code> interface</td></tr></tbody></table><hr><h2 id=request--response--commands-and-queries>Request / Response — Commands and Queries</h2><p>A request routes to <strong>exactly one handler</strong> and always returns a result. Use it for commands
+(state-changing operations) and queries (read-only operations).</p><p><strong>Define the message:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#75715e>// Command — modifies state, idempotent (safe to retry)</span>
+</span></span><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>record</span> <span style=color:#a6e22e>CreateOrderCommand</span>(<span style=color:#66d9ef>string</span> OrderId, <span style=color:#66d9ef>string</span> CustomerId)
+</span></span><span style=display:flex><span>    : MessageBase, IRequest&lt;IOperationResult&gt;, IIdempotentRequest
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> IdempotencyKey =&gt; OrderId;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex;background-color:#3c3d38><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Query — reads state, no side effects</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>record</span> <span style=color:#a6e22e>GetOrderQuery</span>(<span style=color:#66d9ef>string</span> OrderId) : MessageBase, IRequest&lt;OrderDto?&gt;;</span></span></code></pre></div><p><strong>Implement the handler:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CreateOrderCommandHandler</span> : IRequestHandler&lt;CreateOrderCommand, IOperationResult&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> AppDbContext _db;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>public</span> CreateOrderCommandHandler(AppDbContext db) =&gt; _db = db;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IOperationResult&gt; Handle(CreateOrderCommand cmd, CancellationToken ct)
+</span></span><span style=display:flex;background-color:#3c3d38><span>    {
+</span></span><span style=display:flex><span>        _db.Orders.Add(<span style=color:#66d9ef>new</span> Order(cmd.OrderId, cmd.CustomerId));
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> _db.SaveChangesAsync(ct);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> OperationResult.Success();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p><strong>Dispatch:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>var</span> result = <span style=color:#66d9ef>await</span> mediator.Send(<span style=color:#66d9ef>new</span> CreateOrderCommand(orderId, customerId));</span></span></code></pre></div><hr><h2 id=notification--in-process-events>Notification — In-Process Events</h2><p>A notification fans out to <strong>zero or more handlers</strong> and returns nothing. Use it to
+broadcast a domain event to multiple in-process listeners without coupling them to the sender.</p><p><strong>Define the message:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>record</span> <span style=color:#a6e22e>OrderStatusChangedNotification</span>(<span style=color:#66d9ef>string</span> OrderId, <span style=color:#66d9ef>string</span> NewStatus)
+</span></span><span style=display:flex><span>    : MessageBase, INotification;</span></span></code></pre></div><p><strong>Implement handlers (as many as needed):</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SendStatusEmailHandler</span> : INotificationHandler&lt;OrderStatusChangedNotification&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task Handle(OrderStatusChangedNotification n, CancellationToken ct)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// send email ...</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WriteAuditLogHandler</span> : INotificationHandler&lt;OrderStatusChangedNotification&gt;
+</span></span><span style=display:flex;background-color:#3c3d38><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task Handle(OrderStatusChangedNotification n, CancellationToken ct)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// write audit entry ...</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p><strong>Dispatch:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>await</span> mediator.Publish(<span style=color:#66d9ef>new</span> OrderStatusChangedNotification(orderId, <span style=color:#e6db74>&#34;Shipped&#34;</span>));</span></span></code></pre></div><blockquote><p><strong>Sequential execution</strong>: Handlers run one after another in registration order by default.
+An exception in one handler stops the remaining handlers. For fire-and-forget or parallel
+dispatch, implement a custom <code>INotificationPublisher</code> and register it with MediatR.</p></blockquote><hr><h2 id=stream-request--async-streaming>Stream Request — Async Streaming</h2><p>A stream request returns <code>IAsyncEnumerable&lt;TResponse></code>. The handler yields items one at a
+time and the caller consumes them as they arrive — ideal for large result sets or
+server-sent event feeds.</p><p><strong>Define the message:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>record</span> <span style=color:#a6e22e>GetOrderEventsQuery</span>(<span style=color:#66d9ef>string</span> OrderId) : MessageBase, IStreamRequest&lt;OrderEventDto&gt;;</span></span></code></pre></div><p><strong>Implement the handler:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GetOrderEventsHandler</span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    : IStreamRequestHandler&lt;GetOrderEventsQuery, OrderEventDto&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> AppDbContext _db;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> GetOrderEventsHandler(AppDbContext db) =&gt; _db = db;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> IAsyncEnumerable&lt;OrderEventDto&gt; Handle(
+</span></span><span style=display:flex;background-color:#3c3d38><span>        GetOrderEventsQuery query,
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [EnumeratorCancellation]</span> CancellationToken ct)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> evt <span style=color:#66d9ef>in</span> _db.OrderEvents
+</span></span><span style=display:flex><span>            .Where(e =&gt; e.OrderId == query.OrderId)
+</span></span><span style=display:flex><span>            .AsAsyncEnumerable()
+</span></span><span style=display:flex><span>            .WithCancellation(ct))
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>yield</span> <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> OrderEventDto(evt.Type, evt.OccurredAt);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><p><strong>Consume the stream:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>await</span> <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> evt <span style=color:#66d9ef>in</span> mediator.CreateStream(<span style=color:#66d9ef>new</span> GetOrderEventsQuery(orderId)))
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    Console.WriteLine(<span style=color:#e6db74>$&#34;{evt.Type} at {evt.OccurredAt}&#34;</span>);
+</span></span><span style=display:flex><span>}</span></span></code></pre></div><hr><h2 id=registration>Registration</h2><p>Register MediatR once, scanning all handler types from your assembly:</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddMediatR(cfg =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex;background-color:#3c3d38><span>    cfg.RegisterServicesFromAssembly(<span style=color:#66d9ef>typeof</span>(MyHandler).Assembly);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    cfg.AddIdempotencyRequestBehavior();                    <span style=color:#75715e>// deduplication — requires IIdempotentRequest</span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    cfg.AddOpenBehavior(<span style=color:#66d9ef>typeof</span>(AppTransactionBehavior&lt;,&gt;)); <span style=color:#75715e>// transaction — requires Outbox setup</span>
+</span></span><span style=display:flex><span>});</span></span></code></pre></div><p><code>RegisterServicesFromAssembly</code> discovers and registers all three handler types automatically:</p><table><thead><tr><th>Handler interface</th><th>Discovered automatically</th><th>DI lifetime</th></tr></thead><tbody><tr><td><code>IRequestHandler&lt;T, R></code></td><td>Yes</td><td>Transient</td></tr><tr><td><code>INotificationHandler&lt;T></code></td><td>Yes</td><td>Transient</td></tr><tr><td><code>IStreamRequestHandler&lt;T, R></code></td><td>Yes</td><td>Transient</td></tr></tbody></table><p>Handlers support full constructor injection. Scoped services such as <code>DbContext</code> and
+repositories resolve correctly because MediatR resolves handlers within the active DI scope.</p><hr><h2 id=see-also>See also</h2><ul><li><a href=https://juice-docs.creatorflow.io/core/messaging/>Messaging</a> — <code>IMessage</code> hierarchy, idempotency backends, and <code>MessagingBuilder</code> setup</li><li><a href=https://juice-docs.creatorflow.io/core/messaging/outbox/>Outbox Setup</a> — transactional staging with <code>TransactionBehavior</code></li><li><a href=https://juice-docs.creatorflow.io/core/mediator/v8.5.0/>MediatR v8.5.0 archive</a> — original <code>IRequestManager</code> / <code>IdentifiedCommand</code> pattern</li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Apr 3, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li class=parent data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu><li data-nav-id=/core/overview/index.html><a class=padding href=/core/overview/index.html>Overview</a></li><li class=alwaysopen data-nav-id=/core/logging/index.html><a class=padding href=/core/logging/index.html>Logging</a><ul id=R-subsections-75db7930ffb434daa8a1fb726f7e1cd3 class=collapsible-menu></ul></li><li data-nav-id=/core/configuration/index.html><a class=padding href=/core/configuration/index.html>Configuration</a></li><li data-nav-id=/core/options/index.html><a class=padding href=/core/options/index.html>Options</a></li><li data-nav-id=/core/swagger/index.html><a class=padding href=/core/swagger/index.html>Swagger</a></li><li class=alwaysopen data-nav-id=/core/messaging/index.html><a class=padding href=/core/messaging/index.html>Messaging</a><ul id=R-subsections-1f5aed48448c40d55fe4f28ff1e00222 class=collapsible-menu></ul></li><li class="active parent alwaysopen" data-nav-id=/core/mediator/index.html><a class=padding href=/core/mediator/index.html>Mediator</a><ul id=R-subsections-1d8a4e743e3c3831715116ee2cf8be23 class=collapsible-menu><li data-nav-id=/core/mediator/v8.5.0/index.html><a class=padding href=/core/mediator/v8.5.0/index.html>MediatR (v8.5.0)</a></li></ul></li><li class=alwaysopen data-nav-id=/core/eventbus/index.html><a class=padding href=/core/eventbus/index.html>Event bus</a><ul id=R-subsections-8bb47dd787c6a0c9079dde618735fec8 class=collapsible-menu></ul></li><li data-nav-id=/core/entityframework/index.html><a class=padding href=/core/entityframework/index.html>Entity framework</a></li><li class=alwaysopen data-nav-id=/core/integration/index.html><a class=padding href=/core/integration/index.html>Integration service</a><ul id=R-subsections-6d43538225634e169bdebdf7720aa656 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/xunit/index.html><a class=padding href=/core/xunit/index.html>xUnit</a><ul id=R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb class=collapsible-menu></ul></li><li data-nav-id=/core/multitenant/index.html><a class=padding href=/core/multitenant/index.html>Multi-tenant</a></li><li data-nav-id=/core/modular/index.html><a class=padding href=/core/modular/index.html>Modular</a></li></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

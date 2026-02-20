@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Audit services :: Juice&#39;s documentation</title>
-    <link>https://juice-docs.creatorflow.io/other_services/audit/v7.0.2/index.html</link>
-    <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://juice-docs.creatorflow.io/other_services/audit/v7.0.2/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Audit services :: Juice's documentation</title><link>https://juice-docs.creatorflow.io/other_services/audit/v7.0.2/index.html</link><description>Versionslatest7.0.2Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description><generator>Hugo</generator><language>en-us</language><lastBuildDate/><atom:link href="https://juice-docs.creatorflow.io/other_services/audit/v7.0.2/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
