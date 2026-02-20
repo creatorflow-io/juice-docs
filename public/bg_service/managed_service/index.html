@@ -1,332 +1,45 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
-Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;)); builder.Services.AddBgService(builder.Configuration.GetSection(&#34;BackgroundService&#34;)) .UseFileStore(builder.Configuration.GetSection(&#34;File&#34;)); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile(&#34;Store&#34;); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options =&gt; { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) =&gt; { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Manageable services :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
-Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;)); builder.Services.AddBgService(builder.Configuration.GetSection(&#34;BackgroundService&#34;)) .UseFileStore(builder.Configuration.GetSection(&#34;File&#34;)); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile(&#34;Store&#34;); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options =&gt; { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) =&gt; { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/bg_service/managed_service/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Manageable services :: Juice&#39;s documentation">
-    <meta property="og:description" content="Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
-Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;)); builder.Services.AddBgService(builder.Configuration.GetSection(&#34;BackgroundService&#34;)) .UseFileStore(builder.Configuration.GetSection(&#34;File&#34;)); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile(&#34;Store&#34;); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options =&gt; { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) =&gt; { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Manageable services :: Juice&#39;s documentation">
-    <meta itemprop="description" content="Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
-Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(&#34;Logging:File&#34;)); builder.Services.AddBgService(builder.Configuration.GetSection(&#34;BackgroundService&#34;)) .UseFileStore(builder.Configuration.GetSection(&#34;File&#34;)); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile(&#34;Store&#34;); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options =&gt; { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) =&gt; { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.">
-    <meta itemprop="datePublished" content="2023-09-20T17:22:07+07:00">
-    <meta itemprop="dateModified" content="2023-09-20T17:22:07+07:00">
-    <meta itemprop="wordCount" content="554">
-    <title>Manageable services :: Juice&#39;s documentation</title>
-    <link href="/bg_service/managed_service/index.xml" rel="alternate" type="application/rss+xml" title="Manageable services :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/bg_service\/managed_service\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/bg_service/managed_service/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/bg_service/index.html"><span itemprop="name">Background service</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Manageable services</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/bg_service/managed_service/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/bg_service/index.html" title="Background service (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/other_services/index.html" title="Other services (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable bg_service" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="manageable-services">Manageable services</h1>
-
-<h4 id="purposes">Purposes</h4>
-<ul>
-<li>Operate background services remotely (<em>Start, Stop, Invoke Job&hellip;</em>)</li>
-<li>Load background service as as plugin dynamically</li>
-<li>Monitor service status</li>
-<li>Custom service logging</li>
-</ul>
-<h4 id="usage">Usage</h4>
-<p>We provide <em>ServiceManager</em> service to manage and operate <em>IManagedService</em> instances and Web API to access it.</p>
-<figure><img src="/images/services/BackgroundService.svg"><figcaption>
-      <h4>Background service sequence diagram</h4>
-    </figcaption>
-</figure>
-
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.BgService.Management;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.BgService.Extensions.Logging;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.Extensions.Options.DependencyInjection;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// see Logging section</span>
-</span></span><span style="display:flex;"><span>builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;Logging:File&#34;</span>));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>builder.Services.AddBgService(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;BackgroundService&#34;</span>))
-</span></span><span style="display:flex;"><span>    .UseFileStore(builder.Configuration.GetSection(<span style="color:#e6db74">&#34;File&#34;</span>));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// optional use separated appsettings file for background service file store.</span>
-</span></span><span style="display:flex;"><span>builder.SeparateStoreFile(<span style="color:#e6db74">&#34;Store&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> pluginPaths = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">string</span>[]
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// plugin absolute paths</span>
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Optional plugins</span>
-</span></span><span style="display:flex;"><span>builder.Services.AddPlugins(options =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    options.AbsolutePaths = pluginPaths;
-</span></span><span style="display:flex;"><span>    options.ConfigureSharedServices = (services, sp) =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// required for web api</span>
-</span></span><span style="display:flex;"><span>builder.Services.AddControllers();
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>app.MapControllers();</span></span></code></pre></div>
-<h4 id="implementation">Implementation</h4>
-<p>We provide <a href="https://www.nuget.org/packages/Juice.BgService.ServiceBase" rel="external" target="_blank">Juice.BgService.ServiceBase</a> that contains a number of abstract services that you can inherit.</p>
-<ol>
-<li><strong>BackgroundService</strong></li>
-</ol>
-<p>This abstract service contains only basic methods that can be managed by <em>ServiceManager</em>, so you can implement anything in your service by overriding the <em>ExecuteAsync()</em> method.</p>
-<ol start="2">
-<li><strong>ScheduledService</strong></li>
-</ol>
-<p>This abstract service is processed according to the schedule options, so you can schedule something to be done by overriding the <em>InvokeAsync()</em> method.</p>
-<p>The <em>ScheduledServiceOptions</em> has <em>Frequencies</em> options to scheduling a task (we can add one or more <em>Frequency</em>):</p>
-<ul>
-<li><em>RunOnStartup</em>: if <strong>false</strong>, you must start service manually.</li>
-<li><em>Occurs</em>: (<strong>Daily, Weekly, Monthly, Once</strong>)</li>
-<li><em>Daily</em>: describes daily schedule if the <em>Occurs</em> is set to <strong>Daily</strong>
-<ul>
-<li><em>RecursEvery</em>: service will recurs after number of <strong>days</strong></li>
-<li><em>OccursOnceAt</em>: if specified, the <em>InvokeAsync</em> method will be called once at specified time after every <em>RecursEvery</em> day(s).</li>
-<li><em>OccursEvery</em>: if no <em>OccursOnceAt</em> is specified, the <em>InvokeAsync</em> method will be called after every specified interval (30s by default), in the working time and recurs after every <em>RecursEvery</em> day(s).</li>
-<li><em>StartingAt</em>: describes the start time of work during the day</li>
-<li><em>Duration</em>: describes working time of the day</li>
-</ul>
-</li>
-<li><em>Weekly</em>: describes weekly schedule if the <em>Occurs</em> is set to <strong>Weekly</strong>. It is almost the same as the <em>Daily</em> frequency above but has differences:
-<ul>
-<li><em>RecursEvery</em>: service will recurs after number of <strong>weeks</strong></li>
-<li><em>OnDays</em>: describes the days of the week on which the service will execute</li>
-<li><em>StartOfWeek</em>: describes the first day of the week
-Ex: If the schedule is { RecursEvery: 2, OnDays: [Mon, Wed, Fri], StartOfWeek: Tue } and today is Saturday of the week of execution, the next execution will be next Monday. After that, the service will await for 2 weeks.</li>
-</ul>
-</li>
-<li><em>Monthly</em>: describes monthly schedule if the <em>Occurs</em> is set to <strong>Monthly</strong>. It is almost the same as the <em>Daily</em> frequency above but has more options:
-<ul>
-<li><em>RecursEvery</em>: service will recurs after number of <strong>months</strong></li>
-<li><em>OnDay</em>: service will only be performed on this day of the month (optional)</li>
-<li><em>DayOfWeek</em>: service will only be performed on this day of the week, combined with <em>On</em> to specify the day in month (Ex: the third Friday of month)</li>
-<li><em>On</em>: (<em>First, Second, Third, Fourth, Last</em>) describes the week in month</li>
-<li><em>SpecialDay</em>: (Day, Weekday, Weekend), combined with <em>On</em> to specify the special day in month (Ex: the last weekend of month)</li>
-</ul>
-</li>
-</ul>
-<ol start="3">
-<li><strong>FileWatcherService</strong></li>
-</ol>
-<p>This abstract service will monitor the file changes and invoke these methods:</p>
-<ul>
-<li>OnFileRenamedAsync</li>
-<li>OnFileDeletedAsync</li>
-<li>OnFileReadyAsync</li>
-</ul>
-<p>You will override these method to handle yourself.</p>
-<h4 id="service-repository">Service repository</h4>
-<p>We are implemented a default service repository based on configuration. You can call <em>UseFileStore(configurationSection)</em> to use it, or implement a repository yourself.</p>
-<p>The sample source code is available on <a href="https://github.com/creatorflow-io/Juice/tree/master/services/bgservice/test/" rel="external" target="_blank">github</a>.</p>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.BgService" rel="external" target="_blank">Juice.BgService</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.BgService.ServiceBase" rel="external" target="_blank">Juice.BgService.ServiceBase</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.BgService.Api" rel="external" target="_blank">Juice.BgService.Api</a></li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Sep 20, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu">
-            <li class="active " data-nav-id="/bg_service/managed_service/index.html"><a class="padding" href="/bg_service/managed_service/index.html">Manageable services</a></li></ul></li>
-            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content='Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
+Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection("Logging:File")); builder.Services.AddBgService(builder.Configuration.GetSection("BackgroundService")) .UseFileStore(builder.Configuration.GetSection("File")); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile("Store"); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options => { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) => { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.'><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Manageable services :: Juice's documentation"><meta name=twitter:description content='Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
+Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection("Logging:File")); builder.Services.AddBgService(builder.Configuration.GetSection("BackgroundService")) .UseFileStore(builder.Configuration.GetSection("File")); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile("Store"); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options => { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) => { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.'><meta property="og:url" content="https://juice-docs.creatorflow.io/bg_service/managed_service/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Manageable services :: Juice's documentation"><meta property="og:description" content='Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
+Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection("Logging:File")); builder.Services.AddBgService(builder.Configuration.GetSection("BackgroundService")) .UseFileStore(builder.Configuration.GetSection("File")); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile("Store"); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options => { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) => { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.'><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Manageable services :: Juice's documentation"><meta itemprop=description content='Purposes Operate background services remotely (Start, Stop, Invoke Job…) Load background service as as plugin dynamically Monitor service status Custom service logging Usage We provide ServiceManager service to manage and operate IManagedService instances and Web API to access it.
+Background service sequence diagram using Juice.BgService.Management; using Juice.BgService.Extensions.Logging; using Juice.Extensions.Options.DependencyInjection; ... var builder = WebApplication.CreateBuilder(args); // see Logging section builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection("Logging:File")); builder.Services.AddBgService(builder.Configuration.GetSection("BackgroundService")) .UseFileStore(builder.Configuration.GetSection("File")); // optional use separated appsettings file for background service file store. builder.SeparateStoreFile("Store"); var pluginPaths = new string[] { // plugin absolute paths }; // Optional plugins builder.Services.AddPlugins(options => { options.AbsolutePaths = pluginPaths; options.ConfigureSharedServices = (services, sp) => { }; }); // required for web api builder.Services.AddControllers(); ... var app = builder.Build(); ... app.MapControllers();Implementation We provide Juice.BgService.ServiceBase that contains a number of abstract services that you can inherit.'><meta itemprop=datePublished content="2023-09-20T17:22:07+07:00"><meta itemprop=dateModified content="2023-09-20T17:22:07+07:00"><meta itemprop=wordCount content="554"><title>Manageable services :: Juice's documentation</title>
+<link href=/bg_service/managed_service/index.xml rel=alternate type=application/rss+xml title="Manageable services :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/bg_service/managed_service/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/bg_service/managed_service/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/bg_service/index.html><span itemprop=name>Background service</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Manageable services</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/bg_service/managed_service/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/bg_service/index.html title="Background service (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/other_services/index.html title="Other services (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable bg_service" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=manageable-services>Manageable services</h1><h4 id=purposes>Purposes</h4><ul><li>Operate background services remotely (<em>Start, Stop, Invoke Job&mldr;</em>)</li><li>Load background service as as plugin dynamically</li><li>Monitor service status</li><li>Custom service logging</li></ul><h4 id=usage>Usage</h4><p>We provide <em>ServiceManager</em> service to manage and operate <em>IManagedService</em> instances and Web API to access it.</p><figure><img src=/images/services/BackgroundService.svg><figcaption><h4>Background service sequence diagram</h4></figcaption></figure><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.BgService.Management;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.BgService.Extensions.Logging;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.Extensions.Options.DependencyInjection;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// see Logging section</span>
+</span></span><span style=display:flex><span>builder.Logging.AddBgServiceFileLogger(builder.Configuration.GetSection(<span style=color:#e6db74>&#34;Logging:File&#34;</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>builder.Services.AddBgService(builder.Configuration.GetSection(<span style=color:#e6db74>&#34;BackgroundService&#34;</span>))
+</span></span><span style=display:flex><span>    .UseFileStore(builder.Configuration.GetSection(<span style=color:#e6db74>&#34;File&#34;</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// optional use separated appsettings file for background service file store.</span>
+</span></span><span style=display:flex><span>builder.SeparateStoreFile(<span style=color:#e6db74>&#34;Store&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> pluginPaths = <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[]
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// plugin absolute paths</span>
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Optional plugins</span>
+</span></span><span style=display:flex><span>builder.Services.AddPlugins(options =&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    options.AbsolutePaths = pluginPaths;
+</span></span><span style=display:flex><span>    options.ConfigureSharedServices = (services, sp) =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>    };
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// required for web api</span>
+</span></span><span style=display:flex><span>builder.Services.AddControllers();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> app = builder.Build();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>app.MapControllers();</span></span></code></pre></div><h4 id=implementation>Implementation</h4><p>We provide <a href=https://www.nuget.org/packages/Juice.BgService.ServiceBase rel=external target=_blank>Juice.BgService.ServiceBase</a> that contains a number of abstract services that you can inherit.</p><ol><li><strong>BackgroundService</strong></li></ol><p>This abstract service contains only basic methods that can be managed by <em>ServiceManager</em>, so you can implement anything in your service by overriding the <em>ExecuteAsync()</em> method.</p><ol start=2><li><strong>ScheduledService</strong></li></ol><p>This abstract service is processed according to the schedule options, so you can schedule something to be done by overriding the <em>InvokeAsync()</em> method.</p><p>The <em>ScheduledServiceOptions</em> has <em>Frequencies</em> options to scheduling a task (we can add one or more <em>Frequency</em>):</p><ul><li><em>RunOnStartup</em>: if <strong>false</strong>, you must start service manually.</li><li><em>Occurs</em>: (<strong>Daily, Weekly, Monthly, Once</strong>)</li><li><em>Daily</em>: describes daily schedule if the <em>Occurs</em> is set to <strong>Daily</strong><ul><li><em>RecursEvery</em>: service will recurs after number of <strong>days</strong></li><li><em>OccursOnceAt</em>: if specified, the <em>InvokeAsync</em> method will be called once at specified time after every <em>RecursEvery</em> day(s).</li><li><em>OccursEvery</em>: if no <em>OccursOnceAt</em> is specified, the <em>InvokeAsync</em> method will be called after every specified interval (30s by default), in the working time and recurs after every <em>RecursEvery</em> day(s).</li><li><em>StartingAt</em>: describes the start time of work during the day</li><li><em>Duration</em>: describes working time of the day</li></ul></li><li><em>Weekly</em>: describes weekly schedule if the <em>Occurs</em> is set to <strong>Weekly</strong>. It is almost the same as the <em>Daily</em> frequency above but has differences:<ul><li><em>RecursEvery</em>: service will recurs after number of <strong>weeks</strong></li><li><em>OnDays</em>: describes the days of the week on which the service will execute</li><li><em>StartOfWeek</em>: describes the first day of the week
+Ex: If the schedule is { RecursEvery: 2, OnDays: [Mon, Wed, Fri], StartOfWeek: Tue } and today is Saturday of the week of execution, the next execution will be next Monday. After that, the service will await for 2 weeks.</li></ul></li><li><em>Monthly</em>: describes monthly schedule if the <em>Occurs</em> is set to <strong>Monthly</strong>. It is almost the same as the <em>Daily</em> frequency above but has more options:<ul><li><em>RecursEvery</em>: service will recurs after number of <strong>months</strong></li><li><em>OnDay</em>: service will only be performed on this day of the month (optional)</li><li><em>DayOfWeek</em>: service will only be performed on this day of the week, combined with <em>On</em> to specify the day in month (Ex: the third Friday of month)</li><li><em>On</em>: (<em>First, Second, Third, Fourth, Last</em>) describes the week in month</li><li><em>SpecialDay</em>: (Day, Weekday, Weekend), combined with <em>On</em> to specify the special day in month (Ex: the last weekend of month)</li></ul></li></ul><ol start=3><li><strong>FileWatcherService</strong></li></ol><p>This abstract service will monitor the file changes and invoke these methods:</p><ul><li>OnFileRenamedAsync</li><li>OnFileDeletedAsync</li><li>OnFileReadyAsync</li></ul><p>You will override these method to handle yourself.</p><h4 id=service-repository>Service repository</h4><p>We are implemented a default service repository based on configuration. You can call <em>UseFileStore(configurationSection)</em> to use it, or implement a repository yourself.</p><p>The sample source code is available on <a href=https://github.com/creatorflow-io/Juice/tree/master/services/bgservice/test/ rel=external target=_blank>github</a>.</p><p>The library can be accessed via Nuget:</p><ul><li><a href=https://www.nuget.org/packages/Juice.BgService rel=external target=_blank>Juice.BgService</a></li><li><a href=https://www.nuget.org/packages/Juice.BgService.ServiceBase rel=external target=_blank>Juice.BgService.ServiceBase</a></li><li><a href=https://www.nuget.org/packages/Juice.BgService.Api rel=external target=_blank>Juice.BgService.Api</a></li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Sep 20, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu></ul></li><li class=parent data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu><li class=active data-nav-id=/bg_service/managed_service/index.html><a class=padding href=/bg_service/managed_service/index.html>Manageable services</a></li></ul></li><li data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

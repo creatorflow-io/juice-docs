@@ -1,12 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Application models :: Juice&#39;s documentation</title>
-    <link>https://juice-docs.creatorflow.io/overview/app_model/index.html</link>
-    <description>Monolithic If you are starting to build an application without any existing product reference or new products without an idea to start with, monolithic architecture may be a good fit. Be careful with microservices if you are not sure about your product’s size, how many users you have to serve or what specific services need to scale… because it can be complicated and unnecessary.&#xA;The most common problems when we deploy a monolithic application are:</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://juice-docs.creatorflow.io/overview/app_model/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Application models :: Juice's documentation</title><link>https://juice-docs.creatorflow.io/overview/app_model/index.html</link><description>Monolithic If you are starting to build an application without any existing product reference or new products without an idea to start with, monolithic architecture may be a good fit. Be careful with microservices if you are not sure about your product’s size, how many users you have to serve or what specific services need to scale… because it can be complicated and unnecessary.
+The most common problems when we deploy a monolithic application are:</description><generator>Hugo</generator><language>en-us</language><lastBuildDate/><atom:link href="https://juice-docs.creatorflow.io/overview/app_model/index.xml" rel="self" type="application/rss+xml"/></channel></rss>

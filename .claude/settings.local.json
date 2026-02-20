@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -File:*)",
+      "Bash(powershell -Command \"& ''.specify/scripts/powershell/create-new-feature.ps1'' -Json -Number 1 -ShortName ''v9-messaging-docs'' ''I want to update documents to replace old doc about eventbus integration mediator by new messaging principle''\")"
+    ]
+  }
+}

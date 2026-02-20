@@ -1,413 +1,102 @@
-<!DOCTYPE html>
-<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.144.0">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
+<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
 File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:
-MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type">
-    <meta name="author" content="">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Multi-tenant :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
+MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type"><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Multi-tenant :: Juice's documentation"><meta name=twitter:description content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
 File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:
-MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/multitenant/index.html">
-    <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="Multi-tenant :: Juice&#39;s documentation">
-    <meta property="og:description" content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
+MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type"><meta property="og:url" content="https://juice-docs.creatorflow.io/core/multitenant/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Multi-tenant :: Juice's documentation"><meta property="og:description" content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
 File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:
-MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type">
-    <meta property="og:locale" content="en_us">
-    <meta property="og:type" content="website">
-    <meta itemprop="name" content="Multi-tenant :: Juice&#39;s documentation">
-    <meta itemprop="description" content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
+MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type"><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Multi-tenant :: Juice's documentation"><meta itemprop=description content="MultiTenant This core feature is useful to verify other core features that we have built because it is developed as a microservice. It’s integrated with Finbuckle to identity the tenant. We provide multiple choices for tenant data store:
 File store EFCore store gRPC store We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:
-MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type">
-    <meta itemprop="datePublished" content="2023-04-03T20:24:21+07:00">
-    <meta itemprop="dateModified" content="2023-04-03T20:24:21+07:00">
-    <meta itemprop="wordCount" content="514">
-    <title>Multi-tenant :: Juice&#39;s documentation</title>
-    <link href="/core/multitenant/index.xml" rel="alternate" type="application/rss+xml" title="Multi-tenant :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1755243972" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1755243972" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1755243972" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1755243972" rel="stylesheet">
-    <link href="/css/theme.min.css?1755243972" rel="stylesheet">
-    <link href="/css/format-html.min.css?1755243972" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1755243972" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1755243972" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1755243972" defer></script>
-    <script src="/js/search.min.js?1755243972" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.min = `.min`;
-      window.relearn.path='\/core\/multitenant\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1755243972";
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
-      window.relearn.disableInlineCopyToClipboard=false;
-      window.relearn.enableBlockCodeWrap=true;
-      // legal
-      window.relearn.getItem = (s,n) => {return s.getItem(n)};
-      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
-      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
-      // variant stuff
-      window.relearn.themevariants = [ 'mine' ];
-      window.relearn.customvariantname = "my-custom-variant";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
-      }
-      window.relearn.markVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
-          variant = window.relearn.themevariants[0];
-          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-    </script>
-  </head>
-  <body class="mobile-support html" data-url="/core/multitenant/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
-            </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-<nav class="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#multitenant">MultiTenant</a></li>
-        <li><a href="#multitenant-dbcontext">MultiTenant DBContext</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Multi-tenant</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/multitenant/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/xunit/ci_ignore/index.html" title="CI-Ignore (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/modular/index.html" title="Modular (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
-            </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable core" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="multi-tenant">Multi-tenant</h1>
-
-<h3 id="multitenant">MultiTenant</h3>
-<p>This core feature is useful to verify other core features that we have built because it is developed as a microservice.
-It&rsquo;s integrated with <a href="https://www.finbuckle.com/MultiTenant" rel="external" target="_blank">Finbuckle</a> to identity the tenant. We provide multiple choices for tenant data store:</p>
-<ul>
-<li>File store</li>
-<li>EFCore store</li>
-<li>gRPC store</li>
-</ul>
-<p>We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:</p>
-<ul>
-<li>MultiTenant DBContext</li>
-<li>UnitOfWork pattern</li>
-<li>Audit</li>
-<li>gRPC API</li>
-<li>DDD/CQRS and Domain Events pattern</li>
-<li>Integration with event bus</li>
-<li>Per-tenant configuration/options</li>
-<li>xUnit helper</li>
-</ul>
-<p>To use multi-tenant, we must register services with <strong>Tenant</strong> type</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> tenantBuilder = builder.Services
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// default Finbuckle services</span>
-</span></span><span style="display:flex;"><span>        .AddMultiTenant&lt;Tenant&gt;(options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// configure tenant options</span>
-</span></span><span style="display:flex;"><span>        })
-</span></span><span style="display:flex;"><span>        .WithBasePathStrategy(options =&gt; options.RebaseAspNetCorePathBase = <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// AND/OR other strategies</span>
-</span></span><span style="display:flex;"><span>        ;</span></span></code></pre></div>
-<p>After that, we have 2 choices:</p>
-<ol>
-<li>Use multi-tenant as a separate serice by building a multi-tenant server and use gRPC client to get tenant information.</li>
-</ol>
-<p>So we will register services for tenant host inside tenant microservice.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Api.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantHost(builder.Configuration, options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;PostgreConnection&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.Schema = <span style="color:#e6db74">&#34;App&#34;</span>;
-</span></span><span style="display:flex;"><span>        });</span></span></code></pre></div>
-<p>Then register services for tenant client inside other microservices.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Grpc.Finbuckle.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantClient(builder.Configuration, builder.Environment.EnvironmentName);</span></span></code></pre></div>
-<ol start="2">
-<li>Use multi-tenant service directly.</li>
-</ol>
-<ul>
-<li>Default EF store build</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.EF.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tenantBuilder.ConfigureTenantEFDirectly(builder.Configuration, options =&gt;
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.ConnectionName = <span style="color:#e6db74">&#34;PostgreConnection&#34;</span>;
-</span></span><span style="display:flex;"><span>            options.Schema = <span style="color:#e6db74">&#34;App&#34;</span>;
-</span></span><span style="display:flex;"><span>        }, builder.Environment.EnvironmentName);</span></span></code></pre></div>
-<ul>
-<li>Or manually build tenant service with multiple store options.</li>
-</ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.MultiTenant.Finbuckle.DependencyInjection;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    tenantBuilder.JuiceIntegration()
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        .WithGprcStore(tenantGrpcEndpoint)
-</span></span><span style="display:flex; background-color:#3c3d38"><span>        .WithDistributedCacheStore()
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// .WithEFStore(...)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// you can add many stores at the same time</span>
-</span></span><span style="display:flex;"><span>        ;</span></span></code></pre></div>
-<h4 id="per-tenant-authentication">Per-tenant Authentication</h4>
-<p>We provide a custom <em>WithPerTenantAuthenticationConventions</em> extension beside the original <em>WithPerTenantAuthenticationConventions</em> from Finbuckle.
-It allows you to handle cross-tenant authorization yourself.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Juice.MultiTenant.AspNetCore;
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span> services
-</span></span><span style="display:flex;"><span>    .AddMultiTenant()
-</span></span><span style="display:flex;"><span>    .WithBasePathStrategy(options =&gt; options.RebaseAspNetCorePathBase = <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>    .ConfigureTenantEFDirectly(configuration, options =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        options.DatabaseProvider = <span style="color:#e6db74">&#34;PostgreSQL&#34;</span>;
-</span></span><span style="display:flex;"><span>        options.ConnectionName = <span style="color:#e6db74">&#34;TenantDbConnection&#34;</span>;
-</span></span><span style="display:flex;"><span>        options.Schema = <span style="color:#e6db74">&#34;App&#34;</span>;
-</span></span><span style="display:flex;"><span>    }, environment.EnvironmentName)
-</span></span><span style="display:flex;"><span>    .WithPerTenantOptions&lt;OpenIdConnectOptions&gt;((options, tc) =&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        options.Authority = authority + <span style="color:#e6db74">$&#34;/{tc.Identifier}&#34;</span>;
-</span></span><span style="display:flex;"><span>    })
-</span></span><span style="display:flex;"><span>    .WithPerTenantAuthenticationCore() <span style="color:#75715e">// it&#39;s required</span>
-</span></span><span style="display:flex;"><span>    .WithPerTenantAuthenticationConventions(crossTenantAuthorize: (authTenant, currentTenant, principal) =&gt;
-</span></span><span style="display:flex;"><span>        authTenant == <span style="color:#66d9ef">null</span> <span style="color:#75715e">// root tenant</span>
-</span></span><span style="display:flex;"><span>        &amp;&amp; (principal?.Identity?.IsAuthenticated ?? <span style="color:#66d9ef">false</span>) <span style="color:#75715e">// authenticated</span>
-</span></span><span style="display:flex;"><span>        &amp;&amp; principal.IsInRole(<span style="color:#e6db74">&#34;admin&#34;</span>))
-</span></span><span style="display:flex;"><span>    .WithRemoteAuthenticationCallbackStrategy()
-</span></span><span style="display:flex;"><span>    ;</span></span></code></pre></div>
-<p>The library can be accessed via Nuget and npmjs:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant" rel="external" target="_blank">Juice.MultiTenant</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.AspNetCore" rel="external" target="_blank">Juice.MultiTenant.AspNetCore</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF" rel="external" target="_blank">Juice.MultiTenant.EF</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF.SqlServer" rel="external" target="_blank">Juice.MultiTenant.EF.SqlServer</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.EF.PostgreSQL" rel="external" target="_blank">Juice.MultiTenant.EF.PostgreSQL</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Api.Contracts" rel="external" target="_blank">Juice.MultiTenant.Api.Contracts</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Api" rel="external" target="_blank">Juice.MultiTenant.Api</a></li>
-<li><a href="https://www.nuget.org/packages/Juice.MultiTenant.Grpc" rel="external" target="_blank">Juice.MultiTenant.Grpc</a></li>
-<li><a href="https://www.npmjs.com/package/@juice-js/tenants" rel="external" target="_blank">@juice-js/tenants</a></li>
-</ul>
-<h3 id="multitenant-dbcontext">MultiTenant DBContext</h3>
-<p>Please follow up on <a href="https://www.finbuckle.com/MultiTenant/Docs/v6.10.0/EFCore" rel="external" target="_blank">Data Isolation with Entity Framework Core</a> to understand this section.</p>
-<p>We usually have two options for storing per-tenant application data:</p>
-<ul>
-<li>Separate DB with different DB connection strings, it can be done by per-tenant setting</li>
-<li>Shared DB with an extra TenantId column to determine tenant data</li>
-</ul>
-<p>In the second way, we will create a TenantDbContext that implement <strong>IMultiTenantDbContext</strong> interface.
-So we provide a <strong>MultiTenantDbContext</strong> abstraction class that implement these interfaces:</p>
-<ul>
-<li>ISchemaDbContext</li>
-<li>IAuditableDbContext</li>
-<li>IUnitOfWork</li>
-<li>IMultiTenantDbContext</li>
-</ul>
-<p>You can inherit <strong>MultiTenantDbContext</strong> abstraction and mark your entity <strong>IsMultiTenant()</strong>, and/or <strong>IsAuditable()</strong>.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EF.Extensions;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Juice.EF.MultiTenant;
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TenantContentDbContext</span> : MultiTenantDbContext
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> DbSet&lt;TenantContent&gt; TenantContents { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> TenantContentDbContext(IServiceProvider serviceProvider, DbContextOptions options) : <span style="color:#66d9ef">base</span>(options)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            ConfigureServices(serviceProvider);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> ConfigureModel(ModelBuilder modelBuilder)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            modelBuilder.Entity&lt;TenantContent&gt;(options =&gt;
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                options.ToTable(nameof(TenantContent), Schema);
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                options.IsMultiTenant();
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                options.IsAuditable();
-</span></span><span style="display:flex;"><span>            });
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<p>Or using the <strong>[MultiTenant]</strong> attribute in entity class</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">using</span> Finbuckle.MultiTenant;
-</span></span><span style="display:flex; background-color:#3c3d38"><span><span style="color:#a6e22e">    [MultiTenant]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TenantContent</span>
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        ...
-</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div>
-<p>See <a href="https://juice-docs.creatorflow.io/core/entityframework/#multitenantdbcontext">MultiTenantDbContext</a> for more information.</p>
-<p>The library can be accessed via Nuget:</p>
-<ul>
-<li><a href="https://www.nuget.org/packages/Juice.EF.MultiTenant" rel="external" target="_blank">Juice.EF.MultiTenant</a></li>
-</ul>
-
-  <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Apr 3, 2023
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
-    <aside id="R-sidebar" class="default-animation">
-      <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-
-        </div>
-        <search><form action="/search/index.html" method="get">
-          <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-            <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
-          </div>
-        </form></search>
-      </div>
-      <div id="R-homelinks" class="default-animation homelinks">
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
-          <ul class="">
-          </ul>
-        </div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-      </div>
-      <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
-          <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
-            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
-            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
-            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
-            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
-            <li class="" data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a></li>
-            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
-            <li class="" data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a></li>
-            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
-            <li class="active " data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a></li>
-            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
-            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
-          </ul>
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
-          <div class="nav-title padding">More</div>
-          <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
-          </ul>
-        </div>
-        <div id="R-footer-margin"></div>
-        <div class="R-menu-divider default-animation">
-          <hr class="padding">
-        </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
-          <ul class="">
-          </ul>
-        </div>
-<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
-      </div>
-    </aside>
-    <script src="/js/clipboard/clipboard.min.js?1755243972" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1755243972" defer></script>
-    <script src="/js/theme.min.js?1755243972" defer></script>
-  </body>
-</html>
+MultiTenant DBContext UnitOfWork pattern Audit gRPC API DDD/CQRS and Domain Events pattern Integration with event bus Per-tenant configuration/options xUnit helper To use multi-tenant, we must register services with Tenant type"><meta itemprop=datePublished content="2023-04-03T20:24:21+07:00"><meta itemprop=dateModified content="2023-04-03T20:24:21+07:00"><meta itemprop=wordCount content="514"><title>Multi-tenant :: Juice's documentation</title>
+<link href=/core/multitenant/index.xml rel=alternate type=application/rss+xml title="Multi-tenant :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/core/multitenant/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/core/multitenant/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper><nav class=TableOfContents><ul><li><ul><li><a href=#multitenant>MultiTenant</a></li><li><a href=#multitenant-dbcontext>MultiTenant DBContext</a></li></ul></li></ul></nav></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/core/index.html><span itemprop=name>Core features</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Multi-tenant</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/core/multitenant/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/xunit/ci_ignore/index.html title="CI-Ignore (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/modular/index.html title="Modular (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable core" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=multi-tenant>Multi-tenant</h1><h3 id=multitenant>MultiTenant</h3><p>This core feature is useful to verify other core features that we have built because it is developed as a microservice.
+It&rsquo;s integrated with <a href=https://www.finbuckle.com/MultiTenant rel=external target=_blank>Finbuckle</a> to identity the tenant. We provide multiple choices for tenant data store:</p><ul><li>File store</li><li>EFCore store</li><li>gRPC store</li></ul><p>We also provide the gRPC API to manage tenant information and tenant settings, so MultiTenant itself is a service with the full implementation of:</p><ul><li>MultiTenant DBContext</li><li>UnitOfWork pattern</li><li>Audit</li><li>gRPC API</li><li>DDD/CQRS and Domain Events pattern</li><li>Integration with event bus</li><li>Per-tenant configuration/options</li><li>xUnit helper</li></ul><p>To use multi-tenant, we must register services with <strong>Tenant</strong> type</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>    <span style=color:#66d9ef>var</span> tenantBuilder = builder.Services
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// default Finbuckle services</span>
+</span></span><span style=display:flex><span>        .AddMultiTenant&lt;Tenant&gt;(options =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// configure tenant options</span>
+</span></span><span style=display:flex><span>        })
+</span></span><span style=display:flex><span>        .WithBasePathStrategy(options =&gt; options.RebaseAspNetCorePathBase = <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// AND/OR other strategies</span>
+</span></span><span style=display:flex><span>        ;</span></span></code></pre></div><p>After that, we have 2 choices:</p><ol><li>Use multi-tenant as a separate serice by building a multi-tenant server and use gRPC client to get tenant information.</li></ol><p>So we will register services for tenant host inside tenant microservice.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>    ...
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.MultiTenant.Api.DependencyInjection;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    tenantBuilder.ConfigureTenantHost(builder.Configuration, options =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            options.DatabaseProvider = <span style=color:#e6db74>&#34;PostgreSQL&#34;</span>;
+</span></span><span style=display:flex><span>            options.ConnectionName = <span style=color:#e6db74>&#34;PostgreConnection&#34;</span>;
+</span></span><span style=display:flex><span>            options.Schema = <span style=color:#e6db74>&#34;App&#34;</span>;
+</span></span><span style=display:flex><span>        });</span></span></code></pre></div><p>Then register services for tenant client inside other microservices.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>    ...
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.MultiTenant.Grpc.Finbuckle.DependencyInjection;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    tenantBuilder.ConfigureTenantClient(builder.Configuration, builder.Environment.EnvironmentName);</span></span></code></pre></div><ol start=2><li>Use multi-tenant service directly.</li></ol><ul><li>Default EF store build</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>    ...
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.MultiTenant.EF.DependencyInjection;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    tenantBuilder.ConfigureTenantEFDirectly(builder.Configuration, options =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            options.DatabaseProvider = <span style=color:#e6db74>&#34;PostgreSQL&#34;</span>;
+</span></span><span style=display:flex><span>            options.ConnectionName = <span style=color:#e6db74>&#34;PostgreConnection&#34;</span>;
+</span></span><span style=display:flex><span>            options.Schema = <span style=color:#e6db74>&#34;App&#34;</span>;
+</span></span><span style=display:flex><span>        }, builder.Environment.EnvironmentName);</span></span></code></pre></div><ul><li>Or manually build tenant service with multiple store options.</li></ul><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>    ...
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.MultiTenant.Finbuckle.DependencyInjection;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    tenantBuilder.JuiceIntegration()
+</span></span><span style=display:flex;background-color:#3c3d38><span>        .WithGprcStore(tenantGrpcEndpoint)
+</span></span><span style=display:flex;background-color:#3c3d38><span>        .WithDistributedCacheStore()
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// .WithEFStore(...)</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// you can add many stores at the same time</span>
+</span></span><span style=display:flex><span>        ;</span></span></code></pre></div><h4 id=per-tenant-authentication>Per-tenant Authentication</h4><p>We provide a custom <em>WithPerTenantAuthenticationConventions</em> extension beside the original <em>WithPerTenantAuthenticationConventions</em> from Finbuckle.
+It allows you to handle cross-tenant authorization yourself.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#66d9ef>using</span> Juice.MultiTenant.AspNetCore;
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span> services
+</span></span><span style=display:flex><span>    .AddMultiTenant()
+</span></span><span style=display:flex><span>    .WithBasePathStrategy(options =&gt; options.RebaseAspNetCorePathBase = <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>    .ConfigureTenantEFDirectly(configuration, options =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        options.DatabaseProvider = <span style=color:#e6db74>&#34;PostgreSQL&#34;</span>;
+</span></span><span style=display:flex><span>        options.ConnectionName = <span style=color:#e6db74>&#34;TenantDbConnection&#34;</span>;
+</span></span><span style=display:flex><span>        options.Schema = <span style=color:#e6db74>&#34;App&#34;</span>;
+</span></span><span style=display:flex><span>    }, environment.EnvironmentName)
+</span></span><span style=display:flex><span>    .WithPerTenantOptions&lt;OpenIdConnectOptions&gt;((options, tc) =&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        options.Authority = authority + <span style=color:#e6db74>$&#34;/{tc.Identifier}&#34;</span>;
+</span></span><span style=display:flex><span>    })
+</span></span><span style=display:flex><span>    .WithPerTenantAuthenticationCore() <span style=color:#75715e>// it&#39;s required</span>
+</span></span><span style=display:flex><span>    .WithPerTenantAuthenticationConventions(crossTenantAuthorize: (authTenant, currentTenant, principal) =&gt;
+</span></span><span style=display:flex><span>        authTenant == <span style=color:#66d9ef>null</span> <span style=color:#75715e>// root tenant</span>
+</span></span><span style=display:flex><span>        &amp;&amp; (principal?.Identity?.IsAuthenticated ?? <span style=color:#66d9ef>false</span>) <span style=color:#75715e>// authenticated</span>
+</span></span><span style=display:flex><span>        &amp;&amp; principal.IsInRole(<span style=color:#e6db74>&#34;admin&#34;</span>))
+</span></span><span style=display:flex><span>    .WithRemoteAuthenticationCallbackStrategy()
+</span></span><span style=display:flex><span>    ;</span></span></code></pre></div><p>The library can be accessed via Nuget and npmjs:</p><ul><li><a href=https://www.nuget.org/packages/Juice.MultiTenant rel=external target=_blank>Juice.MultiTenant</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.AspNetCore rel=external target=_blank>Juice.MultiTenant.AspNetCore</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.EF rel=external target=_blank>Juice.MultiTenant.EF</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.EF.SqlServer rel=external target=_blank>Juice.MultiTenant.EF.SqlServer</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.EF.PostgreSQL rel=external target=_blank>Juice.MultiTenant.EF.PostgreSQL</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.Api.Contracts rel=external target=_blank>Juice.MultiTenant.Api.Contracts</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.Api rel=external target=_blank>Juice.MultiTenant.Api</a></li><li><a href=https://www.nuget.org/packages/Juice.MultiTenant.Grpc rel=external target=_blank>Juice.MultiTenant.Grpc</a></li><li><a href=https://www.npmjs.com/package/@juice-js/tenants rel=external target=_blank>@juice-js/tenants</a></li></ul><h3 id=multitenant-dbcontext>MultiTenant DBContext</h3><p>Please follow up on <a href=https://www.finbuckle.com/MultiTenant/Docs/v6.10.0/EFCore rel=external target=_blank>Data Isolation with Entity Framework Core</a> to understand this section.</p><p>We usually have two options for storing per-tenant application data:</p><ul><li>Separate DB with different DB connection strings, it can be done by per-tenant setting</li><li>Shared DB with an extra TenantId column to determine tenant data</li></ul><p>In the second way, we will create a TenantDbContext that implement <strong>IMultiTenantDbContext</strong> interface.
+So we provide a <strong>MultiTenantDbContext</strong> abstraction class that implement these interfaces:</p><ul><li>ISchemaDbContext</li><li>IAuditableDbContext</li><li>IUnitOfWork</li><li>IMultiTenantDbContext</li></ul><p>You can inherit <strong>MultiTenantDbContext</strong> abstraction and mark your entity <strong>IsMultiTenant()</strong>, and/or <strong>IsAuditable()</strong>.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.EF.Extensions;
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Juice.EF.MultiTenant;
+</span></span><span style=display:flex><span>    ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TenantContentDbContext</span> : MultiTenantDbContext
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> DbSet&lt;TenantContent&gt; TenantContents { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> TenantContentDbContext(IServiceProvider serviceProvider, DbContextOptions options) : <span style=color:#66d9ef>base</span>(options)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex;background-color:#3c3d38><span>            ConfigureServices(serviceProvider);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>void</span> ConfigureModel(ModelBuilder modelBuilder)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            modelBuilder.Entity&lt;TenantContent&gt;(options =&gt;
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                options.ToTable(nameof(TenantContent), Schema);
+</span></span><span style=display:flex;background-color:#3c3d38><span>                options.IsMultiTenant();
+</span></span><span style=display:flex;background-color:#3c3d38><span>                options.IsAuditable();
+</span></span><span style=display:flex><span>            });
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><p>Or using the <strong>[MultiTenant]</strong> attribute in entity class</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>using</span> Finbuckle.MultiTenant;
+</span></span><span style=display:flex;background-color:#3c3d38><span><span style=color:#a6e22e>    [MultiTenant]</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TenantContent</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        ...
+</span></span><span style=display:flex><span>    }</span></span></code></pre></div><p>See <a href=https://juice-docs.creatorflow.io/core/entityframework/#multitenantdbcontext>MultiTenantDbContext</a> for more information.</p><p>The library can be accessed via Nuget:</p><ul><li><a href=https://www.nuget.org/packages/Juice.EF.MultiTenant rel=external target=_blank>Juice.EF.MultiTenant</a></li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Apr 3, 2023</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+<label class=a11y-only for=R-search-by>Search</label>
+<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
+<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li class=parent data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu><li data-nav-id=/core/overview/index.html><a class=padding href=/core/overview/index.html>Overview</a></li><li class=alwaysopen data-nav-id=/core/logging/index.html><a class=padding href=/core/logging/index.html>Logging</a><ul id=R-subsections-75db7930ffb434daa8a1fb726f7e1cd3 class=collapsible-menu></ul></li><li data-nav-id=/core/configuration/index.html><a class=padding href=/core/configuration/index.html>Configuration</a></li><li data-nav-id=/core/options/index.html><a class=padding href=/core/options/index.html>Options</a></li><li data-nav-id=/core/swagger/index.html><a class=padding href=/core/swagger/index.html>Swagger</a></li><li class=alwaysopen data-nav-id=/core/messaging/index.html><a class=padding href=/core/messaging/index.html>Messaging</a><ul id=R-subsections-1f5aed48448c40d55fe4f28ff1e00222 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/mediator/index.html><a class=padding href=/core/mediator/index.html>Mediator</a><ul id=R-subsections-1d8a4e743e3c3831715116ee2cf8be23 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/eventbus/index.html><a class=padding href=/core/eventbus/index.html>Event bus</a><ul id=R-subsections-8bb47dd787c6a0c9079dde618735fec8 class=collapsible-menu></ul></li><li data-nav-id=/core/entityframework/index.html><a class=padding href=/core/entityframework/index.html>Entity framework</a></li><li class=alwaysopen data-nav-id=/core/integration/index.html><a class=padding href=/core/integration/index.html>Integration service</a><ul id=R-subsections-6d43538225634e169bdebdf7720aa656 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/xunit/index.html><a class=padding href=/core/xunit/index.html>xUnit</a><ul id=R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb class=collapsible-menu></ul></li><li class=active data-nav-id=/core/multitenant/index.html><a class=padding href=/core/multitenant/index.html>Multi-tenant</a></li><li data-nav-id=/core/modular/index.html><a class=padding href=/core/modular/index.html>Modular</a></li></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>

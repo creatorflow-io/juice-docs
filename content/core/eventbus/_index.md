@@ -5,6 +5,11 @@ draft: false
 weight: 8
 version: latest
 ---
+> **ℹ v9 update**
+> This feature has been updated in Juice v9.
+> See [Messaging]({{< ref "core/messaging/_index.md" >}}) for the current API.
+> The original v8.5.0 content is preserved [here]({{< ref "v8.5.0" >}}).
+
 {{< versions doc=core_eventbus >}}
 To communicate between services we defined an **IEventBus** interface with a built-in RabbitMQ broker.
 Please follow up [Implementing event-based communication between microservices](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/integration-event-based-microservice-communications) for details.
