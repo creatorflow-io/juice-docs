@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.144.0">
+    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
+    <meta name="description" content="Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries.
+MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MessageContext :: Juice&#39;s documentation">
+    <meta name="twitter:description" content="Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries.
+MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/message-context/index.html">
+    <meta property="og:site_name" content="Juice&#39;s documentation">
+    <meta property="og:title" content="MessageContext :: Juice&#39;s documentation">
+    <meta property="og:description" content="Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries.
+MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.">
+    <meta property="og:locale" content="en_us">
+    <meta property="og:type" content="website">
+    <meta itemprop="name" content="MessageContext :: Juice&#39;s documentation">
+    <meta itemprop="description" content="Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries.
+MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.">
+    <meta itemprop="datePublished" content="2026-03-14T00:00:00+00:00">
+    <meta itemprop="dateModified" content="2026-03-14T00:00:00+00:00">
+    <meta itemprop="wordCount" content="1854">
+    <title>MessageContext :: Juice&#39;s documentation</title>
+    <link href="/core/messaging/message-context/index.xml" rel="alternate" type="application/rss+xml" title="MessageContext :: Juice&#39;s documentation">
+    <link href="/images/favicon.png?1773477089" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1773477089" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1773477089" rel="stylesheet">
+    <link href="/css/theme.min.css?1773477089" rel="stylesheet">
+    <link href="/css/format-html.min.css?1773477089" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1773477089" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1773477089" defer></script>
+    <script src="/js/search.min.js?1773477089" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      // configuration
+      window.relearn.min = `.min`;
+      window.relearn.path='\/core\/messaging\/message-context\/index.html';
+      window.relearn.relBasePath='..\/..\/..';
+      window.relearn.relBaseUri='..\/..\/..';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
+      window.relearn.contentLangs=['en'];
+      window.relearn.index_js_url="/searchindex.en.js?1773477089";
+      window.relearn.disableAnchorCopy=false;
+      window.relearn.disableAnchorScrolling=false;
+      window.relearn.disableInlineCopyToClipboard=false;
+      window.relearn.enableBlockCodeWrap=true;
+      // legal
+      window.relearn.getItem = (s,n) => {return s.getItem(n)};
+      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
+      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
+      // variant stuff
+      window.relearn.themevariants = [ 'mine' ];
+      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.changeVariant = function(variant) {
+        var oldVariant = document.documentElement.dataset.rThemeVariant;
+        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        document.documentElement.dataset.rThemeVariant = variant;
+        if (oldVariant != variant) {
+          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
+        }
+      }
+      window.relearn.markVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
+      }
+      window.relearn.initVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
+        if( variant == window.relearn.customvariantname ){
+        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+          variant = window.relearn.themevariants[0];
+          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        }
+        document.documentElement.dataset.rThemeVariant = variant;
+      }
+      window.relearn.initVariant();
+      window.relearn.markVariant();
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html" data-url="/core/messaging/message-context/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#lifecycle">Lifecycle</a></li>
+    <li><a href="#messagecontext-fields">MessageContext Fields</a>
+      <ul>
+        <li><a href="#how-headers-propagate-across-services">How Headers Propagate Across Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#initialization-methods">Initialization Methods</a></li>
+    <li><a href="#messagecontextmiddleware--global-http-initialization">MessageContextMiddleware — Global HTTP Initialization</a>
+      <ul>
+        <li><a href="#nuget-package">NuGet package</a></li>
+        <li><a href="#registration">Registration</a></li>
+        <li><a href="#behavior">Behavior</a></li>
+        <li><a href="#when-to-use">When to use</a></li>
+      </ul>
+    </li>
+    <li><a href="#messagecontext-attribute--per-controller--per-action">[MessageContext] Attribute — Per-Controller / Per-Action</a>
+      <ul>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#properties">Properties</a></li>
+        <li><a href="#behavior-1">Behavior</a></li>
+        <li><a href="#when-to-use-1">When to use</a></li>
+      </ul>
+    </li>
+    <li><a href="#middleware-vs-attribute--which-to-choose">Middleware vs Attribute — Which to Choose</a></li>
+    <li><a href="#initializemessagecontext--xunit-tests">[InitializeMessageContext] — xUnit Tests</a>
+      <ul>
+        <li><a href="#nuget-package-1">NuGet package</a></li>
+        <li><a href="#usage-1">Usage</a></li>
+        <li><a href="#properties-1">Properties</a></li>
+        <li><a href="#behavior-2">Behavior</a></li>
+      </ul>
+    </li>
+    <li><a href="#automatic-initialization--consumers-and-local-transport">Automatic Initialization — Consumers and Local Transport</a></li>
+    <li><a href="#checking-initialization">Checking Initialization</a></li>
+    <li><a href="#distributed-tracing-with-messagecontext">Distributed Tracing with MessageContext</a>
+      <ul>
+        <li><a href="#what-each-field-tells-you">What each field tells you</a></li>
+        <li><a href="#example-tracing-an-order-across-4-services">Example: Tracing an Order Across 4 Services</a></li>
+        <li><a href="#querying-logs-with-messagecontext">Querying logs with MessageContext</a></li>
+        <li><a href="#building-a-causation-tree">Building a causation tree</a></li>
+        <li><a href="#practical-uses">Practical uses</a></li>
+        <li><a href="#logging-with-messagecontext-in-handlers">Logging with MessageContext in handlers</a></li>
+      </ul>
+    </li>
+    <li><a href="#see-also">See also</a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/messaging/index.html"><span itemprop="name">Messaging</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">MessageContext</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/messaging/message-context/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/messaging/index.html" title="Messaging (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/messaging/outbox/index.html" title="Outbox Setup (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable core" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="messagecontext">MessageContext</h1>
+
+<h2 id="overview">Overview</h2>
+<p><code>MessageContext</code> is an <code>AsyncLocal</code>-based context that carries correlation, causation, and
+source identity across async call chains. Every message produced by the Juice messaging
+pipeline stamps the current <code>MessageContext</code> values into outbox headers, enabling distributed
+tracing and idempotency across service boundaries.</p>
+<p><strong><code>MessageContext</code> must be initialized at every entry point</strong> — HTTP requests, background
+consumers, test methods, and hosted services. If not initialized, any code that reads
+<code>MessageContext.Current</code> will throw <code>InvalidOperationException</code>.</p>
+<hr>
+<h2 id="lifecycle">Lifecycle</h2>
+<pre class="mermaid align-center ">flowchart LR
+    subgraph Init[&#34;Initialize (entry point)&#34;]
+        A1[&#34;HTTP → Middleware or Attribute&#34;]
+        A2[&#34;Broker → ConsumerEngine&#34;]
+        A3[&#34;Test → [InitializeMessageContext]&#34;]
+        A4[&#34;Delivery retry → LocalTransportPublisher&#34;]
+    end
+
+    subgraph Live[&#34;Active (request scope)&#34;]
+        B1[&#34;Flows via AsyncLocal&#34;]
+        B2[&#34;Available in handlers,&lt;br/&gt;services, repositories&#34;]
+        B3[&#34;Stamped into outbox&lt;br/&gt;headers on publish&#34;]
+    end
+
+    subgraph End[&#34;Clear (finally)&#34;]
+        C1[&#34;MessageContext.Clear()&#34;]
+    end
+
+    Init --&gt; Live --&gt; End</pre>
+<p>The context is created once per entry point, flows automatically through all <code>await</code> calls
+(thanks to <code>AsyncLocal</code>), and is cleaned up in a <code>finally</code> block to prevent leaking into
+unrelated work.</p>
+<hr>
+<h2 id="messagecontext-fields">MessageContext Fields</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Field</th>
+          <th>Type</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>CorrelationId</code></td>
+          <td><code>string</code></td>
+          <td>Trace ID that spans the entire request chain across services</td>
+      </tr>
+      <tr>
+          <td><code>CausationId</code></td>
+          <td><code>string?</code></td>
+          <td>ID of the message that caused this operation (parent event ID)</td>
+      </tr>
+      <tr>
+          <td><code>ExecutionId</code></td>
+          <td><code>string</code></td>
+          <td>Unique ID for this specific execution (generated per entry point)</td>
+      </tr>
+      <tr>
+          <td><code>Source</code></td>
+          <td><code>string</code></td>
+          <td>Identifies the entry point type (e.g. <code>&quot;http&quot;</code>, <code>&quot;rabbitmq&quot;</code>, <code>&quot;xunit.test&quot;</code>)</td>
+      </tr>
+  </tbody>
+</table>
+<p>These values are written into outbox event headers and propagated across service boundaries:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Header</th>
+          <th>Field</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>x-correlation-id</code></td>
+          <td><code>CorrelationId</code></td>
+      </tr>
+      <tr>
+          <td><code>x-causation-id</code></td>
+          <td><code>CausationId</code></td>
+      </tr>
+      <tr>
+          <td><code>x-source</code></td>
+          <td><code>Source</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="how-headers-propagate-across-services">How Headers Propagate Across Services</h3>
+<pre class="mermaid align-center ">sequenceDiagram
+    participant Client
+    participant ServiceA as Service A (Producer)
+    participant Outbox as Outbox DB
+    participant Broker as RabbitMQ
+    participant ServiceB as Service B (Consumer)
+
+    Client-&gt;&gt;ServiceA: POST /orders&lt;br/&gt;x-correlation-id: abc-123
+    Note over ServiceA: Middleware initializes&lt;br/&gt;MessageContext:&lt;br/&gt;CorrelationId = abc-123&lt;br/&gt;Source = &#34;orders-api&#34;&lt;br/&gt;ExecutionId = exec-001
+
+    ServiceA-&gt;&gt;ServiceA: Handler publishes event&lt;br/&gt;via IMessageService
+
+    ServiceA-&gt;&gt;Outbox: OutboxEvent + headers:&lt;br/&gt;x-correlation-id: abc-123&lt;br/&gt;x-causation-id: exec-001&lt;br/&gt;x-source: orders-api&lt;br/&gt;x-message-id: evt-456
+
+    Note over ServiceA: MessageContext.Clear()
+
+    Outbox-&gt;&gt;Broker: DeliveryHostedService&lt;br/&gt;publishes to exchange
+
+    Broker-&gt;&gt;ServiceB: Message delivered
+
+    Note over ServiceB: ConsumerEngine initializes&lt;br/&gt;MessageContext:&lt;br/&gt;CorrelationId = abc-123&lt;br/&gt;CausationId = evt-456&lt;br/&gt;Source = &#34;orders-consumer&#34;
+
+    ServiceB-&gt;&gt;ServiceB: Handler processes event
+
+    Note over ServiceB: MessageContext.Clear()</pre>
+<blockquote>
+<p><strong>CorrelationId</strong> stays the same across the entire chain — enabling end-to-end tracing.
+<strong>CausationId</strong> links each step to its parent, creating a causal chain.
+<strong>Source</strong> identifies which service/entry point produced each message.</p></blockquote>
+<hr>
+<h2 id="initialization-methods">Initialization Methods</h2>
+<p>There are three ways to initialize <code>MessageContext</code>, depending on your entry point:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Method</th>
+          <th>Entry point</th>
+          <th>Package</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>MessageContextMiddleware</code></td>
+          <td>All HTTP requests (global)</td>
+          <td><code>Juice.AspNetCore</code></td>
+      </tr>
+      <tr>
+          <td><code>[MessageContext]</code> attribute</td>
+          <td>Specific controllers or actions</td>
+          <td><code>Juice.AspNetCore</code></td>
+      </tr>
+      <tr>
+          <td><code>[InitializeMessageContext]</code> attribute</td>
+          <td>xUnit test methods</td>
+          <td><code>Juice.XUnit</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>Broker consumers (<code>RabbitMQConsumerEngine</code>) and local transport (<code>LocalTransportPublisher</code>)
+initialize <code>MessageContext</code> automatically from incoming message headers — no manual setup needed.</p>
+<hr>
+<h2 id="messagecontextmiddleware--global-http-initialization">MessageContextMiddleware — Global HTTP Initialization</h2>
+<p>Register the middleware in your ASP.NET Core pipeline to initialize <code>MessageContext</code> for
+<strong>every HTTP request</strong>. This is the recommended approach for most services.</p>
+<h3 id="nuget-package">NuGet package</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Package</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.AspNetCore" rel="external" target="_blank">Juice.AspNetCore</a></td>
+          <td><code>MessageContextMiddleware</code>, <code>MessageContextAttribute</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="registration">Registration</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span>app.UseMiddleware&lt;MessageContextMiddleware&gt;(<span style="color:#e6db74">&#34;my-service&#34;</span>);</span></span></code></pre></div>
+<p>The <code>source</code> parameter identifies this service in distributed traces. Choose a meaningful
+name — it appears in all outbox headers and idempotency keys produced by this service.</p>
+<h3 id="behavior">Behavior</h3>
+<ol>
+<li>Reads <code>x-correlation-id</code> from the request header (or generates a new one)</li>
+<li>Calls <code>MessageContext.Initialize(correlationId, causationId: null, executionId, source)</code></li>
+<li>Sets <code>x-correlation-id</code> on the response header</li>
+<li>Executes the request pipeline</li>
+<li>Calls <code>MessageContext.Clear()</code> in <code>finally</code> (prevents context leak)</li>
+</ol>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>You want <strong>all</strong> HTTP endpoints to have <code>MessageContext</code> initialized</li>
+<li>Your service has a single logical source name</li>
+<li>This is the simplest and most reliable option for HTTP services</li>
+</ul>
+<hr>
+<h2 id="messagecontext-attribute--per-controller--per-action">[MessageContext] Attribute — Per-Controller / Per-Action</h2>
+<p>Use the <code>[MessageContext]</code> attribute when you need <code>MessageContext</code> on specific controllers
+or actions, or when different endpoints need different <code>Source</code> values.</p>
+<h3 id="usage">Usage</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span><span style="color:#75715e">// All actions in this controller get MessageContext with Source = &#34;orders-api&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[MessageContext(Source = &#34;orders-api&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[ApiController]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Route(&#34;api/[controller]</span><span style="color:#e6db74">&#34;)]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OrdersController</span> : ControllerBase
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [HttpPost]</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; CreateAsync(CreateOrderRequest request)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// MessageContext.Current is available here</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> correlationId = MessageContext.Current.CorrelationId;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// Per-action with a specific source</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span><span style="color:#a6e22e">[MessageContext(Source = &#34;webhook-handler&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[HttpPost(&#34;webhook&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; HandleWebhookAsync()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Source = &#34;webhook-handler&#34; for this action only</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="properties">Properties</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Source</code></td>
+          <td><code>string</code></td>
+          <td><code>&quot;http&quot;</code></td>
+          <td>Source identifier written into <code>MessageContext</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="behavior-1">Behavior</h3>
+<ol>
+<li>Checks <code>MessageContext.IsInitialized</code> — if already initialized (e.g. by middleware), <strong>skips</strong> without overwriting</li>
+<li>Reads <code>x-correlation-id</code> from the request header (or generates one)</li>
+<li>Calls <code>MessageContext.Initialize(...)</code> with the configured <code>Source</code></li>
+<li>Sets <code>x-correlation-id</code> on the response header</li>
+<li>Executes the action</li>
+<li>Calls <code>MessageContext.Clear()</code> in <code>finally</code></li>
+</ol>
+<h3 id="when-to-use-1">When to use</h3>
+<ul>
+<li>You do <strong>not</strong> want global middleware (e.g. some endpoints don&rsquo;t need <code>MessageContext</code>)</li>
+<li>Different controllers need different <code>Source</code> values</li>
+<li>You want to add <code>MessageContext</code> to specific webhook or API endpoints</li>
+<li>You are combining with <code>MessageContextMiddleware</code> — the attribute safely no-ops if the middleware already initialized the context</li>
+</ul>
+<hr>
+<h2 id="middleware-vs-attribute--which-to-choose">Middleware vs Attribute — Which to Choose</h2>
+<pre class="mermaid align-center ">flowchart TD
+    Q1{&#34;Do ALL endpoints&lt;br/&gt;need MessageContext?&#34;}
+    Q2{&#34;Same Source for&lt;br/&gt;all endpoints?&#34;}
+    Q3{&#34;Middleware already&lt;br/&gt;registered?&#34;}
+
+    R1[&#34;Use &lt;b&gt;MessageContextMiddleware&lt;/b&gt;&lt;br/&gt;&lt;small&gt;app.UseMiddleware&amp;lt;...&amp;gt;(source)&lt;/small&gt;&#34;]
+    R2[&#34;Use &lt;b&gt;[MessageContext]&lt;/b&gt; attribute&lt;br/&gt;&lt;small&gt;per controller or action&lt;/small&gt;&#34;]
+    R3[&#34;Attribute safely &lt;b&gt;skips&lt;/b&gt;&lt;br/&gt;&lt;small&gt;IsInitialized = true → no-op&lt;/small&gt;&#34;]
+
+    Q1 --&gt;|Yes| Q2
+    Q1 --&gt;|No| R2
+    Q2 --&gt;|Yes| R1
+    Q2 --&gt;|&#34;No — different&lt;br/&gt;sources needed&#34;| R2
+    R2 --&gt; Q3
+    Q3 --&gt;|&#34;Yes&#34;| R3
+    Q3 --&gt;|&#34;No&#34;| R2</pre>
+<table>
+  <thead>
+      <tr>
+          <th>Scenario</th>
+          <th>Recommendation</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All endpoints need <code>MessageContext</code>, same source</td>
+          <td><code>MessageContextMiddleware</code> (global)</td>
+      </tr>
+      <tr>
+          <td>Only some endpoints need it</td>
+          <td><code>[MessageContext]</code> attribute on those controllers/actions</td>
+      </tr>
+      <tr>
+          <td>Different endpoints need different source names</td>
+          <td><code>[MessageContext(Source = &quot;...&quot;)]</code> per controller</td>
+      </tr>
+      <tr>
+          <td>Middleware is global but one endpoint needs a custom source</td>
+          <td>Middleware wins (attribute skips if already initialized) — override by removing middleware and using attributes</td>
+      </tr>
+      <tr>
+          <td>Both middleware and attribute are present</td>
+          <td>Middleware runs first (it&rsquo;s in the pipeline before MVC filters); attribute detects <code>IsInitialized</code> and skips</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="initializemessagecontext--xunit-tests">[InitializeMessageContext] — xUnit Tests</h2>
+<p>Use the <code>[InitializeMessageContext]</code> attribute on test methods or test classes to
+initialize <code>MessageContext</code> before the test runs.</p>
+<h3 id="nuget-package-1">NuGet package</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Package</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.XUnit" rel="external" target="_blank">Juice.XUnit</a></td>
+          <td><code>[InitializeMessageContext]</code>, <code>[IgnoreOnCIFact]</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="usage-1">Usage</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span><span style="color:#a6e22e">[Fact]</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span><span style="color:#a6e22e">[InitializeMessageContext]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task MyTest_Should_Have_MessageContextAsync()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// MessageContext.Current is available</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> correlationId = MessageContext.Current.CorrelationId;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Custom values</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Fact]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[InitializeMessageContext(Source = &#34;integration-test&#34;, CorrelationId = &#34;test-123&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task MyTest_With_Custom_SourceAsync()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Assert.Equal(<span style="color:#e6db74">&#34;integration-test&#34;</span>, MessageContext.Current.Source);
+</span></span><span style="display:flex;"><span>    Assert.Equal(<span style="color:#e6db74">&#34;test-123&#34;</span>, MessageContext.Current.CorrelationId);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="properties-1">Properties</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>CorrelationId</code></td>
+          <td><code>string?</code></td>
+          <td>Auto-generated</td>
+          <td>Custom correlation ID</td>
+      </tr>
+      <tr>
+          <td><code>CausationId</code></td>
+          <td><code>string?</code></td>
+          <td><code>null</code></td>
+          <td>Custom causation ID</td>
+      </tr>
+      <tr>
+          <td><code>ExecutionId</code></td>
+          <td><code>string?</code></td>
+          <td>Auto-generated</td>
+          <td>Custom execution ID</td>
+      </tr>
+      <tr>
+          <td><code>Source</code></td>
+          <td><code>string</code></td>
+          <td><code>&quot;xunit.test&quot;</code></td>
+          <td>Source identifier</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="behavior-2">Behavior</h3>
+<ul>
+<li><code>Before(method)</code>: Calls <code>MessageContext.Initialize(...)</code> with configured or generated values</li>
+<li><code>After(method)</code>: Calls <code>MessageContext.Clear()</code></li>
+<li>Works on both <code>[Fact]</code> and <code>[Theory]</code> test methods</li>
+<li>Can be applied to a class to cover all test methods</li>
+</ul>
+<hr>
+<h2 id="automatic-initialization--consumers-and-local-transport">Automatic Initialization — Consumers and Local Transport</h2>
+<p>These entry points initialize <code>MessageContext</code> automatically from message headers — no
+manual setup needed:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Entry point</th>
+          <th>How it initializes</th>
+          <th>Source value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>RabbitMQConsumerEngine</code></td>
+          <td>From incoming message headers (<code>x-correlation-id</code>, <code>x-causation-id</code>)</td>
+          <td>Consumer service key</td>
+      </tr>
+      <tr>
+          <td><code>LocalTransportPublisher</code></td>
+          <td>Restored from outbox headers when <code>MessageContext</code> is not initialized</td>
+          <td><code>x-source</code> header value, or <code>&quot;local&quot;</code> fallback</td>
+      </tr>
+  </tbody>
+</table>
+<pre class="mermaid align-center ">flowchart LR
+    subgraph Produce[&#34;Producer (Service A)&#34;]
+        MC1[&#34;MessageContext&lt;br/&gt;Source = orders-api&lt;br/&gt;CorrelationId = abc&#34;]
+        Pub[&#34;PublishAsync()&#34;]
+        OB[&#34;Outbox headers:&lt;br/&gt;x-source: orders-api&lt;br/&gt;x-correlation-id: abc&#34;]
+        MC1 --&gt; Pub --&gt; OB
+    end
+
+    OB --&gt;|&#34;broker or&lt;br/&gt;delivery retry&#34;| Restore
+
+    subgraph Consume[&#34;Consumer / Retry&#34;]
+        Restore[&#34;Restore MessageContext&lt;br/&gt;from headers&#34;]
+        MC2[&#34;MessageContext&lt;br/&gt;Source = orders-api ✓&lt;br/&gt;CorrelationId = abc ✓&#34;]
+        Handler[&#34;Handler executes&#34;]
+        Restore --&gt; MC2 --&gt; Handler
+    end</pre>
+<blockquote>
+<p><strong>Why Source matters for idempotency</strong>: The <code>&quot;local&quot;</code> route dispatches immediately via
+the channel AND later via <code>DeliveryHostedService</code>. Both paths produce the idempotency
+key <code>(EventName, &quot;{Source}:{MessageId}&quot;)</code>. Because <code>LocalTransportPublisher</code> restores
+<code>Source</code> from the <code>x-source</code> header, both keys match — preventing duplicate handler
+invocation.</p></blockquote>
+<hr>
+<h2 id="checking-initialization">Checking Initialization</h2>
+<p>Use <code>MessageContext.IsInitialized</code> to safely check before accessing <code>Current</code>:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (MessageContext.IsInitialized)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> source = MessageContext.Current.Source;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>This is used internally by <code>LocalDispatchHelper</code> to avoid crashes when the
+<code>LocalChannelBackgroundService</code> processes messages without an HTTP request context.</p>
+<hr>
+<h2 id="distributed-tracing-with-messagecontext">Distributed Tracing with MessageContext</h2>
+<p><code>MessageContext</code> gives you three tracing capabilities out of the box — without requiring
+OpenTelemetry, Jaeger, or any external tracing infrastructure. Every message that flows
+through the Juice pipeline carries these headers, making it possible to reconstruct the
+full story of any request across services.</p>
+<h3 id="what-each-field-tells-you">What each field tells you</h3>
+<pre class="mermaid align-center ">flowchart TB
+    subgraph COR[&#34;CorrelationId&#34;]
+        direction LR
+        C0[&#34;&#39;Which user request started this?&#39;&#34;]
+        C1[&#34;Same value across ALL services and messages&lt;br/&gt;triggered by one user request&#34;]
+    end
+
+    subgraph CAU[&#34;CausationId&#34;]
+        direction LR
+        C2[&#34;&#39;What directly caused this step?&#39;&#34;]
+        C3[&#34;Points to the ExecutionId of the parent step&lt;br/&gt;Forms a parent → child chain&#34;]
+    end
+
+    subgraph EXE[&#34;ExecutionId&#34;]
+        direction LR
+        C4[&#34;&#39;Which specific handler ran?&#39;&#34;]
+        C5[&#34;Unique per entry point execution&lt;br/&gt;Becomes the CausationId of downstream messages&#34;]
+    end
+
+    subgraph SRC[&#34;Source&#34;]
+        direction LR
+        C6[&#34;&#39;Which service and entry point?&#39;&#34;]
+        C7[&#34;Identifies service name and entry type&lt;br/&gt;Used in idempotency keys and log filtering&#34;]
+    end</pre>
+<h3 id="example-tracing-an-order-across-4-services">Example: Tracing an Order Across 4 Services</h3>
+<p>A user places an order. That single request triggers a chain of events across multiple
+services. Here is what <code>MessageContext</code> captures at each step:</p>
+<pre class="mermaid align-center ">sequenceDiagram
+    participant User
+    participant Orders as Orders API
+    participant Inventory as Inventory Service
+    participant Shipping as Shipping Service
+    participant Notify as Notification Service
+
+    User-&gt;&gt;Orders: POST /orders
+    Note over Orders: CorrelationId = cor-001&lt;br/&gt;ExecutionId = exec-A&lt;br/&gt;Source = &#34;orders-api&#34;
+
+    Orders-&gt;&gt;Inventory: OrderCreatedEvent
+    Note right of Orders: Headers:&lt;br/&gt;x-correlation-id: cor-001&lt;br/&gt;x-causation-id: exec-A
+
+    Note over Inventory: CorrelationId = cor-001 ✓&lt;br/&gt;CausationId = exec-A&lt;br/&gt;ExecutionId = exec-B&lt;br/&gt;Source = &#34;inventory&#34;
+
+    Inventory-&gt;&gt;Shipping: StockReservedEvent
+    Note right of Inventory: Headers:&lt;br/&gt;x-correlation-id: cor-001&lt;br/&gt;x-causation-id: exec-B
+
+    Note over Shipping: CorrelationId = cor-001 ✓&lt;br/&gt;CausationId = exec-B&lt;br/&gt;ExecutionId = exec-C&lt;br/&gt;Source = &#34;shipping&#34;
+
+    Shipping-&gt;&gt;Notify: ShipmentScheduledEvent
+    Note right of Shipping: Headers:&lt;br/&gt;x-correlation-id: cor-001&lt;br/&gt;x-causation-id: exec-C
+
+    Note over Notify: CorrelationId = cor-001 ✓&lt;br/&gt;CausationId = exec-C&lt;br/&gt;ExecutionId = exec-D&lt;br/&gt;Source = &#34;notifications&#34;</pre>
+<h3 id="querying-logs-with-messagecontext">Querying logs with MessageContext</h3>
+<p>Every step in the chain shares <code>CorrelationId = cor-001</code>. With structured logging, you
+can reconstruct the full request flow:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- Find everything that happened for this user request
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> logs <span style="color:#66d9ef">WHERE</span> correlation_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;cor-001&#39;</span> <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">timestamp</span>;</span></span></code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>| timestamp | source       | correlation_id | causation_id | message                        |
+|-----------|-------------|----------------|--------------|--------------------------------|
+| 10:00:01  | orders-api  | cor-001        | null         | POST /orders received          |
+| 10:00:02  | orders-api  | cor-001        | null         | OrderCreatedEvent published    |
+| 10:00:03  | inventory   | cor-001        | exec-A       | OrderCreatedEvent handled      |
+| 10:00:03  | inventory   | cor-001        | exec-A       | StockReservedEvent published   |
+| 10:00:04  | shipping    | cor-001        | exec-B       | StockReservedEvent handled     |
+| 10:00:05  | shipping    | cor-001        | exec-B       | ShipmentScheduledEvent published|
+| 10:00:06  | notifications| cor-001       | exec-C       | Email sent to customer         |</code></pre></div>
+<h3 id="building-a-causation-tree">Building a causation tree</h3>
+<p>Using <code>CausationId</code>, you can reconstruct the exact causal chain — which event triggered
+which downstream event:</p>
+<pre class="mermaid align-center ">flowchart TD
+    A[&#34;POST /orders&lt;br/&gt;&lt;small&gt;exec-A | orders-api&lt;/small&gt;&#34;]
+    B[&#34;OrderCreatedEvent&lt;br/&gt;&lt;small&gt;exec-B | inventory&lt;br/&gt;caused by: exec-A&lt;/small&gt;&#34;]
+    C[&#34;StockReservedEvent&lt;br/&gt;&lt;small&gt;exec-C | shipping&lt;br/&gt;caused by: exec-B&lt;/small&gt;&#34;]
+    D[&#34;ShipmentScheduledEvent&lt;br/&gt;&lt;small&gt;exec-D | notifications&lt;br/&gt;caused by: exec-C&lt;/small&gt;&#34;]
+
+    A --&gt;|&#34;causation&#34;| B --&gt;|&#34;causation&#34;| C --&gt;|&#34;causation&#34;| D</pre>
+<p>This tree answers: <em>&ldquo;The customer got a shipping notification (exec-D) because shipping
+scheduled a shipment (exec-C) because inventory reserved stock (exec-B) because the
+user placed an order (exec-A).&rdquo;</em></p>
+<h3 id="practical-uses">Practical uses</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Use case</th>
+          <th>Which field</th>
+          <th>How</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>&ldquo;Show me everything for this request&rdquo;</strong></td>
+          <td><code>CorrelationId</code></td>
+          <td>Filter all logs/events by correlation ID</td>
+      </tr>
+      <tr>
+          <td><strong>&ldquo;What caused this failure?&rdquo;</strong></td>
+          <td><code>CausationId</code></td>
+          <td>Walk the chain backward: failed step → its causation → parent causation</td>
+      </tr>
+      <tr>
+          <td><strong>&ldquo;Which service produced this event?&rdquo;</strong></td>
+          <td><code>Source</code></td>
+          <td>Filter by source to isolate one service&rsquo;s contribution</td>
+      </tr>
+      <tr>
+          <td><strong>&ldquo;Is this a duplicate?&rdquo;</strong></td>
+          <td><code>Source</code> + <code>MessageId</code></td>
+          <td>Idempotency key <code>&quot;{Source}:{MessageId}&quot;</code> prevents double processing</td>
+      </tr>
+      <tr>
+          <td><strong>&ldquo;How long did the full chain take?&rdquo;</strong></td>
+          <td><code>CorrelationId</code></td>
+          <td>Compare first and last timestamp with the same correlation ID</td>
+      </tr>
+      <tr>
+          <td><strong>&ldquo;Fan-out: what did this event trigger?&rdquo;</strong></td>
+          <td><code>ExecutionId</code> as parent</td>
+          <td>Find all messages where <code>CausationId</code> = this <code>ExecutionId</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="logging-with-messagecontext-in-handlers">Logging with MessageContext in handlers</h3>
+<p>Access <code>MessageContext.Current</code> in any handler to include tracing fields in your logs:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task HandleAsync(OrderCreatedEvent @event)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> ctx = MessageContext.Current;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    _logger.LogInformation(
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        <span style="color:#e6db74">&#34;Handling {Event} [correlation={CorrelationId}, causation={CausationId}, source={Source}]&#34;</span>,
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        nameof(OrderCreatedEvent), ctx.CorrelationId, ctx.CausationId, ctx.Source);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ... business logic</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<blockquote>
+<p><strong>Tip</strong>: Use a logging scope or structured logging enricher to automatically include
+<code>MessageContext</code> fields in every log entry within the request scope — no manual
+logging of correlation IDs needed.</p></blockquote>
+<hr>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/">Internal Messaging Setup</a> — <code>MessagingBuilder</code> and idempotency</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/consumption/">Consumption Setup</a> — RabbitMQ consumer header propagation</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/local-transport/">Local Transport</a> — idempotency deduplication via <code>MessageContext.Source</code></li>
+</ul>
+
+  <footer class="footline">
+              <i class='fa-fw fas fa-calendar'></i> Mar 14, 2026
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+
+        </div>
+        <search><form action="/search/index.html" method="get">
+          <div class="searchbox default-animation">
+            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+            <label class="a11y-only" for="R-search-by">Search</label>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+          </div>
+        </form></search>
+      </div>
+      <div id="R-homelinks" class="default-animation homelinks">
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
+          <ul class="">
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div class="R-sidebarmenu R-shortcutmenu-main">
+          <ul class="enlarge morespace collapsible-menu">
+            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
+            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
+            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
+            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
+            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
+            <li class="parent alwaysopen " data-nav-id="/core/messaging/index.html"><a class="padding" href="/core/messaging/index.html">Messaging</a><ul id="R-subsections-1f5aed48448c40d55fe4f28ff1e00222" class="collapsible-menu">
+            <li class="active " data-nav-id="/core/messaging/message-context/index.html"><a class="padding" href="/core/messaging/message-context/index.html">MessageContext</a></li>
+            <li class="" data-nav-id="/core/messaging/outbox/index.html"><a class="padding" href="/core/messaging/outbox/index.html">Outbox Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/delivery/index.html"><a class="padding" href="/core/messaging/delivery/index.html">Delivery Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/local-transport/index.html"><a class="padding" href="/core/messaging/local-transport/index.html">Local Transport</a></li>
+            <li class="" data-nav-id="/core/messaging/consumption/index.html"><a class="padding" href="/core/messaging/consumption/index.html">Consumption Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/full-setup/index.html"><a class="padding" href="/core/messaging/full-setup/index.html">Full Pipeline Setup</a></li></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a><ul id="R-subsections-1d8a4e743e3c3831715116ee2cf8be23" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
+            <li class="alwaysopen " data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a><ul id="R-subsections-6d43538225634e169bdebdf7720aa656" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a></li>
+            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
+            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
+          </ul>
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
+          <div class="nav-title padding">More</div>
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
+          </ul>
+        </div>
+        <div id="R-footer-margin"></div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
+          <ul class="">
+          </ul>
+        </div>
+<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
+      </div>
+    </aside>
+    <script src="/js/clipboard/clipboard.min.js?1773477089" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1773477089" defer></script>
+    <script src="/js/js-yaml/js-yaml.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-color.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-dispatch.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-drag.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-ease.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-interpolate.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-selection.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-timer.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-transition.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-zoom.min.js?1773477089" defer></script>
+    <script src="/js/mermaid/mermaid.min.js?1773477089" defer></script>
+    <script>
+      window.relearn.themeUseMermaid = JSON.parse("{}");
+    </script>
+    <script src="/js/theme.min.js?1773477089" defer></script>
+  </body>
+</html>

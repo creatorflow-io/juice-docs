@@ -1,16 +1,183 @@
-<!doctype html><html lang=en-us dir=ltr itemscope itemtype=http://schema.org/Article data-r-output-format=html><head><meta charset=utf-8><meta name=viewport content="height=device-height,width=device-width,initial-scale=1,minimum-scale=1"><meta name=generator content="Hugo 0.144.0"><meta name=generator content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee"><meta name=description content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.144.0">
+    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
+    <meta name="description" content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
 IMessage Hierarchy Every message type in Juice v9 — MediatR commands, domain events, and integration events — implements IMessage, giving them a shared identity (MessageId, CreatedAt, TenantId).
-IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName + type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent."><meta name=author content><meta name=twitter:card content="summary"><meta name=twitter:title content="Messaging :: Juice's documentation"><meta name=twitter:description content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
+IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName &#43; type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent.">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Messaging :: Juice&#39;s documentation">
+    <meta name="twitter:description" content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
 IMessage Hierarchy Every message type in Juice v9 — MediatR commands, domain events, and integration events — implements IMessage, giving them a shared identity (MessageId, CreatedAt, TenantId).
-IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName + type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent."><meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/index.html"><meta property="og:site_name" content="Juice's documentation"><meta property="og:title" content="Messaging :: Juice's documentation"><meta property="og:description" content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
+IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName &#43; type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent.">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/index.html">
+    <meta property="og:site_name" content="Juice&#39;s documentation">
+    <meta property="og:title" content="Messaging :: Juice&#39;s documentation">
+    <meta property="og:description" content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
 IMessage Hierarchy Every message type in Juice v9 — MediatR commands, domain events, and integration events — implements IMessage, giving them a shared identity (MessageId, CreatedAt, TenantId).
-IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName + type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta itemprop=name content="Messaging :: Juice's documentation"><meta itemprop=description content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
+IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName &#43; type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent.">
+    <meta property="og:locale" content="en_us">
+    <meta property="og:type" content="website">
+    <meta itemprop="name" content="Messaging :: Juice&#39;s documentation">
+    <meta itemprop="description" content="Juice v9 unifies all message types under a single IMessage hierarchy and introduces a MessagingBuilder entry point that composes the outbox, delivery, idempotency, and broker layers with a single services.AddMessaging() call.
 IMessage Hierarchy Every message type in Juice v9 — MediatR commands, domain events, and integration events — implements IMessage, giving them a shared identity (MessageId, CreatedAt, TenantId).
-IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName + type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent."><meta itemprop=datePublished content="2026-02-19T00:00:00+00:00"><meta itemprop=dateModified content="2026-02-19T00:00:00+00:00"><meta itemprop=wordCount content="717"><title>Messaging :: Juice's documentation</title>
-<link href=/core/messaging/index.xml rel=alternate type=application/rss+xml title="Messaging :: Juice's documentation"><link href=/images/favicon.png?1771488671 rel=icon type=image/png><link href=/images/favicon.ico?1771488671 rel=icon type=image/x-icon sizes=any><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet media=print onload='this.media="all",this.onload=null'><noscript><link href=/fonts/fontawesome/css/fontawesome-all.min.css?1771488671 rel=stylesheet></noscript><link href=/css/perfect-scrollbar/perfect-scrollbar.min.css?1771488671 rel=stylesheet><link href=/css/theme.min.css?1771488671 rel=stylesheet><link href=/css/format-html.min.css?1771488671 rel=stylesheet id=R-format-style><link href=/css/auto-complete/auto-complete.min.css?1771488671 rel=stylesheet><script src=/js/auto-complete/auto-complete.min.js?1771488671 defer></script><script src=/js/lunr/lunr.min.js?1771488671 defer></script><script src=/js/lunr/lunr.stemmer.support.min.js?1771488671 defer></script><script src=/js/lunr/lunr.multi.min.js?1771488671 defer></script><script src=/js/lunr/lunr.en.min.js?1771488671 defer></script><script src=/js/search.min.js?1771488671 defer></script><script>window.relearn=window.relearn||{},window.relearn.min=`.min`,window.relearn.path="/core/messaging/index.html",window.relearn.relBasePath="../..",window.relearn.relBaseUri="../..",window.relearn.absBaseUri="https://juice-docs.creatorflow.io",window.relearn.contentLangs=["en"],window.relearn.index_js_url="/searchindex.en.js?1771488671",window.relearn.disableAnchorCopy=!1,window.relearn.disableAnchorScrolling=!1,window.relearn.disableInlineCopyToClipboard=!1,window.relearn.enableBlockCodeWrap=!0,window.relearn.getItem=(e,t)=>e.getItem(t),window.relearn.setItem=(e,t,n)=>e.setItem(t,n),window.relearn.removeItem=(e,t)=>e.removeItem(t),window.relearn.themevariants=["mine"],window.relearn.customvariantname="my-custom-variant",window.relearn.changeVariant=function(e){var t=document.documentElement.dataset.rThemeVariant;window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e),document.documentElement.dataset.rThemeVariant=e,t!=e&&(document.dispatchEvent(new CustomEvent("themeVariantLoaded",{detail:{variant:e,oldVariant:t}})),window.relearn.markVariant())},window.relearn.markVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant");document.querySelectorAll(".R-variantswitcher select").forEach(t=>{t.value=e})},window.relearn.initVariant=function(){var e=window.relearn.getItem(window.localStorage,window.relearn.absBaseUri+"/variant")??"";e==window.relearn.customvariantname||(!e||!window.relearn.themevariants.includes(e))&&(e=window.relearn.themevariants[0],window.relearn.setItem(window.localStorage,window.relearn.absBaseUri+"/variant",e)),document.documentElement.dataset.rThemeVariant=e},window.relearn.initVariant(),window.relearn.markVariant(),window.T_Copy_to_clipboard=`Copy to clipboard`,window.T_Copied_to_clipboard=`Copied to clipboard!`,window.T_Copy_link_to_clipboard=`Copy link to clipboard`,window.T_Link_copied_to_clipboard=`Copied link to clipboard!`,window.T_Reset_view=`Reset view`,window.T_View_reset=`View reset!`,window.T_No_results_found=`No results found for "{0}"`,window.T_N_results_found=`{1} results found for "{0}"`</script></head><body class="mobile-support html" data-url=/core/messaging/index.html><div id=R-body class=default-animation><div id=R-body-overlay></div><nav id=R-topbar><div class=topbar-wrapper><div class=topbar-sidebar-divider></div><div class="topbar-area topbar-area-start" data-area=start><div class="topbar-button topbar-button-sidebar" data-content-empty=disable data-width-s=show data-width-m=hide data-width-l=hide><button class=topbar-control onclick=toggleNav() type=button title="Menu (CTRL+ALT+n)"><i class="fa-fw fas fa-bars"></i></button></div><div class="topbar-button topbar-button-toc" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title="Table of Contents (CTRL+ALT+t)"><i class="fa-fw fas fa-list-alt"></i></button><div class=topbar-content><div class=topbar-content-wrapper><nav class=TableOfContents><ul><li><a href=#imessage-hierarchy>IMessage Hierarchy</a><ul><li><a href=#publish-vs-consume-roles>Publish vs. Consume roles</a></li></ul></li><li><a href=#setup-guides>Setup Guides</a></li><li><a href=#internal-messaging-setup>Internal Messaging Setup</a><ul><li><a href=#when-to-use>When to use</a></li><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#nuget-packages>NuGet packages</a></li><li><a href=#di-registration>DI Registration</a></li><li><a href=#iidempotentrequest-replaces-irequestmanager>IIdempotentRequest (replaces IRequestManager)</a></li><li><a href=#idempotencybehavior-pipeline>IdempotencyBehavior Pipeline</a></li><li><a href=#idempotency-backend-selection>Idempotency Backend Selection</a></li></ul></li><li><a href=#see-also>See also</a></li></ul></nav></div></div></div></div><ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype=http://schema.org/BreadcrumbList><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/index.html><span itemprop=name>Juice's documentation</span></a><meta itemprop=position content="1">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><a itemprop=item href=/core/index.html><span itemprop=name>Core features</span></a><meta itemprop=position content="2">&nbsp;>&nbsp;</li><li itemscope itemtype=https://schema.org/ListItem itemprop=itemListElement><span itemprop=name>Messaging</span><meta itemprop=position content="3"></li></ol><div class="topbar-area topbar-area-end" data-area=end><div class="topbar-button topbar-button-edit" data-content-empty=disable data-width-s=area-more data-width-m=show data-width-l=show><a class=topbar-control href=https://github.com/creatorflow-io/juice-docs/tree/master/content/core/messaging/_index.md rel=external target=_blank title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></div><div class="topbar-button topbar-button-prev" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/swagger/index.html title="Swagger (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></div><div class="topbar-button topbar-button-next" data-content-empty=disable data-width-s=show data-width-m=show data-width-l=show><a class=topbar-control href=/core/messaging/outbox/index.html title="Outbox Setup (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></div><div class="topbar-button topbar-button-more" data-content-empty=hide data-width-s=show data-width-m=show data-width-l=show><button class=topbar-control onclick=toggleTopbarFlyout(this) type=button title=More><i class="fa-fw fas fa-ellipsis-v"></i></button><div class=topbar-content><div class=topbar-content-wrapper><div class="topbar-area topbar-area-more" data-area=more></div></div></div></div></div></div></nav><div id=R-main-overlay></div><main id=R-body-inner class="highlightable core" tabindex=-1><div class=flex-block-wrapper><article class=default><header class=headline></header><h1 id=messaging>Messaging</h1><p>Juice v9 unifies all message types under a single <code>IMessage</code> hierarchy and introduces a
+IMessage├── MessageId : Guid├── CreatedAt : DateTimeOffset└── TenantId : string?IEvent : IMessage└── EventName : stringIIntegrationEvent : IEvent ← required only on the CONSUMING side└── (marker — enables dispatcher routing)MessageBase (abstract record) : IMessage└── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent└── EventName → GetType().Name (default) ← optional to customizing the routing key on the PRODUCER sidePublish vs. Consume roles Role Type required Reason Publishing (outbox staging) Any IMessage Outbox accepts any message including plain domain events Consuming (broker dispatch) Must implement IIntegrationEvent IntegrationEventDispatcher uses EventName &#43; type registry to deserialize and route from raw bytes Key insight: A plain domain event (IMessage) can be published and delivered through the outbox without ever implementing IIntegrationEvent if you do not want to customizing the event name. Only services that need to receive it via broker infrastructure must use IIntegrationEvent.">
+    <meta itemprop="datePublished" content="2026-02-19T00:00:00+00:00">
+    <meta itemprop="dateModified" content="2026-02-19T00:00:00+00:00">
+    <meta itemprop="wordCount" content="994">
+    <title>Messaging :: Juice&#39;s documentation</title>
+    <link href="/core/messaging/index.xml" rel="alternate" type="application/rss+xml" title="Messaging :: Juice&#39;s documentation">
+    <link href="/images/favicon.png?1773477089" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1773477089" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1773477089" rel="stylesheet">
+    <link href="/css/theme.min.css?1773477089" rel="stylesheet">
+    <link href="/css/format-html.min.css?1773477089" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1773477089" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1773477089" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1773477089" defer></script>
+    <script src="/js/search.min.js?1773477089" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      // configuration
+      window.relearn.min = `.min`;
+      window.relearn.path='\/core\/messaging\/index.html';
+      window.relearn.relBasePath='..\/..';
+      window.relearn.relBaseUri='..\/..';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
+      window.relearn.contentLangs=['en'];
+      window.relearn.index_js_url="/searchindex.en.js?1773477089";
+      window.relearn.disableAnchorCopy=false;
+      window.relearn.disableAnchorScrolling=false;
+      window.relearn.disableInlineCopyToClipboard=false;
+      window.relearn.enableBlockCodeWrap=true;
+      // legal
+      window.relearn.getItem = (s,n) => {return s.getItem(n)};
+      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
+      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
+      // variant stuff
+      window.relearn.themevariants = [ 'mine' ];
+      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.changeVariant = function(variant) {
+        var oldVariant = document.documentElement.dataset.rThemeVariant;
+        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        document.documentElement.dataset.rThemeVariant = variant;
+        if (oldVariant != variant) {
+          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
+        }
+      }
+      window.relearn.markVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
+      }
+      window.relearn.initVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
+        if( variant == window.relearn.customvariantname ){
+        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+          variant = window.relearn.themevariants[0];
+          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        }
+        document.documentElement.dataset.rThemeVariant = variant;
+      }
+      window.relearn.initVariant();
+      window.relearn.markVariant();
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html" data-url="/core/messaging/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li><a href="#imessage-hierarchy">IMessage Hierarchy</a>
+      <ul>
+        <li><a href="#publish-vs-consume-roles">Publish vs. Consume roles</a></li>
+      </ul>
+    </li>
+    <li><a href="#setup-guides">Setup Guides</a></li>
+    <li><a href="#how-it-all-fits-together">How It All Fits Together</a></li>
+    <li><a href="#internal-messaging-setup">Internal Messaging Setup</a>
+      <ul>
+        <li><a href="#when-to-use">When to use</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#nuget-packages">NuGet packages</a></li>
+        <li><a href="#di-registration">DI Registration</a></li>
+        <li><a href="#iidempotentrequest-replaces-irequestmanager">IIdempotentRequest (replaces IRequestManager)</a></li>
+        <li><a href="#idempotencybehavior-pipeline">IdempotencyBehavior Pipeline</a></li>
+        <li><a href="#idempotency-backend-selection">Idempotency Backend Selection</a></li>
+      </ul>
+    </li>
+    <li><a href="#see-also">See also</a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Messaging</span><meta itemprop="position" content="3"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/messaging/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/swagger/index.html" title="Swagger (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/messaging/message-context/index.html" title="MessageContext (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable core" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="messaging">Messaging</h1>
+
+<p>Juice v9 unifies all message types under a single <code>IMessage</code> hierarchy and introduces a
 <code>MessagingBuilder</code> entry point that composes the outbox, delivery, idempotency, and
-broker layers with a single <code>services.AddMessaging()</code> call.</p><h2 id=imessage-hierarchy>IMessage Hierarchy</h2><p>Every message type in Juice v9 — MediatR commands, domain events, and integration events —
-implements <code>IMessage</code>, giving them a shared identity (<code>MessageId</code>, <code>CreatedAt</code>, <code>TenantId</code>).</p><div class="highlight wrap-code" dir=auto><pre tabindex=0><code>IMessage
+broker layers with a single <code>services.AddMessaging()</code> call.</p>
+<h2 id="imessage-hierarchy">IMessage Hierarchy</h2>
+<p>Every message type in Juice v9 — MediatR commands, domain events, and integration events —
+implements <code>IMessage</code>, giving them a shared identity (<code>MessageId</code>, <code>CreatedAt</code>, <code>TenantId</code>).</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>IMessage
 ├── MessageId : Guid
 ├── CreatedAt : DateTimeOffset
 └── TenantId  : string?
@@ -25,38 +192,434 @@ MessageBase (abstract record) : IMessage
 └── MessageId = Guid.NewGuid(), CreatedAt = UtcNow (defaults)
 
 IntegrationEvent (abstract record) : MessageBase, IIntegrationEvent
-└── EventName → GetType().Name (default)    ← optional to customizing the routing key on the PRODUCER side</code></pre></div><h3 id=publish-vs-consume-roles>Publish vs. Consume roles</h3><table><thead><tr><th>Role</th><th>Type required</th><th>Reason</th></tr></thead><tbody><tr><td><strong>Publishing</strong> (outbox staging)</td><td>Any <code>IMessage</code></td><td>Outbox accepts any message including plain domain events</td></tr><tr><td><strong>Consuming</strong> (broker dispatch)</td><td>Must implement <code>IIntegrationEvent</code></td><td><code>IntegrationEventDispatcher</code> uses <code>EventName</code> + type registry to deserialize and route from raw bytes</td></tr></tbody></table><blockquote><p><strong>Key insight</strong>: A plain domain event (<code>IMessage</code>) can be published and delivered through
+└── EventName → GetType().Name (default)    ← optional to customizing the routing key on the PRODUCER side</code></pre></div>
+<h3 id="publish-vs-consume-roles">Publish vs. Consume roles</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Type required</th>
+          <th>Reason</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Publishing</strong> (outbox staging)</td>
+          <td>Any <code>IMessage</code></td>
+          <td>Outbox accepts any message including plain domain events</td>
+      </tr>
+      <tr>
+          <td><strong>Consuming</strong> (broker dispatch)</td>
+          <td>Must implement <code>IIntegrationEvent</code></td>
+          <td><code>IntegrationEventDispatcher</code> uses <code>EventName</code> + type registry to deserialize and route from raw bytes</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><strong>Key insight</strong>: A plain domain event (<code>IMessage</code>) can be published and delivered through
 the outbox without ever implementing <code>IIntegrationEvent</code> if you do not want to customizing the event name.
-Only services that need to <em>receive</em> it via broker infrastructure must use <code>IIntegrationEvent</code>.</p></blockquote><hr><h2 id=setup-guides>Setup Guides</h2><p>Choose the guide that matches your service&rsquo;s needs. Each is independently followable.</p><table><thead><tr><th>Guide</th><th>What it sets up</th></tr></thead><tbody><tr><td><a href=https://juice-docs.creatorflow.io/core/mediator/>Mediator</a></td><td>MediatR Request/Response, Notification, and Stream Request patterns with handler implementation</td></tr><tr><td><a href=https://juice-docs.creatorflow.io/core/messaging/outbox/>Outbox Setup</a></td><td>Transactional staging of any <code>IMessage</code> inside a MediatR <code>TransactionBehavior</code></td></tr><tr><td><a href=https://juice-docs.creatorflow.io/core/messaging/delivery/>Delivery Setup</a></td><td>Background <code>DeliveryHostedService</code> that forwards staged messages to the broker</td></tr><tr><td><a href=https://juice-docs.creatorflow.io/core/messaging/consumption/>Consumption Setup</a></td><td>RabbitMQ consumer engine, <code>IIntegrationEventHandler&lt;T></code> dispatch, and automatic idempotency</td></tr><tr><td><a href=https://juice-docs.creatorflow.io/core/messaging/full-setup/>Full Setup</a></td><td>All four sub-builders combined in one <code>AddMessaging()</code> call, with migration table</td></tr></tbody></table><hr><h2 id=internal-messaging-setup>Internal Messaging Setup</h2><p>Use this setup when your service only needs in-process MediatR command deduplication —
-no external broker, no outbox table, no delivery worker.</p><h3 id=when-to-use>When to use</h3><ul><li>Service handles <code>IIdempotentRequest</code> commands from an HTTP API or message queue handler</li><li>No need to publish events to other services from this registration</li><li>You want idempotent command handling without any infrastructure dependencies</li></ul><h3 id=prerequisites>Prerequisites</h3><p>None. This is the simplest, self-contained setup.</p><h3 id=nuget-packages>NuGet packages</h3><table><thead><tr><th>Package</th><th>Purpose</th></tr></thead><tbody><tr><td><a href=https://www.nuget.org/packages/Juice.Messaging rel=external target=_blank>Juice.Messaging</a></td><td><code>MessagingBuilder</code> entry point, <code>IMessage</code> hierarchy</td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.MediatR.Behaviors rel=external target=_blank>Juice.MediatR.Behaviors</a></td><td><code>IdempotencyRequestBehavior&lt;,></code>, <code>TransactionBehavior&lt;,,></code></td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.MediatR.Contracts rel=external target=_blank>Juice.MediatR.Contracts</a></td><td><code>IIdempotentRequest</code> interface</td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.Messaging.Idempotency.Redis rel=external target=_blank>Juice.Messaging.Idempotency.Redis</a></td><td>Redis idempotency backend (recommended for production)</td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.Messaging.Idempotency.Caching rel=external target=_blank>Juice.Messaging.Idempotency.Caching</a></td><td>In-memory or distributed cache backend</td></tr><tr><td><a href=https://www.nuget.org/packages/Juice.Messaging.Idempotency.EF rel=external target=_blank>Juice.Messaging.Idempotency.EF</a></td><td>EF idempotency backend (auditable / SQL-required)</td></tr></tbody></table><h3 id=di-registration>DI Registration</h3><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddMessaging(builder =&gt;
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex;background-color:#3c3d38><span>    builder.AddIdempotencyRedis(opts =&gt;
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        opts.Configuration = configuration.GetConnectionString(<span style=color:#e6db74>&#34;Redis&#34;</span>);
-</span></span><span style=display:flex><span>    });
-</span></span><span style=display:flex><span>});
-</span></span><span style=display:flex;background-color:#3c3d38><span>
-</span></span><span style=display:flex;background-color:#3c3d38><span>services.AddMediatR(cfg =&gt;
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    cfg.RegisterServicesFromAssembly(<span style=color:#66d9ef>typeof</span>(MyHandler).Assembly);
-</span></span><span style=display:flex><span>    cfg.AddIdempotencyRequestBehavior();
-</span></span><span style=display:flex><span>});</span></span></code></pre></div><hr><h3 id=iidempotentrequest-replaces-irequestmanager>IIdempotentRequest (replaces IRequestManager)</h3><p><code>IIdempotentRequest</code> is the v9 replacement for the v8.5.0 <code>IRequestManager</code> + <code>IIdentifiedCommand&lt;T></code> pattern.
-Mark your command with <code>IIdempotentRequest</code> and the <code>IdempotencyBehavior</code> handles deduplication automatically.</p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#75715e>// In Juice.MediatR.Contracts (package: Juice.MediatR.Contracts)</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>IIdempotentRequest</span> : IBaseRequest
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Caller-supplied unique key — generated by the sender, not the server</span>
-</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>string</span> IdempotencyKey { <span style=color:#66d9ef>get</span>; }
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p><strong>Usage example — mark your command directly:</strong></p><div class="highlight wrap-code" dir=auto><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-csharp data-lang=csharp><span style=display:flex;background-color:#3c3d38><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>record</span> <span style=color:#a6e22e>CreateOrderCommand</span>(<span style=color:#66d9ef>string</span> OrderId, <span style=color:#66d9ef>string</span> CustomerId)
-</span></span><span style=display:flex><span>    : IRequest&lt;IOperationResult&gt;, IIdempotentRequest
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// IdempotencyKey is the caller-supplied unique identifier</span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// The framework calls IIdempotencyService automatically — no handler changes needed</span>
-</span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> IdempotencyKey =&gt; OrderId;
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p><strong>v8.5.0 → v9 comparison:</strong></p><table><thead><tr><th>v8.5.0</th><th>v9</th></tr></thead><tbody><tr><td>Wrap command: <code>new IdentifiedCommand&lt;T>(cmd, id)</code></td><td>Mark command directly with <code>IIdempotentRequest</code></td></tr><tr><td>Inject <code>IRequestManager</code> into handler</td><td>No injection needed</td></tr><tr><td>Call <code>requestManager.ExistAsync(id)</code> manually</td><td><code>IdempotencyBehavior</code> calls <code>IIdempotencyService</code> automatically</td></tr><tr><td>Register <code>IIdentifiedCommand&lt;T></code> handler</td><td>Register your command handler directly</td></tr></tbody></table><hr><h3 id=idempotencybehavior-pipeline>IdempotencyBehavior Pipeline</h3><p><code>IdempotencyRequestBehavior&lt;TRequest, TResponse></code> intercepts any <code>IRequest&lt;T></code> that also
+Only services that need to <em>receive</em> it via broker infrastructure must use <code>IIntegrationEvent</code>.</p></blockquote>
+<hr>
+<h2 id="setup-guides">Setup Guides</h2>
+<p>Choose the guide that matches your service&rsquo;s needs. Each is independently followable.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Guide</th>
+          <th>What it sets up</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/message-context/">MessageContext</a></td>
+          <td><code>MessageContext</code> initialization via middleware, <code>[MessageContext]</code> attribute, or <code>[InitializeMessageContext]</code> for tests</td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/mediator/">Mediator</a></td>
+          <td>MediatR Request/Response, Notification, and Stream Request patterns with handler implementation</td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a></td>
+          <td>Transactional staging of any <code>IMessage</code> inside a MediatR <code>TransactionBehavior</code></td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/delivery/">Delivery Setup</a></td>
+          <td>Background <code>DeliveryHostedService</code> that forwards staged messages to the broker</td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/local-transport/">Local Transport</a></td>
+          <td>In-process dispatch via <code>IMessageService</code> — <code>&quot;local-channel&quot;</code> (non-durable) and <code>&quot;local&quot;</code> (outbox-backed) routes with immediate dispatch and idempotency deduplication</td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/consumption/">Consumption Setup</a></td>
+          <td>RabbitMQ consumer engine, <code>IIntegrationEventHandler&lt;T&gt;</code> dispatch, and automatic idempotency</td>
+      </tr>
+      <tr>
+          <td><a href="https://juice-docs.creatorflow.io/core/messaging/full-setup/">Full Setup</a></td>
+          <td>All sub-builders combined in one <code>AddMessaging()</code> call, with migration table</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="how-it-all-fits-together">How It All Fits Together</h2>
+<p>The diagram below shows how a message flows from an HTTP request through the messaging
+pipeline to its final destination — in-process handler or broker.</p>
+<pre class="mermaid align-center ">flowchart TB
+    subgraph Entry[&#34;Entry Points&#34;]
+        HTTP[&#34;HTTP Request&#34;]
+        Consumer[&#34;RabbitMQ Consumer&#34;]
+        Test[&#34;xUnit Test&#34;]
+    end
+
+    subgraph MC[&#34;MessageContext (AsyncLocal)&#34;]
+        direction LR
+        CID[&#34;CorrelationId&#34;]
+        CAID[&#34;CausationId&#34;]
+        EID[&#34;ExecutionId&#34;]
+        SRC[&#34;Source&#34;]
+    end
+
+    subgraph Init[&#34;MessageContext Initialization&#34;]
+        MW[&#34;MessageContextMiddleware&lt;br/&gt;&lt;small&gt;global — all requests&lt;/small&gt;&#34;]
+        Attr[&#34;[MessageContext] attribute&lt;br/&gt;&lt;small&gt;per controller/action&lt;/small&gt;&#34;]
+        TestAttr[&#34;[InitializeMessageContext]&lt;br/&gt;&lt;small&gt;xUnit before/after&lt;/small&gt;&#34;]
+        AutoConsumer[&#34;RabbitMQConsumerEngine&lt;br/&gt;&lt;small&gt;from message headers&lt;/small&gt;&#34;]
+    end
+
+    HTTP --&gt; MW &amp; Attr
+    Consumer --&gt; AutoConsumer
+    Test --&gt; TestAttr
+    MW &amp; Attr &amp; TestAttr &amp; AutoConsumer --&gt; MC
+
+    subgraph Publish[&#34;Publishing&#34;]
+        IMS[&#34;IMessageService.PublishAsync()&#34;]
+        Policy[&#34;IMessagePublishingPolicy&lt;br/&gt;&lt;small&gt;resolves routes from config&lt;/small&gt;&#34;]
+        IMS --&gt; Policy
+    end
+
+    MC --&gt; Publish
+
+    subgraph Routes[&#34;Route Resolution&#34;]
+        LC[&#34;local-channel&lt;br/&gt;&lt;small&gt;non-durable&lt;/small&gt;&#34;]
+        LO[&#34;local&lt;br/&gt;&lt;small&gt;durable, in-process&lt;/small&gt;&#34;]
+        BR[&#34;rabbitmq&lt;br/&gt;&lt;small&gt;durable, cross-service&lt;/small&gt;&#34;]
+    end
+
+    Policy --&gt; LC &amp; LO &amp; BR
+
+    subgraph Dispatch[&#34;Dispatch&#34;]
+        Channel[&#34;Channel&amp;lt;IMessage&amp;gt;&lt;br/&gt;&lt;small&gt;in-memory queue&lt;/small&gt;&#34;]
+        Outbox[&#34;OutboxEvent +&lt;br/&gt;OutboxDelivery&lt;br/&gt;&lt;small&gt;DB tables&lt;/small&gt;&#34;]
+        BgSvc[&#34;LocalChannel&lt;br/&gt;BackgroundService&#34;]
+        DeliverySvc[&#34;DeliveryHostedService&#34;]
+        LTP[&#34;LocalTransport&lt;br/&gt;Publisher&#34;]
+        RMQ[&#34;RabbitMQProducer&#34;]
+        Handler[&#34;IIntegrationEventHandler&amp;lt;T&amp;gt;&lt;br/&gt;INotificationHandler&amp;lt;T&amp;gt;&#34;]
+        Broker[&#34;RabbitMQ Broker&#34;]
+    end
+
+    LC --&gt; Channel
+    LO --&gt; Outbox
+    LO -.-&gt;|&#34;immediate&lt;br/&gt;best-effort&#34;| Channel
+    BR --&gt; Outbox
+
+    Channel --&gt; BgSvc --&gt; Handler
+    Outbox --&gt; DeliverySvc
+    DeliverySvc --&gt;|&#34;key=local&#34;| LTP --&gt; Handler
+    DeliverySvc --&gt;|&#34;key=rabbitmq&#34;| RMQ --&gt; Broker
+
+    subgraph Headers[&#34;Outbox Headers (from MessageContext)&#34;]
+        direction LR
+        H1[&#34;x-correlation-id&#34;]
+        H2[&#34;x-causation-id&#34;]
+        H3[&#34;x-source&#34;]
+        H4[&#34;x-tenant-id&#34;]
+        H5[&#34;x-message-id&#34;]
+    end
+
+    MC -.-&gt;|&#34;stamped into&#34;| Headers
+    Headers -.-&gt;|&#34;stored in&#34;| Outbox</pre>
+<blockquote>
+<p><strong>Key concept</strong>: <code>MessageContext</code> is initialized once at the entry point, flows through
+all async operations via <code>AsyncLocal</code>, and is stamped into outbox headers. When a message
+crosses a service boundary (via broker) or is retried (via <code>LocalTransportPublisher</code>),
+<code>MessageContext</code> is <strong>restored from these headers</strong> — preserving correlation across the
+entire chain.</p></blockquote>
+<hr>
+<h2 id="internal-messaging-setup">Internal Messaging Setup</h2>
+<p>Use this setup when your service only needs in-process MediatR command deduplication —
+no external broker, no outbox table, no delivery worker.</p>
+<h3 id="when-to-use">When to use</h3>
+<ul>
+<li>Service handles <code>IIdempotentRequest</code> commands from an HTTP API or message queue handler</li>
+<li>No need to publish events to other services from this registration</li>
+<li>You want idempotent command handling without any infrastructure dependencies</li>
+</ul>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>None. This is the simplest, self-contained setup.</p>
+<h3 id="nuget-packages">NuGet packages</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Package</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.Messaging" rel="external" target="_blank">Juice.Messaging</a></td>
+          <td><code>MessagingBuilder</code> entry point, <code>IMessage</code> hierarchy</td>
+      </tr>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.MediatR.Behaviors" rel="external" target="_blank">Juice.MediatR.Behaviors</a></td>
+          <td><code>IdempotencyRequestBehavior&lt;,&gt;</code>, <code>TransactionBehavior&lt;,,&gt;</code></td>
+      </tr>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.MediatR.Contracts" rel="external" target="_blank">Juice.MediatR.Contracts</a></td>
+          <td><code>IIdempotentRequest</code> interface</td>
+      </tr>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.Messaging.Idempotency.Redis" rel="external" target="_blank">Juice.Messaging.Idempotency.Redis</a></td>
+          <td>Redis idempotency backend (recommended for production)</td>
+      </tr>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.Messaging.Idempotency.Caching" rel="external" target="_blank">Juice.Messaging.Idempotency.Caching</a></td>
+          <td>In-memory or distributed cache backend</td>
+      </tr>
+      <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.Messaging.Idempotency.EF" rel="external" target="_blank">Juice.Messaging.Idempotency.EF</a></td>
+          <td>EF idempotency backend (auditable / SQL-required)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="di-registration">DI Registration</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging(builder =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    builder.AddIdempotencyRedis(opts =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        opts.Configuration = configuration.GetConnectionString(<span style="color:#e6db74">&#34;Redis&#34;</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex; background-color:#3c3d38"><span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>services.AddMediatR(cfg =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    cfg.RegisterServicesFromAssembly(<span style="color:#66d9ef">typeof</span>(MyHandler).Assembly);
+</span></span><span style="display:flex;"><span>    cfg.AddIdempotencyRequestBehavior();
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<hr>
+<h3 id="iidempotentrequest-replaces-irequestmanager">IIdempotentRequest (replaces IRequestManager)</h3>
+<p><code>IIdempotentRequest</code> is the v9 replacement for the v8.5.0 <code>IRequestManager</code> + <code>IIdentifiedCommand&lt;T&gt;</code> pattern.
+Mark your command with <code>IIdempotentRequest</code> and the <code>IdempotencyBehavior</code> handles deduplication automatically.</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span><span style="color:#75715e">// In Juice.MediatR.Contracts (package: Juice.MediatR.Contracts)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IIdempotentRequest</span> : IBaseRequest
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Caller-supplied unique key — generated by the sender, not the server</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">string</span> IdempotencyKey { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p><strong>Usage example — mark your command directly:</strong></p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex; background-color:#3c3d38"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">CreateOrderCommand</span>(<span style="color:#66d9ef">string</span> OrderId, <span style="color:#66d9ef">string</span> CustomerId)
+</span></span><span style="display:flex;"><span>    : IRequest&lt;IOperationResult&gt;, IIdempotentRequest
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// IdempotencyKey is the caller-supplied unique identifier</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// The framework calls IIdempotencyService automatically — no handler changes needed</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> IdempotencyKey =&gt; OrderId;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p><strong>v8.5.0 → v9 comparison:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>v8.5.0</th>
+          <th>v9</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Wrap command: <code>new IdentifiedCommand&lt;T&gt;(cmd, id)</code></td>
+          <td>Mark command directly with <code>IIdempotentRequest</code></td>
+      </tr>
+      <tr>
+          <td>Inject <code>IRequestManager</code> into handler</td>
+          <td>No injection needed</td>
+      </tr>
+      <tr>
+          <td>Call <code>requestManager.ExistAsync(id)</code> manually</td>
+          <td><code>IdempotencyBehavior</code> calls <code>IIdempotencyService</code> automatically</td>
+      </tr>
+      <tr>
+          <td>Register <code>IIdentifiedCommand&lt;T&gt;</code> handler</td>
+          <td>Register your command handler directly</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="idempotencybehavior-pipeline">IdempotencyBehavior Pipeline</h3>
+<p><code>IdempotencyRequestBehavior&lt;TRequest, TResponse&gt;</code> intercepts any <code>IRequest&lt;T&gt;</code> that also
 implements <code>IIdempotentRequest</code>. It runs at pipeline order <code>int.MinValue</code> — before all
-other behaviors — so duplicate commands are rejected before any handler logic executes.</p><p><strong>How it works:</strong></p><ol><li>Behavior checks <code>IIdempotencyService.TryCreateRequestAsync(key, typeName)</code></li><li>If the key already exists → returns the cached result immediately (no handler invoked)</li><li>If the key is new → proceeds through the pipeline, then stores the result</li></ol><blockquote><p><strong>Shared registration</strong>: One <code>IIdempotencyService</code> registration serves both
+other behaviors — so duplicate commands are rejected before any handler logic executes.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Behavior checks <code>IIdempotencyService.TryCreateRequestAsync(key, typeName)</code></li>
+<li>If the key already exists → returns the cached result immediately (no handler invoked)</li>
+<li>If the key is new → proceeds through the pipeline, then stores the result</li>
+</ol>
+<blockquote>
+<p><strong>Shared registration</strong>: One <code>IIdempotencyService</code> registration serves both
 <code>IdempotencyBehavior</code> (MediatR pipeline) and <code>IntegrationEventDispatcher</code> (consumer side).
-No separate registration is needed for each.</p></blockquote><hr><h3 id=idempotency-backend-selection>Idempotency Backend Selection</h3><table><thead><tr><th>Backend</th><th>Registration</th><th>Package</th><th>Use case</th></tr></thead><tbody><tr><td>In-memory</td><td><code>builder.AddIdempotencyInMemory()</code></td><td><code>Juice.Messaging.Idempotency.Caching</code></td><td>Tests and development only</td></tr><tr><td>Distributed cache</td><td><code>builder.AddIdempotencyDistributedCache()</code></td><td><code>Juice.Messaging.Idempotency.Caching</code></td><td>Simple, non-critical workloads</td></tr><tr><td><strong>Redis</strong></td><td><code>builder.AddIdempotencyRedis(opts => { ... })</code></td><td><code>Juice.Messaging.Idempotency.Redis</code></td><td><strong>Production (recommended)</strong></td></tr><tr><td>EF</td><td><code>builder.AddIdempotencyEF(config, opts => { ... })</code></td><td><code>Juice.Messaging.Idempotency.EF</code></td><td>Auditable / SQL Server required</td></tr></tbody></table><hr><h2 id=see-also>See also</h2><ul><li><a href=https://juice-docs.creatorflow.io/core/mediator/>Mediator</a> — Request/Response, Notification, and Stream Request patterns</li><li><a href=https://juice-docs.creatorflow.io/core/messaging/outbox/>Outbox Setup</a> — add transactional message staging</li><li><a href=https://juice-docs.creatorflow.io/core/messaging/full-setup/>Full Setup</a> — combine all sub-builders + migration table</li><li><a href=https://juice-docs.creatorflow.io/core/mediator/v8.5.0/>MediatR v8.5.0 archive</a> — original <code>IRequestManager</code> documentation</li><li><a href=https://juice-docs.creatorflow.io/core/eventbus/v8.5.0/>Event bus v8.5.0 archive</a> — original <code>IEventBus</code> documentation</li></ul><footer class=footline><i class='fa-fw fas fa-calendar'></i> Feb 19, 2026</footer></article></div></main></div><aside id=R-sidebar class=default-animation><div id=R-header-topbar class=default-animation></div><div id=R-header-wrapper class=default-animation><div id=R-header class=default-animation></div><search><form action=/search/index.html method=get><div class="searchbox default-animation"><button class=search-detail type=submit title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
-<label class=a11y-only for=R-search-by>Search</label>
-<input data-search-input id=R-search-by name=search-by class=search-by type=search placeholder=Search...>
-<button class=search-clear type=button data-search-clear title="Clear search"><i class="fas fa-times" title="Clear search"></i></button></div></form></search></div><div id=R-homelinks class="default-animation homelinks"><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-homelinks"><ul class="space collapsible-menu"><li data-nav-id=/index.html><a class=padding href=/index.html><i class="fa-fw fas fa-home"></i> Home</a></li></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-headercontrols"><ul></ul></div><div class="R-menu-divider default-animation"><hr class=padding></div></div><div id=R-content-wrapper class=highlightable><div class="R-sidebarmenu R-shortcutmenu-main"><ul class="enlarge morespace collapsible-menu"><li data-nav-id=/overview/index.html><a class=padding href=/overview/index.html><b>1. </b>Overview</a><ul id=R-subsections-0545e563276d3ac6e3218cfecf67a14b class=collapsible-menu></ul></li><li data-nav-id=/quickstart/index.html><a class=padding href=/quickstart/index.html><b>2. </b>Quickstarts</a><ul id=R-subsections-d63193e927818b6cb77d9c791ea48a61 class=collapsible-menu></ul></li><li class=parent data-nav-id=/core/index.html><a class=padding href=/core/index.html><b>3. </b>Core features</a><ul id=R-subsections-ae20cee98ae962b39919c99c9fa7e1c8 class=collapsible-menu><li data-nav-id=/core/overview/index.html><a class=padding href=/core/overview/index.html>Overview</a></li><li class=alwaysopen data-nav-id=/core/logging/index.html><a class=padding href=/core/logging/index.html>Logging</a><ul id=R-subsections-75db7930ffb434daa8a1fb726f7e1cd3 class=collapsible-menu></ul></li><li data-nav-id=/core/configuration/index.html><a class=padding href=/core/configuration/index.html>Configuration</a></li><li data-nav-id=/core/options/index.html><a class=padding href=/core/options/index.html>Options</a></li><li data-nav-id=/core/swagger/index.html><a class=padding href=/core/swagger/index.html>Swagger</a></li><li class="active parent alwaysopen" data-nav-id=/core/messaging/index.html><a class=padding href=/core/messaging/index.html>Messaging</a><ul id=R-subsections-1f5aed48448c40d55fe4f28ff1e00222 class=collapsible-menu><li data-nav-id=/core/messaging/outbox/index.html><a class=padding href=/core/messaging/outbox/index.html>Outbox Setup</a></li><li data-nav-id=/core/messaging/delivery/index.html><a class=padding href=/core/messaging/delivery/index.html>Delivery Setup</a></li><li data-nav-id=/core/messaging/consumption/index.html><a class=padding href=/core/messaging/consumption/index.html>Consumption Setup</a></li><li data-nav-id=/core/messaging/full-setup/index.html><a class=padding href=/core/messaging/full-setup/index.html>Full Pipeline Setup</a></li></ul></li><li class=alwaysopen data-nav-id=/core/mediator/index.html><a class=padding href=/core/mediator/index.html>Mediator</a><ul id=R-subsections-1d8a4e743e3c3831715116ee2cf8be23 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/eventbus/index.html><a class=padding href=/core/eventbus/index.html>Event bus</a><ul id=R-subsections-8bb47dd787c6a0c9079dde618735fec8 class=collapsible-menu></ul></li><li data-nav-id=/core/entityframework/index.html><a class=padding href=/core/entityframework/index.html>Entity framework</a></li><li class=alwaysopen data-nav-id=/core/integration/index.html><a class=padding href=/core/integration/index.html>Integration service</a><ul id=R-subsections-6d43538225634e169bdebdf7720aa656 class=collapsible-menu></ul></li><li class=alwaysopen data-nav-id=/core/xunit/index.html><a class=padding href=/core/xunit/index.html>xUnit</a><ul id=R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb class=collapsible-menu></ul></li><li data-nav-id=/core/multitenant/index.html><a class=padding href=/core/multitenant/index.html>Multi-tenant</a></li><li data-nav-id=/core/modular/index.html><a class=padding href=/core/modular/index.html>Modular</a></li></ul></li><li data-nav-id=/bg_service/index.html><a class=padding href=/bg_service/index.html><b>4. </b>Background service</a><ul id=R-subsections-91ddeaef7589de0de564e5ca3c5ae84c class=collapsible-menu></ul></li><li data-nav-id=/other_services/index.html><a class=padding href=/other_services/index.html><b>5. </b>Other services</a><ul id=R-subsections-499bf1af617ed2be177da5b5e1438bc4 class=collapsible-menu></ul></li></ul></div><div class="R-sidebarmenu R-shortcutmenu-shortcuts"><div class="nav-title padding">More</div><ul class="space collapsible-menu"><li data-nav-id=https://github.com/creatorflow-io/Juice><a class=padding href=https://github.com/creatorflow-io/Juice rel=external target=_blank><i class='fab fa-github'></i> Github repo</a></li></ul></div><div id=R-footer-margin></div><div class="R-menu-divider default-animation"><hr class=padding></div><div class="R-sidebarmenu R-shortcutmenu-footercontrols"><ul></ul></div><div id=R-footer><p>Built with <a href=https://github.com/McShelby/hugo-theme-relearn title=love><i class="fas fa-heart"></i></a> by <a href=https://gohugo.io/>Hugo</a></p></div></div></aside><script src=/js/clipboard/clipboard.min.js?1771488671 defer></script><script src=/js/perfect-scrollbar/perfect-scrollbar.min.js?1771488671 defer></script><script src=/js/theme.min.js?1771488671 defer></script></body></html>
+No separate registration is needed for each.</p></blockquote>
+<hr>
+<h3 id="idempotency-backend-selection">Idempotency Backend Selection</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Backend</th>
+          <th>Registration</th>
+          <th>Package</th>
+          <th>Use case</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>In-memory</td>
+          <td><code>builder.AddIdempotencyInMemory()</code></td>
+          <td><code>Juice.Messaging.Idempotency.Caching</code></td>
+          <td>Tests and development only</td>
+      </tr>
+      <tr>
+          <td>Distributed cache</td>
+          <td><code>builder.AddIdempotencyDistributedCache()</code></td>
+          <td><code>Juice.Messaging.Idempotency.Caching</code></td>
+          <td>Simple, non-critical workloads</td>
+      </tr>
+      <tr>
+          <td><strong>Redis</strong></td>
+          <td><code>builder.AddIdempotencyRedis(opts =&gt; { ... })</code></td>
+          <td><code>Juice.Messaging.Idempotency.Redis</code></td>
+          <td><strong>Production (recommended)</strong></td>
+      </tr>
+      <tr>
+          <td>EF</td>
+          <td><code>builder.AddIdempotencyEF(config, opts =&gt; { ... })</code></td>
+          <td><code>Juice.Messaging.Idempotency.EF</code></td>
+          <td>Auditable / SQL Server required</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/message-context/">MessageContext</a> — middleware, attribute, and test initialization</li>
+<li><a href="https://juice-docs.creatorflow.io/core/mediator/">Mediator</a> — Request/Response, Notification, and Stream Request patterns</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> — add transactional message staging</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/local-transport/">Local Transport</a> — in-process dispatch with <code>IMessageService</code></li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/full-setup/">Full Setup</a> — combine all sub-builders + migration table</li>
+<li><a href="https://juice-docs.creatorflow.io/core/mediator/v8.5.0/">MediatR v8.5.0 archive</a> — original <code>IRequestManager</code> documentation</li>
+<li><a href="https://juice-docs.creatorflow.io/core/eventbus/v8.5.0/">Event bus v8.5.0 archive</a> — original <code>IEventBus</code> documentation</li>
+</ul>
+
+  <footer class="footline">
+              <i class='fa-fw fas fa-calendar'></i> Feb 19, 2026
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+
+        </div>
+        <search><form action="/search/index.html" method="get">
+          <div class="searchbox default-animation">
+            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+            <label class="a11y-only" for="R-search-by">Search</label>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+          </div>
+        </form></search>
+      </div>
+      <div id="R-homelinks" class="default-animation homelinks">
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
+          <ul class="">
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div class="R-sidebarmenu R-shortcutmenu-main">
+          <ul class="enlarge morespace collapsible-menu">
+            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
+            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
+            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
+            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
+            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
+            <li class="active parent alwaysopen " data-nav-id="/core/messaging/index.html"><a class="padding" href="/core/messaging/index.html">Messaging</a><ul id="R-subsections-1f5aed48448c40d55fe4f28ff1e00222" class="collapsible-menu">
+            <li class="" data-nav-id="/core/messaging/message-context/index.html"><a class="padding" href="/core/messaging/message-context/index.html">MessageContext</a></li>
+            <li class="" data-nav-id="/core/messaging/outbox/index.html"><a class="padding" href="/core/messaging/outbox/index.html">Outbox Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/delivery/index.html"><a class="padding" href="/core/messaging/delivery/index.html">Delivery Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/local-transport/index.html"><a class="padding" href="/core/messaging/local-transport/index.html">Local Transport</a></li>
+            <li class="" data-nav-id="/core/messaging/consumption/index.html"><a class="padding" href="/core/messaging/consumption/index.html">Consumption Setup</a></li>
+            <li class="" data-nav-id="/core/messaging/full-setup/index.html"><a class="padding" href="/core/messaging/full-setup/index.html">Full Pipeline Setup</a></li></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a><ul id="R-subsections-1d8a4e743e3c3831715116ee2cf8be23" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
+            <li class="alwaysopen " data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a><ul id="R-subsections-6d43538225634e169bdebdf7720aa656" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a></li>
+            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
+            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
+          </ul>
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
+          <div class="nav-title padding">More</div>
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
+          </ul>
+        </div>
+        <div id="R-footer-margin"></div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
+          <ul class="">
+          </ul>
+        </div>
+<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
+      </div>
+    </aside>
+    <script src="/js/clipboard/clipboard.min.js?1773477089" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1773477089" defer></script>
+    <script src="/js/js-yaml/js-yaml.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-color.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-dispatch.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-drag.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-ease.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-interpolate.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-selection.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-timer.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-transition.min.js?1773477089" defer></script>
+    <script src="/js/d3/d3-zoom.min.js?1773477089" defer></script>
+    <script src="/js/mermaid/mermaid.min.js?1773477089" defer></script>
+    <script>
+      window.relearn.themeUseMermaid = JSON.parse("{}");
+    </script>
+    <script src="/js/theme.min.js?1773477089" defer></script>
+  </body>
+</html>
