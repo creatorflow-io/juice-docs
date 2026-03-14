@@ -275,6 +275,7 @@ dotnet ef database update --context AppDbContext
 ## See also
 
 - [Delivery Setup]({{< ref "core/messaging/delivery/_index.md" >}}) — add the background delivery worker
+- [Local Transport]({{< ref "core/messaging/local-transport/_index.md" >}}) — in-process dispatch with `IMessageService` and immediate delivery
 - [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) — combine outbox + delivery + consumption
 - [Event bus v8.5.0 archive]({{< ref "core/eventbus/v8.5.0/_index.md" >}}) — original `IntegrationEventLog` documentation
 - [Integration service v8.5.0 archive]({{< ref "core/integration/v8.5.0/_index.md" >}}) — original `IIntegrationEventService` documentation

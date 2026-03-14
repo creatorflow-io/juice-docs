@@ -24,11 +24,12 @@ Either:
 
 ## NuGet packages
 
-Install all packages from the four setup guides:
+Install all packages from the setup guides:
 
 | Package | Purpose |
 |---|---|
 | [Juice.Messaging](https://www.nuget.org/packages/Juice.Messaging) | `MessagingBuilder`, `IOutboxService<T>`, `IMessage` hierarchy |
+| [Juice.Messaging.Local](https://www.nuget.org/packages/Juice.Messaging.Local) | `IMessageService`, `LocalTransportPublisher`, in-process channel dispatch |
 | [Juice.Messaging.Outbox.EF](https://www.nuget.org/packages/Juice.Messaging.Outbox.EF) | Outbox tables, `AddOutbox()` sub-builder |
 | [Juice.Messaging.Outbox.Delivery](https://www.nuget.org/packages/Juice.Messaging.Outbox.Delivery) | `DeliveryHostedService`, `AddDelivery()` sub-builder |
 | [Juice.MediatR.Behaviors](https://www.nuget.org/packages/Juice.MediatR.Behaviors) | `IdempotencyRequestBehavior<,>`, `TransactionBehavior<,,>` |
@@ -87,9 +88,17 @@ services.AddMessaging(builder =>
         opts.Configuration = configuration.GetConnectionString("Redis");
     });
 
-    // 4. Delivery (creates EventBusBuilder internally — do not call AddEventBus() separately)
+    // 4. Local transport — IMessageService<TContext> + in-process publishers
+    builder.AddMessageService<AppDbContext>();    // registers IMessageService<AppDbContext> + local channel
+    builder.AddLocalPublisher<AppDbContext>();    // registers LocalTransportPublisher keyed "local"
+
+    // 5. Delivery (creates EventBusBuilder internally — do not call AddEventBus() separately)
     builder.AddDelivery(delivery =>
     {
+        // "local" publisher key for durable in-process dispatch
+        delivery.AddDeliveryProcessor<AppDbContext>("local",
+            "send-pending", "retry-failed", "recover-timeout");
+        // "rabbitmq" publisher key for broker dispatch
         delivery.AddDeliveryProcessor<AppDbContext>("rabbitmq",
             "send-pending", "retry-failed", "recover-timeout");
         delivery.AddDeliveryPolicies(configuration.GetSection("DeliveryPolicies"));
@@ -146,6 +155,8 @@ services.AddHealthChecks()
 | `IntegrationEvent` record (v8) | `Juice.EventBus` | `IntegrationEvent` record still exists; now extends `MessageBase` (carries `MessageId`, `CreatedAt`, `TenantId`) | `Juice.EventBus.Contracts` |
 | `IIntegrationEventHandler<T>.HandleAsync()` | `Juice.EventBus` | Unchanged | `Juice.EventBus` |
 | RabbitMQ `SubscriptionClientName` config | `Juice.EventBus.RabbitMQ` | `AddConsumer(key, queueName, connectionName)` | `Juice.EventBus.RabbitMQ` |
+| N/A (new in v9) | — | `IMessageService` / `IMessageService<TContext>` — unified publishing interface with config-driven routing to `"local-channel"`, `"local"`, or broker | `Juice.Messaging.Local` |
+| N/A (new in v9) | — | `LocalTransportPublisher` — outbox-backed in-process delivery with immediate dispatch + idempotency deduplication | `Juice.Messaging.Local` |
 
 ### What Is Unchanged
 
@@ -166,6 +177,7 @@ These v8.5.0 concepts carry forward to v9 without replacement:
 
 - [Internal Messaging Setup]({{< ref "core/messaging/_index.md" >}}) — MediatR + `IdempotencyBehavior` standalone
 - [Outbox Setup]({{< ref "core/messaging/outbox/_index.md" >}}) — transactional outbox standalone
+- [Local Transport]({{< ref "core/messaging/local-transport/_index.md" >}}) — in-process dispatch with `IMessageService`
 - [Delivery Setup]({{< ref "core/messaging/delivery/_index.md" >}}) — delivery worker standalone
 - [Consumption Setup]({{< ref "core/messaging/consumption/_index.md" >}}) — RabbitMQ consumer standalone
 - [Event bus v8.5.0 archive]({{< ref "core/eventbus/v8.5.0/_index.md" >}}) — original `IEventBus` and `IntegrationEventLog` docs
