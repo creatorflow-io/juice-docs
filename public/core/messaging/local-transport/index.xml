@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Local Transport :: Juice&#39;s documentation</title>
+    <link>https://juice-docs.creatorflow.io/core/messaging/local-transport/index.html</link>
+    <description>Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.&#xA;Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox + in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox + broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) When to use You need in-process event dispatch without broker overhead (&#34;local-channel&#34;) You need durable, retryable in-process dispatch backed by the outbox (&#34;local&#34;) You want a single PublishAsync call site where routing is config-driven You are building a monolith or modular monolith where some events stay in-process Prerequisites Internal Messaging Setup for IIdempotencyService and MessagingBuilder Outbox Setup if using the &#34;local&#34; durable route NuGet packages Package Purpose Juice.Messaging.Local IMessageService, LocalChannelBackgroundService, LocalTransportPublisher Juice.Messaging MessagingBuilder, IMessagePublishingPolicy, IOutboxService&lt;T&gt; Juice.Messaging.Idempotency.Caching In-memory idempotency (dev/test) Juice.Messaging.Idempotency.Redis Redis idempotency (production) IMessageService — Unified Publishing Interface Two interfaces are available depending on whether your routes need outbox writes:</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="https://juice-docs.creatorflow.io/core/messaging/local-transport/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
