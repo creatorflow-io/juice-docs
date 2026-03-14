@@ -161,5 +161,6 @@ check — there are no `InProgress` records to monitor in a process that doesn't
 
 ## See also
 
+- [Local Transport]({{< ref "core/messaging/local-transport/_index.md" >}}) — in-process dispatch via `"local-channel"` and `"local"` routes
 - [Consumption Setup]({{< ref "core/messaging/consumption/_index.md" >}}) — add a RabbitMQ consumer to the same service
 - [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) — combine outbox + delivery + consumption in one registration

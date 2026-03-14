@@ -52,11 +52,104 @@ Choose the guide that matches your service's needs. Each is independently follow
 
 | Guide | What it sets up |
 |---|---|
+| [MessageContext]({{< ref "core/messaging/message-context/_index.md" >}}) | `MessageContext` initialization via middleware, `[MessageContext]` attribute, or `[InitializeMessageContext]` for tests |
 | [Mediator]({{< ref "core/mediator/_index.md" >}}) | MediatR Request/Response, Notification, and Stream Request patterns with handler implementation |
 | [Outbox Setup]({{< ref "core/messaging/outbox/_index.md" >}}) | Transactional staging of any `IMessage` inside a MediatR `TransactionBehavior` |
 | [Delivery Setup]({{< ref "core/messaging/delivery/_index.md" >}}) | Background `DeliveryHostedService` that forwards staged messages to the broker |
+| [Local Transport]({{< ref "core/messaging/local-transport/_index.md" >}}) | In-process dispatch via `IMessageService` — `"local-channel"` (non-durable) and `"local"` (outbox-backed) routes with immediate dispatch and idempotency deduplication |
 | [Consumption Setup]({{< ref "core/messaging/consumption/_index.md" >}}) | RabbitMQ consumer engine, `IIntegrationEventHandler<T>` dispatch, and automatic idempotency |
-| [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) | All four sub-builders combined in one `AddMessaging()` call, with migration table |
+| [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) | All sub-builders combined in one `AddMessaging()` call, with migration table |
+
+---
+
+## How It All Fits Together
+
+The diagram below shows how a message flows from an HTTP request through the messaging
+pipeline to its final destination — in-process handler or broker.
+
+```mermaid
+flowchart TB
+    subgraph Entry["Entry Points"]
+        HTTP["HTTP Request"]
+        Consumer["RabbitMQ Consumer"]
+        Test["xUnit Test"]
+    end
+
+    subgraph MC["MessageContext (AsyncLocal)"]
+        direction LR
+        CID["CorrelationId"]
+        CAID["CausationId"]
+        EID["ExecutionId"]
+        SRC["Source"]
+    end
+
+    subgraph Init["MessageContext Initialization"]
+        MW["MessageContextMiddleware<br/><small>global — all requests</small>"]
+        Attr["[MessageContext] attribute<br/><small>per controller/action</small>"]
+        TestAttr["[InitializeMessageContext]<br/><small>xUnit before/after</small>"]
+        AutoConsumer["RabbitMQConsumerEngine<br/><small>from message headers</small>"]
+    end
+
+    HTTP --> MW & Attr
+    Consumer --> AutoConsumer
+    Test --> TestAttr
+    MW & Attr & TestAttr & AutoConsumer --> MC
+
+    subgraph Publish["Publishing"]
+        IMS["IMessageService.PublishAsync()"]
+        Policy["IMessagePublishingPolicy<br/><small>resolves routes from config</small>"]
+        IMS --> Policy
+    end
+
+    MC --> Publish
+
+    subgraph Routes["Route Resolution"]
+        LC["local-channel<br/><small>non-durable</small>"]
+        LO["local<br/><small>durable, in-process</small>"]
+        BR["rabbitmq<br/><small>durable, cross-service</small>"]
+    end
+
+    Policy --> LC & LO & BR
+
+    subgraph Dispatch["Dispatch"]
+        Channel["Channel&lt;IMessage&gt;<br/><small>in-memory queue</small>"]
+        Outbox["OutboxEvent +<br/>OutboxDelivery<br/><small>DB tables</small>"]
+        BgSvc["LocalChannel<br/>BackgroundService"]
+        DeliverySvc["DeliveryHostedService"]
+        LTP["LocalTransport<br/>Publisher"]
+        RMQ["RabbitMQProducer"]
+        Handler["IIntegrationEventHandler&lt;T&gt;<br/>INotificationHandler&lt;T&gt;"]
+        Broker["RabbitMQ Broker"]
+    end
+
+    LC --> Channel
+    LO --> Outbox
+    LO -.->|"immediate<br/>best-effort"| Channel
+    BR --> Outbox
+
+    Channel --> BgSvc --> Handler
+    Outbox --> DeliverySvc
+    DeliverySvc -->|"key=local"| LTP --> Handler
+    DeliverySvc -->|"key=rabbitmq"| RMQ --> Broker
+
+    subgraph Headers["Outbox Headers (from MessageContext)"]
+        direction LR
+        H1["x-correlation-id"]
+        H2["x-causation-id"]
+        H3["x-source"]
+        H4["x-tenant-id"]
+        H5["x-message-id"]
+    end
+
+    MC -.->|"stamped into"| Headers
+    Headers -.->|"stored in"| Outbox
+```
+
+> **Key concept**: `MessageContext` is initialized once at the entry point, flows through
+> all async operations via `AsyncLocal`, and is stamped into outbox headers. When a message
+> crosses a service boundary (via broker) or is retried (via `LocalTransportPublisher`),
+> `MessageContext` is **restored from these headers** — preserving correlation across the
+> entire chain.
 
 ---
 
@@ -174,8 +267,10 @@ other behaviors — so duplicate commands are rejected before any handler logic 
 
 ## See also
 
+- [MessageContext]({{< ref "core/messaging/message-context/_index.md" >}}) — middleware, attribute, and test initialization
 - [Mediator]({{< ref "core/mediator/_index.md" >}}) — Request/Response, Notification, and Stream Request patterns
 - [Outbox Setup]({{< ref "core/messaging/outbox/_index.md" >}}) — add transactional message staging
+- [Local Transport]({{< ref "core/messaging/local-transport/_index.md" >}}) — in-process dispatch with `IMessageService`
 - [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) — combine all sub-builders + migration table
 - [MediatR v8.5.0 archive]({{< ref "core/mediator/v8.5.0/_index.md" >}}) — original `IRequestManager` documentation
 - [Event bus v8.5.0 archive]({{< ref "core/eventbus/v8.5.0/_index.md" >}}) — original `IEventBus` documentation

@@ -147,8 +147,13 @@ consumers.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>();
 ## MessageContext — Header Propagation
 
 `MessageContext` carries correlation, causation, and tenant identity across service
-boundaries. It must be initialized at an entry point. `IntegrationEventDispatcher` calls `MessageContext.Initialize()` automatically
-from incoming RabbitMQ headers **before** your handler is invoked.
+boundaries. It must be initialized at every entry point. The RabbitMQ consumer engine
+initializes `MessageContext` automatically from incoming message headers **before** your
+handler is invoked — no manual setup needed on the consumer side.
+
+For HTTP entry points (APIs that publish events), see
+[MessageContext Setup]({{< ref "core/messaging/message-context/_index.md" >}}) for
+middleware and attribute initialization options.
 
 | Incoming header | MessageContext field | Description |
 |---|---|---|
@@ -190,6 +195,7 @@ If your service only consumes (no outbox or delivery), register only
 
 ## See also
 
+- [MessageContext Setup]({{< ref "core/messaging/message-context/_index.md" >}}) — middleware, attribute, and test initialization
 - [Full Setup]({{< ref "core/messaging/full-setup/_index.md" >}}) — combine consumption + outbox + delivery in one registration
 - [Internal Messaging Setup]({{< ref "core/messaging/_index.md" >}}) — idempotency backend selection
 - [Event bus v8.5.0 archive]({{< ref "core/eventbus/v8.5.0/_index.md" >}}) — original `IIntegrationEventHandler` registration docs
