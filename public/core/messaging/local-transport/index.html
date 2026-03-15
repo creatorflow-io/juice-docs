@@ -6,40 +6,40 @@
     <meta name="generator" content="Hugo 0.144.0">
     <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
     <meta name="description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
-Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) When to use You need in-process event dispatch without broker overhead (&#34;local-channel&#34;) You need durable, retryable in-process dispatch backed by the outbox (&#34;local&#34;) You want a single PublishAsync call site where routing is config-driven You are building a monolith or modular monolith where some events stay in-process Prerequisites Internal Messaging Setup for IIdempotencyService and MessagingBuilder Outbox Setup if using the &#34;local&#34; durable route NuGet packages Package Purpose Juice.Messaging.Local IMessageService, LocalChannelBackgroundService, LocalTransportPublisher Juice.Messaging MessagingBuilder, IMessagePublishingPolicy, IOutboxService&lt;T&gt; Juice.Messaging.Idempotency.Caching In-memory idempotency (dev/test) Juice.Messaging.Idempotency.Redis Redis idempotency (production) IMessageService — Unified Publishing Interface Two interfaces are available depending on whether your routes need outbox writes:">
+Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Local Transport :: Juice&#39;s documentation">
     <meta name="twitter:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
-Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) When to use You need in-process event dispatch without broker overhead (&#34;local-channel&#34;) You need durable, retryable in-process dispatch backed by the outbox (&#34;local&#34;) You want a single PublishAsync call site where routing is config-driven You are building a monolith or modular monolith where some events stay in-process Prerequisites Internal Messaging Setup for IIdempotencyService and MessagingBuilder Outbox Setup if using the &#34;local&#34; durable route NuGet packages Package Purpose Juice.Messaging.Local IMessageService, LocalChannelBackgroundService, LocalTransportPublisher Juice.Messaging MessagingBuilder, IMessagePublishingPolicy, IOutboxService&lt;T&gt; Juice.Messaging.Idempotency.Caching In-memory idempotency (dev/test) Juice.Messaging.Idempotency.Redis Redis idempotency (production) IMessageService — Unified Publishing Interface Two interfaces are available depending on whether your routes need outbox writes:">
+Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/local-transport/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Local Transport :: Juice&#39;s documentation">
     <meta property="og:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
-Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) When to use You need in-process event dispatch without broker overhead (&#34;local-channel&#34;) You need durable, retryable in-process dispatch backed by the outbox (&#34;local&#34;) You want a single PublishAsync call site where routing is config-driven You are building a monolith or modular monolith where some events stay in-process Prerequisites Internal Messaging Setup for IIdempotencyService and MessagingBuilder Outbox Setup if using the &#34;local&#34; durable route NuGet packages Package Purpose Juice.Messaging.Local IMessageService, LocalChannelBackgroundService, LocalTransportPublisher Juice.Messaging MessagingBuilder, IMessagePublishingPolicy, IOutboxService&lt;T&gt; Juice.Messaging.Idempotency.Caching In-memory idempotency (dev/test) Juice.Messaging.Idempotency.Redis Redis idempotency (production) IMessageService — Unified Publishing Interface Two interfaces are available depending on whether your routes need outbox writes:">
+Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta property="og:locale" content="en_us">
     <meta property="og:type" content="website">
     <meta itemprop="name" content="Local Transport :: Juice&#39;s documentation">
     <meta itemprop="description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
-Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) When to use You need in-process event dispatch without broker overhead (&#34;local-channel&#34;) You need durable, retryable in-process dispatch backed by the outbox (&#34;local&#34;) You want a single PublishAsync call site where routing is config-driven You are building a monolith or modular monolith where some events stay in-process Prerequisites Internal Messaging Setup for IIdempotencyService and MessagingBuilder Outbox Setup if using the &#34;local&#34; durable route NuGet packages Package Purpose Juice.Messaging.Local IMessageService, LocalChannelBackgroundService, LocalTransportPublisher Juice.Messaging MessagingBuilder, IMessagePublishingPolicy, IOutboxService&lt;T&gt; Juice.Messaging.Idempotency.Caching In-memory idempotency (dev/test) Juice.Messaging.Idempotency.Redis Redis idempotency (production) IMessageService — Unified Publishing Interface Two interfaces are available depending on whether your routes need outbox writes:">
+Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta itemprop="datePublished" content="2026-03-14T00:00:00+00:00">
     <meta itemprop="dateModified" content="2026-03-14T00:00:00+00:00">
-    <meta itemprop="wordCount" content="1109">
+    <meta itemprop="wordCount" content="1497">
     <title>Local Transport :: Juice&#39;s documentation</title>
     <link href="/core/messaging/local-transport/index.xml" rel="alternate" type="application/rss+xml" title="Local Transport :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1773477089" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1773477089" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773477089" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1773477089" rel="stylesheet">
-    <link href="/css/theme.min.css?1773477089" rel="stylesheet">
-    <link href="/css/format-html.min.css?1773477089" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1773477089" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1773477089" defer></script>
-    <script src="/js/lunr/lunr.min.js?1773477089" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1773477089" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1773477089" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1773477089" defer></script>
-    <script src="/js/search.min.js?1773477089" defer></script>
+    <link href="/images/favicon.png?1773556234" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1773556234" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773556234" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773556234" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1773556234" rel="stylesheet">
+    <link href="/css/theme.min.css?1773556234" rel="stylesheet">
+    <link href="/css/format-html.min.css?1773556234" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1773556234" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1773556234" defer></script>
+    <script src="/js/lunr/lunr.min.js?1773556234" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1773556234" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1773556234" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1773556234" defer></script>
+    <script src="/js/search.min.js?1773556234" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
@@ -49,7 +49,7 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1773477089";
+      window.relearn.index_js_url="/searchindex.en.js?1773556234";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -130,7 +130,11 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
       </ul>
     </li>
     <li><a href="#idempotency-across-dispatch-paths">Idempotency Across Dispatch Paths</a></li>
-    <li><a href="#transaction-behavior">Transaction Behavior</a></li>
+    <li><a href="#transaction-behavior">Transaction Behavior</a>
+      <ul>
+        <li><a href="#why-this-matters">Why this matters</a></li>
+      </ul>
+    </li>
     <li><a href="#handler-registration">Handler Registration</a></li>
     <li><a href="#metrics">Metrics</a></li>
     <li><a href="#see-also">See also</a></li>
@@ -212,6 +216,11 @@ switch between local and broker delivery with no code changes.</p>
       </tr>
   </tbody>
 </table>
+<blockquote>
+<p><strong><code>&quot;local-channel&quot;</code> and <code>&quot;local&quot;</code> are mutually exclusive.</strong> If a publishing policy
+resolves both routes for the same event, <code>&quot;local&quot;</code> takes precedence — it is the durable
+superset (outbox write + immediate in-process dispatch). The <code>&quot;local-channel&quot;</code> route is
+ignored to prevent double handler invocation. Use one or the other per event type.</p></blockquote>
 <hr>
 <h2 id="when-to-use">When to use</h2>
 <ul>
@@ -376,8 +385,12 @@ runtime — changing the route in configuration changes the transport with no co
 <ul>
 <li><strong>Cache</strong> domain events use <code>&quot;local-channel&quot;</code> (instant, non-durable)</li>
 <li><strong>Workflows</strong> domain events use <code>&quot;local&quot;</code> (durable, in-process)</li>
-<li><strong>Orders</strong> events go to <strong>both</strong> <code>&quot;local&quot;</code> and <code>&quot;rabbitmq&quot;</code> (local handler + cross-service)</li>
+<li><strong>Orders</strong> events go to <strong>both</strong> <code>&quot;local&quot;</code> and <code>&quot;rabbitmq&quot;</code> (local handler + cross-service broker)</li>
 </ul>
+<blockquote>
+<p><strong>Do not combine <code>&quot;local-channel&quot;</code> and <code>&quot;local&quot;</code></strong> in the same rule — <code>&quot;local&quot;</code> will
+supersede <code>&quot;local-channel&quot;</code>, making the <code>&quot;local-channel&quot;</code> entry redundant. Use <code>&quot;local&quot;</code>
+when you need durability, or <code>&quot;local-channel&quot;</code> when you explicitly want zero DB overhead.</p></blockquote>
 <hr>
 <h2 id="usage-example">Usage Example</h2>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OrderCommandHandler</span> : IRequestHandler&lt;CreateOrderCommand, IOperationResult&gt;
@@ -419,30 +432,51 @@ runtime — changing the route in configuration changes the transport with no co
 <li><strong>Not durable</strong>: messages in the channel are lost on process shutdown</li>
 </ol>
 <h3 id="local--durable-near-immediate"><code>&quot;local&quot;</code> — Durable, Near-Immediate</h3>
+<p><strong>Outside <code>TransactionBehavior</code></strong> (standalone publish):</p>
 <ol>
-<li>Message written to <code>OutboxEvent</code> + <code>OutboxDelivery</code> tables (same transaction as domain data)</li>
+<li>Message staged via <code>AddEventAsync</code>, then saved via <code>SaveEventsAsync(null)</code> (standalone commit)</li>
 <li>After outbox commit, message is <strong>also enqueued to the channel</strong> for immediate best-effort dispatch</li>
-<li><code>LocalChannelBackgroundService</code> dispatches the handler (same as <code>&quot;local-channel&quot;</code>)</li>
+<li><code>LocalChannelBackgroundService</code> dispatches the handler</li>
 <li><code>IntegrationEventDispatcher</code> records the idempotency key on successful dispatch</li>
 <li><code>DeliveryHostedService</code> later processes the same outbox record via <code>LocalTransportPublisher</code></li>
-<li><code>LocalTransportPublisher</code> restores <code>MessageContext</code> from outbox headers (<code>x-source</code>, <code>x-correlation-id</code>)</li>
 <li>Idempotency check detects the duplicate → handler is <strong>not invoked again</strong></li>
 <li>If immediate dispatch fails, the outbox record remains <code>NotPublished</code> — delivery retries as normal</li>
 </ol>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>Publish ──► Outbox write ──► Enqueue to channel (immediate, best-effort)
-                │                      │
-                │                      ▼
-                │              Handler runs (idempotency records key)
-                │
-                ▼
-         DeliveryHostedService (polling)
-                │
-                ▼
-         LocalTransportPublisher
-                │
-                ▼
-         Idempotency check → Duplicated (skip)
-         OR (if immediate failed) → Handler runs</code></pre></div>
+<p><strong>Inside <code>TransactionBehavior</code></strong> (domain event handler):</p>
+<ol>
+<li>Message staged via <code>AddEventAsync</code> — save is <strong>deferred</strong></li>
+<li>Channel enqueue registered as a <strong>post-commit action</strong> via <code>IPostCommitActions</code></li>
+<li><code>TransactionBehavior</code> calls <code>SaveEventsAsync(transactionId)</code> → persists all staged events atomically</li>
+<li><code>TransactionBehavior</code> calls <code>CommitTransactionAsync()</code> → data is committed</li>
+<li><code>TransactionBehavior</code> calls <code>PostCommitActions.Flush()</code> → channel enqueue fires</li>
+<li>Handler runs immediately via <code>LocalChannelBackgroundService</code></li>
+<li><code>DeliveryHostedService</code> later processes the same outbox record → idempotency deduplicates</li>
+</ol>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>Outside transaction:
+  Publish ──► Outbox write ──► Enqueue to channel (immediate)
+                  │                      │
+                  │                      ▼
+                  │              Handler runs (idempotency key recorded)
+                  ▼
+           DeliveryHostedService → Idempotency → Duplicated (skip)
+
+Inside TransactionBehavior:
+  Domain Event Handler ──► PublishAsync
+                               ├── AddEventAsync (deferred save)
+                               └── PostCommitActions.Add(enqueue)
+                                          │
+                                          ▼
+                  TransactionBehavior: SaveEventsAsync(txId) → Commit
+                                          │
+                                          ▼
+                                PostCommitActions.Flush()
+                                          │
+                                          ▼
+                                  EnqueueLocalChannel → Handler runs
+                                          │
+                                       (later)
+                                          ▼
+                         DeliveryHostedService → Idempotency → Duplicated (skip)</code></pre></div>
 <hr>
 <h2 id="idempotency-across-dispatch-paths">Idempotency Across Dispatch Paths</h2>
 <p>When using the <code>&quot;local&quot;</code> route, the same message may be dispatched twice:</p>
@@ -477,10 +511,13 @@ state across DI scopes. <code>InMemoryIdempotencyService</code> is scoped by def
 cross-scope deduplication, use Redis or EF-backed idempotency in production.</p></blockquote>
 <hr>
 <h2 id="transaction-behavior">Transaction Behavior</h2>
+<p><code>IMessageService&lt;TContext&gt;</code> is <strong>transaction-aware</strong>. It detects whether the <code>DbContext</code>
+is managed by <code>TransactionBehavior</code> (via <code>IUnitOfWork.IsManaged</code>) and adjusts its behavior:</p>
 <table>
   <thead>
       <tr>
           <th>Context</th>
+          <th>Detection</th>
           <th><code>&quot;local-channel&quot;</code></th>
           <th><code>&quot;local&quot;</code> / broker</th>
       </tr>
@@ -488,21 +525,68 @@ cross-scope deduplication, use Redis or EF-backed idempotency in production.</p>
   <tbody>
       <tr>
           <td>Inside <code>TransactionBehavior</code></td>
+          <td><code>TContext is IUnitOfWork { IsManaged: true }</code></td>
           <td>Enqueued to channel immediately</td>
-          <td>Outbox write joins transaction; no immediate channel dispatch (not yet committed)</td>
+          <td><code>AddEventAsync</code> only — save deferred to <code>TransactionBehavior</code>. Channel enqueue registered as <strong>post-commit action</strong> and fires after <code>CommitTransactionAsync</code>.</td>
       </tr>
       <tr>
-          <td>Outside active transaction</td>
+          <td>Outside transaction</td>
+          <td><code>IsManaged = false</code> or <code>TContext</code> not <code>IUnitOfWork</code></td>
           <td>Enqueued to channel immediately</td>
-          <td><code>SaveEventsAsync(null)</code> commits standalone; then enqueued to channel for immediate dispatch</td>
+          <td><code>AddEventAsync</code> + <code>SaveEventsAsync(null)</code> immediately. <code>&quot;local&quot;</code> routes also enqueued to channel.</td>
       </tr>
   </tbody>
 </table>
+<h3 id="why-this-matters">Why this matters</h3>
+<p>When <code>IMessageService&lt;TContext&gt;.PublishAsync</code> is called from a <strong>domain event handler</strong>
+inside <code>TransactionBehavior</code>, the event must be saved atomically with the domain data.
+If the message service called <code>SaveEventsAsync(null)</code> immediately, it would:</p>
+<ol>
+<li>Save the outbox record with <code>transactionId = null</code> (wrong — not part of the business transaction)</li>
+<li>If the transaction later rolls back, the outbox record would already be committed (orphaned message)</li>
+</ol>
+<p>By deferring to <code>TransactionBehavior</code>, the event is saved with the correct <code>transactionId</code>
+and committed only when the entire transaction succeeds. The channel enqueue is registered
+as a <strong>post-commit action</strong> via <code>IPostCommitActions</code> — it fires only after
+<code>CommitTransactionAsync</code> completes, so handlers always see committed data.</p>
+<pre class="mermaid align-center ">flowchart TB
+    subgraph TX[&#34;Inside TransactionBehavior&#34;]
+        direction TB
+        H[&#34;Command Handler&#34;]
+        DE[&#34;Domain Event Handler&#34;]
+        MS[&#34;IMessageService.PublishAsync()&#34;]
+        AE[&#34;AddEventAsync()&lt;br/&gt;&lt;small&gt;staged in scoped IOutboxService&lt;/small&gt;&#34;]
+        PC[&#34;PostCommitActions.Add()&lt;br/&gt;&lt;small&gt;register channel enqueue&lt;/small&gt;&#34;]
+        TB_SAVE[&#34;SaveEventsAsync(txId)&lt;br/&gt;&lt;small&gt;persist ALL staged events&lt;/small&gt;&#34;]
+        TB_COMMIT[&#34;CommitTransactionAsync()&#34;]
+        FL[&#34;PostCommitActions.Flush()&lt;br/&gt;&lt;small&gt;enqueue to channel NOW&lt;/small&gt;&#34;]
+        CH[&#34;LocalChannelBackgroundService&lt;br/&gt;&lt;small&gt;handler runs immediately&lt;/small&gt;&#34;]
+
+        H --&gt;|&#34;raises domain event&#34;| DE
+        DE --&gt;|&#34;calls&#34;| MS
+        MS --&gt; AE
+        MS --&gt; PC
+        AE -.-&gt;|&#34;deferred save&#34;| TB_SAVE
+        TB_SAVE --&gt; TB_COMMIT
+        TB_COMMIT --&gt; FL
+        FL --&gt; CH
+    end
+
+    subgraph OUT[&#34;Outside TransactionBehavior&#34;]
+        direction TB
+        MS2[&#34;IMessageService.PublishAsync()&#34;]
+        AE2[&#34;AddEventAsync()&#34;]
+        SE2[&#34;SaveEventsAsync(null)&lt;br/&gt;&lt;small&gt;committed immediately&lt;/small&gt;&#34;]
+        CH2[&#34;EnqueueLocalChannel()&lt;br/&gt;&lt;small&gt;immediate dispatch&lt;/small&gt;&#34;]
+
+        MS2 --&gt; AE2 --&gt; SE2 --&gt; CH2
+    end</pre>
 <blockquote>
-<p><strong>Note</strong>: When called inside <code>TransactionBehavior</code>, the <code>&quot;local&quot;</code> route does not
-dispatch immediately because the transaction has not committed yet. The message is
-delivered by <code>DeliveryHostedService</code> after commit. Use <code>IOutboxService&lt;T&gt;</code> directly
-(via domain event handlers + <code>TransactionBehavior</code>) for transactional scenarios.</p></blockquote>
+<p><strong>Shared scoped instances</strong>: <code>IOutboxService&lt;TContext&gt;</code> and <code>IPostCommitActions</code> are
+both scoped. <code>TransactionBehavior</code> and <code>IMessageService&lt;TContext&gt;</code> share the same
+instances within a request scope. Events staged by either path accumulate in the same
+list. Post-commit actions registered by <code>IMessageService</code> are flushed by
+<code>TransactionBehavior</code> after commit.</p></blockquote>
 <hr>
 <h2 id="handler-registration">Handler Registration</h2>
 <p>Local transport reuses existing handler interfaces — no new interfaces needed:</p>
@@ -662,8 +746,22 @@ delivered by <code>DeliveryHostedService</code> after commit. Use <code>IOutboxS
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1773477089" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1773477089" defer></script>
-    <script src="/js/theme.min.js?1773477089" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1773556234" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1773556234" defer></script>
+    <script src="/js/js-yaml/js-yaml.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-color.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-dispatch.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-drag.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-ease.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-interpolate.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-selection.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-timer.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-transition.min.js?1773556234" defer></script>
+    <script src="/js/d3/d3-zoom.min.js?1773556234" defer></script>
+    <script src="/js/mermaid/mermaid.min.js?1773556234" defer></script>
+    <script>
+      window.relearn.themeUseMermaid = JSON.parse("{}");
+    </script>
+    <script src="/js/theme.min.js?1773556234" defer></script>
   </body>
 </html>
