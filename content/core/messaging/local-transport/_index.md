@@ -18,6 +18,11 @@ switch between local and broker delivery with no code changes.
 | **Outbox + in-process** | `"local"` | Yes | Near-immediate | Reliable cross-aggregate events within the same service |
 | **Outbox + broker** | `"rabbitmq"` | Yes | Polling interval | Cross-service messaging (existing) |
 
+> **`"local-channel"` and `"local"` are mutually exclusive.** If a publishing policy
+> resolves both routes for the same event, `"local"` takes precedence — it is the durable
+> superset (outbox write + immediate in-process dispatch). The `"local-channel"` route is
+> ignored to prevent double handler invocation. Use one or the other per event type.
+
 ---
 
 ## When to use
@@ -174,7 +179,11 @@ Route events to local or broker transports via `appsettings.json`:
 In this example:
 - **Cache** domain events use `"local-channel"` (instant, non-durable)
 - **Workflows** domain events use `"local"` (durable, in-process)
-- **Orders** events go to **both** `"local"` and `"rabbitmq"` (local handler + cross-service)
+- **Orders** events go to **both** `"local"` and `"rabbitmq"` (local handler + cross-service broker)
+
+> **Do not combine `"local-channel"` and `"local"`** in the same rule — `"local"` will
+> supersede `"local-channel"`, making the `"local-channel"` entry redundant. Use `"local"`
+> when you need durability, or `"local-channel"` when you explicitly want zero DB overhead.
 
 ---
 
@@ -222,30 +231,52 @@ public class OrderCommandHandler : IRequestHandler<CreateOrderCommand, IOperatio
 
 ### `"local"` — Durable, Near-Immediate
 
-1. Message written to `OutboxEvent` + `OutboxDelivery` tables (same transaction as domain data)
+**Outside `TransactionBehavior`** (standalone publish):
+
+1. Message staged via `AddEventAsync`, then saved via `SaveEventsAsync(null)` (standalone commit)
 2. After outbox commit, message is **also enqueued to the channel** for immediate best-effort dispatch
-3. `LocalChannelBackgroundService` dispatches the handler (same as `"local-channel"`)
+3. `LocalChannelBackgroundService` dispatches the handler
 4. `IntegrationEventDispatcher` records the idempotency key on successful dispatch
 5. `DeliveryHostedService` later processes the same outbox record via `LocalTransportPublisher`
-6. `LocalTransportPublisher` restores `MessageContext` from outbox headers (`x-source`, `x-correlation-id`)
-7. Idempotency check detects the duplicate → handler is **not invoked again**
-8. If immediate dispatch fails, the outbox record remains `NotPublished` — delivery retries as normal
+6. Idempotency check detects the duplicate → handler is **not invoked again**
+7. If immediate dispatch fails, the outbox record remains `NotPublished` — delivery retries as normal
+
+**Inside `TransactionBehavior`** (domain event handler):
+
+1. Message staged via `AddEventAsync` — save is **deferred**
+2. Channel enqueue registered as a **post-commit action** via `IPostCommitActions`
+3. `TransactionBehavior` calls `SaveEventsAsync(transactionId)` → persists all staged events atomically
+4. `TransactionBehavior` calls `CommitTransactionAsync()` → data is committed
+5. `TransactionBehavior` calls `PostCommitActions.Flush()` → channel enqueue fires
+6. Handler runs immediately via `LocalChannelBackgroundService`
+7. `DeliveryHostedService` later processes the same outbox record → idempotency deduplicates
 
 ```
-Publish ──► Outbox write ──► Enqueue to channel (immediate, best-effort)
-                │                      │
-                │                      ▼
-                │              Handler runs (idempotency records key)
-                │
-                ▼
-         DeliveryHostedService (polling)
-                │
-                ▼
-         LocalTransportPublisher
-                │
-                ▼
-         Idempotency check → Duplicated (skip)
-         OR (if immediate failed) → Handler runs
+Outside transaction:
+  Publish ──► Outbox write ──► Enqueue to channel (immediate)
+                  │                      │
+                  │                      ▼
+                  │              Handler runs (idempotency key recorded)
+                  ▼
+           DeliveryHostedService → Idempotency → Duplicated (skip)
+
+Inside TransactionBehavior:
+  Domain Event Handler ──► PublishAsync
+                               ├── AddEventAsync (deferred save)
+                               └── PostCommitActions.Add(enqueue)
+                                          │
+                                          ▼
+                  TransactionBehavior: SaveEventsAsync(txId) → Commit
+                                          │
+                                          ▼
+                                PostCommitActions.Flush()
+                                          │
+                                          ▼
+                                  EnqueueLocalChannel → Handler runs
+                                          │
+                                       (later)
+                                          ▼
+                         DeliveryHostedService → Idempotency → Duplicated (skip)
 ```
 
 ---
@@ -274,15 +305,68 @@ Both paths produce the **same key**, so the second dispatch is skipped.
 
 ## Transaction Behavior
 
-| Context | `"local-channel"` | `"local"` / broker |
-|---|---|---|
-| Inside `TransactionBehavior` | Enqueued to channel immediately | Outbox write joins transaction; no immediate channel dispatch (not yet committed) |
-| Outside active transaction | Enqueued to channel immediately | `SaveEventsAsync(null)` commits standalone; then enqueued to channel for immediate dispatch |
+`IMessageService<TContext>` is **transaction-aware**. It detects whether the `DbContext`
+is managed by `TransactionBehavior` (via `IUnitOfWork.IsManaged`) and adjusts its behavior:
 
-> **Note**: When called inside `TransactionBehavior`, the `"local"` route does not
-> dispatch immediately because the transaction has not committed yet. The message is
-> delivered by `DeliveryHostedService` after commit. Use `IOutboxService<T>` directly
-> (via domain event handlers + `TransactionBehavior`) for transactional scenarios.
+| Context | Detection | `"local-channel"` | `"local"` / broker |
+|---|---|---|---|
+| Inside `TransactionBehavior` | `TContext is IUnitOfWork { IsManaged: true }` | Enqueued to channel immediately | `AddEventAsync` only — save deferred to `TransactionBehavior`. Channel enqueue registered as **post-commit action** and fires after `CommitTransactionAsync`. |
+| Outside transaction | `IsManaged = false` or `TContext` not `IUnitOfWork` | Enqueued to channel immediately | `AddEventAsync` + `SaveEventsAsync(null)` immediately. `"local"` routes also enqueued to channel. |
+
+### Why this matters
+
+When `IMessageService<TContext>.PublishAsync` is called from a **domain event handler**
+inside `TransactionBehavior`, the event must be saved atomically with the domain data.
+If the message service called `SaveEventsAsync(null)` immediately, it would:
+
+1. Save the outbox record with `transactionId = null` (wrong — not part of the business transaction)
+2. If the transaction later rolls back, the outbox record would already be committed (orphaned message)
+
+By deferring to `TransactionBehavior`, the event is saved with the correct `transactionId`
+and committed only when the entire transaction succeeds. The channel enqueue is registered
+as a **post-commit action** via `IPostCommitActions` — it fires only after
+`CommitTransactionAsync` completes, so handlers always see committed data.
+
+```mermaid
+flowchart TB
+    subgraph TX["Inside TransactionBehavior"]
+        direction TB
+        H["Command Handler"]
+        DE["Domain Event Handler"]
+        MS["IMessageService.PublishAsync()"]
+        AE["AddEventAsync()<br/><small>staged in scoped IOutboxService</small>"]
+        PC["PostCommitActions.Add()<br/><small>register channel enqueue</small>"]
+        TB_SAVE["SaveEventsAsync(txId)<br/><small>persist ALL staged events</small>"]
+        TB_COMMIT["CommitTransactionAsync()"]
+        FL["PostCommitActions.Flush()<br/><small>enqueue to channel NOW</small>"]
+        CH["LocalChannelBackgroundService<br/><small>handler runs immediately</small>"]
+
+        H -->|"raises domain event"| DE
+        DE -->|"calls"| MS
+        MS --> AE
+        MS --> PC
+        AE -.->|"deferred save"| TB_SAVE
+        TB_SAVE --> TB_COMMIT
+        TB_COMMIT --> FL
+        FL --> CH
+    end
+
+    subgraph OUT["Outside TransactionBehavior"]
+        direction TB
+        MS2["IMessageService.PublishAsync()"]
+        AE2["AddEventAsync()"]
+        SE2["SaveEventsAsync(null)<br/><small>committed immediately</small>"]
+        CH2["EnqueueLocalChannel()<br/><small>immediate dispatch</small>"]
+
+        MS2 --> AE2 --> SE2 --> CH2
+    end
+```
+
+> **Shared scoped instances**: `IOutboxService<TContext>` and `IPostCommitActions` are
+> both scoped. `TransactionBehavior` and `IMessageService<TContext>` share the same
+> instances within a request scope. Events staged by either path accumulate in the same
+> list. Post-commit actions registered by `IMessageService` are flushed by
+> `TransactionBehavior` after commit.
 
 ---
 
