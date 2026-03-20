@@ -47,6 +47,7 @@ switch between local and broker delivery with no code changes.
 |---|---|
 | [Juice.Messaging.Local](https://www.nuget.org/packages/Juice.Messaging.Local) | `IMessageService`, `LocalChannelBackgroundService`, `LocalTransportPublisher` |
 | [Juice.Messaging](https://www.nuget.org/packages/Juice.Messaging) | `MessagingBuilder`, `IMessagePublishingPolicy`, `IOutboxService<T>` |
+| [Juice.Messaging.Outbox.EF](https://www.nuget.org/packages/Juice.Messaging.Outbox.EF) | `DefaultOutboxContext`, `AddDefaultMessageService()`, EF-backed outbox repository |
 | [Juice.Messaging.Idempotency.Caching](https://www.nuget.org/packages/Juice.Messaging.Idempotency.Caching) | In-memory idempotency (dev/test) |
 | [Juice.Messaging.Idempotency.Redis](https://www.nuget.org/packages/Juice.Messaging.Idempotency.Redis) | Redis idempotency (production) |
 
@@ -54,12 +55,12 @@ switch between local and broker delivery with no code changes.
 
 ## IMessageService — Unified Publishing Interface
 
-Two interfaces are available depending on whether your routes need outbox writes:
+Two interfaces are available, each with its own registration path:
 
-| Interface | Routes supported | When to use |
-|---|---|---|
-| `IMessageService` | `"local-channel"` only | Fire-and-forget, no DB |
-| `IMessageService<TContext>` | All three (`"local-channel"`, `"local"`, broker) | When any route may require outbox writes |
+| Interface | Registration | Routes supported | When to use |
+|---|---|---|---|
+| `IMessageService` | `AddDefaultMessageService()` | All three | Application services, controllers, background jobs — outside domain transactions |
+| `IMessageService<TContext>` | `AddMessageService<TContext>()` | All three | Inside `TransactionBehavior` — defers outbox save until after commit |
 
 Both expose a single method:
 
@@ -77,14 +78,24 @@ runtime — changing the route in configuration changes the transport with no co
 
 ### Local-channel only (zero DB)
 
-```csharp {linenos=false,hl_lines=[3,4],linenostart=1}
+`AddLocalChannel()` registers the channel, background service, and `IMessagePublisher`
+keyed `"local-channel"` — but **not** `IMessageService`. Use `AddDefaultMessageService()`
+to register `IMessageService`. When all routes resolve to `"local-channel"`, the
+`DefaultOutboxContext` is never accessed, so the configure delegate can be a no-op.
+
+```csharp {linenos=false,hl_lines=[3,6],linenostart=1}
 services.AddMessaging(builder =>
 {
     builder.AddLocalChannel(opts =>
     {
-        opts.MaxConcurrency = 10;  // optional: limit concurrent handlers (default: unlimited)
+        opts.MaxConcurrency = 10;   // optional: limit concurrent handlers (default: unlimited)
+        opts.Capacity = 10_000;     // optional: bounded channel (default: unbounded)
     });
     builder.AddIdempotencyInMemory();  // or AddIdempotencyRedis for production
+
+    // Registers IMessageService; DefaultOutboxContext is never accessed
+    // when all routes resolve to "local-channel"
+    builder.AddDefaultMessageService(_ => { });
 });
 
 // Register publishing policy
@@ -133,6 +144,116 @@ services.AddMessaging(builder =>
     });
 });
 ```
+
+### Full-route outside transactions (`DefaultOutboxContext`)
+
+Use `AddDefaultMessageService()` when you need full-route publishing (`"local-channel"`,
+`"local"`, and broker routes) from code that runs **outside** a `TransactionBehavior`
+pipeline — for example, API controllers, background services, or application-layer services
+that are not part of a domain transaction.
+
+```csharp {linenos=false,hl_lines=[4],linenostart=1}
+services.AddMessaging(builder =>
+{
+    // Registers DefaultOutboxContext + IMessageService (backed by MessageService<DefaultOutboxContext>)
+    builder.AddDefaultMessageService(opts =>
+        opts.UseSqlServer(configuration.GetConnectionString("Outbox")));
+
+    builder.AddLocalChannel();          // required for "local-channel" route dispatch
+    builder.AddIdempotencyRedis(opts =>
+        opts.Configuration = configuration.GetConnectionString("Redis"));
+
+    builder.AddPublishingPolicies(configuration.GetSection("PublishingPolicies"));
+});
+```
+
+> **Delivery is not auto-configured.** If you use the `"local"` or broker routes, add the
+> delivery worker explicitly:
+>
+> ```csharp
+> builder.AddDelivery(delivery =>
+> {
+>     delivery.AddDeliveryProcessor<DefaultOutboxContext>("local",
+>         "send-pending", "retry-failed", "recover-timeout");
+> });
+> ```
+
+> **`IMessageService` registration uses `TryAddScoped` — first call wins.** Do not call
+> both `AddMessageService<TContext>()` and `AddDefaultMessageService()` in the same
+> container. Use `IMessageService<TContext>` if you need domain-transaction deferral inside
+> `TransactionBehavior`; use `AddDefaultMessageService()` for everything else.
+
+---
+
+## DefaultOutboxContext
+
+`DefaultOutboxContext` is a standalone EF Core `DbContext` implementing `IOutboxContext`.
+It owns its own database connection string and is completely independent of any domain
+`DbContext` registered in the application.
+
+### Schema
+
+`DefaultOutboxContext` uses the **same tables** (`OutboxEvents` and `OutboxDeliveries`)
+as `OutboxContext`. The schema is applied via the shared `ConfigureOutbox()` extension —
+no separate migration project is needed.
+
+> **To create the tables**: run the existing `OutboxContext` migrations against the target
+> database. `DefaultOutboxContext` resolves the schema from those migrations automatically.
+
+### Transaction behavior (`IsManaged = false`)
+
+`DefaultOutboxContext.IsManaged` is always `false`. This means `SaveEventsAsync` is
+**never deferred** — it executes immediately as a standalone operation, regardless of
+whether a domain transaction is in progress elsewhere in the application.
+
+This is intentional: `DefaultOutboxContext` is designed for code paths that are **outside**
+a `TransactionBehavior` pipeline. For code inside `TransactionBehavior` — where you need
+outbox saves to be deferred until the domain transaction commits — use
+`IMessageService<TContext>` with your domain `DbContext` instead.
+
+### Isolation from `OutboxContext`
+
+If you also register `OutboxContext` (e.g., for broker delivery driven by `AppDbContext`),
+the two contexts are registered as separate EF services with separate connection strings.
+They do not collide in DI — one is `IOutboxContext` for `OutboxContext`, the other for
+`DefaultOutboxContext`. Both can coexist and even target the same database if desired.
+
+---
+
+## Coexistence — `IMessageService` and `IMessageService<TContext>`
+
+Both registrations can coexist in the same application without conflict:
+
+```csharp {linenos=false,linenostart=1}
+services.AddMessaging(builder =>
+{
+    // Domain-aware: used inside TransactionBehavior (defers outbox save until commit)
+    builder.AddMessageService<AppDbContext>();
+
+    // Default outbox: used outside transactions (saves immediately)
+    builder.AddDefaultMessageService(opts =>
+        opts.UseSqlServer(configuration.GetConnectionString("Outbox")));
+});
+```
+
+`IMessageService` (backed by `DefaultOutboxContext`) and `IMessageService<AppDbContext>`
+resolve as independent instances — they write to separate outbox scopes and do not interfere.
+
+### When to inject which
+
+| Injection context | Interface to inject | Why |
+|---|---|---|
+| Command handler inside `TransactionBehavior` | `IMessageService<TContext>` | Defers `SaveEventsAsync` until after domain transaction commits |
+| Domain event handler inside `TransactionBehavior` | `IMessageService<TContext>` | Must participate in the same transaction scope |
+| API controller | `IMessageService` | No transaction context; saves immediately via `DefaultOutboxContext` |
+| Background service / `IHostedService` | `IMessageService` | No transaction context; saves immediately |
+| Application service (non-transactional) | `IMessageService` | Simpler; no domain `DbContext` dependency |
+
+> **`IMessageService` is registered with `TryAddScoped` — first call wins.** If both
+> `AddMessageService<TContext>()` and `AddDefaultMessageService()` are called,
+> only the first `IMessageService` registration is active. `IMessageService<TContext>` (the
+> generic form) is **always registered independently** and does not conflict with
+> `IMessageService`.
 
 ---
 
@@ -220,7 +341,7 @@ public class OrderCommandHandler : IRequestHandler<CreateOrderCommand, IOperatio
 
 ### `"local-channel"` — Non-Durable, Immediate
 
-1. Message enqueued to `Channel<IMessage>` (unbounded, singleton)
+1. Message enqueued to `Channel<IMessage>` (singleton; unbounded by default, configurable via `LocalChannelOptions.Capacity`)
 2. `PublishAsync` returns **immediately** — handler runs asynchronously
 3. `LocalChannelBackgroundService` drains the channel and dispatches:
    - `INotification` → full MediatR notification pipeline (`INotificationPublisher.Publish<T>`)
@@ -240,6 +361,10 @@ public class OrderCommandHandler : IRequestHandler<CreateOrderCommand, IOperatio
 5. `DeliveryHostedService` later processes the same outbox record via `LocalTransportPublisher`
 6. Idempotency check detects the duplicate → handler is **not invoked again**
 7. If immediate dispatch fails, the outbox record remains `NotPublished` — delivery retries as normal
+
+> **`DefaultOutboxContext` users**: delivery is not auto-configured. Register
+> `AddDeliveryProcessor<DefaultOutboxContext>("local", ...)` explicitly (see
+> [Full-route outside transactions](#full-route-outside-transactions-defaultoutboxcontext)).
 
 **Inside `TransactionBehavior`** (domain event handler):
 
@@ -408,12 +533,19 @@ Both local routes emit the same delivery metrics as broker routes:
 
 | Metric | `"local-channel"` | `"local"` |
 |---|---|---|
-| `delivery.attempts` | Per channel dispatch | Per `LocalTransportPublisher` call |
-| `delivery.success` | Handler completed | Handler completed |
-| `delivery.failure` | Handler threw exception | Handler threw exception |
-| `delivery.latency` | Dispatch duration | Dispatch duration |
+| `delivery_attempt_total` | Per channel dispatch | Per `LocalTransportPublisher` call |
+| `delivery_success_total` | Handler completed | Handler completed |
+| `delivery_failure_total` | Handler threw exception | Handler threw exception |
+| `delivery_latency_ms` | Dispatch duration | Dispatch duration |
+| `channel_queue_depth` | Live queue depth (observable gauge) | — |
+| `channel_dropped_total` | Messages dropped when channel full (`DropWrite` mode) | — |
 
-Use the publisher key (`"local-channel"` or `"local"`) to filter metrics by transport.
+Use the `publisher` tag (`"local-channel"` or `"local"`) to filter metrics by transport.
+
+> `channel_dropped_total` is only incremented when `FullMode = DropWrite` and the
+> channel is full. For `Wait` mode (default), back-pressure prevents drops entirely.
+> For `DropOldest`/`DropNewest`, evictions are silent — monitor `channel_queue_depth`
+> staying at capacity as the signal that items may be evicted.
 
 ---
 
