@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mediator :: Juice&#39;s documentation</title>
-    <link>https://juice-docs.creatorflow.io/core/mediator/index.html</link>
+    <link>http://localhost:1313/core/mediator/index.html</link>
     <description>MediatR provides three in-process messaging patterns. In Juice v9 all three can extend MessageBase so every message carries MessageId, CreatedAt, and TenantId automatically.&#xA;Pattern Interface Handler interface Use when Request/Response IRequest&lt;TResponse&gt; IRequestHandler&lt;T, TResponse&gt; Command or query — exactly one handler, returns a result Notification INotification INotificationHandler&lt;T&gt; In-process fan-out — multiple handlers, no return value Stream Request IStreamRequest&lt;TResponse&gt; IStreamRequestHandler&lt;T, TResponse&gt; Async streaming — handler yields items one at a time NuGet Package Package Purpose MediatR Core MediatR library Juice.MediatR.Behaviors IdempotencyRequestBehavior&lt;,&gt;, TransactionBehavior&lt;,,&gt; Juice.MediatR.Contracts IIdempotentRequest interface Request / Response — Commands and Queries A request routes to exactly one handler and always returns a result. Use it for commands (state-changing operations) and queries (read-only operations).</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 03 Apr 2023 20:23:50 +0700</lastBuildDate>
-    <atom:link href="https://juice-docs.creatorflow.io/core/mediator/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/core/mediator/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MediatR (v8.5.0)</title>
-      <link>https://juice-docs.creatorflow.io/core/mediator/v8.5.0/index.html</link>
+      <link>http://localhost:1313/core/mediator/v8.5.0/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:50 +0700</pubDate>
-      <guid>https://juice-docs.creatorflow.io/core/mediator/v8.5.0/index.html</guid>
+      <guid>http://localhost:1313/core/mediator/v8.5.0/index.html</guid>
       <description>⚠ Archived — v8.5.0 This page describes the pre-v9 Juice API. For current documentation see Messaging.&#xA;We provide IdentifiedCommand pattern to deduplicate incoming events with built-in EF backend (SqlServer/PostgreSQL) or Redis backend. Please follow the link Implement idempotent Commands for more information.&#xA;await mediator.Send(new IdentifiedCommand&lt;OriginCommand&gt;(originCommand, originCommandId));&#xD;The request manager will verify originCommandId does not exist before sending originCommand to your OriginCommandHandler.&#xA;EF backend Please register request management services with your application schema before use.</description>
     </item>
   </channel>
