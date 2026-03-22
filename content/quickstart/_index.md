@@ -6,8 +6,6 @@ chapter = true
 pre = "<b>2. </b>"
 +++
 
-# Quickstarts
-
 [Domain]({{< ref "quickstart/domain" >}})
 
 [Infrastructure]({{< ref "quickstart/infrastructure" >}})
