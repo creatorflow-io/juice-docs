@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
@@ -12,7 +12,7 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
     <meta name="twitter:title" content="Local Transport :: Juice&#39;s documentation">
     <meta name="twitter:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
 Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
-    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/local-transport/index.html">
+    <meta property="og:url" content="http://localhost:1313/core/messaging/local-transport/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Local Transport :: Juice&#39;s documentation">
     <meta property="og:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
@@ -24,32 +24,32 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
 Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta itemprop="datePublished" content="2026-03-14T00:00:00+00:00">
     <meta itemprop="dateModified" content="2026-03-14T00:00:00+00:00">
-    <meta itemprop="wordCount" content="1497">
+    <meta itemprop="wordCount" content="2149">
     <title>Local Transport :: Juice&#39;s documentation</title>
     <link href="/core/messaging/local-transport/index.xml" rel="alternate" type="application/rss+xml" title="Local Transport :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1773556234" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1773556234" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773556234" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1773556234" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1773556234" rel="stylesheet">
-    <link href="/css/theme.min.css?1773556234" rel="stylesheet">
-    <link href="/css/format-html.min.css?1773556234" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1773556234" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1773556234" defer></script>
-    <script src="/js/lunr/lunr.min.js?1773556234" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1773556234" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1773556234" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1773556234" defer></script>
-    <script src="/js/search.min.js?1773556234" defer></script>
+    <link href="/images/favicon.png?1774148296" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1774148296" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774148296" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774148296" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1774148296" rel="stylesheet">
+    <link href="/css/theme.css?1774148296" rel="stylesheet">
+    <link href="/css/format-html.css?1774148296" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1774148296" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1774148296" defer></script>
+    <script src="/js/lunr/lunr.min.js?1774148296" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1774148296" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1774148296" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1774148296" defer></script>
+    <script src="/js/search.js?1774148296" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = `.min`;
+      window.relearn.min = ``;
       window.relearn.path='\/core\/messaging\/local-transport\/index.html';
       window.relearn.relBasePath='..\/..\/..';
       window.relearn.relBaseUri='..\/..\/..';
-      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
+      window.relearn.absBaseUri='http:\/\/localhost:1313';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1773556234";
+      window.relearn.index_js_url="/searchindex.en.js?1774148296";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -119,6 +119,19 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
       <ul>
         <li><a href="#local-channel-only-zero-db">Local-channel only (zero DB)</a></li>
         <li><a href="#all-routes-local-channel--local--broker">All routes (local-channel + local + broker)</a></li>
+        <li><a href="#full-route-outside-transactions-defaultoutboxcontext">Full-route outside transactions (<code>DefaultOutboxContext</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#defaultoutboxcontext">DefaultOutboxContext</a>
+      <ul>
+        <li><a href="#schema">Schema</a></li>
+        <li><a href="#transaction-behavior-ismanaged--false">Transaction behavior (<code>IsManaged = false</code>)</a></li>
+        <li><a href="#isolation-from-outboxcontext">Isolation from <code>OutboxContext</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#coexistence--imessageservice-and-imessageservicetcontext">Coexistence — <code>IMessageService</code> and <code>IMessageService&lt;TContext&gt;</code></a>
+      <ul>
+        <li><a href="#when-to-inject-which">When to inject which</a></li>
       </ul>
     </li>
     <li><a href="#publishing-policy-configuration">Publishing Policy Configuration</a></li>
@@ -232,8 +245,8 @@ ignored to prevent double handler invocation. Use one or the other per event typ
 <hr>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/">Internal Messaging Setup</a> for <code>IIdempotencyService</code> and <code>MessagingBuilder</code></li>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> if using the <code>&quot;local&quot;</code> durable route</li>
+<li><a href="http://localhost:1313/core/messaging/">Internal Messaging Setup</a> for <code>IIdempotencyService</code> and <code>MessagingBuilder</code></li>
+<li><a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> if using the <code>&quot;local&quot;</code> durable route</li>
 </ul>
 <hr>
 <h2 id="nuget-packages">NuGet packages</h2>
@@ -254,6 +267,10 @@ ignored to prevent double handler invocation. Use one or the other per event typ
           <td><code>MessagingBuilder</code>, <code>IMessagePublishingPolicy</code>, <code>IOutboxService&lt;T&gt;</code></td>
       </tr>
       <tr>
+          <td><a href="https://www.nuget.org/packages/Juice.Messaging.Outbox.EF" rel="external" target="_blank">Juice.Messaging.Outbox.EF</a></td>
+          <td><code>DefaultOutboxContext</code>, <code>AddDefaultMessageService()</code>, EF-backed outbox repository</td>
+      </tr>
+      <tr>
           <td><a href="https://www.nuget.org/packages/Juice.Messaging.Idempotency.Caching" rel="external" target="_blank">Juice.Messaging.Idempotency.Caching</a></td>
           <td>In-memory idempotency (dev/test)</td>
       </tr>
@@ -265,11 +282,12 @@ ignored to prevent double handler invocation. Use one or the other per event typ
 </table>
 <hr>
 <h2 id="imessageservice--unified-publishing-interface">IMessageService — Unified Publishing Interface</h2>
-<p>Two interfaces are available depending on whether your routes need outbox writes:</p>
+<p>Two interfaces are available, each with its own registration path:</p>
 <table>
   <thead>
       <tr>
           <th>Interface</th>
+          <th>Registration</th>
           <th>Routes supported</th>
           <th>When to use</th>
       </tr>
@@ -277,13 +295,15 @@ ignored to prevent double handler invocation. Use one or the other per event typ
   <tbody>
       <tr>
           <td><code>IMessageService</code></td>
-          <td><code>&quot;local-channel&quot;</code> only</td>
-          <td>Fire-and-forget, no DB</td>
+          <td><code>AddDefaultMessageService()</code></td>
+          <td>All three</td>
+          <td>Application services, controllers, background jobs — outside domain transactions</td>
       </tr>
       <tr>
           <td><code>IMessageService&lt;TContext&gt;</code></td>
-          <td>All three (<code>&quot;local-channel&quot;</code>, <code>&quot;local&quot;</code>, broker)</td>
-          <td>When any route may require outbox writes</td>
+          <td><code>AddMessageService&lt;TContext&gt;()</code></td>
+          <td>All three</td>
+          <td>Inside <code>TransactionBehavior</code> — defers outbox save until after commit</td>
       </tr>
   </tbody>
 </table>
@@ -295,13 +315,22 @@ runtime — changing the route in configuration changes the transport with no co
 <hr>
 <h2 id="di-registration">DI Registration</h2>
 <h3 id="local-channel-only-zero-db">Local-channel only (zero DB)</h3>
+<p><code>AddLocalChannel()</code> registers the channel, background service, and <code>IMessagePublisher</code>
+keyed <code>&quot;local-channel&quot;</code> — but <strong>not</strong> <code>IMessageService</code>. Use <code>AddDefaultMessageService()</code>
+to register <code>IMessageService</code>. When all routes resolve to <code>&quot;local-channel&quot;</code>, the
+<code>DefaultOutboxContext</code> is never accessed, so the configure delegate can be a no-op.</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging(builder =&gt;
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex; background-color:#3c3d38"><span>    builder.AddLocalChannel(opts =&gt;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    {
-</span></span><span style="display:flex;"><span>        opts.MaxConcurrency = <span style="color:#ae81ff">10</span>;  <span style="color:#75715e">// optional: limit concurrent handlers (default: unlimited)</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        opts.MaxConcurrency = <span style="color:#ae81ff">10</span>;   <span style="color:#75715e">// optional: limit concurrent handlers (default: unlimited)</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        opts.Capacity = <span style="color:#ae81ff">10_000</span>;     <span style="color:#75715e">// optional: bounded channel (default: unbounded)</span>
 </span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>    builder.AddIdempotencyInMemory();  <span style="color:#75715e">// or AddIdempotencyRedis for production</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Registers IMessageService; DefaultOutboxContext is never accessed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// when all routes resolve to &#34;local-channel&#34;</span>
+</span></span><span style="display:flex;"><span>    builder.AddDefaultMessageService(_ =&gt; { });
 </span></span><span style="display:flex;"><span>});
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// Register publishing policy</span>
@@ -345,6 +374,118 @@ runtime — changing the route in configuration changes the transport with no co
 </span></span><span style="display:flex;"><span>        delivery.AddDeliveryPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;DeliveryPolicies&#34;</span>));
 </span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<h3 id="full-route-outside-transactions-defaultoutboxcontext">Full-route outside transactions (<code>DefaultOutboxContext</code>)</h3>
+<p>Use <code>AddDefaultMessageService()</code> when you need full-route publishing (<code>&quot;local-channel&quot;</code>,
+<code>&quot;local&quot;</code>, and broker routes) from code that runs <strong>outside</strong> a <code>TransactionBehavior</code>
+pipeline — for example, API controllers, background services, or application-layer services
+that are not part of a domain transaction.</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging(builder =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Registers DefaultOutboxContext + IMessageService (backed by MessageService&lt;DefaultOutboxContext&gt;)</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    builder.AddDefaultMessageService(opts =&gt;
+</span></span><span style="display:flex;"><span>        opts.UseSqlServer(configuration.GetConnectionString(<span style="color:#e6db74">&#34;Outbox&#34;</span>)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    builder.AddLocalChannel();          <span style="color:#75715e">// required for &#34;local-channel&#34; route dispatch</span>
+</span></span><span style="display:flex;"><span>    builder.AddIdempotencyRedis(opts =&gt;
+</span></span><span style="display:flex;"><span>        opts.Configuration = configuration.GetConnectionString(<span style="color:#e6db74">&#34;Redis&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    builder.AddPublishingPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;PublishingPolicies&#34;</span>));
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<blockquote>
+<p><strong>Delivery is not auto-configured.</strong> If you use the <code>&quot;local&quot;</code> or broker routes, add the
+delivery worker explicitly:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>builder.AddDelivery(delivery =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    delivery.AddDeliveryProcessor&lt;DefaultOutboxContext&gt;(<span style="color:#e6db74">&#34;local&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;send-pending&#34;</span>, <span style="color:#e6db74">&#34;retry-failed&#34;</span>, <span style="color:#e6db74">&#34;recover-timeout&#34;</span>);
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div></blockquote>
+<blockquote>
+<p><strong><code>IMessageService</code> registration uses <code>TryAddScoped</code> — first call wins.</strong> Do not call
+both <code>AddMessageService&lt;TContext&gt;()</code> and <code>AddDefaultMessageService()</code> in the same
+container. Use <code>IMessageService&lt;TContext&gt;</code> if you need domain-transaction deferral inside
+<code>TransactionBehavior</code>; use <code>AddDefaultMessageService()</code> for everything else.</p></blockquote>
+<hr>
+<h2 id="defaultoutboxcontext">DefaultOutboxContext</h2>
+<p><code>DefaultOutboxContext</code> is a standalone EF Core <code>DbContext</code> implementing <code>IOutboxContext</code>.
+It owns its own database connection string and is completely independent of any domain
+<code>DbContext</code> registered in the application.</p>
+<h3 id="schema">Schema</h3>
+<p><code>DefaultOutboxContext</code> uses the <strong>same tables</strong> (<code>OutboxEvents</code> and <code>OutboxDeliveries</code>)
+as <code>OutboxContext</code>. The schema is applied via the shared <code>ConfigureOutbox()</code> extension —
+no separate migration project is needed.</p>
+<blockquote>
+<p><strong>To create the tables</strong>: run the existing <code>OutboxContext</code> migrations against the target
+database. <code>DefaultOutboxContext</code> resolves the schema from those migrations automatically.</p></blockquote>
+<h3 id="transaction-behavior-ismanaged--false">Transaction behavior (<code>IsManaged = false</code>)</h3>
+<p><code>DefaultOutboxContext.IsManaged</code> is always <code>false</code>. This means <code>SaveEventsAsync</code> is
+<strong>never deferred</strong> — it executes immediately as a standalone operation, regardless of
+whether a domain transaction is in progress elsewhere in the application.</p>
+<p>This is intentional: <code>DefaultOutboxContext</code> is designed for code paths that are <strong>outside</strong>
+a <code>TransactionBehavior</code> pipeline. For code inside <code>TransactionBehavior</code> — where you need
+outbox saves to be deferred until the domain transaction commits — use
+<code>IMessageService&lt;TContext&gt;</code> with your domain <code>DbContext</code> instead.</p>
+<h3 id="isolation-from-outboxcontext">Isolation from <code>OutboxContext</code></h3>
+<p>If you also register <code>OutboxContext</code> (e.g., for broker delivery driven by <code>AppDbContext</code>),
+the two contexts are registered as separate EF services with separate connection strings.
+They do not collide in DI — one is <code>IOutboxContext</code> for <code>OutboxContext</code>, the other for
+<code>DefaultOutboxContext</code>. Both can coexist and even target the same database if desired.</p>
+<hr>
+<h2 id="coexistence--imessageservice-and-imessageservicetcontext">Coexistence — <code>IMessageService</code> and <code>IMessageService&lt;TContext&gt;</code></h2>
+<p>Both registrations can coexist in the same application without conflict:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging(builder =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Domain-aware: used inside TransactionBehavior (defers outbox save until commit)</span>
+</span></span><span style="display:flex;"><span>    builder.AddMessageService&lt;AppDbContext&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Default outbox: used outside transactions (saves immediately)</span>
+</span></span><span style="display:flex;"><span>    builder.AddDefaultMessageService(opts =&gt;
+</span></span><span style="display:flex;"><span>        opts.UseSqlServer(configuration.GetConnectionString(<span style="color:#e6db74">&#34;Outbox&#34;</span>)));
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<p><code>IMessageService</code> (backed by <code>DefaultOutboxContext</code>) and <code>IMessageService&lt;AppDbContext&gt;</code>
+resolve as independent instances — they write to separate outbox scopes and do not interfere.</p>
+<h3 id="when-to-inject-which">When to inject which</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Injection context</th>
+          <th>Interface to inject</th>
+          <th>Why</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Command handler inside <code>TransactionBehavior</code></td>
+          <td><code>IMessageService&lt;TContext&gt;</code></td>
+          <td>Defers <code>SaveEventsAsync</code> until after domain transaction commits</td>
+      </tr>
+      <tr>
+          <td>Domain event handler inside <code>TransactionBehavior</code></td>
+          <td><code>IMessageService&lt;TContext&gt;</code></td>
+          <td>Must participate in the same transaction scope</td>
+      </tr>
+      <tr>
+          <td>API controller</td>
+          <td><code>IMessageService</code></td>
+          <td>No transaction context; saves immediately via <code>DefaultOutboxContext</code></td>
+      </tr>
+      <tr>
+          <td>Background service / <code>IHostedService</code></td>
+          <td><code>IMessageService</code></td>
+          <td>No transaction context; saves immediately</td>
+      </tr>
+      <tr>
+          <td>Application service (non-transactional)</td>
+          <td><code>IMessageService</code></td>
+          <td>Simpler; no domain <code>DbContext</code> dependency</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p><strong><code>IMessageService</code> is registered with <code>TryAddScoped</code> — first call wins.</strong> If both
+<code>AddMessageService&lt;TContext&gt;()</code> and <code>AddDefaultMessageService()</code> are called,
+only the first <code>IMessageService</code> registration is active. <code>IMessageService&lt;TContext&gt;</code> (the
+generic form) is <strong>always registered independently</strong> and does not conflict with
+<code>IMessageService</code>.</p></blockquote>
 <hr>
 <h2 id="publishing-policy-configuration">Publishing Policy Configuration</h2>
 <p>Route events to local or broker transports via <code>appsettings.json</code>:</p>
@@ -419,7 +560,7 @@ when you need durability, or <code>&quot;local-channel&quot;</code> when you exp
 <h2 id="route-behavior-details">Route Behavior Details</h2>
 <h3 id="local-channel--non-durable-immediate"><code>&quot;local-channel&quot;</code> — Non-Durable, Immediate</h3>
 <ol>
-<li>Message enqueued to <code>Channel&lt;IMessage&gt;</code> (unbounded, singleton)</li>
+<li>Message enqueued to <code>Channel&lt;IMessage&gt;</code> (singleton; unbounded by default, configurable via <code>LocalChannelOptions.Capacity</code>)</li>
 <li><code>PublishAsync</code> returns <strong>immediately</strong> — handler runs asynchronously</li>
 <li><code>LocalChannelBackgroundService</code> drains the channel and dispatches:
 <ul>
@@ -442,6 +583,10 @@ when you need durability, or <code>&quot;local-channel&quot;</code> when you exp
 <li>Idempotency check detects the duplicate → handler is <strong>not invoked again</strong></li>
 <li>If immediate dispatch fails, the outbox record remains <code>NotPublished</code> — delivery retries as normal</li>
 </ol>
+<blockquote>
+<p><strong><code>DefaultOutboxContext</code> users</strong>: delivery is not auto-configured. Register
+<code>AddDeliveryProcessor&lt;DefaultOutboxContext&gt;(&quot;local&quot;, ...)</code> explicitly (see
+<a href="/core/messaging/local-transport/index.html#full-route-outside-transactions-defaultoutboxcontext">Full-route outside transactions</a>).</p></blockquote>
 <p><strong>Inside <code>TransactionBehavior</code></strong> (domain event handler):</p>
 <ol>
 <li>Message staged via <code>AddEventAsync</code> — save is <strong>deferred</strong></li>
@@ -626,36 +771,51 @@ list. Post-commit actions registered by <code>IMessageService</code> are flushed
   </thead>
   <tbody>
       <tr>
-          <td><code>delivery.attempts</code></td>
+          <td><code>delivery_attempt_total</code></td>
           <td>Per channel dispatch</td>
           <td>Per <code>LocalTransportPublisher</code> call</td>
       </tr>
       <tr>
-          <td><code>delivery.success</code></td>
+          <td><code>delivery_success_total</code></td>
           <td>Handler completed</td>
           <td>Handler completed</td>
       </tr>
       <tr>
-          <td><code>delivery.failure</code></td>
+          <td><code>delivery_failure_total</code></td>
           <td>Handler threw exception</td>
           <td>Handler threw exception</td>
       </tr>
       <tr>
-          <td><code>delivery.latency</code></td>
+          <td><code>delivery_latency_ms</code></td>
           <td>Dispatch duration</td>
           <td>Dispatch duration</td>
+      </tr>
+      <tr>
+          <td><code>channel_queue_depth</code></td>
+          <td>Live queue depth (observable gauge)</td>
+          <td>—</td>
+      </tr>
+      <tr>
+          <td><code>channel_dropped_total</code></td>
+          <td>Messages dropped when channel full (<code>DropWrite</code> mode)</td>
+          <td>—</td>
       </tr>
   </tbody>
 </table>
-<p>Use the publisher key (<code>&quot;local-channel&quot;</code> or <code>&quot;local&quot;</code>) to filter metrics by transport.</p>
+<p>Use the <code>publisher</code> tag (<code>&quot;local-channel&quot;</code> or <code>&quot;local&quot;</code>) to filter metrics by transport.</p>
+<blockquote>
+<p><code>channel_dropped_total</code> is only incremented when <code>FullMode = DropWrite</code> and the
+channel is full. For <code>Wait</code> mode (default), back-pressure prevents drops entirely.
+For <code>DropOldest</code>/<code>DropNewest</code>, evictions are silent — monitor <code>channel_queue_depth</code>
+staying at capacity as the signal that items may be evicted.</p></blockquote>
 <hr>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/message-context/">MessageContext Setup</a> — middleware, attribute, and test initialization</li>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/">Internal Messaging Setup</a> — MediatR + idempotency standalone</li>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> — transactional outbox staging</li>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/delivery/">Delivery Setup</a> — background delivery worker</li>
-<li><a href="https://juice-docs.creatorflow.io/core/messaging/full-setup/">Full Setup</a> — all components combined</li>
+<li><a href="http://localhost:1313/core/messaging/message-context/">MessageContext Setup</a> — middleware, attribute, and test initialization</li>
+<li><a href="http://localhost:1313/core/messaging/">Internal Messaging Setup</a> — MediatR + idempotency standalone</li>
+<li><a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> — transactional outbox staging</li>
+<li><a href="http://localhost:1313/core/messaging/delivery/">Delivery Setup</a> — background delivery worker</li>
+<li><a href="http://localhost:1313/core/messaging/full-setup/">Full Setup</a> — all components combined</li>
 </ul>
 
   <footer class="footline">
@@ -746,22 +906,22 @@ list. Post-commit actions registered by <code>IMessageService</code> are flushed
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1773556234" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1773556234" defer></script>
-    <script src="/js/js-yaml/js-yaml.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-color.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-dispatch.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-drag.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-ease.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-interpolate.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-selection.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-timer.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-transition.min.js?1773556234" defer></script>
-    <script src="/js/d3/d3-zoom.min.js?1773556234" defer></script>
-    <script src="/js/mermaid/mermaid.min.js?1773556234" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1774148296" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1774148296" defer></script>
+    <script src="/js/js-yaml/js-yaml.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-color.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-dispatch.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-drag.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-ease.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-interpolate.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-selection.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-timer.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-transition.min.js?1774148296" defer></script>
+    <script src="/js/d3/d3-zoom.min.js?1774148296" defer></script>
+    <script src="/js/mermaid/mermaid.min.js?1774148296" defer></script>
     <script>
       window.relearn.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/js/theme.min.js?1773556234" defer></script>
+    <script src="/js/theme.js?1774148296" defer></script>
   </body>
 </html>
