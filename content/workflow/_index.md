@@ -7,8 +7,6 @@ pre = "<b>5. </b>"
 draft = true
 +++
 
-# Workflow
-
 [Overview]({{< ref "workflow/overview/_index.md" >}})
 
 [Workflow service]({{< ref "workflow/service/_index.md" >}})

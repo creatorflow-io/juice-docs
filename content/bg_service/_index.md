@@ -8,8 +8,6 @@ draft = false
 +++
 
 
-# Background service
-
 [Logging]({{< ref "bg_service/logging/_index.md" >}})
 
 [Managed service]({{< ref "bg_service/managed_service/_index.md" >}})

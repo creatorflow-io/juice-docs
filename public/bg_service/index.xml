@@ -3,7 +3,7 @@
   <channel>
     <title>Background service :: Juice&#39;s documentation</title>
     <link>http://localhost:1313/bg_service/index.html</link>
-    <description>Background service Logging&#xA;Managed service</description>
+    <description>Logging&#xA;Managed service</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 20 Sep 2023 17:22:07 +0700</lastBuildDate>

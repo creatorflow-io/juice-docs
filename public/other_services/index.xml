@@ -3,7 +3,7 @@
   <channel>
     <title>Other services :: Juice&#39;s documentation</title>
     <link>http://localhost:1313/other_services/index.html</link>
-    <description>Other services Logging service&#xA;Audit service&#xA;File storage&#xA;Plugins</description>
+    <description>Logging service&#xA;Audit service&#xA;File storage&#xA;Plugins</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 30 Sep 2024 08:36:48 +0700</lastBuildDate>

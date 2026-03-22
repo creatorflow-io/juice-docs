@@ -6,8 +6,6 @@ chapter = true
 pre = "<b>1. </b>"
 +++
 
-# Overview
-
 [Purpose]({{< ref "overview/purpose" >}})
 
 [Application models]({{< ref "overview/app_model" >}})

@@ -7,7 +7,6 @@ pre = "<b>5. </b>"
 draft = false
 +++
 
-# Other services
 
 [Logging service]({{< ref "other_services/logging/_index.md" >}})
 
