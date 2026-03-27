@@ -24,22 +24,22 @@ When to use You have Outbox Setup configured and need a delivery worker You want
 When to use You have Outbox Setup configured and need a delivery worker You want to run the delivery worker in a separate process from the outbox-writing service You need retry backoff, stuck-message recovery, and a health check for the delivery backlog Prerequisites Outbox Setup — the OutboxEvent and OutboxDelivery tables must exist and be populated by IOutboxService&lt;TContext&gt;.">
     <meta itemprop="datePublished" content="2026-02-19T00:00:00+00:00">
     <meta itemprop="dateModified" content="2026-02-19T00:00:00+00:00">
-    <meta itemprop="wordCount" content="558">
+    <meta itemprop="wordCount" content="1106">
     <title>Delivery Setup :: Juice&#39;s documentation</title>
     <link href="/core/messaging/delivery/index.xml" rel="alternate" type="application/rss+xml" title="Delivery Setup :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1774149262" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1774149262" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774149262" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774149262" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1774149262" rel="stylesheet">
-    <link href="/css/theme.css?1774149262" rel="stylesheet">
-    <link href="/css/format-html.css?1774149262" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1774149262" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1774149262" defer></script>
-    <script src="/js/lunr/lunr.min.js?1774149262" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1774149262" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1774149262" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1774149262" defer></script>
-    <script src="/js/search.js?1774149262" defer></script>
+    <link href="/images/favicon.png?1774584424" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1774584424" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774584424" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774584424" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1774584424" rel="stylesheet">
+    <link href="/css/theme.css?1774584424" rel="stylesheet">
+    <link href="/css/format-html.css?1774584424" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1774584424" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1774584424" defer></script>
+    <script src="/js/lunr/lunr.min.js?1774584424" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1774584424" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1774584424" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1774584424" defer></script>
+    <script src="/js/search.js?1774584424" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
@@ -49,7 +49,7 @@ When to use You have Outbox Setup configured and need a delivery worker You want
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='http:\/\/localhost:1313';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1774149262";
+      window.relearn.index_js_url="/searchindex.en.js?1774584424";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -114,8 +114,22 @@ When to use You have Outbox Setup configured and need a delivery worker You want
     <li><a href="#when-to-use">When to use</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#nuget-packages">NuGet packages</a></li>
-    <li><a href="#di-registration">DI Registration</a></li>
+    <li><a href="#di-registration">DI Registration</a>
+      <ul>
+        <li><a href="#minimal-setup">Minimal setup</a></li>
+        <li><a href="#per-processor-policies">Per-processor policies</a></li>
+      </ul>
+    </li>
     <li><a href="#intent-strategies">Intent Strategies</a></li>
+    <li><a href="#delivery-policies">Delivery Policies</a>
+      <ul>
+        <li><a href="#built-in-defaults">Built-in defaults</a></li>
+        <li><a href="#policy-resolution-order">Policy resolution order</a></li>
+        <li><a href="#global-policies-via-configuration">Global policies via configuration</a></li>
+        <li><a href="#global-policies-via-code">Global policies via code</a></li>
+        <li><a href="#per-processor-code-policy">Per-processor code policy</a></li>
+      </ul>
+    </li>
     <li><a href="#retry-backoff-schedule">Retry Backoff Schedule</a></li>
     <li><a href="#outboxdelivery-state-machine">OutboxDelivery State Machine</a></li>
     <li><a href="#health-check">Health Check</a></li>
@@ -197,19 +211,35 @@ the same process or in a dedicated worker service.</p>
 </table>
 <hr>
 <h2 id="di-registration">DI Registration</h2>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging(builder =&gt;
-</span></span><span style="display:flex;"><span>        .AddDelivery(delivery =&gt;
+<h3 id="minimal-setup">Minimal setup</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>services.AddMessaging()
+</span></span><span style="display:flex;"><span>    .AddDelivery(delivery =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        delivery.AddDeliveryProcessor&lt;AppDbContext&gt;(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>); <span style="color:#75715e">// default intents applied automatically</span>
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        delivery.AddDeliveryPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;DeliveryPolicies&#34;</span>));
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        delivery.EventBus.AddRabbitMQ(rabbitMQ =&gt;
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        {
+</span></span><span style="display:flex; background-color:#3c3d38"><span>            rabbitMQ.AddConnection(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, configuration.GetSection(<span style="color:#e6db74">&#34;RabbitMQ&#34;</span>))
+</span></span><span style="display:flex; background-color:#3c3d38"><span>                    .AddProducer(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, <span style="color:#e6db74">&#34;rabbitmq&#34;</span>);
+</span></span><span style="display:flex; background-color:#3c3d38"><span>        });
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    });</span></span></code></pre></div>
+<h3 id="per-processor-policies">Per-processor policies</h3>
+<p>Use the delegate overload of <code>AddDeliveryProcessor&lt;TContext&gt;</code> to configure a policy
+that applies only to that processor, independently of the global policy:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>delivery.AddDeliveryProcessor&lt;AppDbContext&gt;(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, proc =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    proc.AddDeliveryPolicies(opts =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        opts.DefaultPolicy = <span style="color:#66d9ef">new</span> PolicyConfiguration
 </span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            delivery.AddDeliveryProcessor&lt;AppDbContext&gt;(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, <span style="color:#75715e">// the producer key</span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                <span style="color:#e6db74">&#34;send-pending&#34;</span>, <span style="color:#e6db74">&#34;retry-failed&#34;</span>, <span style="color:#e6db74">&#34;recover-timeout&#34;</span> <span style="color:#75715e">// default intents</span>
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                );
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            delivery.AddDeliveryPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;DeliveryPolicies&#34;</span>));
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            delivery.EventBus.AddRabbitMQ(rabbitMQ =&gt;
-</span></span><span style="display:flex; background-color:#3c3d38"><span>            {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                rabbitMQ.AddConnection(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, configuration.GetSection(<span style="color:#e6db74">&#34;RabbitMQ&#34;</span>))
-</span></span><span style="display:flex; background-color:#3c3d38"><span>                        .AddProducer(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, <span style="color:#e6db74">&#34;rabbitmq&#34;</span>);
-</span></span><span style="display:flex;"><span>            });
-</span></span><span style="display:flex;"><span>        });</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>            BatchSize = <span style="color:#ae81ff">50</span>,
+</span></span><span style="display:flex;"><span>            Interval = TimeSpan.FromSeconds(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<p>Processor-scoped policies sit below global key-matched entries in the resolution chain
+but above the global <code>DefaultPolicy</code>. See <a href="/core/messaging/delivery/index.html#delivery-policies">Delivery Policies</a> for
+the full resolution order.</p>
 <blockquote>
 <p><strong>Important</strong>: <code>AddDelivery()</code> automatically calls <code>services.AddEventBus()</code> in its
 constructor. Do <strong>not need</strong> to call <code>services.AddEventBus()</code> separately when using
@@ -239,16 +269,179 @@ Pass them to <code>AddDeliveryProcessor&lt;TContext&gt;()</code> in the order yo
       </tr>
       <tr>
           <td><code>recover-timeout</code></td>
-          <td><code>State == InProgress</code> AND stuck for &gt; 15 minutes</td>
+          <td><code>State == InProgress</code> AND stuck for &gt; configured timeout</td>
           <td>Reset timed-out in-progress records to <code>Failed</code> so they can be retried</td>
       </tr>
   </tbody>
 </table>
-<p>All three strategies are recommended for production. Each runs as a keyed, independently
-configurable hosted service intent.</p>
+<p>All three strategies are registered automatically when using <code>AddDeliveryProcessor&lt;TContext&gt;(publisher)</code>.</p>
+<hr>
+<h2 id="delivery-policies">Delivery Policies</h2>
+<p>A <code>DeliveryPolicy</code> controls how a processor polls and retries messages. Every field has
+a built-in default; you only need to specify the fields you want to override.</p>
+<h3 id="built-in-defaults">Built-in defaults</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Field</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Interval</code></td>
+          <td>5 seconds</td>
+          <td>Polling interval between batch processing cycles</td>
+      </tr>
+      <tr>
+          <td><code>BatchSize</code></td>
+          <td>10</td>
+          <td>Records processed per cycle</td>
+      </tr>
+      <tr>
+          <td><code>Timeout</code></td>
+          <td>5 minutes</td>
+          <td>Age threshold before a stuck <code>InProgress</code> record is recovered</td>
+      </tr>
+      <tr>
+          <td><code>InitialRetryDelay</code></td>
+          <td>5 seconds</td>
+          <td>Delay before the first retry attempt</td>
+      </tr>
+      <tr>
+          <td><code>RetryDelayMultiplier</code></td>
+          <td>2.0</td>
+          <td>Exponential backoff multiplier</td>
+      </tr>
+      <tr>
+          <td><code>MaxRetryAttempts</code></td>
+          <td>3</td>
+          <td>Number of retry attempts before the record stays in <code>Failed</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="policy-resolution-order">Policy resolution order</h3>
+<p>When <code>DeliveryHostedService</code> requests a policy for a given context, <code>IDeliveryPolicyResolver</code>
+checks sources in this order and uses the first match:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Priority</th>
+          <th>Source</th>
+          <th>Key format</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1 (highest)</td>
+          <td>Global <code>Policies</code> — exact</td>
+          <td><code>&quot;{publisher}:{intent}:{contextName}&quot;</code></td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Processor <code>Policies</code> — intent-specific</td>
+          <td><code>&quot;{publisher}:{intent}&quot;</code> (2-segment; context is implicit)</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Processor <code>DefaultPolicy</code></td>
+          <td>—</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Global <code>Policies</code> — wildcard context</td>
+          <td><code>&quot;{publisher}:{intent}:*&quot;</code></td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Global <code>Policies</code> — wildcard intent</td>
+          <td><code>&quot;{publisher}:*:*&quot;</code></td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>Global <code>DefaultPolicy</code></td>
+          <td>—</td>
+      </tr>
+      <tr>
+          <td>7 (lowest)</td>
+          <td>Built-in defaults</td>
+          <td><code>DeliveryPolicy.Default</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>Only the global <strong>exact</strong> match (priority 1) outranks processor-scoped policies. Global
+wildcard entries (priorities 4–5) are catch-alls that fall below any explicit processor
+configuration.</p>
+<p>Each matched entry inherits unset fields from the next source down:</p>
+<ul>
+<li>A processor <code>Policies</code> entry inherits from the processor <code>DefaultPolicy</code>, which inherits from the global <code>DefaultPolicy</code>.</li>
+<li>A global <code>Policies</code> entry inherits directly from the global <code>DefaultPolicy</code>.</li>
+</ul>
+<h3 id="global-policies-via-configuration">Global policies via configuration</h3>
+<p>Configure shared policies in <code>appsettings.json</code>. In JSON, replace <code>:</code> in key names
+with <code>__</code> (double underscore):</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;DeliveryPolicies&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;DefaultPolicy&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Interval&#34;</span>: <span style="color:#e6db74">&#34;00:00:05&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;BatchSize&#34;</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Policies&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rabbitmq__send-pending__AppDbContext&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;BatchSize&#34;</span>: <span style="color:#ae81ff">20</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;Interval&#34;</span>: <span style="color:#e6db74">&#34;00:00:03&#34;</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rabbitmq__send-pending__*&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;BatchSize&#34;</span>: <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rabbitmq__*__*&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;Interval&#34;</span>: <span style="color:#e6db74">&#34;00:00:10&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Register the section with <code>AddDeliveryPolicies</code>:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>delivery.AddDeliveryPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;DeliveryPolicies&#34;</span>));</span></span></code></pre></div>
+<p><code>AddDeliveryPolicies</code> is safe to call multiple times — each call merges its entries
+into the shared options.</p>
+<h3 id="global-policies-via-code">Global policies via code</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>delivery
+</span></span><span style="display:flex;"><span>    .AddDeliveryPolicies(opts =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        opts.DefaultPolicy = <span style="color:#66d9ef">new</span> PolicyConfiguration { BatchSize = <span style="color:#ae81ff">20</span> };
+</span></span><span style="display:flex;"><span>        opts.Policies[<span style="color:#e6db74">&#34;rabbitmq:retry:*&#34;</span>] = <span style="color:#66d9ef">new</span> PolicyConfiguration { BatchSize = <span style="color:#ae81ff">5</span> };
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .AddDeliveryPolicies(opts =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        opts.Policies[<span style="color:#e6db74">&#34;rabbitmq:send-pending:*&#34;</span>] = <span style="color:#66d9ef">new</span> PolicyConfiguration { Interval = TimeSpan.FromSeconds(<span style="color:#ae81ff">3</span>) };
+</span></span><span style="display:flex;"><span>    });</span></span></code></pre></div>
+<h3 id="per-processor-code-policy">Per-processor code policy</h3>
+<p>A processor-scoped policy applies only to that processor type. It ranks <strong>above</strong> global
+wildcard policies — only the global exact match can override it. Use it when a specific
+<code>TContext</code> needs its own policy without touching the global configuration.</p>
+<p>The processor <code>Policies</code> dictionary uses <strong>2-segment keys</strong> (<code>&quot;{publisher}:{intent}&quot;</code>)
+because the context is already implied by the processor registration:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>delivery.AddDeliveryProcessor&lt;SlowDbContext&gt;(<span style="color:#e6db74">&#34;rabbitmq&#34;</span>, proc =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    proc.AddDeliveryPolicies(opts =&gt;
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Intent-specific overrides (2-segment key — no context needed)</span>
+</span></span><span style="display:flex;"><span>        opts.Policies[<span style="color:#e6db74">&#34;rabbitmq:send-pending&#34;</span>] = <span style="color:#66d9ef">new</span> PolicyConfiguration { BatchSize = <span style="color:#ae81ff">20</span> };
+</span></span><span style="display:flex;"><span>        opts.Policies[<span style="color:#e6db74">&#34;rabbitmq:retry&#34;</span>]        = <span style="color:#66d9ef">new</span> PolicyConfiguration { BatchSize = <span style="color:#ae81ff">2</span> };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Fallback for any intent not listed above</span>
+</span></span><span style="display:flex;"><span>        opts.DefaultPolicy = <span style="color:#66d9ef">new</span> PolicyConfiguration { Interval = TimeSpan.FromSeconds(<span style="color:#ae81ff">30</span>) };
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<p>Unset fields in a processor <code>Policies</code> entry inherit from the processor <code>DefaultPolicy</code>,
+which in turn inherits from the global <code>DefaultPolicy</code>. Only a global exact entry
+(priority 1) can override processor-scoped policies.</p>
 <hr>
 <h2 id="retry-backoff-schedule">Retry Backoff Schedule</h2>
-<p>The default policy applies exponential-style delays between retry attempts:</p>
+<p>The default policy uses exponential backoff:
+<code>delay = InitialRetryDelay × RetryDelayMultiplier^(attempt - 1)</code></p>
+<p>With built-in defaults (<code>InitialRetryDelay = 5s</code>, <code>RetryDelayMultiplier = 2.0</code>):</p>
 <table>
   <thead>
       <tr>
@@ -259,37 +452,27 @@ configurable hosted service intent.</p>
   <tbody>
       <tr>
           <td>1st retry</td>
-          <td>10 seconds</td>
+          <td>5 seconds</td>
       </tr>
       <tr>
           <td>2nd retry</td>
-          <td>5 minutes</td>
+          <td>10 seconds</td>
       </tr>
       <tr>
           <td>3rd retry</td>
-          <td>10 minutes</td>
-      </tr>
-      <tr>
-          <td>4th retry</td>
-          <td>30 minutes</td>
-      </tr>
-      <tr>
-          <td>5th+ retry</td>
-          <td>1 hour</td>
+          <td>20 seconds</td>
       </tr>
   </tbody>
 </table>
-<p><strong>Override with a custom policy</strong> via <code>appsettings.json</code>:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;DeliveryPolicies&#34;</span>: {
-</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#f92672">&#34;RetryDelays&#34;</span>: [
-</span></span><span style="display:flex; background-color:#3c3d38"><span>      <span style="color:#e6db74">&#34;00:00:30&#34;</span>,
-</span></span><span style="display:flex; background-color:#3c3d38"><span>      <span style="color:#e6db74">&#34;00:05:00&#34;</span>,
-</span></span><span style="display:flex; background-color:#3c3d38"><span>      <span style="color:#e6db74">&#34;00:15:00&#34;</span>,
-</span></span><span style="display:flex; background-color:#3c3d38"><span>      <span style="color:#e6db74">&#34;01:00:00&#34;</span>
-</span></span><span style="display:flex;"><span>    ]
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Records that exhaust <code>MaxRetryAttempts</code> (default 3) remain in <code>Failed</code> state for audit.</p>
+<p><strong>Override the retry behaviour</strong> via a processor or global policy:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>delivery.AddDeliveryPolicies(opts =&gt;
+</span></span><span style="display:flex;"><span>    opts.DefaultPolicy = <span style="color:#66d9ef">new</span> PolicyConfiguration
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        InitialRetryDelay = TimeSpan.FromSeconds(<span style="color:#ae81ff">30</span>),
+</span></span><span style="display:flex;"><span>        RetryDelayMultiplier = <span style="color:#ae81ff">3.0</span>,
+</span></span><span style="display:flex;"><span>        MaxRetryAttempts = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    });</span></span></code></pre></div>
 <hr>
 <h2 id="outboxdelivery-state-machine">OutboxDelivery State Machine</h2>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>NotPublished
@@ -303,12 +486,11 @@ InProgress
     │       │
     │       └──► InProgress  (retry-failed — when NextAttemptOn ≤ UtcNow)
     │
-    └──► Failed      (recover-timeout — InProgress for &gt; 15 min is reset to Failed)
+    └──► Failed      (recover-timeout — InProgress for &gt; configured timeout is reset to Failed)
 
 DeliveryState values: NotPublished=0, InProgress=1, Published=2, Failed=3, Skipped=4</code></pre></div>
-<p>Messages that fail permanently (e.g., max retries exhausted and no further <code>retry-failed</code>
-triggers) remain in <code>Failed</code> state for audit. <code>Skipped</code> is used when a publishing policy
-has no matching route.</p>
+<p>Messages that fail permanently remain in <code>Failed</code> state for audit. <code>Skipped</code> is used
+when a publishing policy has no matching route.</p>
 <hr>
 <h2 id="health-check">Health Check</h2>
 <p>Register <code>AddOutboxDeliveryHealthCheck</code> to expose a <code>live</code> health endpoint that alerts
@@ -426,8 +608,8 @@ check — there are no <code>InProgress</code> records to monitor in a process t
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1774149262" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1774149262" defer></script>
-    <script src="/js/theme.js?1774149262" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1774584424" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1774584424" defer></script>
+    <script src="/js/theme.js?1774584424" defer></script>
   </body>
 </html>
