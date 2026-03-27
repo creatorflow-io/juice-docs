@@ -124,7 +124,7 @@ checks sources in this order and uses the first match:
 | Priority | Source | Key format |
 |---|---|---|
 | 1 (highest) | Global `Policies` — exact | `"{publisher}:{intent}:{contextName}"` |
-| 2 | Processor `Policies` — intent-specific | `"{publisher}:{intent}"` (2-segment; context is implicit) |
+| 2 | Processor `Policies` — intent-specific | `"{intent}"` (1-segment; publisher and context are implicit) |
 | 3 | Processor `DefaultPolicy` | — |
 | 4 | Global `Policies` — wildcard context | `"{publisher}:{intent}:*"` |
 | 5 | Global `Policies` — wildcard intent | `"{publisher}:*:*"` |
@@ -197,17 +197,18 @@ A processor-scoped policy applies only to that processor type. It ranks **above*
 wildcard policies — only the global exact match can override it. Use it when a specific
 `TContext` needs its own policy without touching the global configuration.
 
-The processor `Policies` dictionary uses **2-segment keys** (`"{publisher}:{intent}"`)
-because the context is already implied by the processor registration:
+The processor `Policies` dictionary uses **intent-only keys** (1-segment) because the
+publisher and context are already implied by the processor registration:
 
 ```csharp {linenos=false,linenostart=1}
 delivery.AddDeliveryProcessor<SlowDbContext>("rabbitmq", proc =>
 {
     proc.AddDeliveryPolicies(opts =>
     {
-        // Intent-specific overrides (2-segment key — no context needed)
-        opts.Policies["rabbitmq:send-pending"] = new PolicyConfiguration { BatchSize = 20 };
-        opts.Policies["rabbitmq:retry"]        = new PolicyConfiguration { BatchSize = 2 };
+        // Intent-specific overrides — just the intent name, no publisher prefix
+        opts.Policies["send-pending"]     = new PolicyConfiguration { BatchSize = 20, Interval = TimeSpan.FromSeconds(5) };
+        opts.Policies["retry-failed"]     = new PolicyConfiguration { BatchSize = 10, Interval = TimeSpan.FromSeconds(10), MaxRetryAttempts = 3 };
+        opts.Policies["recover-timeout"]  = new PolicyConfiguration { BatchSize = 10, Interval = TimeSpan.FromSeconds(30), Timeout = TimeSpan.FromMinutes(10) };
 
         // Fallback for any intent not listed above
         opts.DefaultPolicy = new PolicyConfiguration { Interval = TimeSpan.FromSeconds(30) };
