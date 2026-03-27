@@ -121,18 +121,21 @@ a built-in default; you only need to specify the fields you want to override.
 When `DeliveryHostedService` requests a policy for a given context, `IDeliveryPolicyResolver`
 checks sources in this order and uses the first match:
 
-| Priority | Source | Key / condition |
+| Priority | Source | Key format |
 |---|---|---|
-| 1 (highest) | Global `Policies` dictionary — exact match | `"{publisher}:{intent}:{contextName}"` |
-| 2 | Global `Policies` dictionary — wildcard context | `"{publisher}:{intent}:*"` |
-| 3 | Global `Policies` dictionary — wildcard intent + context | `"{publisher}:*:*"` |
-| 4 | Global `Policies` dictionary — wildcard publisher + context | `"*:{intent}:*"` |
-| 5a | Processor `Policies` dictionary — same four wildcard levels as above | keys scoped to this processor |
-| 5b | Processor `DefaultPolicy` | fallback within the processor scope |
-| 6 | Global `DefaultPolicy` | Set via `delivery.AddDeliveryPolicies(opts => ...)` |
+| 1 (highest) | Global `Policies` — exact | `"{publisher}:{intent}:{contextName}"` |
+| 2 | Processor `Policies` — intent-specific | `"{publisher}:{intent}"` (2-segment; context is implicit) |
+| 3 | Processor `DefaultPolicy` | — |
+| 4 | Global `Policies` — wildcard context | `"{publisher}:{intent}:*"` |
+| 5 | Global `Policies` — wildcard intent | `"{publisher}:*:*"` |
+| 6 | Global `DefaultPolicy` | — |
 | 7 (lowest) | Built-in defaults | `DeliveryPolicy.Default` |
 
-Each matched `PolicyConfiguration` inherits any unset fields from the next fallback:
+Only the global **exact** match (priority 1) outranks processor-scoped policies. Global
+wildcard entries (priorities 4–5) are catch-alls that fall below any explicit processor
+configuration.
+
+Each matched entry inherits unset fields from the next source down:
 - A processor `Policies` entry inherits from the processor `DefaultPolicy`, which inherits from the global `DefaultPolicy`.
 - A global `Policies` entry inherits directly from the global `DefaultPolicy`.
 
@@ -190,21 +193,21 @@ delivery
 
 ### Per-processor code policy
 
-A processor-scoped policy applies only to that processor type and sits below all global
-key-matched entries (priorities 1–4). Use it when a specific `TContext` needs its own
-policy without touching the global configuration.
+A processor-scoped policy applies only to that processor type. It ranks **above** global
+wildcard policies — only the global exact match can override it. Use it when a specific
+`TContext` needs its own policy without touching the global configuration.
 
-The processor `Policies` dictionary supports the same four wildcard levels as the global
-one, allowing intent-specific overrides within the processor scope:
+The processor `Policies` dictionary uses **2-segment keys** (`"{publisher}:{intent}"`)
+because the context is already implied by the processor registration:
 
 ```csharp {linenos=false,linenostart=1}
 delivery.AddDeliveryProcessor<SlowDbContext>("rabbitmq", proc =>
 {
     proc.AddDeliveryPolicies(opts =>
     {
-        // Intent-specific overrides for this processor
-        opts.Policies["rabbitmq:send-pending:*"] = new PolicyConfiguration { BatchSize = 20 };
-        opts.Policies["rabbitmq:retry:*"]        = new PolicyConfiguration { BatchSize = 2 };
+        // Intent-specific overrides (2-segment key — no context needed)
+        opts.Policies["rabbitmq:send-pending"] = new PolicyConfiguration { BatchSize = 20 };
+        opts.Policies["rabbitmq:retry"]        = new PolicyConfiguration { BatchSize = 2 };
 
         // Fallback for any intent not listed above
         opts.DefaultPolicy = new PolicyConfiguration { Interval = TimeSpan.FromSeconds(30) };
@@ -213,8 +216,8 @@ delivery.AddDeliveryProcessor<SlowDbContext>("rabbitmq", proc =>
 ```
 
 Unset fields in a processor `Policies` entry inherit from the processor `DefaultPolicy`,
-which in turn inherits from the global `DefaultPolicy`. A global key-matched entry
-(priorities 1–4) always overrides any processor-scoped policy.
+which in turn inherits from the global `DefaultPolicy`. Only a global exact entry
+(priority 1) can override processor-scoped policies.
 
 ---
 
