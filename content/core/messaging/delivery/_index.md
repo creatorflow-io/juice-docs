@@ -127,13 +127,14 @@ checks sources in this order and uses the first match:
 | 2 | Global `Policies` dictionary — wildcard context | `"{publisher}:{intent}:*"` |
 | 3 | Global `Policies` dictionary — wildcard intent + context | `"{publisher}:*:*"` |
 | 4 | Global `Policies` dictionary — wildcard publisher + context | `"*:{intent}:*"` |
-| 5 | Processor code policy | `DefaultPolicy` set via `proc.AddDeliveryPolicies(opts => ...)` |
+| 5a | Processor `Policies` dictionary — same four wildcard levels as above | keys scoped to this processor |
+| 5b | Processor `DefaultPolicy` | fallback within the processor scope |
 | 6 | Global `DefaultPolicy` | Set via `delivery.AddDeliveryPolicies(opts => ...)` |
 | 7 (lowest) | Built-in defaults | `DeliveryPolicy.Default` |
 
-Each matched `PolicyConfiguration` inherits any unset fields from the next source
-down the chain (e.g., a processor policy that sets only `BatchSize` inherits `Interval`
-from the global `DefaultPolicy` or the built-in defaults).
+Each matched `PolicyConfiguration` inherits any unset fields from the next fallback:
+- A processor `Policies` entry inherits from the processor `DefaultPolicy`, which inherits from the global `DefaultPolicy`.
+- A global `Policies` entry inherits directly from the global `DefaultPolicy`.
 
 ### Global policies via configuration
 
@@ -190,23 +191,30 @@ delivery
 ### Per-processor code policy
 
 A processor-scoped policy applies only to that processor type and sits below all global
-key-matched entries. Use it when a specific `TContext` needs a different default without
-polluting the global configuration:
+key-matched entries (priorities 1–4). Use it when a specific `TContext` needs its own
+policy without touching the global configuration.
+
+The processor `Policies` dictionary supports the same four wildcard levels as the global
+one, allowing intent-specific overrides within the processor scope:
 
 ```csharp {linenos=false,linenostart=1}
 delivery.AddDeliveryProcessor<SlowDbContext>("rabbitmq", proc =>
 {
     proc.AddDeliveryPolicies(opts =>
-        opts.DefaultPolicy = new PolicyConfiguration
-        {
-            BatchSize = 2,
-            Interval = TimeSpan.FromSeconds(30)
-        });
+    {
+        // Intent-specific overrides for this processor
+        opts.Policies["rabbitmq:send-pending:*"] = new PolicyConfiguration { BatchSize = 20 };
+        opts.Policies["rabbitmq:retry:*"]        = new PolicyConfiguration { BatchSize = 2 };
+
+        // Fallback for any intent not listed above
+        opts.DefaultPolicy = new PolicyConfiguration { Interval = TimeSpan.FromSeconds(30) };
+    });
 });
 ```
 
-A global key-matched entry (priorities 1–4) always takes precedence over a processor
-code policy. The global `DefaultPolicy` does **not** override the processor code policy.
+Unset fields in a processor `Policies` entry inherit from the processor `DefaultPolicy`,
+which in turn inherits from the global `DefaultPolicy`. A global key-matched entry
+(priorities 1–4) always overrides any processor-scoped policy.
 
 ---
 
