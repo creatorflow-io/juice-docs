@@ -40,21 +40,44 @@ the same process or in a dedicated worker service.
 
 ## DI Registration
 
+### Minimal setup
+
 ```csharp {linenos=false,hl_lines=[4,5,6,7,8,9,10,11],linenostart=1}
-services.AddMessaging(builder =>
-        .AddDelivery(delivery =>
+services.AddMessaging()
+    .AddDelivery(delivery =>
+    {
+        delivery.AddDeliveryProcessor<AppDbContext>("rabbitmq"); // default intents applied automatically
+        delivery.AddDeliveryPolicies(configuration.GetSection("DeliveryPolicies"));
+        delivery.EventBus.AddRabbitMQ(rabbitMQ =>
         {
-            delivery.AddDeliveryProcessor<AppDbContext>("rabbitmq", // the producer key
-                "send-pending", "retry-failed", "recover-timeout" // default intents
-                );
-            delivery.AddDeliveryPolicies(configuration.GetSection("DeliveryPolicies"));
-            delivery.EventBus.AddRabbitMQ(rabbitMQ =>
-            {
-                rabbitMQ.AddConnection("rabbitmq", configuration.GetSection("RabbitMQ"))
-                        .AddProducer("rabbitmq", "rabbitmq");
-            });
+            rabbitMQ.AddConnection("rabbitmq", configuration.GetSection("RabbitMQ"))
+                    .AddProducer("rabbitmq", "rabbitmq");
         });
+    });
 ```
+
+### Per-processor policies
+
+Use the delegate overload of `AddDeliveryProcessor<TContext>` to configure a policy
+that applies only to that processor, independently of the global policy:
+
+```csharp {linenos=false,linenostart=1}
+delivery.AddDeliveryProcessor<AppDbContext>("rabbitmq", proc =>
+{
+    proc.AddDeliveryPolicies(opts =>
+    {
+        opts.DefaultPolicy = new PolicyConfiguration
+        {
+            BatchSize = 50,
+            Interval = TimeSpan.FromSeconds(10)
+        };
+    });
+});
+```
+
+Processor-scoped policies sit below global key-matched entries in the resolution chain
+but above the global `DefaultPolicy`. See [Delivery Policies](#delivery-policies) for
+the full resolution order.
 
 > **Important**: `AddDelivery()` automatically calls `services.AddEventBus()` in its
 > constructor. Do **not need** to call `services.AddEventBus()` separately when using
@@ -71,38 +94,147 @@ Pass them to `AddDeliveryProcessor<TContext>()` in the order you want them evalu
 |---|---|---|
 | `send-pending` | `OutboxDelivery.State == NotPublished` | Pick up newly staged messages and publish them |
 | `retry-failed` | `State == Failed` AND `NextAttemptOn ≤ UtcNow` | Re-attempt delivery after the backoff delay has elapsed |
-| `recover-timeout` | `State == InProgress` AND stuck for > 15 minutes | Reset timed-out in-progress records to `Failed` so they can be retried |
+| `recover-timeout` | `State == InProgress` AND stuck for > configured timeout | Reset timed-out in-progress records to `Failed` so they can be retried |
 
-All three strategies are recommended for production. Each runs as a keyed, independently
-configurable hosted service intent.
+All three strategies are registered automatically when using `AddDeliveryProcessor<TContext>(publisher)`.
+
+---
+
+## Delivery Policies
+
+A `DeliveryPolicy` controls how a processor polls and retries messages. Every field has
+a built-in default; you only need to specify the fields you want to override.
+
+### Built-in defaults
+
+| Field | Default | Description |
+|---|---|---|
+| `Interval` | 5 seconds | Polling interval between batch processing cycles |
+| `BatchSize` | 10 | Records processed per cycle |
+| `Timeout` | 5 minutes | Age threshold before a stuck `InProgress` record is recovered |
+| `InitialRetryDelay` | 5 seconds | Delay before the first retry attempt |
+| `RetryDelayMultiplier` | 2.0 | Exponential backoff multiplier |
+| `MaxRetryAttempts` | 3 | Number of retry attempts before the record stays in `Failed` |
+
+### Policy resolution order
+
+When `DeliveryHostedService` requests a policy for a given context, `IDeliveryPolicyResolver`
+checks sources in this order and uses the first match:
+
+| Priority | Source | Key / condition |
+|---|---|---|
+| 1 (highest) | Global `Policies` dictionary — exact match | `"{publisher}:{intent}:{contextName}"` |
+| 2 | Global `Policies` dictionary — wildcard context | `"{publisher}:{intent}:*"` |
+| 3 | Global `Policies` dictionary — wildcard intent + context | `"{publisher}:*:*"` |
+| 4 | Global `Policies` dictionary — wildcard publisher + context | `"*:{intent}:*"` |
+| 5 | Processor code policy | `DefaultPolicy` set via `proc.AddDeliveryPolicies(opts => ...)` |
+| 6 | Global `DefaultPolicy` | Set via `delivery.AddDeliveryPolicies(opts => ...)` |
+| 7 (lowest) | Built-in defaults | `DeliveryPolicy.Default` |
+
+Each matched `PolicyConfiguration` inherits any unset fields from the next source
+down the chain (e.g., a processor policy that sets only `BatchSize` inherits `Interval`
+from the global `DefaultPolicy` or the built-in defaults).
+
+### Global policies via configuration
+
+Configure shared policies in `appsettings.json`. In JSON, replace `:` in key names
+with `__` (double underscore):
+
+```json {linenos=false,linenostart=1}
+{
+  "DeliveryPolicies": {
+    "DefaultPolicy": {
+      "Interval": "00:00:05",
+      "BatchSize": 10
+    },
+    "Policies": {
+      "rabbitmq__send-pending__AppDbContext": {
+        "BatchSize": 20,
+        "Interval": "00:00:03"
+      },
+      "rabbitmq__send-pending__*": {
+        "BatchSize": 15
+      },
+      "rabbitmq__*__*": {
+        "Interval": "00:00:10"
+      }
+    }
+  }
+}
+```
+
+Register the section with `AddDeliveryPolicies`:
+
+```csharp {linenos=false,linenostart=1}
+delivery.AddDeliveryPolicies(configuration.GetSection("DeliveryPolicies"));
+```
+
+`AddDeliveryPolicies` is safe to call multiple times — each call merges its entries
+into the shared options.
+
+### Global policies via code
+
+```csharp {linenos=false,linenostart=1}
+delivery
+    .AddDeliveryPolicies(opts =>
+    {
+        opts.DefaultPolicy = new PolicyConfiguration { BatchSize = 20 };
+        opts.Policies["rabbitmq:retry:*"] = new PolicyConfiguration { BatchSize = 5 };
+    })
+    .AddDeliveryPolicies(opts =>
+    {
+        opts.Policies["rabbitmq:send-pending:*"] = new PolicyConfiguration { Interval = TimeSpan.FromSeconds(3) };
+    });
+```
+
+### Per-processor code policy
+
+A processor-scoped policy applies only to that processor type and sits below all global
+key-matched entries. Use it when a specific `TContext` needs a different default without
+polluting the global configuration:
+
+```csharp {linenos=false,linenostart=1}
+delivery.AddDeliveryProcessor<SlowDbContext>("rabbitmq", proc =>
+{
+    proc.AddDeliveryPolicies(opts =>
+        opts.DefaultPolicy = new PolicyConfiguration
+        {
+            BatchSize = 2,
+            Interval = TimeSpan.FromSeconds(30)
+        });
+});
+```
+
+A global key-matched entry (priorities 1–4) always takes precedence over a processor
+code policy. The global `DefaultPolicy` does **not** override the processor code policy.
 
 ---
 
 ## Retry Backoff Schedule
 
-The default policy applies exponential-style delays between retry attempts:
+The default policy uses exponential backoff:
+`delay = InitialRetryDelay × RetryDelayMultiplier^(attempt - 1)`
+
+With built-in defaults (`InitialRetryDelay = 5s`, `RetryDelayMultiplier = 2.0`):
 
 | Attempt | Delay before retry |
 |---|---|
-| 1st retry | 10 seconds |
-| 2nd retry | 5 minutes |
-| 3rd retry | 10 minutes |
-| 4th retry | 30 minutes |
-| 5th+ retry | 1 hour |
+| 1st retry | 5 seconds |
+| 2nd retry | 10 seconds |
+| 3rd retry | 20 seconds |
 
-**Override with a custom policy** via `appsettings.json`:
+Records that exhaust `MaxRetryAttempts` (default 3) remain in `Failed` state for audit.
 
-```json {linenos=false,hl_lines=[3,4,5,6,7],linenostart=1}
-{
-  "DeliveryPolicies": {
-    "RetryDelays": [
-      "00:00:30",
-      "00:05:00",
-      "00:15:00",
-      "01:00:00"
-    ]
-  }
-}
+**Override the retry behaviour** via a processor or global policy:
+
+```csharp {linenos=false,linenostart=1}
+delivery.AddDeliveryPolicies(opts =>
+    opts.DefaultPolicy = new PolicyConfiguration
+    {
+        InitialRetryDelay = TimeSpan.FromSeconds(30),
+        RetryDelayMultiplier = 3.0,
+        MaxRetryAttempts = 5
+    });
 ```
 
 ---
@@ -121,14 +253,13 @@ InProgress
     │       │
     │       └──► InProgress  (retry-failed — when NextAttemptOn ≤ UtcNow)
     │
-    └──► Failed      (recover-timeout — InProgress for > 15 min is reset to Failed)
+    └──► Failed      (recover-timeout — InProgress for > configured timeout is reset to Failed)
 
 DeliveryState values: NotPublished=0, InProgress=1, Published=2, Failed=3, Skipped=4
 ```
 
-Messages that fail permanently (e.g., max retries exhausted and no further `retry-failed`
-triggers) remain in `Failed` state for audit. `Skipped` is used when a publishing policy
-has no matching route.
+Messages that fail permanently remain in `Failed` state for audit. `Skipped` is used
+when a publishing policy has no matching route.
 
 ---
 
