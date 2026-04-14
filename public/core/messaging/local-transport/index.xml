@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Local Transport :: Juice&#39;s documentation</title>
-    <link>http://localhost:1313/core/messaging/local-transport/index.html</link>
+    <link>https://juice-docs.creatorflow.io/core/messaging/local-transport/index.html</link>
     <description>Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.&#xA;Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox + in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox + broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write + immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/core/messaging/local-transport/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://juice-docs.creatorflow.io/core/messaging/local-transport/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
