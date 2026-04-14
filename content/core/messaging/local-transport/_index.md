@@ -121,15 +121,19 @@ services.AddMessaging(builder =>
     // Registers IMessageService<AppDbContext> (implies AddLocalChannel)
     builder.AddMessageService<AppDbContext>();
 
-    // Registers LocalTransportPublisher as keyed ITransportPublisher "local"
-    builder.AddLocalPublisher<AppDbContext>();
+    // Registers LocalTransportPublisher as keyed ITransportPublisher "local".
+    // No type parameter — publisher is context-independent.
+    builder.AddLocalPublisher();
 
     builder.AddIdempotencyRedis(opts =>
     {
         opts.Configuration = configuration.GetConnectionString("Redis");
     });
 
-    // Delivery worker for outbox-backed routes
+    // Delivery worker for outbox-backed routes.
+    // Each AddDeliveryProcessor call is independent — both are required even when
+    // TContext is the same. Omitting the "local" call means outbox rows are written
+    // but never picked up (State stays NotPublished indefinitely).
     builder.AddDelivery(delivery =>
     {
         // "local" publisher key dispatches in-process via LocalTransportPublisher
@@ -144,6 +148,12 @@ services.AddMessaging(builder =>
     });
 });
 ```
+
+> **`INotification` dispatch requires `AddMediatR()`**: when `LocalTransportPublisher`
+> delivers a message that implements `INotification`, it resolves `IMediator` from the
+> DI scope. If `services.AddMediatR()` was not called, delivery will throw
+> `InvalidOperationException` at runtime. `IIntegrationEvent` messages are dispatched
+> via `IntegrationEventDispatcher` and do **not** require `IMediator`.
 
 ### Full-route outside transactions (`DefaultOutboxContext`)
 
