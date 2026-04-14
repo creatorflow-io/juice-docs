@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
@@ -12,7 +12,7 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
     <meta name="twitter:title" content="Local Transport :: Juice&#39;s documentation">
     <meta name="twitter:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
 Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
-    <meta property="og:url" content="http://localhost:1313/core/messaging/local-transport/index.html">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/local-transport/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Local Transport :: Juice&#39;s documentation">
     <meta property="og:description" content="Overview The Local Transport adds two in-process delivery routes and a unified IMessageService publishing interface. Messages can be dispatched to handlers within the same process without requiring a broker, while still supporting configuration-driven routing that can switch between local and broker delivery with no code changes.
@@ -24,32 +24,32 @@ Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-chann
 Route Publisher Key Durable? Latency Use case In-memory channel &#34;local-channel&#34; No Immediate Fast fire-and-forget: cache invalidation, lightweight side-effects Outbox &#43; in-process &#34;local&#34; Yes Near-immediate Reliable cross-aggregate events within the same service Outbox &#43; broker &#34;rabbitmq&#34; Yes Polling interval Cross-service messaging (existing) &#34;local-channel&#34; and &#34;local&#34; are mutually exclusive. If a publishing policy resolves both routes for the same event, &#34;local&#34; takes precedence — it is the durable superset (outbox write &#43; immediate in-process dispatch). The &#34;local-channel&#34; route is ignored to prevent double handler invocation. Use one or the other per event type.">
     <meta itemprop="datePublished" content="2026-03-14T00:00:00+00:00">
     <meta itemprop="dateModified" content="2026-03-14T00:00:00+00:00">
-    <meta itemprop="wordCount" content="2149">
+    <meta itemprop="wordCount" content="2233">
     <title>Local Transport :: Juice&#39;s documentation</title>
     <link href="/core/messaging/local-transport/index.xml" rel="alternate" type="application/rss+xml" title="Local Transport :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1774588047" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1774588047" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774588047" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774588047" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1774588047" rel="stylesheet">
-    <link href="/css/theme.css?1774588047" rel="stylesheet">
-    <link href="/css/format-html.css?1774588047" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1774588047" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1774588047" defer></script>
-    <script src="/js/search.js?1774588047" defer></script>
+    <link href="/images/favicon.png?1776155053" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1776155053" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1776155053" rel="stylesheet">
+    <link href="/css/theme.min.css?1776155053" rel="stylesheet">
+    <link href="/css/format-html.min.css?1776155053" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1776155053" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1776155053" defer></script>
+    <script src="/js/search.min.js?1776155053" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = ``;
+      window.relearn.min = `.min`;
       window.relearn.path='\/core\/messaging\/local-transport\/index.html';
       window.relearn.relBasePath='..\/..\/..';
       window.relearn.relBaseUri='..\/..\/..';
-      window.relearn.absBaseUri='http:\/\/localhost:1313';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1774588047";
+      window.relearn.index_js_url="/searchindex.en.js?1776155053";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -245,8 +245,8 @@ ignored to prevent double handler invocation. Use one or the other per event typ
 <hr>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
-<li><a href="http://localhost:1313/core/messaging/">Internal Messaging Setup</a> for <code>IIdempotencyService</code> and <code>MessagingBuilder</code></li>
-<li><a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> if using the <code>&quot;local&quot;</code> durable route</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/">Internal Messaging Setup</a> for <code>IIdempotencyService</code> and <code>MessagingBuilder</code></li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> if using the <code>&quot;local&quot;</code> durable route</li>
 </ul>
 <hr>
 <h2 id="nuget-packages">NuGet packages</h2>
@@ -352,15 +352,19 @@ to register <code>IMessageService</code>. When all routes resolve to <code>&quot
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Registers IMessageService&lt;AppDbContext&gt; (implies AddLocalChannel)</span>
 </span></span><span style="display:flex;"><span>    builder.AddMessageService&lt;AppDbContext&gt;();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Registers LocalTransportPublisher as keyed ITransportPublisher &#34;local&#34;</span>
-</span></span><span style="display:flex;"><span>    builder.AddLocalPublisher&lt;AppDbContext&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Registers LocalTransportPublisher as keyed ITransportPublisher &#34;local&#34;.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// No type parameter — publisher is context-independent.</span>
+</span></span><span style="display:flex;"><span>    builder.AddLocalPublisher();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    builder.AddIdempotencyRedis(opts =&gt;
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        opts.Configuration = configuration.GetConnectionString(<span style="color:#e6db74">&#34;Redis&#34;</span>);
 </span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Delivery worker for outbox-backed routes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Delivery worker for outbox-backed routes.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Each AddDeliveryProcessor call is independent — both are required even when</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// TContext is the same. Omitting the &#34;local&#34; call means outbox rows are written</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// but never picked up (State stays NotPublished indefinitely).</span>
 </span></span><span style="display:flex;"><span>    builder.AddDelivery(delivery =&gt;
 </span></span><span style="display:flex;"><span>    {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// &#34;local&#34; publisher key dispatches in-process via LocalTransportPublisher</span>
@@ -374,6 +378,12 @@ to register <code>IMessageService</code>. When all routes resolve to <code>&quot
 </span></span><span style="display:flex;"><span>        delivery.AddDeliveryPolicies(configuration.GetSection(<span style="color:#e6db74">&#34;DeliveryPolicies&#34;</span>));
 </span></span><span style="display:flex;"><span>    });
 </span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<blockquote>
+<p><strong><code>INotification</code> dispatch requires <code>AddMediatR()</code></strong>: when <code>LocalTransportPublisher</code>
+delivers a message that implements <code>INotification</code>, it resolves <code>IMediator</code> from the
+DI scope. If <code>services.AddMediatR()</code> was not called, delivery will throw
+<code>InvalidOperationException</code> at runtime. <code>IIntegrationEvent</code> messages are dispatched
+via <code>IntegrationEventDispatcher</code> and do <strong>not</strong> require <code>IMediator</code>.</p></blockquote>
 <h3 id="full-route-outside-transactions-defaultoutboxcontext">Full-route outside transactions (<code>DefaultOutboxContext</code>)</h3>
 <p>Use <code>AddDefaultMessageService()</code> when you need full-route publishing (<code>&quot;local-channel&quot;</code>,
 <code>&quot;local&quot;</code>, and broker routes) from code that runs <strong>outside</strong> a <code>TransactionBehavior</code>
@@ -811,11 +821,11 @@ staying at capacity as the signal that items may be evicted.</p></blockquote>
 <hr>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://localhost:1313/core/messaging/message-context/">MessageContext Setup</a> — middleware, attribute, and test initialization</li>
-<li><a href="http://localhost:1313/core/messaging/">Internal Messaging Setup</a> — MediatR + idempotency standalone</li>
-<li><a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> — transactional outbox staging</li>
-<li><a href="http://localhost:1313/core/messaging/delivery/">Delivery Setup</a> — background delivery worker</li>
-<li><a href="http://localhost:1313/core/messaging/full-setup/">Full Setup</a> — all components combined</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/message-context/">MessageContext Setup</a> — middleware, attribute, and test initialization</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/">Internal Messaging Setup</a> — MediatR + idempotency standalone</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> — transactional outbox staging</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/delivery/">Delivery Setup</a> — background delivery worker</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/full-setup/">Full Setup</a> — all components combined</li>
 </ul>
 
   <footer class="footline">
@@ -906,22 +916,22 @@ staying at capacity as the signal that items may be evicted.</p></blockquote>
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1774588047" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1774588047" defer></script>
-    <script src="/js/js-yaml/js-yaml.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-color.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-dispatch.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-drag.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-ease.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-interpolate.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-selection.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-timer.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-transition.min.js?1774588047" defer></script>
-    <script src="/js/d3/d3-zoom.min.js?1774588047" defer></script>
-    <script src="/js/mermaid/mermaid.min.js?1774588047" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1776155053" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1776155053" defer></script>
+    <script src="/js/js-yaml/js-yaml.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-color.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-dispatch.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-drag.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-ease.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-interpolate.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-selection.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-timer.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-transition.min.js?1776155053" defer></script>
+    <script src="/js/d3/d3-zoom.min.js?1776155053" defer></script>
+    <script src="/js/mermaid/mermaid.min.js?1776155053" defer></script>
     <script>
       window.relearn.themeUseMermaid = JSON.parse("{}");
     </script>
-    <script src="/js/theme.js?1774588047" defer></script>
+    <script src="/js/theme.min.js?1776155053" defer></script>
   </body>
 </html>

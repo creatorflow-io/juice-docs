@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
@@ -12,7 +12,7 @@ When to use You have Outbox Setup configured and need a delivery worker You want
     <meta name="twitter:title" content="Delivery Setup :: Juice&#39;s documentation">
     <meta name="twitter:description" content="Overview The Delivery setup registers DeliveryHostedService, a background worker that reads OutboxDelivery records from the database and forwards them to the broker transport (e.g., RabbitMQ). It operates independently of the outbox staging layer and can run in the same process or in a dedicated worker service.
 When to use You have Outbox Setup configured and need a delivery worker You want to run the delivery worker in a separate process from the outbox-writing service You need retry backoff, stuck-message recovery, and a health check for the delivery backlog Prerequisites Outbox Setup — the OutboxEvent and OutboxDelivery tables must exist and be populated by IOutboxService&lt;TContext&gt;.">
-    <meta property="og:url" content="http://localhost:1313/core/messaging/delivery/index.html">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/messaging/delivery/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
     <meta property="og:title" content="Delivery Setup :: Juice&#39;s documentation">
     <meta property="og:description" content="Overview The Delivery setup registers DeliveryHostedService, a background worker that reads OutboxDelivery records from the database and forwards them to the broker transport (e.g., RabbitMQ). It operates independently of the outbox staging layer and can run in the same process or in a dedicated worker service.
@@ -27,29 +27,29 @@ When to use You have Outbox Setup configured and need a delivery worker You want
     <meta itemprop="wordCount" content="1136">
     <title>Delivery Setup :: Juice&#39;s documentation</title>
     <link href="/core/messaging/delivery/index.xml" rel="alternate" type="application/rss+xml" title="Delivery Setup :: Juice&#39;s documentation">
-    <link href="/images/favicon.png?1774588047" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1774588047" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774588047" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1774588047" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1774588047" rel="stylesheet">
-    <link href="/css/theme.css?1774588047" rel="stylesheet">
-    <link href="/css/format-html.css?1774588047" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1774588047" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1774588047" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1774588047" defer></script>
-    <script src="/js/search.js?1774588047" defer></script>
+    <link href="/images/favicon.png?1776155053" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1776155053" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1776155053" rel="stylesheet">
+    <link href="/css/theme.min.css?1776155053" rel="stylesheet">
+    <link href="/css/format-html.min.css?1776155053" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1776155053" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1776155053" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1776155053" defer></script>
+    <script src="/js/search.min.js?1776155053" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = ``;
+      window.relearn.min = `.min`;
       window.relearn.path='\/core\/messaging\/delivery\/index.html';
       window.relearn.relBasePath='..\/..\/..';
       window.relearn.relBaseUri='..\/..\/..';
-      window.relearn.absBaseUri='http:\/\/localhost:1313';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1774588047";
+      window.relearn.index_js_url="/searchindex.en.js?1776155053";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -181,13 +181,13 @@ the same process or in a dedicated worker service.</p>
 <hr>
 <h2 id="when-to-use">When to use</h2>
 <ul>
-<li>You have <a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> configured and need a delivery worker</li>
+<li>You have <a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> configured and need a delivery worker</li>
 <li>You want to run the delivery worker in a separate process from the outbox-writing service</li>
 <li>You need retry backoff, stuck-message recovery, and a health check for the delivery backlog</li>
 </ul>
 <hr>
 <h2 id="prerequisites">Prerequisites</h2>
-<p><a href="http://localhost:1313/core/messaging/outbox/">Outbox Setup</a> — the <code>OutboxEvent</code> and
+<p><a href="https://juice-docs.creatorflow.io/core/messaging/outbox/">Outbox Setup</a> — the <code>OutboxEvent</code> and
 <code>OutboxDelivery</code> tables must exist and be populated by <code>IOutboxService&lt;TContext&gt;</code>.</p>
 <hr>
 <h2 id="nuget-packages">NuGet packages</h2>
@@ -516,9 +516,9 @@ check — there are no <code>InProgress</code> records to monitor in a process t
 <hr>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="http://localhost:1313/core/messaging/local-transport/">Local Transport</a> — in-process dispatch via <code>&quot;local-channel&quot;</code> and <code>&quot;local&quot;</code> routes</li>
-<li><a href="http://localhost:1313/core/messaging/consumption/">Consumption Setup</a> — add a RabbitMQ consumer to the same service</li>
-<li><a href="http://localhost:1313/core/messaging/full-setup/">Full Setup</a> — combine outbox + delivery + consumption in one registration</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/local-transport/">Local Transport</a> — in-process dispatch via <code>&quot;local-channel&quot;</code> and <code>&quot;local&quot;</code> routes</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/consumption/">Consumption Setup</a> — add a RabbitMQ consumer to the same service</li>
+<li><a href="https://juice-docs.creatorflow.io/core/messaging/full-setup/">Full Setup</a> — combine outbox + delivery + consumption in one registration</li>
 </ul>
 
   <footer class="footline">
@@ -609,8 +609,8 @@ check — there are no <code>InProgress</code> records to monitor in a process t
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1774588047" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1774588047" defer></script>
-    <script src="/js/theme.js?1774588047" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1776155053" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1776155053" defer></script>
+    <script src="/js/theme.min.js?1776155053" defer></script>
   </body>
 </html>
