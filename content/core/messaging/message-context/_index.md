@@ -130,7 +130,8 @@ Register the middleware in your ASP.NET Core pipeline to initialize `MessageCont
 ### Registration
 
 ```csharp {linenos=false,hl_lines=[1],linenostart=1}
-app.UseMiddleware<MessageContextMiddleware>("my-service");
+app.UseMessageContext("my-service");
+// equivalent to: app.UseMiddleware<MessageContextMiddleware>("my-service");
 ```
 
 The `source` parameter identifies this service in distributed traces. Choose a meaningful
@@ -218,7 +219,7 @@ flowchart TD
     Q2{"Same Source for<br/>all endpoints?"}
     Q3{"Middleware already<br/>registered?"}
 
-    R1["Use <b>MessageContextMiddleware</b><br/><small>app.UseMiddleware&lt;...&gt;(source)</small>"]
+    R1["Use <b>MessageContextMiddleware</b><br/><small>app.UseMessageContext(source)</small>"]
     R2["Use <b>[MessageContext]</b> attribute<br/><small>per controller or action</small>"]
     R3["Attribute safely <b>skips</b><br/><small>IsInitialized = true → no-op</small>"]
 

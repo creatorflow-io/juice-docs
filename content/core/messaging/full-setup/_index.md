@@ -90,7 +90,7 @@ services.AddMessaging(builder =>
 
     // 4. Local transport — IMessageService<TContext> + in-process publishers
     builder.AddMessageService<AppDbContext>();    // registers IMessageService<AppDbContext> + local channel
-    builder.AddLocalPublisher<AppDbContext>();    // registers LocalTransportPublisher keyed "local"
+    builder.AddLocalPublisher();                  // registers LocalTransportPublisher keyed "local"
 
     // 5. Delivery (creates EventBusBuilder internally — do not call AddEventBus() separately)
     builder.AddDelivery(delivery =>
@@ -115,9 +115,18 @@ services.AddMessaging(builder =>
             // 6. RabbitMQ inside EventBus
             rabbitMQ.AddConnection("rabbitmq", configuration.GetSection("RabbitMQ"))
                     .AddProducer("rabbitmq", "rabbitmq")
-                    .AddConsumer("orders", "orders-queue", "rabbitmq");
+                    .AddConsumer("orders", "orders-queue", "rabbitmq")
+                    // AddConsumer declares nothing: the exchange, queue and binding come from the topology,
+                    // declared at startup by InitRabbitMQInfrastructureAsync() (see below).
+                    .AddInfrastructureTopology("rabbitmq", topology => topology
+                        .DeclareExchange("orders.integration", "topic", true)
+                        .DeclareQueue("orders-queue")
+                        .BindQueue("orders-queue", "orders.integration", "orders.#"));
         });
 });
+
+// After Build(): declare the topology before the consumers start.
+// await app.InitRabbitMQInfrastructureAsync();
 
 services.AddHealthChecks()
     .AddRabbitMQHealthCheck("rabbitmq", tags: new[] { "ready" })

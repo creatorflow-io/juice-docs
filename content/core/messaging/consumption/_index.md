@@ -60,10 +60,41 @@ services.AddMessaging()
                     .AddConsumer("orders", "orders-queue", "rabbitmq", consumer =>
                     {
                         consumer.Subscribe<OrderCreatedEvent, OrderCreatedEventHandler>(); // per-consumer
-                    });
+                    })
+                    // AddConsumer declares nothing on the broker: declare the exchange, queue and binding here.
+                    .AddInfrastructureTopology("rabbitmq", topology => topology
+                        .DeclareExchange("orders.integration", "topic", true)
+                        .DeclareQueue("orders-queue")
+                        .BindQueue("orders-queue", "orders.integration", "orders.#"));
         });
 
+// After Build(), before the host starts consuming:
+await app.InitRabbitMQInfrastructureAsync();
+
 ```
+
+`AddConsumer(key, queueName, connectionName)` only starts a consumer on an existing queue. Without
+`AddInfrastructureTopology(...)` and `InitRabbitMQInfrastructureAsync()`, the queue, exchange and binding are never
+created and the consumer receives nothing.
+
+The connection section binds to `RabbitMQConnectionOptions`. The host goes in `Connection` (there is no `HostName`),
+and `Port` defaults to `0`, so set it explicitly:
+
+```json
+"RabbitMQ": {
+  "Connection": "rabbitmq.local",
+  "Port": 5672,
+  "UserName": "guest",
+  "Password": "guest",
+  "VirtualHost": "/"
+}
+```
+
+A local subscription made without a route is keyed by the event type name, and local dispatch matches both the event's
+`EventName` and its type name (Juice 10.5). So `Subscribe<TEvent, THandler>()` receives every `TEvent`, even one that
+overrides `EventName` with a per-instance routing key, while `Subscribe<TEvent, THandler>("orders.placed")` (or a
+`*`/`#` pattern where topic matching is enabled) receives only the events whose `EventName` matches. A handler subscribed
+both ways runs once.
 
 ---
 
