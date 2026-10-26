@@ -1,10 +1,31 @@
 ---
-title: "What's New in Audit 7.0.3"
+title: "What's New in Audit 10.3.0"
 menuTitle: "What's new?"
-date: 2023-10-20T08:21:52+07:00
+date: 2026-10-26T09:00:00+07:00
 draft: false
 weight: 1
 ---
+
+### Audit 10.3.0
+
+#### Multi-tenant audit records
+*AccessLog* and *DataAudit* now carry a *TenantId*, and *AuditDbContext* inherits Juice's *MultiTenantDbContext*. Both entities are configured as `IsMultiTenant(SharingType.Global)`:
+- A **tenant** reads and writes only its own audit records.
+- The **root** context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants.
+- Records saved without a tenant are stamped with the current tenant (`TenantNotSetMode.Overwrite`); changing another tenant's records throws (`TenantMismatchMode.Throw`).
+
+How the tenant is captured:
+- *AuditMiddleware* reads it from *ITenantAccessor* when the request starts, and again after the pipeline if it was resolved later.
+- *DataAudit* entries take it from *DataEvent.TenantId*, falling back to the request's tenant.
+- The gRPC contract has new optional `tenantId` fields on *AccessLogMessage* and *DataAuditMessage*, so a central audit server stores the tenant reported by each client. Older clients keep working; their records have no tenant.
+
+Upgrade notes:
+- Apply the new **AddTenantId** migration (SqlServer and PostgreSQL). It adds a nullable *TenantId* column and a *(TenantId, DateTime)* index to both tables.
+- *Juice.Audit.EF* now depends on *Juice.EF.MultiTenant* (Finbuckle).
+- Code that queries *AuditDbContext* while a tenant is resolved now gets only that tenant's records.
+- The *DataAudit* constructor has a new optional *tenantId* parameter: rebuild code compiled against an earlier version.
+
+### Audit 7.0.3
 
 #### Quick access
 - [Fixed file upload issue](#fixed-file-upload-issue)

@@ -18,6 +18,7 @@ version: latest
     + [Usage](#usage)
     + [Configuration](#configuration)
     + [Programming API](#programming-api)
+- [Multi-tenant](#multi-tenant)
 
 
 ### Data audit
@@ -500,6 +501,14 @@ If the current audit information is not enough, you can add more information to 
     // OR
     auditContextAccessor.AuditContext?.AccessRecord?.SetMetadataJson(jsonString);
 ```
+
+### Multi-tenant
+Audit records are tenant-aware from version 10.3.0. No extra registration is needed: if your app registers Juice multi-tenant services (*ITenantAccessor*), the current tenant is stored on every *AccessLog* and *DataAudit*.
+
+- Put `UseAudit()` after `UseMultiTenant()` so the tenant is known when the audit context is created. If the tenant is resolved later in the pipeline, the middleware picks it up after the request.
+- *AuditDbContext* is a *MultiTenantDbContext* with entities configured as *SharingType.Global*: a tenant only sees its own records, while the root context (no tenant) sees all of them.
+- With the gRPC audit service, the client sends the tenant in the message; the audit server runs without a tenant and stores each record with the tenant it received.
+- Apps that are not multi-tenant are unaffected: records are stored without a tenant.
 
 The library can be accessed via Nuget:
 - [Juice.Audit](https://www.nuget.org/packages/Juice.Audit)
