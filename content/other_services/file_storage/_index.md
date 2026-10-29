@@ -28,7 +28,7 @@ It is a proxy that contains backend storage endpoints so we can access storage u
 
 3. **IStorageProvider**
 
-It provides methods to access the endpoint depending on its protocol. By default, we have implemented FTP, Samba and LocalDisk access providers.
+It provides methods to access the endpoint depending on its protocol. By default, we have implemented FTP, Samba and LocalDisk access providers. S3 and Azure Blob providers are available for [direct client uploads](#object-storage-s3-azure-blob).
 
 4. **IUploadManager**
 
@@ -164,9 +164,43 @@ builder.Services.AddAuthorization(options =>
 });
 ```
 
+#### Object storage (S3, Azure Blob)
+
+*Juice.Storage.S3* (Amazon S3, MinIO and other S3 compatible services) and *Juice.Storage.Azure* (Azure Blob Storage, Azurite) are designed for **direct client uploads**: the client sends the file to the storage itself with a signed url, instead of streaming it through your web host.
+
+**Do not serve these endpoints through *StorageMiddleware* / *IUploadManager*.** That pipeline writes files in sections at increasing offsets, and objects can not be appended: the first section is written, the next one fails with *NotSupportedException* and a warning that points back to this guide. Server side writes are limited to whole files from offset 0.
+
+Register the providers:
+
+```cs
+builder.Services.AddStorage(storage => storage
+    .AddS3Provider()          // Protocol.S3: https://s3.<region>.amazonaws.com/<bucket>/<prefix>, s3://<bucket>?region=..., http://<host>:<port>/<bucket>
+    .AddAzureBlobProvider()); // Protocol.AzureBlob: https://<account>.blob.core.windows.net/<container>/<prefix>
+```
+
+Then implement the upload flow in your own API. A direct upload bypasses *IUploadManager*, so your API takes over its responsibilities:
+
+1. **Before issuing the url**: authorize the caller, check the quota and generate the file name.
+2. **Issue the url** with *IStorageUrlSigner* (implemented by both providers):
+
+```cs
+if (provider is IStorageUrlSigner signer)
+{
+    var uploadUrl = await signer.GetUploadUrlAsync(fileName, TimeSpan.FromMinutes(15), contentType, token);
+    // return uploadUrl to the client
+}
+```
+
+3. **The client uploads** with a single HTTP `PUT` of the whole file. For S3, send the same `Content-Type` that was signed. For Azure, also send `x-ms-blob-type: BlockBlob`.
+4. **When the client reports completion**: check the file with *ExistsAsync* / *FileSizeAsync*, then record it and publish your events.
+
+Downloads work the same way with *GetDownloadUrlAsync*. On Azure, signed urls need the storage account key as the endpoint credential.
+
 The sample source code is available on [github](https://github.com/creatorflow-io/Juice/tree/master/services/storage/src/Juice.Storage.App).
 
 The library can be accessed via Nuget and npmjs:
 - [Juice.Storage](https://www.nuget.org/packages/Juice.Storage)
 - [Juice.Storage.Local](https://www.nuget.org/packages/Juice.Storage.Local)
+- [Juice.Storage.S3](https://www.nuget.org/packages/Juice.Storage.S3)
+- [Juice.Storage.Azure](https://www.nuget.org/packages/Juice.Storage.Azure)
 - [@juice-js/upload](https://www.npmjs.com/package/@juice-js/upload)
