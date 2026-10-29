@@ -11,6 +11,8 @@ draft: false
 source identity across async call chains. Every message produced by the Juice messaging
 pipeline stamps the current `MessageContext` values into outbox headers, enabling distributed
 tracing and idempotency across service boundaries.
+For OpenTelemetry traces and metrics, which carry these ids as tags next to the W3C trace context, see
+[Observability]({{< ref "core/observability/_index.md" >}}).
 
 **`MessageContext` must be initialized at every entry point** — HTTP requests, background
 consumers, test methods, and hosted services. If not initialized, any code that reads
