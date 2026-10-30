@@ -68,6 +68,7 @@ builder.Services.AddOpenTelemetry()
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddJuiceInstrumentation()        // juice.* metrics
+        .AddJuiceDeliveryMetrics()        // optional: delivery.metrics, infra.rabbitmq.metrics, infra.nats.metrics
         .AddOtlpExporter());
 
 // mediator spans and metrics
@@ -94,7 +95,9 @@ Every service in the chain configures the same way. The consumer side needs no e
 consumers, the `local` and `local-channel` transports read `traceparent` from the message and continue the trace.
 
 `AddJuiceInstrumentation()` only adds the `"Juice"` source and meter (`JuiceActivitySource.Name`, `JuiceMeter.Name`),
-so a host can also call `AddSource("Juice")` / `AddMeter("Juice")` directly without the package.
+so a host can also call `AddSource("Juice")` / `AddMeter("Juice")` directly without the package. It does **not**
+collect the [delivery and broker meters](#delivery-and-broker-meters); add `AddJuiceDeliveryMetrics()` (10.8) for those,
+or `AddMeter("delivery.metrics", "infra.rabbitmq.metrics", "infra.nats.metrics")` without the package.
 
 ### Options
 
@@ -150,8 +153,29 @@ All instruments are on the `Juice` meter. Dimensions are bounded: message, tenan
 | `juice.outbox.published` | Counter | `{message}` | `juice.publisher`, `juice.message_type` |
 | `juice.outbox.errors` | Counter | `{error}` | `juice.publisher`, `juice.message_type`, `error.type` |
 
-The earlier meters (`delivery.metrics`, `infra.rabbitmq.metrics`, `infra.nats.metrics`) are still recorded for
-existing dashboards.
+### Delivery and broker meters
+
+The earlier meters are still recorded for existing dashboards. They are collected only when the host adds them:
+`AddJuiceDeliveryMetrics()` (10.8) adds all three. A meter whose package is not installed records nothing.
+
+| Meter | Instrument | Type | Unit | Dimensions | Recorded by |
+|---|---|---|---|---|---|
+| `delivery.metrics` | `delivery_attempt_total` | Counter | | `publisher` | outbox delivery, `local`, `local-channel` |
+| `delivery.metrics` | `delivery_success_total` | Counter | | `publisher` | outbox delivery, `local`, `local-channel` |
+| `delivery.metrics` | `delivery_failure_total` | Counter | | `publisher`, `error_type` | outbox delivery, `local`, `local-channel` |
+| `delivery.metrics` | `delivery_latency_ms` | Histogram | `ms` | `publisher` | outbox delivery, `local`, `local-channel` |
+| `delivery.metrics` | `channel_dropped_total` | Counter | | `publisher`, `message_type` | `local-channel` (channel full) |
+| `delivery.metrics` | `local_delivery_phase1_fallback_total` | Counter | | `publisher` | `local` |
+| `delivery.metrics` | `channel_queue_depth` | Gauge | | | `local-channel` |
+| `delivery.metrics` | `identified_commands_received` / `_duplicated` / `_processed` / `_failed` | Counter | | `command` | idempotency behavior |
+| `delivery.metrics` | `identified_commands_latency_ms` | Histogram | `ms` | `command` | idempotency behavior |
+| `infra.rabbitmq.metrics` | `rabbitmq_channel_error_total` | Counter | | `channel` | RabbitMQ |
+| `infra.nats.metrics` | `jetstream_publish_error_total` | Counter | | `destination` (before 10.8: `subject`) | NATS JetStream producer |
+| `infra.nats.metrics` | `jetstream_consume_retry_total` | Counter | | `destination` | NATS JetStream consumer |
+| `infra.nats.metrics` | `jetstream_consume_parked_total` | Counter | | `destination` | NATS JetStream consumer |
+
+Outbox and local delivery record the same four `delivery_*` instruments (`Juice.Messaging.Diagnostics.DeliveryMetrics`),
+so they export as one series per instrument, told apart by `publisher`.
 
 ---
 
