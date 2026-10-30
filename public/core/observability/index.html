@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.144.0">
+    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
+    <meta name="description" content="Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.
+One request produces one connected trace, across processes:
+TraceId = 4bf92f3577b34da6a3ce929d0e0e4736POST /orders (ASP.NET Core server span, tagged with the Juice context)└─ mediator PlaceOrder Juice.OpenTelemetry└─ create OrderPlaced outbox save: the context is stored with the message├─ deliver rabbitmq one per delivery attempt, possibly hours later│ └─ send orders RabbitMQ / NATS producer└─ process orders-queue consumer, in another service└─ handle OrderPlacedHandlerThe trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Observability (OpenTelemetry) :: Juice&#39;s documentation">
+    <meta name="twitter:description" content="Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.
+One request produces one connected trace, across processes:
+TraceId = 4bf92f3577b34da6a3ce929d0e0e4736POST /orders (ASP.NET Core server span, tagged with the Juice context)└─ mediator PlaceOrder Juice.OpenTelemetry└─ create OrderPlaced outbox save: the context is stored with the message├─ deliver rabbitmq one per delivery attempt, possibly hours later│ └─ send orders RabbitMQ / NATS producer└─ process orders-queue consumer, in another service└─ handle OrderPlacedHandlerThe trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/observability/index.html">
+    <meta property="og:site_name" content="Juice&#39;s documentation">
+    <meta property="og:title" content="Observability (OpenTelemetry) :: Juice&#39;s documentation">
+    <meta property="og:description" content="Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.
+One request produces one connected trace, across processes:
+TraceId = 4bf92f3577b34da6a3ce929d0e0e4736POST /orders (ASP.NET Core server span, tagged with the Juice context)└─ mediator PlaceOrder Juice.OpenTelemetry└─ create OrderPlaced outbox save: the context is stored with the message├─ deliver rabbitmq one per delivery attempt, possibly hours later│ └─ send orders RabbitMQ / NATS producer└─ process orders-queue consumer, in another service└─ handle OrderPlacedHandlerThe trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.">
+    <meta property="og:locale" content="en_us">
+    <meta property="og:type" content="website">
+    <meta itemprop="name" content="Observability (OpenTelemetry) :: Juice&#39;s documentation">
+    <meta itemprop="description" content="Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.
+One request produces one connected trace, across processes:
+TraceId = 4bf92f3577b34da6a3ce929d0e0e4736POST /orders (ASP.NET Core server span, tagged with the Juice context)└─ mediator PlaceOrder Juice.OpenTelemetry└─ create OrderPlaced outbox save: the context is stored with the message├─ deliver rabbitmq one per delivery attempt, possibly hours later│ └─ send orders RabbitMQ / NATS producer└─ process orders-queue consumer, in another service└─ handle OrderPlacedHandlerThe trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.">
+    <meta itemprop="datePublished" content="2026-10-29T00:00:00+00:00">
+    <meta itemprop="dateModified" content="2026-10-29T00:00:00+00:00">
+    <meta itemprop="wordCount" content="1184">
+    <title>Observability (OpenTelemetry) :: Juice&#39;s documentation</title>
+    <link href="/core/observability/index.xml" rel="alternate" type="application/rss+xml" title="Observability (OpenTelemetry) :: Juice&#39;s documentation">
+    <link href="/images/favicon.png?1793346320" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1793346320" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1793346320" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1793346320" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1793346320" rel="stylesheet">
+    <link href="/css/theme.min.css?1793346320" rel="stylesheet">
+    <link href="/css/format-html.min.css?1793346320" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1793346320" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1793346320" defer></script>
+    <script src="/js/search.min.js?1793346320" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      // configuration
+      window.relearn.min = `.min`;
+      window.relearn.path='\/core\/observability\/index.html';
+      window.relearn.relBasePath='..\/..';
+      window.relearn.relBaseUri='..\/..';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
+      window.relearn.contentLangs=['en'];
+      window.relearn.index_js_url="/searchindex.en.js?1793346320";
+      window.relearn.disableAnchorCopy=false;
+      window.relearn.disableAnchorScrolling=false;
+      window.relearn.disableInlineCopyToClipboard=false;
+      window.relearn.enableBlockCodeWrap=true;
+      // legal
+      window.relearn.getItem = (s,n) => {return s.getItem(n)};
+      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
+      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
+      // variant stuff
+      window.relearn.themevariants = [ 'mine' ];
+      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.changeVariant = function(variant) {
+        var oldVariant = document.documentElement.dataset.rThemeVariant;
+        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        document.documentElement.dataset.rThemeVariant = variant;
+        if (oldVariant != variant) {
+          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
+        }
+      }
+      window.relearn.markVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
+      }
+      window.relearn.initVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
+        if( variant == window.relearn.customvariantname ){
+        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+          variant = window.relearn.themevariants[0];
+          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        }
+        document.documentElement.dataset.rThemeVariant = variant;
+      }
+      window.relearn.initVariant();
+      window.relearn.markVariant();
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html" data-url="/core/observability/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#setup">Setup</a>
+      <ul>
+        <li><a href="#options">Options</a></li>
+      </ul>
+    </li>
+    <li><a href="#spans">Spans</a></li>
+    <li><a href="#metrics">Metrics</a>
+      <ul>
+        <li><a href="#delivery-and-broker-meters">Delivery and broker meters</a></li>
+      </ul>
+    </li>
+    <li><a href="#logs">Logs</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#notes">Notes</a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Observability (OpenTelemetry)</span><meta itemprop="position" content="3"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/observability/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/integration/v8.5.0/index.html" title="Integration service (v8.5.0) (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/xunit/index.html" title="xUnit (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable core" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="observability-opentelemetry">Observability (OpenTelemetry)</h1>
+
+<h2 id="overview">Overview</h2>
+<p>Juice records <strong>distributed traces</strong> and <strong>framework metrics</strong> with the standard .NET APIs
+(<code>System.Diagnostics.ActivitySource</code> and <code>Meter</code>). The core packages do not reference OpenTelemetry:
+the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor&hellip;)
+and how to sample.</p>
+<p>One request produces one connected trace, across processes:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>TraceId = 4bf92f3577b34da6a3ce929d0e0e4736
+
+POST /orders                         (ASP.NET Core server span, tagged with the Juice context)
+ └─ mediator PlaceOrder              Juice.OpenTelemetry
+     └─ create OrderPlaced           outbox save: the context is stored with the message
+         ├─ deliver rabbitmq         one per delivery attempt, possibly hours later
+         │   └─ send orders          RabbitMQ / NATS producer
+         └─ process orders-queue     consumer, in another service
+             └─ handle OrderPlacedHandler</code></pre></div>
+<p>The trace context travels in the standard W3C <code>traceparent</code> / <code>tracestate</code> message headers.
+It is separate from the <a href="https://juice-docs.creatorflow.io/core/messaging/message-context/">MessageContext</a>:
+<code>x-correlation-id</code> and <code>x-causation-id</code> keep their meaning and are copied onto the spans as tags.</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Trace (<code>Activity</code>)</td>
+          <td>Distributed execution flow: what ran where, and how long</td>
+      </tr>
+      <tr>
+          <td>Metrics (<code>Meter</code>)</td>
+          <td>Aggregated framework measurements</td>
+      </tr>
+      <tr>
+          <td><code>MessageContext</code></td>
+          <td>Juice business correlation (correlation, causation, execution, source)</td>
+      </tr>
+      <tr>
+          <td><code>ITimeTracker</code></td>
+          <td>Detailed local timing inside one execution</td>
+      </tr>
+      <tr>
+          <td>Audit</td>
+          <td>Business and compliance history</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="setup">Setup</h2>
+<p>Install the integration package (net8.0 and later) next to the OpenTelemetry SDK and the exporter you use:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>dotnet add package Juice.OpenTelemetry
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol</code></pre></div>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// Program.cs</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> OpenTelemetry.Metrics;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> OpenTelemetry.Resources;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> OpenTelemetry.Trace;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> builder = WebApplication.CreateBuilder(args);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>builder.Services.AddOpenTelemetry()
+</span></span><span style="display:flex;"><span>    .ConfigureResource(resource =&gt; resource.AddService(<span style="color:#e6db74">&#34;orders-api&#34;</span>))
+</span></span><span style="display:flex;"><span>    .WithTracing(tracing =&gt; tracing
+</span></span><span style="display:flex;"><span>        .AddAspNetCoreInstrumentation()   <span style="color:#75715e">// the HTTP server span</span>
+</span></span><span style="display:flex;"><span>        .AddJuiceInstrumentation()        <span style="color:#75715e">// mediator, outbox, messaging spans</span>
+</span></span><span style="display:flex;"><span>        .AddOtlpExporter())
+</span></span><span style="display:flex;"><span>    .WithMetrics(metrics =&gt; metrics
+</span></span><span style="display:flex;"><span>        .AddAspNetCoreInstrumentation()
+</span></span><span style="display:flex;"><span>        .AddJuiceInstrumentation()        <span style="color:#75715e">// juice.* metrics</span>
+</span></span><span style="display:flex;"><span>        .AddJuiceDeliveryMetrics()        <span style="color:#75715e">// optional: delivery.metrics, infra.rabbitmq.metrics, infra.nats.metrics</span>
+</span></span><span style="display:flex;"><span>        .AddOtlpExporter())
+</span></span><span style="display:flex;"><span>    .WithLogging(logging =&gt; logging
+</span></span><span style="display:flex;"><span>        .AddJuiceInstrumentation()        <span style="color:#75715e">// Juice context, payload redaction (10.8); before the exporter</span>
+</span></span><span style="display:flex;"><span>        .AddOtlpExporter());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// mediator spans and metrics</span>
+</span></span><span style="display:flex;"><span>builder.Services.AddJuiceOpenTelemetry();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>builder.Services.AddMediatR(m =&gt; m.RegisterServicesFromAssemblyContaining&lt;Program&gt;());
+</span></span><span style="display:flex;"><span>builder.Services.AddMessaging(<span style="color:#75715e">/* transports, outbox... */</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> app = builder.Build();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// initializes MessageContext and tags the HTTP server span with it</span>
+</span></span><span style="display:flex;"><span>app.UseMessageContext(<span style="color:#e6db74">&#34;orders-api&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.MapPost(<span style="color:#e6db74">&#34;/orders&#34;</span>, <span style="color:#66d9ef">async</span> (PlaceOrder command, IMediator mediator) =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> mediator.Send(command);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Results.Accepted();
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app.Run();</span></span></code></pre></div>
+<p>Every service in the chain configures the same way. The consumer side needs no extra code: the RabbitMQ and NATS
+consumers, the <code>local</code> and <code>local-channel</code> transports read <code>traceparent</code> from the message and continue the trace.</p>
+<p><code>AddJuiceInstrumentation()</code> only adds the <code>&quot;Juice&quot;</code> source and meter (<code>JuiceActivitySource.Name</code>, <code>JuiceMeter.Name</code>),
+so a host can also call <code>AddSource(&quot;Juice&quot;)</code> / <code>AddMeter(&quot;Juice&quot;)</code> directly without the package. It does <strong>not</strong>
+collect the <a href="/core/observability/index.html#delivery-and-broker-meters">delivery and broker meters</a>; add <code>AddJuiceDeliveryMetrics()</code> (10.8) for those,
+or <code>AddMeter(&quot;delivery.metrics&quot;, &quot;infra.rabbitmq.metrics&quot;, &quot;infra.nats.metrics&quot;)</code> without the package.</p>
+<h3 id="options">Options</h3>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>builder.Services.AddJuiceOpenTelemetry(options =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    options.EnableMediatorInstrumentation = <span style="color:#66d9ef">true</span>;      <span style="color:#75715e">// default</span>
+</span></span><span style="display:flex;"><span>    options.EnableNotificationInstrumentation = <span style="color:#66d9ef">true</span>;  <span style="color:#75715e">// IMediator.Publish, default</span>
+</span></span><span style="display:flex;"><span>    options.Filter = type =&gt; type != <span style="color:#66d9ef">typeof</span>(GetDashboardQuery); <span style="color:#75715e">// skip a chatty request</span>
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div>
+<p>Exporter endpoints and sampling are <strong>not</strong> Juice options: configure them on the OpenTelemetry SDK
+(<code>AlwaysOn</code>, <code>ParentBased</code>, <code>TraceIdRatioBased</code>, tail sampling in a collector&hellip;).</p>
+<hr>
+<h2 id="spans">Spans</h2>
+<p>All spans are on the <code>Juice</code> source. Payloads, request values and secrets are never recorded.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Span</th>
+          <th>Kind</th>
+          <th>Where</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>mediator {RequestType}</code></td>
+          <td>Internal</td>
+          <td>every mediator request or notification (<code>Juice.OpenTelemetry</code>); outermost behavior, covers idempotency and the transaction</td>
+      </tr>
+      <tr>
+          <td><code>create {MessageType}</code></td>
+          <td>Producer</td>
+          <td>the outbox saves a message; its context is stored in the outbox row</td>
+      </tr>
+      <tr>
+          <td><code>deliver {publisherKey}</code></td>
+          <td>Internal</td>
+          <td>one outbox delivery attempt (retry count, outcome)</td>
+      </tr>
+      <tr>
+          <td><code>send {exchange | subject | MessageType}</code></td>
+          <td>Producer</td>
+          <td>RabbitMQ / NATS producer, <code>local-channel</code> enqueue</td>
+      </tr>
+      <tr>
+          <td><code>process {queue | destination | MessageType}</code></td>
+          <td>Consumer</td>
+          <td>RabbitMQ / NATS consumer, <code>local</code>, <code>local-channel</code> dispatch (dispatch result)</td>
+      </tr>
+      <tr>
+          <td><code>handle {Handler}</code></td>
+          <td>Internal</td>
+          <td>one integration event handler</td>
+      </tr>
+  </tbody>
+</table>
+<p>Juice does not create HTTP or database spans: use the ASP.NET Core and EF Core / SqlClient / Npgsql instrumentations.
+<code>UseMessageContext</code> (and <code>[MessageContext]</code>) tag the ASP.NET Core server span instead.</p>
+<p>Common tags: <code>juice.correlation_id</code>, <code>juice.causation_id</code>, <code>juice.execution_id</code>, <code>juice.source</code>, <code>juice.message_type</code>,
+<code>messaging.system</code>, <code>messaging.destination.name</code>, <code>messaging.message.id</code>, <code>juice.dispatch.result</code>. A failure sets the
+span status to <code>Error</code> with an <code>exception</code> event.</p>
+<hr>
+<h2 id="metrics">Metrics</h2>
+<p>All instruments are on the <code>Juice</code> meter. Dimensions are bounded: message, tenant and correlation ids are never used.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Instrument</th>
+          <th>Type</th>
+          <th>Unit</th>
+          <th>Dimensions</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>juice.mediator.requests</code></td>
+          <td>Counter</td>
+          <td><code>{request}</code></td>
+          <td><code>juice.operation</code>, <code>juice.mediator.kind</code>, <code>error.type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.mediator.errors</code></td>
+          <td>Counter</td>
+          <td><code>{error}</code></td>
+          <td><code>juice.operation</code>, <code>juice.mediator.kind</code>, <code>error.type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.mediator.request.duration</code></td>
+          <td>Histogram</td>
+          <td><code>s</code></td>
+          <td><code>juice.operation</code>, <code>juice.mediator.kind</code>, <code>error.type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.messaging.published</code></td>
+          <td>Counter</td>
+          <td><code>{message}</code></td>
+          <td><code>messaging.system</code>, <code>messaging.destination.name</code>, <code>juice.message_type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.messaging.consumed</code></td>
+          <td>Counter</td>
+          <td><code>{message}</code></td>
+          <td><code>messaging.system</code>, <code>messaging.consumer.group.name</code>, <code>juice.message_type</code>, <code>juice.dispatch.result</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.messaging.process.duration</code></td>
+          <td>Histogram</td>
+          <td><code>s</code></td>
+          <td>as <code>consumed</code> (or <code>error.type</code>)</td>
+      </tr>
+      <tr>
+          <td><code>juice.messaging.errors</code></td>
+          <td>Counter</td>
+          <td><code>{error}</code></td>
+          <td><code>messaging.system</code>, <code>messaging.operation.name</code>, <code>juice.message_type</code>, <code>error.type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.outbox.published</code></td>
+          <td>Counter</td>
+          <td><code>{message}</code></td>
+          <td><code>juice.publisher</code>, <code>juice.message_type</code></td>
+      </tr>
+      <tr>
+          <td><code>juice.outbox.errors</code></td>
+          <td>Counter</td>
+          <td><code>{error}</code></td>
+          <td><code>juice.publisher</code>, <code>juice.message_type</code>, <code>error.type</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="delivery-and-broker-meters">Delivery and broker meters</h3>
+<p>The earlier meters are still recorded for existing dashboards. They are collected only when the host adds them:
+<code>AddJuiceDeliveryMetrics()</code> (10.8) adds all three. A meter whose package is not installed records nothing.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Meter</th>
+          <th>Instrument</th>
+          <th>Type</th>
+          <th>Unit</th>
+          <th>Dimensions</th>
+          <th>Recorded by</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>delivery_attempt_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>publisher</code></td>
+          <td>outbox delivery, <code>local</code>, <code>local-channel</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>delivery_success_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>publisher</code></td>
+          <td>outbox delivery, <code>local</code>, <code>local-channel</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>delivery_failure_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>publisher</code>, <code>error_type</code></td>
+          <td>outbox delivery, <code>local</code>, <code>local-channel</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>delivery_latency_ms</code></td>
+          <td>Histogram</td>
+          <td><code>ms</code></td>
+          <td><code>publisher</code></td>
+          <td>outbox delivery, <code>local</code>, <code>local-channel</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>channel_dropped_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>publisher</code>, <code>message_type</code></td>
+          <td><code>local-channel</code> (channel full)</td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>local_delivery_phase1_fallback_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>publisher</code></td>
+          <td><code>local</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>channel_queue_depth</code></td>
+          <td>Gauge</td>
+          <td></td>
+          <td></td>
+          <td><code>local-channel</code></td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>identified_commands_received</code> / <code>_duplicated</code> / <code>_processed</code> / <code>_failed</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>command</code></td>
+          <td>idempotency behavior</td>
+      </tr>
+      <tr>
+          <td><code>delivery.metrics</code></td>
+          <td><code>identified_commands_latency_ms</code></td>
+          <td>Histogram</td>
+          <td><code>ms</code></td>
+          <td><code>command</code></td>
+          <td>idempotency behavior</td>
+      </tr>
+      <tr>
+          <td><code>infra.rabbitmq.metrics</code></td>
+          <td><code>rabbitmq_channel_error_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>channel</code></td>
+          <td>RabbitMQ</td>
+      </tr>
+      <tr>
+          <td><code>infra.nats.metrics</code></td>
+          <td><code>jetstream_publish_error_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>destination</code> (before 10.8: <code>subject</code>)</td>
+          <td>NATS JetStream producer</td>
+      </tr>
+      <tr>
+          <td><code>infra.nats.metrics</code></td>
+          <td><code>jetstream_consume_retry_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>destination</code></td>
+          <td>NATS JetStream consumer</td>
+      </tr>
+      <tr>
+          <td><code>infra.nats.metrics</code></td>
+          <td><code>jetstream_consume_parked_total</code></td>
+          <td>Counter</td>
+          <td></td>
+          <td><code>destination</code></td>
+          <td>NATS JetStream consumer</td>
+      </tr>
+  </tbody>
+</table>
+<p>Outbox and local delivery record the same four <code>delivery_*</code> instruments (<code>Juice.Messaging.Diagnostics.DeliveryMetrics</code>),
+so they export as one series per instrument, told apart by <code>publisher</code>.</p>
+<hr>
+<h2 id="logs">Logs</h2>
+<p>Juice writes logs with <code>ILogger</code>; OpenTelemetry logging exports them (10.8). <code>AddJuiceInstrumentation()</code> on the logging
+builder adds a processor that runs before the exporters, so add it first:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>builder.Services.AddOpenTelemetry()
+</span></span><span style="display:flex;"><span>    .WithLogging(logging =&gt; logging
+</span></span><span style="display:flex;"><span>        .AddJuiceInstrumentation(options =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            options.IncludePayloads = <span style="color:#66d9ef">false</span>;   <span style="color:#75715e">// default</span>
+</span></span><span style="display:flex;"><span>        })
+</span></span><span style="display:flex;"><span>        .AddOtlpExporter());</span></span></code></pre></div>
+<table>
+  <thead>
+      <tr>
+          <th>Exported with each log</th>
+          <th>Source</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Trace id, span id</td>
+          <td>the OpenTelemetry SDK, from the current span</td>
+      </tr>
+      <tr>
+          <td><code>juice.correlation_id</code>, <code>juice.causation_id</code>, <code>juice.execution_id</code>, <code>juice.source</code></td>
+          <td><code>MessageContext</code>, same names as the span tags</td>
+      </tr>
+      <tr>
+          <td>Message template and its scalar values</td>
+          <td>the log call</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Payloads are not exported.</strong> Some Juice logs carry a message payload or a whole command (the outbox debug log,
+the transaction error log). For categories starting with <code>Juice.</code>, the processor removes destructured (<code>{@Command}</code>)
+and <code>Payload</code> attributes, and the formatted message when it held one; the body keeps the message template. Set
+<code>IncludePayloads = true</code> to export them, or add names to <code>PayloadAttributes</code>. Your application&rsquo;s own logs are left as
+written: keep payloads, secrets and personal data out of them, and remember that exception messages are exported as
+thrown.</p>
+<p><strong>Exporter outages.</strong> The OTLP exporter batches logs on a background thread: logging never waits for it and never
+fails because of it. When the backend is down or slow, records beyond the batch queue (<code>MaxQueueSize</code>, 2048 by
+default) are dropped, so memory stays bounded. Tune the queue with
+<code>AddOtlpExporter((exporter, processor) =&gt; processor.BatchExportProcessorOptions.MaxQueueSize = 4096)</code>.</p>
+<p><code>IncludeScopes</code> and <code>IncludeFormattedMessage</code> are OpenTelemetry options:
+<code>WithLogging(logging =&gt; ..., options =&gt; options.IncludeScopes = true)</code>.</p>
+<hr>
+<h2 id="testing">Testing</h2>
+<p><code>Juice.XUnit.ActivityCollector</code> records Juice spans with a plain <code>ActivityListener</code>, without the OpenTelemetry SDK.
+Listeners are process wide, so read the spans of your own trace:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> var collector = <span style="color:#66d9ef">new</span> ActivityCollector();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> var root = collector.StartRoot();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">await</span> messageService.PublishAsync(<span style="color:#66d9ef">new</span> OrderPlaced());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> process = <span style="color:#66d9ef">await</span> collector.WaitForAsync(root.TraceId, <span style="color:#e6db74">&#34;process OrderPlaced&#34;</span>);
+</span></span><span style="display:flex;"><span>process.GetTagItem(<span style="color:#e6db74">&#34;juice.dispatch.result&#34;</span>).Should().Be(<span style="color:#e6db74">&#34;success&#34;</span>);</span></span></code></pre></div>
+<hr>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Without a listener no activity is created; instruments are no-ops while nothing collects them.</li>
+<li>Telemetry never fails a business operation.</li>
+<li><code>Juice.OpenTelemetry</code> targets net8.0+ like OpenTelemetry .NET. The core tracing and metrics also work on net6.0
+with <code>AddSource(&quot;Juice&quot;)</code> / <code>AddMeter(&quot;Juice&quot;)</code>.</li>
+<li>Messages saved by an older version have no <code>traceparent</code>: their deliveries start a new trace.</li>
+</ul>
+<p>The library can be accessed via Nuget:</p>
+<ul>
+<li><a href="https://www.nuget.org/packages/Juice.OpenTelemetry" rel="external" target="_blank">Juice.OpenTelemetry</a></li>
+</ul>
+
+  <footer class="footline">
+              <i class='fa-fw fas fa-calendar'></i> Oct 29, 2026
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+
+        </div>
+        <search><form action="/search/index.html" method="get">
+          <div class="searchbox default-animation">
+            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+            <label class="a11y-only" for="R-search-by">Search</label>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+          </div>
+        </form></search>
+      </div>
+      <div id="R-homelinks" class="default-animation homelinks">
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
+          <ul class="">
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div class="R-sidebarmenu R-shortcutmenu-main">
+          <ul class="enlarge morespace collapsible-menu">
+            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
+            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
+            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
+            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
+            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
+            <li class="alwaysopen " data-nav-id="/core/messaging/index.html"><a class="padding" href="/core/messaging/index.html">Messaging</a><ul id="R-subsections-1f5aed48448c40d55fe4f28ff1e00222" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a><ul id="R-subsections-1d8a4e743e3c3831715116ee2cf8be23" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
+            <li class="alwaysopen " data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a><ul id="R-subsections-6d43538225634e169bdebdf7720aa656" class="collapsible-menu"></ul></li>
+            <li class="active " data-nav-id="/core/observability/index.html"><a class="padding" href="/core/observability/index.html">Observability (OpenTelemetry)</a></li>
+            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a></li>
+            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
+            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
+          </ul>
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
+          <div class="nav-title padding">More</div>
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
+          </ul>
+        </div>
+        <div id="R-footer-margin"></div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
+          <ul class="">
+          </ul>
+        </div>
+<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
+      </div>
+    </aside>
+    <script src="/js/clipboard/clipboard.min.js?1793346320" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1793346320" defer></script>
+    <script src="/js/theme.min.js?1793346320" defer></script>
+  </body>
+</html>

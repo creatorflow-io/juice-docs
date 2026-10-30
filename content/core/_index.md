@@ -18,6 +18,8 @@ pre = "<b>3. </b>"
 
 [Messaging]({{< ref "core/messaging/_index.md" >}})
 
+[Observability (OpenTelemetry)]({{< ref "core/observability/_index.md" >}})
+
 [Mediator]({{< ref "core/mediator/_index.md" >}})
 
 [Event bus]({{< ref "core/eventbus/_index.md" >}})

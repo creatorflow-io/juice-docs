@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Observability (OpenTelemetry) :: Juice&#39;s documentation</title>
+    <link>https://juice-docs.creatorflow.io/core/observability/index.html</link>
+    <description>Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.&#xA;One request produces one connected trace, across processes:&#xA;TraceId = 4bf92f3577b34da6a3ce929d0e0e4736&#xD;POST /orders (ASP.NET Core server span, tagged with the Juice context)&#xD;└─ mediator PlaceOrder Juice.OpenTelemetry&#xD;└─ create OrderPlaced outbox save: the context is stored with the message&#xD;├─ deliver rabbitmq one per delivery attempt, possibly hours later&#xD;│ └─ send orders RabbitMQ / NATS producer&#xD;└─ process orders-queue consumer, in another service&#xD;└─ handle OrderPlacedHandler&#xD;The trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="https://juice-docs.creatorflow.io/core/observability/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

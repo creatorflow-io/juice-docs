@@ -3,7 +3,7 @@
   <channel>
     <title>MessageContext :: Juice&#39;s documentation</title>
     <link>https://juice-docs.creatorflow.io/core/messaging/message-context/index.html</link>
-    <description>Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries.&#xA;MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.</description>
+    <description>Overview MessageContext is an AsyncLocal-based context that carries correlation, causation, and source identity across async call chains. Every message produced by the Juice messaging pipeline stamps the current MessageContext values into outbox headers, enabling distributed tracing and idempotency across service boundaries. For OpenTelemetry traces and metrics, which carry these ids as tags next to the W3C trace context, see Observability.&#xA;MessageContext must be initialized at every entry point — HTTP requests, background consumers, test methods, and hosted services. If not initialized, any code that reads MessageContext.Current will throw InvalidOperationException.</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
