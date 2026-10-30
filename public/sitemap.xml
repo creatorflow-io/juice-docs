@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://juice-docs.creatorflow.io/core/messaging/message-context/index.html</loc>
-    <lastmod>2026-03-14T00:00:00+00:00</lastmod>
+    <loc>https://juice-docs.creatorflow.io/other_services/audit/whatsnew/index.html</loc>
+    <lastmod>2026-10-26T09:00:00+07:00</lastmod>
   </url>
   <url>
-    <loc>https://juice-docs.creatorflow.io/other_services/audit/whatsnew/index.html</loc>
-    <lastmod>2023-10-20T08:21:52+07:00</lastmod>
+    <loc>https://juice-docs.creatorflow.io/core/messaging/message-context/index.html</loc>
+    <lastmod>2026-03-14T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://juice-docs.creatorflow.io/bg_service/logging/whatsnew/index.html</loc>
@@ -191,6 +191,10 @@
   <url>
     <loc>https://juice-docs.creatorflow.io/core/integration/index.html</loc>
     <lastmod>2023-04-03T20:24:09+07:00</lastmod>
+  </url>
+  <url>
+    <loc>https://juice-docs.creatorflow.io/core/observability/index.html</loc>
+    <lastmod>2026-10-29T00:00:00+00:00</lastmod>
   </url>
   <url>
     <loc>https://juice-docs.creatorflow.io/quickstart/microservice/index.html</loc>

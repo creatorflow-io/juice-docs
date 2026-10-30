@@ -5,39 +5,43 @@
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.144.0">
     <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
-    <meta name="description" content="Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream…. So we have to move the collection of request form data after other middleware is processed to avoid the issue.">
+    <meta name="description" content="Audit 10.3.0 Multi-tenant audit records AccessLog and DataAudit now carry a TenantId, and AuditDbContext inherits Juice’s MultiTenantDbContext. Both entities are configured as IsMultiTenant(SharingType.Global):
+A tenant reads and writes only its own audit records. The root context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants. Records saved without a tenant are stamped with the current tenant (TenantNotSetMode.Overwrite); changing another tenant’s records throws (TenantMismatchMode.Throw). How the tenant is captured:">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="What&#39;s New in Audit 7.0.3 :: Juice&#39;s documentation">
-    <meta name="twitter:description" content="Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream…. So we have to move the collection of request form data after other middleware is processed to avoid the issue.">
+    <meta name="twitter:title" content="What&#39;s New in Audit 10.3.0 :: Juice&#39;s documentation">
+    <meta name="twitter:description" content="Audit 10.3.0 Multi-tenant audit records AccessLog and DataAudit now carry a TenantId, and AuditDbContext inherits Juice’s MultiTenantDbContext. Both entities are configured as IsMultiTenant(SharingType.Global):
+A tenant reads and writes only its own audit records. The root context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants. Records saved without a tenant are stamped with the current tenant (TenantNotSetMode.Overwrite); changing another tenant’s records throws (TenantMismatchMode.Throw). How the tenant is captured:">
     <meta property="og:url" content="https://juice-docs.creatorflow.io/other_services/audit/whatsnew/index.html">
     <meta property="og:site_name" content="Juice&#39;s documentation">
-    <meta property="og:title" content="What&#39;s New in Audit 7.0.3 :: Juice&#39;s documentation">
-    <meta property="og:description" content="Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream…. So we have to move the collection of request form data after other middleware is processed to avoid the issue.">
+    <meta property="og:title" content="What&#39;s New in Audit 10.3.0 :: Juice&#39;s documentation">
+    <meta property="og:description" content="Audit 10.3.0 Multi-tenant audit records AccessLog and DataAudit now carry a TenantId, and AuditDbContext inherits Juice’s MultiTenantDbContext. Both entities are configured as IsMultiTenant(SharingType.Global):
+A tenant reads and writes only its own audit records. The root context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants. Records saved without a tenant are stamped with the current tenant (TenantNotSetMode.Overwrite); changing another tenant’s records throws (TenantMismatchMode.Throw). How the tenant is captured:">
     <meta property="og:locale" content="en_us">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Other services">
-    <meta property="article:published_time" content="2023-10-20T08:21:52+07:00">
-    <meta property="article:modified_time" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="name" content="What&#39;s New in Audit 7.0.3 :: Juice&#39;s documentation">
-    <meta itemprop="description" content="Quick access Fixed file upload issue Fixed middleware registration Added more AuditFilterOptions methods Handle aborted request Fixed file upload issue In the case when you are using multipart form data to upload files, the file section stream must be processed for upload first. Otherwise, it can cause the error Unexpected end of Stream…. So we have to move the collection of request form data after other middleware is processed to avoid the issue.">
-    <meta itemprop="datePublished" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="dateModified" content="2023-10-20T08:21:52+07:00">
-    <meta itemprop="wordCount" content="140">
-    <title>What&#39;s New in Audit 7.0.3 :: Juice&#39;s documentation</title>
-    <link href="/images/favicon.png?1776155053" rel="icon" type="image/png">
-    <link href="/images/favicon.ico?1776155053" rel="icon" type="image/x-icon" sizes="any">
-    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1776155053" rel="stylesheet"></noscript>
-    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1776155053" rel="stylesheet">
-    <link href="/css/theme.min.css?1776155053" rel="stylesheet">
-    <link href="/css/format-html.min.css?1776155053" rel="stylesheet" id="R-format-style">
-    <link href="/css/auto-complete/auto-complete.min.css?1776155053" rel="stylesheet">
-    <script src="/js/auto-complete/auto-complete.min.js?1776155053" defer></script>
-    <script src="/js/lunr/lunr.min.js?1776155053" defer></script>
-    <script src="/js/lunr/lunr.stemmer.support.min.js?1776155053" defer></script>
-    <script src="/js/lunr/lunr.multi.min.js?1776155053" defer></script>
-    <script src="/js/lunr/lunr.en.min.js?1776155053" defer></script>
-    <script src="/js/search.min.js?1776155053" defer></script>
+    <meta property="article:published_time" content="2026-10-26T09:00:00+07:00">
+    <meta property="article:modified_time" content="2026-10-26T09:00:00+07:00">
+    <meta itemprop="name" content="What&#39;s New in Audit 10.3.0 :: Juice&#39;s documentation">
+    <meta itemprop="description" content="Audit 10.3.0 Multi-tenant audit records AccessLog and DataAudit now carry a TenantId, and AuditDbContext inherits Juice’s MultiTenantDbContext. Both entities are configured as IsMultiTenant(SharingType.Global):
+A tenant reads and writes only its own audit records. The root context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants. Records saved without a tenant are stamped with the current tenant (TenantNotSetMode.Overwrite); changing another tenant’s records throws (TenantMismatchMode.Throw). How the tenant is captured:">
+    <meta itemprop="datePublished" content="2026-10-26T09:00:00+07:00">
+    <meta itemprop="dateModified" content="2026-10-26T09:00:00+07:00">
+    <meta itemprop="wordCount" content="349">
+    <title>What&#39;s New in Audit 10.3.0 :: Juice&#39;s documentation</title>
+    <link href="/images/favicon.png?1793346320" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1793346320" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1793346320" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1793346320" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1793346320" rel="stylesheet">
+    <link href="/css/theme.min.css?1793346320" rel="stylesheet">
+    <link href="/css/format-html.min.css?1793346320" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1793346320" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1793346320" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1793346320" defer></script>
+    <script src="/js/search.min.js?1793346320" defer></script>
     <script>
       window.relearn = window.relearn || {};
       // configuration
@@ -47,7 +51,7 @@
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
       window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/searchindex.en.js?1776155053";
+      window.relearn.index_js_url="/searchindex.en.js?1793346320";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=false;
@@ -105,7 +109,17 @@
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
               <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#audit-1030">Audit 10.3.0</a></li>
+        <li><a href="#audit-703">Audit 7.0.3</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
                 </div>
               </div>
             </div>
@@ -114,7 +128,7 @@
             <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
             <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/index.html"><span itemprop="name">Other services</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
             <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/other_services/audit/index.html"><span itemprop="name">Audit services</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">What&#39;s New in Audit 7.0.3</span><meta itemprop="position" content="4"></li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">What&#39;s New in Audit 10.3.0</span><meta itemprop="position" content="4"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/other_services/audit/whatsnew.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
@@ -141,8 +155,30 @@
   <header class="headline">
   </header>
 
-<h1 id="whats-new-in-audit-703">What&#39;s New in Audit 7.0.3</h1>
+<h1 id="whats-new-in-audit-1030">What&#39;s New in Audit 10.3.0</h1>
 
+<h3 id="audit-1030">Audit 10.3.0</h3>
+<h4 id="multi-tenant-audit-records">Multi-tenant audit records</h4>
+<p><em>AccessLog</em> and <em>DataAudit</em> now carry a <em>TenantId</em>, and <em>AuditDbContext</em> inherits Juice&rsquo;s <em>MultiTenantDbContext</em>. Both entities are configured as <code>IsMultiTenant(SharingType.Global)</code>:</p>
+<ul>
+<li>A <strong>tenant</strong> reads and writes only its own audit records.</li>
+<li>The <strong>root</strong> context (no tenant resolved: the gRPC audit server, an admin view, or a non multi-tenant app) reads and writes the records of all tenants.</li>
+<li>Records saved without a tenant are stamped with the current tenant (<code>TenantNotSetMode.Overwrite</code>); changing another tenant&rsquo;s records throws (<code>TenantMismatchMode.Throw</code>).</li>
+</ul>
+<p>How the tenant is captured:</p>
+<ul>
+<li><em>AuditMiddleware</em> reads it from <em>ITenantAccessor</em> when the request starts, and again after the pipeline if it was resolved later.</li>
+<li><em>DataAudit</em> entries take it from <em>DataEvent.TenantId</em>, falling back to the request&rsquo;s tenant.</li>
+<li>The gRPC contract has new optional <code>tenantId</code> fields on <em>AccessLogMessage</em> and <em>DataAuditMessage</em>, so a central audit server stores the tenant reported by each client. Older clients keep working; their records have no tenant.</li>
+</ul>
+<p>Upgrade notes:</p>
+<ul>
+<li>Apply the new <strong>AddTenantId</strong> migration (SqlServer and PostgreSQL). It adds a nullable <em>TenantId</em> column and a <em>(TenantId, DateTime)</em> index to both tables.</li>
+<li><em>Juice.Audit.EF</em> now depends on <em>Juice.EF.MultiTenant</em> (Finbuckle).</li>
+<li>Code that queries <em>AuditDbContext</em> while a tenant is resolved now gets only that tenant&rsquo;s records.</li>
+<li>The <em>DataAudit</em> constructor has a new optional <em>tenantId</em> parameter: rebuild code compiled against an earlier version.</li>
+</ul>
+<h3 id="audit-703">Audit 7.0.3</h3>
 <h4 id="quick-access">Quick access</h4>
 <ul>
 <li><a href="/other_services/audit/whatsnew/index.html#fixed-file-upload-issue">Fixed file upload issue</a></li>
@@ -166,7 +202,7 @@
 </ul>
 
   <footer class="footline">
-              <i class='fa-fw fas fa-calendar'></i> Oct 20, 2023
+              <i class='fa-fw fas fa-calendar'></i> Oct 26, 2026
   </footer>
 </article>
         </div>
@@ -217,7 +253,7 @@
             <li class="parent " data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu">
             <li class="alwaysopen " data-nav-id="/other_services/logging/index.html"><a class="padding" href="/other_services/logging/index.html">Logging</a><ul id="R-subsections-f02a0dbe23bd2ae3f01f79dfe1e034f6" class="collapsible-menu"></ul></li>
             <li class="parent alwaysopen " data-nav-id="/other_services/audit/index.html"><a class="padding" href="/other_services/audit/index.html">Audit services</a><ul id="R-subsections-7ad3ed6e75df3e64d9d42de97fc1f328" class="collapsible-menu">
-            <li class="active " data-nav-id="/other_services/audit/whatsnew/index.html"><a class="padding" href="/other_services/audit/whatsnew/index.html">What&#39;s New in Audit 7.0.3</a></li>
+            <li class="active " data-nav-id="/other_services/audit/whatsnew/index.html"><a class="padding" href="/other_services/audit/whatsnew/index.html">What&#39;s New in Audit 10.3.0</a></li>
             <li class="" data-nav-id="/other_services/audit/v7.0.2/index.html"><a class="padding" href="/other_services/audit/v7.0.2/index.html">v7.0.2</a></li></ul></li>
             <li class="" data-nav-id="/other_services/file_storage/index.html"><a class="padding" href="/other_services/file_storage/index.html">File storage</a></li>
             <li class="" data-nav-id="/other_services/plugins/index.html"><a class="padding" href="/other_services/plugins/index.html">Plugins</a></li>
@@ -241,8 +277,8 @@
 <div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
       </div>
     </aside>
-    <script src="/js/clipboard/clipboard.min.js?1776155053" defer></script>
-    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1776155053" defer></script>
-    <script src="/js/theme.min.js?1776155053" defer></script>
+    <script src="/js/clipboard/clipboard.min.js?1793346320" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1793346320" defer></script>
+    <script src="/js/theme.min.js?1793346320" defer></script>
   </body>
 </html>

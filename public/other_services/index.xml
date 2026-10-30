@@ -20,7 +20,7 @@
       <link>https://juice-docs.creatorflow.io/other_services/audit/index.html</link>
       <pubDate>Mon, 03 Apr 2023 20:23:30 +0700</pubDate>
       <guid>https://juice-docs.creatorflow.io/other_services/audit/index.html</guid>
-      <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description>
+      <description>Versions&#xD;latest&#xD;7.0.2&#xD;Quick access Data audit Configure entity model Implement an auditable DbContext Handle DataEvent Default audit service Core concept Usage Configuration Programming API Multi-tenant Data audit We already have a data audit framework based on EF Core and fully implemented in the DbContextBase abstract class. It will send a DataEvent via MediatR’s notification, the object contains:</description>
     </item>
     <item>
       <title>File storage</title>

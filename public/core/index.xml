@@ -3,10 +3,10 @@
   <channel>
     <title>Core features :: Juice&#39;s documentation</title>
     <link>https://juice-docs.creatorflow.io/core/index.html</link>
-    <description>Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Messaging&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
+    <description>Logging&#xA;Configuration&#xA;Options&#xA;Swagger&#xA;Messaging&#xA;Observability (OpenTelemetry)&#xA;Mediator&#xA;Event bus&#xA;Entity framework&#xA;Integration services&#xA;xUnit&#xA;Multi-tenant&#xA;Modular</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://juice-docs.creatorflow.io/core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Overview</title>
@@ -77,6 +77,13 @@
       <pubDate>Mon, 03 Apr 2023 20:24:09 +0700</pubDate>
       <guid>https://juice-docs.creatorflow.io/core/integration/index.html</guid>
       <description>ℹ v9 update This feature has been updated in Juice v9. See Messaging for the current API. The original v8.5.0 content is preserved here.&#xA;Integration event service In the IntegrationEventLog section, we talked about atomicity and resiliency when publishing to the event bus, followed by each step of the process. In this section, we will package the steps of publishing events and updating event states into IIntegrationEventService service, and then combine them with MediatR behavior for transaction processing.</description>
+    </item>
+    <item>
+      <title>Observability (OpenTelemetry)</title>
+      <link>https://juice-docs.creatorflow.io/core/observability/index.html</link>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://juice-docs.creatorflow.io/core/observability/index.html</guid>
+      <description>Overview Juice records distributed traces and framework metrics with the standard .NET APIs (System.Diagnostics.ActivitySource and Meter). The core packages do not reference OpenTelemetry: the application host decides whether to collect them, which exporters to use (OTLP, Jaeger, Azure Monitor…) and how to sample.&#xA;One request produces one connected trace, across processes:&#xA;TraceId = 4bf92f3577b34da6a3ce929d0e0e4736&#xD;POST /orders (ASP.NET Core server span, tagged with the Juice context)&#xD;└─ mediator PlaceOrder Juice.OpenTelemetry&#xD;└─ create OrderPlaced outbox save: the context is stored with the message&#xD;├─ deliver rabbitmq one per delivery attempt, possibly hours later&#xD;│ └─ send orders RabbitMQ / NATS producer&#xD;└─ process orders-queue consumer, in another service&#xD;└─ handle OrderPlacedHandler&#xD;The trace context travels in the standard W3C traceparent / tracestate message headers. It is separate from the MessageContext: x-correlation-id and x-causation-id keep their meaning and are copied onto the spans as tags.</description>
     </item>
     <item>
       <title>xUnit</title>
