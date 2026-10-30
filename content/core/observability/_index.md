@@ -69,6 +69,9 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation()
         .AddJuiceInstrumentation()        // juice.* metrics
         .AddJuiceDeliveryMetrics()        // optional: delivery.metrics, infra.rabbitmq.metrics, infra.nats.metrics
+        .AddOtlpExporter())
+    .WithLogging(logging => logging
+        .AddJuiceInstrumentation()        // Juice context, payload redaction (10.8); before the exporter
         .AddOtlpExporter());
 
 // mediator spans and metrics
@@ -176,6 +179,44 @@ The earlier meters are still recorded for existing dashboards. They are collecte
 
 Outbox and local delivery record the same four `delivery_*` instruments (`Juice.Messaging.Diagnostics.DeliveryMetrics`),
 so they export as one series per instrument, told apart by `publisher`.
+
+---
+
+## Logs
+
+Juice writes logs with `ILogger`; OpenTelemetry logging exports them (10.8). `AddJuiceInstrumentation()` on the logging
+builder adds a processor that runs before the exporters, so add it first:
+
+```cs
+builder.Services.AddOpenTelemetry()
+    .WithLogging(logging => logging
+        .AddJuiceInstrumentation(options =>
+        {
+            options.IncludePayloads = false;   // default
+        })
+        .AddOtlpExporter());
+```
+
+| Exported with each log | Source |
+|---|---|
+| Trace id, span id | the OpenTelemetry SDK, from the current span |
+| `juice.correlation_id`, `juice.causation_id`, `juice.execution_id`, `juice.source` | `MessageContext`, same names as the span tags |
+| Message template and its scalar values | the log call |
+
+**Payloads are not exported.** Some Juice logs carry a message payload or a whole command (the outbox debug log,
+the transaction error log). For categories starting with `Juice.`, the processor removes destructured (`{@Command}`)
+and `Payload` attributes, and the formatted message when it held one; the body keeps the message template. Set
+`IncludePayloads = true` to export them, or add names to `PayloadAttributes`. Your application's own logs are left as
+written: keep payloads, secrets and personal data out of them, and remember that exception messages are exported as
+thrown.
+
+**Exporter outages.** The OTLP exporter batches logs on a background thread: logging never waits for it and never
+fails because of it. When the backend is down or slow, records beyond the batch queue (`MaxQueueSize`, 2048 by
+default) are dropped, so memory stays bounded. Tune the queue with
+`AddOtlpExporter((exporter, processor) => processor.BatchExportProcessorOptions.MaxQueueSize = 4096)`.
+
+`IncludeScopes` and `IncludeFormattedMessage` are OpenTelemetry options:
+`WithLogging(logging => ..., options => options.IncludeScopes = true)`.
 
 ---
 
