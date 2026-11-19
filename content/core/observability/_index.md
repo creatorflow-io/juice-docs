@@ -155,6 +155,14 @@ All instruments are on the `Juice` meter. Dimensions are bounded: message, tenan
 | `juice.messaging.errors` | Counter | `{error}` | `messaging.system`, `messaging.operation.name`, `juice.message_type`, `error.type` |
 | `juice.outbox.published` | Counter | `{message}` | `juice.publisher`, `juice.message_type` |
 | `juice.outbox.errors` | Counter | `{error}` | `juice.publisher`, `juice.message_type`, `error.type` |
+| `juice.delivery.attempts` | Counter | `{attempt}` | `juice.publisher` (10.14.0) |
+| `juice.delivery.successes` | Counter | `{delivery}` | `juice.publisher` (10.14.0) |
+| `juice.delivery.failures` | Counter | `{failure}` | `juice.publisher`, `error.type` (10.14.0) |
+| `juice.delivery.duration` | Histogram | `s` | `juice.publisher` (10.14.0) |
+
+The `juice.delivery.*` instruments are the `delivery_*` ones below under prefixed names, recorded at the same points:
+outbox delivery, `local` and `local-channel`, each its own `juice.publisher`. They differ from `juice.outbox.*`, which
+count outbox deliveries only, not the local channel's in-process dispatch.
 
 ### Delivery and broker meters
 
@@ -178,7 +186,8 @@ The earlier meters are still recorded for existing dashboards. They are collecte
 | `infra.nats.metrics` | `jetstream_consume_parked_total` | Counter | | `destination` | NATS JetStream consumer |
 
 Outbox and local delivery record the same four `delivery_*` instruments (`Juice.Messaging.Diagnostics.DeliveryMetrics`),
-so they export as one series per instrument, told apart by `publisher`.
+so they export as one series per instrument, told apart by `publisher`. Since 10.14.0 the same counts are also on the
+`Juice` meter as `juice.delivery.*`. Prefer those: another library can export the same unprefixed names.
 
 ---
 
