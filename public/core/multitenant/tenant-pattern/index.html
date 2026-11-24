@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.144.0">
+    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
+    <meta name="description" content="Status: Accepted, 24 November 2026. Applies to: the Juice framework (Juice.Extensions.MultiTenant, Juice.EF.MultiTenant), juice-tenants (services/multitenant), and every service built on Juice (Juice.Observability, Juice.Notifications, the services under services/).
+Context Juice services identify tenants in three different ways today.
+How the request’s tenant is found Key used Checks the tenant exists and is active Juice framework and juice-tenants Finbuckle strategies: base path, header, route, per-tenant OIDC login The Identifier (the tenant’s name in URLs). The gRPC __tenant__ header carries the Identifier too Yes, through the tenant store Juice.Observability Each deployment serves one fixed tenant (JUICE_PLATFORM_TENANT_ID); the token’s platform_tenant claim must equal it The Id Its own platform_tenants table, provisioned at install Juice.Notifications The /tenants/{tenantId} route, which must match the token’s platform_tenant claim (TenantAccess) The Id (a GUID) No; only “is this application registered for the tenant” The differences cost us:">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Tenant pattern (decision record) :: Juice&#39;s documentation">
+    <meta name="twitter:description" content="Status: Accepted, 24 November 2026. Applies to: the Juice framework (Juice.Extensions.MultiTenant, Juice.EF.MultiTenant), juice-tenants (services/multitenant), and every service built on Juice (Juice.Observability, Juice.Notifications, the services under services/).
+Context Juice services identify tenants in three different ways today.
+How the request’s tenant is found Key used Checks the tenant exists and is active Juice framework and juice-tenants Finbuckle strategies: base path, header, route, per-tenant OIDC login The Identifier (the tenant’s name in URLs). The gRPC __tenant__ header carries the Identifier too Yes, through the tenant store Juice.Observability Each deployment serves one fixed tenant (JUICE_PLATFORM_TENANT_ID); the token’s platform_tenant claim must equal it The Id Its own platform_tenants table, provisioned at install Juice.Notifications The /tenants/{tenantId} route, which must match the token’s platform_tenant claim (TenantAccess) The Id (a GUID) No; only “is this application registered for the tenant” The differences cost us:">
+    <meta property="og:url" content="https://juice-docs.creatorflow.io/core/multitenant/tenant-pattern/index.html">
+    <meta property="og:site_name" content="Juice&#39;s documentation">
+    <meta property="og:title" content="Tenant pattern (decision record) :: Juice&#39;s documentation">
+    <meta property="og:description" content="Status: Accepted, 24 November 2026. Applies to: the Juice framework (Juice.Extensions.MultiTenant, Juice.EF.MultiTenant), juice-tenants (services/multitenant), and every service built on Juice (Juice.Observability, Juice.Notifications, the services under services/).
+Context Juice services identify tenants in three different ways today.
+How the request’s tenant is found Key used Checks the tenant exists and is active Juice framework and juice-tenants Finbuckle strategies: base path, header, route, per-tenant OIDC login The Identifier (the tenant’s name in URLs). The gRPC __tenant__ header carries the Identifier too Yes, through the tenant store Juice.Observability Each deployment serves one fixed tenant (JUICE_PLATFORM_TENANT_ID); the token’s platform_tenant claim must equal it The Id Its own platform_tenants table, provisioned at install Juice.Notifications The /tenants/{tenantId} route, which must match the token’s platform_tenant claim (TenantAccess) The Id (a GUID) No; only “is this application registered for the tenant” The differences cost us:">
+    <meta property="og:locale" content="en_us">
+    <meta property="og:type" content="article">
+    <meta property="article:section" content="Core features">
+    <meta property="article:published_time" content="2026-11-24T10:00:00+07:00">
+    <meta property="article:modified_time" content="2026-11-24T10:00:00+07:00">
+    <meta itemprop="name" content="Tenant pattern (decision record) :: Juice&#39;s documentation">
+    <meta itemprop="description" content="Status: Accepted, 24 November 2026. Applies to: the Juice framework (Juice.Extensions.MultiTenant, Juice.EF.MultiTenant), juice-tenants (services/multitenant), and every service built on Juice (Juice.Observability, Juice.Notifications, the services under services/).
+Context Juice services identify tenants in three different ways today.
+How the request’s tenant is found Key used Checks the tenant exists and is active Juice framework and juice-tenants Finbuckle strategies: base path, header, route, per-tenant OIDC login The Identifier (the tenant’s name in URLs). The gRPC __tenant__ header carries the Identifier too Yes, through the tenant store Juice.Observability Each deployment serves one fixed tenant (JUICE_PLATFORM_TENANT_ID); the token’s platform_tenant claim must equal it The Id Its own platform_tenants table, provisioned at install Juice.Notifications The /tenants/{tenantId} route, which must match the token’s platform_tenant claim (TenantAccess) The Id (a GUID) No; only “is this application registered for the tenant” The differences cost us:">
+    <meta itemprop="datePublished" content="2026-11-24T10:00:00+07:00">
+    <meta itemprop="dateModified" content="2026-11-24T10:00:00+07:00">
+    <meta itemprop="wordCount" content="1570">
+    <title>Tenant pattern (decision record) :: Juice&#39;s documentation</title>
+    <link href="/images/favicon.png?1795512735" rel="icon" type="image/png">
+    <link href="/images/favicon.ico?1795512735" rel="icon" type="image/x-icon" sizes="any">
+    <link href="/fonts/fontawesome/css/fontawesome-all.min.css?1795512735" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/fonts/fontawesome/css/fontawesome-all.min.css?1795512735" rel="stylesheet"></noscript>
+    <link href="/css/perfect-scrollbar/perfect-scrollbar.min.css?1795512735" rel="stylesheet">
+    <link href="/css/theme.min.css?1795512735" rel="stylesheet">
+    <link href="/css/format-html.min.css?1795512735" rel="stylesheet" id="R-format-style">
+    <link href="/css/auto-complete/auto-complete.min.css?1795512735" rel="stylesheet">
+    <script src="/js/auto-complete/auto-complete.min.js?1795512735" defer></script>
+    <script src="/js/lunr/lunr.min.js?1795512735" defer></script>
+    <script src="/js/lunr/lunr.stemmer.support.min.js?1795512735" defer></script>
+    <script src="/js/lunr/lunr.multi.min.js?1795512735" defer></script>
+    <script src="/js/lunr/lunr.en.min.js?1795512735" defer></script>
+    <script src="/js/search.min.js?1795512735" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      // configuration
+      window.relearn.min = `.min`;
+      window.relearn.path='\/core\/multitenant\/tenant-pattern\/index.html';
+      window.relearn.relBasePath='..\/..\/..';
+      window.relearn.relBaseUri='..\/..\/..';
+      window.relearn.absBaseUri='https:\/\/juice-docs.creatorflow.io';
+      window.relearn.contentLangs=['en'];
+      window.relearn.index_js_url="/searchindex.en.js?1795512735";
+      window.relearn.disableAnchorCopy=false;
+      window.relearn.disableAnchorScrolling=false;
+      window.relearn.disableInlineCopyToClipboard=false;
+      window.relearn.enableBlockCodeWrap=true;
+      // legal
+      window.relearn.getItem = (s,n) => {return s.getItem(n)};
+      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
+      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
+      // variant stuff
+      window.relearn.themevariants = [ 'mine' ];
+      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.changeVariant = function(variant) {
+        var oldVariant = document.documentElement.dataset.rThemeVariant;
+        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        document.documentElement.dataset.rThemeVariant = variant;
+        if (oldVariant != variant) {
+          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
+        }
+      }
+      window.relearn.markVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
+      }
+      window.relearn.initVariant = function() {
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
+        if( variant == window.relearn.customvariantname ){
+        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+          variant = window.relearn.themevariants[0];
+          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
+        }
+        document.documentElement.dataset.rThemeVariant = variant;
+      }
+      window.relearn.initVariant();
+      window.relearn.markVariant();
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html" data-url="/core/multitenant/tenant-pattern/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li><a href="#context">Context</a></li>
+    <li><a href="#decision">Decision</a>
+      <ul>
+        <li><a href="#1-the-id-is-the-tenants-identity-the-identifier-is-only-for-display">1. The Id is the tenant&rsquo;s identity; the Identifier is only for display</a></li>
+        <li><a href="#2-the-token-says-which-tenant-a-caller-belongs-to">2. The token says which tenant a caller belongs to</a></li>
+        <li><a href="#3-each-kind-of-caller-supplies-the-tenant-one-way">3. Each kind of caller supplies the tenant one way</a></li>
+        <li><a href="#4-one-shared-package">4. One shared package</a></li>
+        <li><a href="#5-data">5. Data</a></li>
+        <li><a href="#6-the-tenant-lifecycle-is-published-as-events">6. The tenant lifecycle is published as events</a></li>
+      </ul>
+    </li>
+    <li><a href="#consequences">Consequences</a></li>
+    <li><a href="#changes-in-order">Changes, in order</a></li>
+    <li><a href="#not-decided-here">Not decided here</a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/index.html"><span itemprop="name">Juice&#39;s documentation</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/index.html"><span itemprop="name">Core features</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/core/multitenant/index.html"><span itemprop="name">Multi-tenant</span></a><meta itemprop="position" content="3">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Tenant pattern (decision record)</span><meta itemprop="position" content="4"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/creatorflow-io/juice-docs/tree/master/content/core/multitenant/tenant-pattern.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/multitenant/index.html" title="Multi-tenant (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/core/modular/index.html" title="Modular (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable core" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="tenant-pattern-decision-record">Tenant pattern (decision record)</h1>
+
+<p><strong>Status:</strong> Accepted, 24 November 2026. <strong>Applies to:</strong> the Juice framework (<code>Juice.Extensions.MultiTenant</code>, <code>Juice.EF.MultiTenant</code>),
+juice-tenants (<code>services/multitenant</code>), and every service built on Juice (Juice.Observability, Juice.Notifications, the services under
+<code>services/</code>).</p>
+<h2 id="context">Context</h2>
+<p>Juice services identify tenants in three different ways today.</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>How the request&rsquo;s tenant is found</th>
+          <th>Key used</th>
+          <th>Checks the tenant exists and is active</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Juice framework and juice-tenants</td>
+          <td>Finbuckle strategies: base path, header, route, per-tenant OIDC login</td>
+          <td>The <strong>Identifier</strong> (the tenant&rsquo;s name in URLs). The gRPC <code>__tenant__</code> header carries the Identifier too</td>
+          <td>Yes, through the tenant store</td>
+      </tr>
+      <tr>
+          <td>Juice.Observability</td>
+          <td>Each deployment serves one fixed tenant (<code>JUICE_PLATFORM_TENANT_ID</code>); the token&rsquo;s <code>platform_tenant</code> claim must equal it</td>
+          <td>The Id</td>
+          <td>Its own <code>platform_tenants</code> table, provisioned at install</td>
+      </tr>
+      <tr>
+          <td>Juice.Notifications</td>
+          <td>The <code>/tenants/{tenantId}</code> route, which must match the token&rsquo;s <code>platform_tenant</code> claim (<code>TenantAccess</code>)</td>
+          <td>The Id (a GUID)</td>
+          <td>No; only &ldquo;is this application registered for the tenant&rdquo;</td>
+      </tr>
+  </tbody>
+</table>
+<p>The differences cost us:</p>
+<ul>
+<li><strong>Two keys.</strong> The framework passes Identifiers between services, while Observability and Notifications store Ids. A service talking to
+another must know which one it is given. Renaming a tenant&rsquo;s Identifier breaks anything that stored it.</li>
+<li><strong>Ids aren&rsquo;t always GUIDs.</strong> juice-tenants creates a tenant without an Id by copying its Identifier (<code>Id = request.Id ?? request.Identifier</code>,
+<code>CreateTenantCommandHandler</code>), so an &ldquo;id&rdquo; may be a name.</li>
+<li><strong>Tenant status is ignored by the services.</strong> A suspended tenant keeps receiving notifications, because nothing in Notifications asks.</li>
+<li><strong>Each service writes its own check.</strong> The claim name, the admin role and the &ldquo;may this caller act in this tenant&rdquo; rule are coded again
+in every service, each with its own tests and its own local-stack seeding.</li>
+</ul>
+<h2 id="decision">Decision</h2>
+<h3 id="1-the-id-is-the-tenants-identity-the-identifier-is-only-for-display">1. The Id is the tenant&rsquo;s identity; the Identifier is only for display</h3>
+<ul>
+<li>The <strong>Id</strong> is a GUID issued by juice-tenants when the tenant is created. It is required and never changes.</li>
+<li>Everything that stores or carries a tenant uses the Id: database columns, integration events and message envelopes, tokens,
+service-to-service calls (REST and gRPC), and logs and telemetry.</li>
+<li>The <strong>Identifier</strong> (<code>acme</code> in <code>acme.example.com</code> or <code>/acme/...</code>) is for browser URLs and the UI only. It is turned into the Id once, where a
+browser request enters an app, and never sent further.</li>
+<li><strong>The Id never depends on a name</strong> (owner, 24 November 2026): not a hash of the tenant&rsquo;s name, and not a name-based UUID. A tenant known
+only by a name from before this pattern (a Juice.Observability deployment&rsquo;s <code>JUICE_PLATFORM_TENANT_ID</code>, such as <code>local-dev</code>) gets a
+random Id like any other, and keeps its old name only where it was already stored.</li>
+</ul>
+<h3 id="2-the-token-says-which-tenant-a-caller-belongs-to">2. The token says which tenant a caller belongs to</h3>
+<ul>
+<li>The claim is <strong><code>platform_tenant</code></strong>, holding the tenant <strong>Id</strong>.
+<ul>
+<li><strong>People:</strong> issued from the Keycloak user attribute <code>platform_tenant</code> by a user-attribute mapper. Identity directories read the same
+attribute to list a tenant&rsquo;s people.</li>
+<li><strong>Service clients:</strong> issued by a hard-coded claim mapper on the client.</li>
+</ul>
+</li>
+<li>Roles come from the <code>roles</code> claim:
+<ul>
+<li>A <strong>tenant-admin role</strong> per service (for example <code>notifications-tenant-admin</code>) lets its holder administer the tenant its claim names.</li>
+<li>A <strong>platform-admin role</strong> lets its holder act in any tenant, naming the tenant explicitly (section 3).</li>
+</ul>
+</li>
+<li>One tenant per person for now. If a person later needs several, only the shared reader of this claim changes (section 4), not the
+services.</li>
+</ul>
+<h3 id="3-each-kind-of-caller-supplies-the-tenant-one-way">3. Each kind of caller supplies the tenant one way</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Caller</th>
+          <th>Where the tenant comes from</th>
+          <th>Rule</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>A browser app</td>
+          <td>The Identifier in its URL (base path or host), through the tenant store</td>
+          <td>The app uses the Id from then on, including in API calls</td>
+      </tr>
+      <tr>
+          <td>A person or tenant admin calling an API</td>
+          <td>The <code>platform_tenant</code> claim</td>
+          <td>A tenant in the route (<code>/tenants/{tenantId}</code>) is allowed but must equal the claim</td>
+      </tr>
+      <tr>
+          <td>A platform admin or service account</td>
+          <td>The <code>/tenants/{tenantId}</code> route, or the <code>X-Tenant-Id</code> header on gRPC</td>
+          <td>Always explicit; never inferred</td>
+      </tr>
+      <tr>
+          <td>A message or background job</td>
+          <td>The tenant Id in the message envelope</td>
+          <td>Run in <code>IScopedTenantResolver.Resolve(id)</code></td>
+      </tr>
+      <tr>
+          <td>A single-tenant deployment (Observability)</td>
+          <td>The deployment&rsquo;s fixed tenant Id</td>
+          <td>The claim must equal it</td>
+      </tr>
+  </tbody>
+</table>
+<p>Every resolved tenant is then checked against the tenant store:</p>
+<ul>
+<li>An unknown tenant gets <strong>404</strong>. A caller who may not see it gets the same 403 as for another tenant, so responses don&rsquo;t reveal which
+tenants exist.</li>
+<li>A tenant still starting (<code>Initializing</code>, <code>Initialized</code>, <code>PendingToActive</code>) gets <strong>503</strong> with the problem code <code>tenant_starting</code>: try
+again later.</li>
+<li>Any other tenant that isn&rsquo;t <code>Active</code> (<code>Inactive</code>, <code>Suspended</code>, <code>Abandoned</code>, and the ones never approved) gets <strong>403</strong> with the problem
+code <code>tenant_inactive</code>.</li>
+<li>Background work for a tenant that isn&rsquo;t <code>Active</code> is held, not dropped. It waits until the tenant is <code>Active</code> again (expiring as it would
+anyway), and the wait is logged.</li>
+</ul>
+<h3 id="4-one-shared-package">4. One shared package</h3>
+<p>The pattern lives in one package, which every service sets up with one call (for example <code>AddJuiceTenancy()</code>), instead of each service
+writing it again. It is <code>Juice.MultiTenant.AspNetCore</code> in the Juice framework (owner, 24 November 2026), released with it;
+juice-tenants&rsquo; gRPC store plugs into it. It holds:</p>
+<ul>
+<li><strong>Names:</strong> the claim, header and route parameter (<code>platform_tenant</code>, <code>X-Tenant-Id</code>, <code>tenantId</code>) as constants, each overridable by
+options.</li>
+<li><strong>Resolution:</strong> the strategies in the order of section 3.</li>
+<li><strong>Authorization:</strong> <code>ITenantAccess</code>, the one &ldquo;may this caller act in this tenant&rdquo; check (claim equals tenant, the tenant-admin role, the
+platform-admin role), with authorization policies built on it.</li>
+<li><strong>The tenant store:</strong> juice-tenants over gRPC, cached for a short time (about a minute) and refreshed on the lifecycle events of
+section 6. It is keyed by Id, with a by-Identifier lookup for browser apps.</li>
+<li><strong>The message envelope:</strong> a tenant Id header written by the outbox and read by the consumers.</li>
+</ul>
+<h3 id="5-data">5. Data</h3>
+<ul>
+<li>One database per service, with a <code>TenantId</code> column (the Id) on every tenant-owned table. It is part of that table&rsquo;s keys and foreign keys,
+so a row can&rsquo;t point at another tenant&rsquo;s row.</li>
+<li>An EF query filter by tenant (<code>Juice.EF.MultiTenant</code>). A query across tenants turns the filter off explicitly and is reserved for platform
+operations.</li>
+<li>No database per tenant unless a customer needs that isolation. Even then, it is a setting in the tenant store (a per-tenant connection
+string), not a code change.</li>
+</ul>
+<h3 id="6-the-tenant-lifecycle-is-published-as-events">6. The tenant lifecycle is published as events</h3>
+<ul>
+<li>juice-tenants publishes integration events, keyed by Id, when a tenant is created, activated, made inactive, suspended or deleted.</li>
+<li>Each service decides what an event means for it. For example, Notifications stops sending, and Observability stops alerting. A service
+keeps no list of tenants of its own beyond what its rows need.</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<p><strong>Testing</strong></p>
+<ul>
+<li>The test helper (<code>Juice.MultiTenant.TestHelper</code>) gives an in-memory store with two fixed tenants, A and B (fixed GUIDs, one active, one
+suspended), and a token maker that sets <code>platform_tenant</code> and the roles.</li>
+<li>Every service runs the same set of tenant tests, shipped with the package:
+<ul>
+<li>A&rsquo;s token cannot read or change B&rsquo;s data.</li>
+<li>A route tenant that differs from the claim is refused.</li>
+<li>A suspended tenant gets 403, and an unknown tenant gets 404.</li>
+<li>A platform admin must name the tenant.</li>
+<li>A message carrying B&rsquo;s Id runs in B.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Deployment</strong></p>
+<ul>
+<li>A new tenant is created in juice-tenants (its Id is a GUID) and given to its people as the Keycloak attribute. No service is configured
+for it.</li>
+<li>The local stacks seed the same fixed tenant Ids everywhere (Notifications uses <code>0193f0aa-0000-7000-8000-0000000000a1</code> today), so a person
+set up once works in every service.</li>
+</ul>
+<p><strong>Maintenance</strong></p>
+<ul>
+<li>One package and one set of names. Changing the claim, allowing several tenants per person or changing the store happens in one place.</li>
+<li>The cost is a dependency on that package and on juice-tenants being reachable. The store&rsquo;s cache, plus refresh on lifecycle events, keeps
+short outages of juice-tenants from failing requests.</li>
+</ul>
+<h2 id="changes-in-order">Changes, in order</h2>
+<ol>
+<li><strong>juice-tenants:</strong> require a GUID Id when a tenant is created (or generate one); stop copying the Identifier. Every deployed tenant
+already has a GUID Id (owner, 24 November 2026), so no data migration is needed. The lifecycle integration events of section 6
+already exist (<code>TenantCreatedIntegrationEvent</code>, the status-changed and deleted events, sent through the outbox with the Id and the
+Identifier); document them as the contract services consume.</li>
+<li><strong>Juice framework:</strong>
+<ul>
+<li>Build the shared package of section 4.</li>
+<li>Move the gRPC <code>__tenant__</code> header and the default resolution from the Identifier to the Id (<code>X-Tenant-Id</code>). Keep reading the old
+header for one major version.</li>
+<li>Keep the Identifier only for browser routing (base path, host, per-tenant OIDC login).</li>
+<li>Extend <code>Juice.MultiTenant.TestHelper</code> with the fixed tenants, the token maker and the shared tenant tests.</li>
+</ul>
+</li>
+<li><strong>Juice.Notifications:</strong>
+<ul>
+<li>Replace <code>TenantAccess</code> with the shared <code>ITenantAccess</code>. Its rules already match section 3.</li>
+<li>Add the tenant-status check (403 <code>tenant_inactive</code>), and skip deliveries for inactive tenants.</li>
+<li>React to the lifecycle events.</li>
+</ul>
+</li>
+<li><strong>Juice.Observability:</strong> keep the single-tenant deployment, using the shared package&rsquo;s fixed-tenant mode for the claim check and the
+tenant tests.
+<ul>
+<li><strong>Its tenant:</strong> until now a free-form name (<code>JUICE_PLATFORM_TENANT_ID</code>, such as <code>local-dev</code>), stamped on all its telemetry. It is
+replaced by the tenant&rsquo;s Id (owner, 24 November 2026).</li>
+<li><strong>The data:</strong> the API renames the tenant at start, and a script rewrites the telemetry stamped with the old name.</li>
+<li><strong>Enrolled agents:</strong> they are told the new tenant, signed by a command key they trust.</li>
+</ul>
+</li>
+<li><strong>The other services under <code>services/</code>:</strong> adopt the package as each is next released, Id-keyed from the start.</li>
+<li><strong><code>@juice-js</code> libraries:</strong> each library takes the tenant Id from the token&rsquo;s claim by default (<code>@juice-js/notifications</code> already does).
+<code>@juice-js/tenant</code> keeps resolving the URL&rsquo;s Identifier for the app and exposes the matching Id.</li>
+</ol>
+<h2 id="not-decided-here">Not decided here</h2>
+<ul>
+<li><strong>Several tenants per person:</strong> a claim holding a list, and how the person picks one.</li>
+<li><strong>Per-tenant identity providers:</strong> a realm per tenant, which the per-tenant OIDC conventions allow.</li>
+<li><strong>Per-tenant databases:</strong> whether any customer needs them, and at what tier.</li>
+</ul>
+
+  <footer class="footline">
+              <i class='fa-fw fas fa-calendar'></i> Nov 24, 2026
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+
+        </div>
+        <search><form action="/search/index.html" method="get">
+          <div class="searchbox default-animation">
+            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+            <label class="a11y-only" for="R-search-by">Search</label>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+          </div>
+        </form></search>
+      </div>
+      <div id="R-homelinks" class="default-animation homelinks">
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="/index.html"><a class="padding" href="/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
+          <ul class="">
+          </ul>
+        </div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div class="R-sidebarmenu R-shortcutmenu-main">
+          <ul class="enlarge morespace collapsible-menu">
+            <li class="" data-nav-id="/overview/index.html"><a class="padding" href="/overview/index.html"><b>1. </b>Overview</a><ul id="R-subsections-0545e563276d3ac6e3218cfecf67a14b" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/quickstart/index.html"><a class="padding" href="/quickstart/index.html"><b>2. </b>Quickstarts</a><ul id="R-subsections-d63193e927818b6cb77d9c791ea48a61" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-id="/core/index.html"><a class="padding" href="/core/index.html"><b>3. </b>Core features</a><ul id="R-subsections-ae20cee98ae962b39919c99c9fa7e1c8" class="collapsible-menu">
+            <li class="" data-nav-id="/core/overview/index.html"><a class="padding" href="/core/overview/index.html">Overview</a></li>
+            <li class="alwaysopen " data-nav-id="/core/logging/index.html"><a class="padding" href="/core/logging/index.html">Logging</a><ul id="R-subsections-75db7930ffb434daa8a1fb726f7e1cd3" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/configuration/index.html"><a class="padding" href="/core/configuration/index.html">Configuration</a></li>
+            <li class="" data-nav-id="/core/options/index.html"><a class="padding" href="/core/options/index.html">Options</a></li>
+            <li class="" data-nav-id="/core/swagger/index.html"><a class="padding" href="/core/swagger/index.html">Swagger</a></li>
+            <li class="alwaysopen " data-nav-id="/core/messaging/index.html"><a class="padding" href="/core/messaging/index.html">Messaging</a><ul id="R-subsections-1f5aed48448c40d55fe4f28ff1e00222" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/mediator/index.html"><a class="padding" href="/core/mediator/index.html">Mediator</a><ul id="R-subsections-1d8a4e743e3c3831715116ee2cf8be23" class="collapsible-menu"></ul></li>
+            <li class="alwaysopen " data-nav-id="/core/eventbus/index.html"><a class="padding" href="/core/eventbus/index.html">Event bus</a><ul id="R-subsections-8bb47dd787c6a0c9079dde618735fec8" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/entityframework/index.html"><a class="padding" href="/core/entityframework/index.html">Entity framework</a></li>
+            <li class="alwaysopen " data-nav-id="/core/integration/index.html"><a class="padding" href="/core/integration/index.html">Integration service</a><ul id="R-subsections-6d43538225634e169bdebdf7720aa656" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/core/observability/index.html"><a class="padding" href="/core/observability/index.html">Observability (OpenTelemetry)</a></li>
+            <li class="alwaysopen " data-nav-id="/core/xunit/index.html"><a class="padding" href="/core/xunit/index.html">xUnit</a><ul id="R-subsections-b6ad7eb3f731b9e4ca13d5d5f27cf7cb" class="collapsible-menu"></ul></li>
+            <li class="parent alwaysopen " data-nav-id="/core/multitenant/index.html"><a class="padding" href="/core/multitenant/index.html">Multi-tenant</a><ul id="R-subsections-9ab67c48c4ffcc1d9711c76ced86b91c" class="collapsible-menu">
+            <li class="active " data-nav-id="/core/multitenant/tenant-pattern/index.html"><a class="padding" href="/core/multitenant/tenant-pattern/index.html">Tenant pattern (decision record)</a></li></ul></li>
+            <li class="" data-nav-id="/core/modular/index.html"><a class="padding" href="/core/modular/index.html">Modular</a></li></ul></li>
+            <li class="" data-nav-id="/bg_service/index.html"><a class="padding" href="/bg_service/index.html"><b>4. </b>Background service</a><ul id="R-subsections-91ddeaef7589de0de564e5ca3c5ae84c" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-id="/other_services/index.html"><a class="padding" href="/other_services/index.html"><b>5. </b>Other services</a><ul id="R-subsections-499bf1af617ed2be177da5b5e1438bc4" class="collapsible-menu"></ul></li>
+          </ul>
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
+          <div class="nav-title padding">More</div>
+          <ul class="space collapsible-menu">
+            <li class="" data-nav-id="https://github.com/creatorflow-io/Juice"><a class="padding" href="https://github.com/creatorflow-io/Juice" rel="external" target="_blank"><i class='fab fa-github'></i> Github repo</a></li>
+          </ul>
+        </div>
+        <div id="R-footer-margin"></div>
+        <div class="R-menu-divider default-animation">
+          <hr class="padding">
+        </div>
+        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
+          <ul class="">
+          </ul>
+        </div>
+<div id="R-footer"><p>Built with <a href="https://github.com/McShelby/hugo-theme-relearn" title="love"><i class="fas fa-heart"></i></a> by <a href="https://gohugo.io/">Hugo</a></p></div>
+      </div>
+    </aside>
+    <script src="/js/clipboard/clipboard.min.js?1795512735" defer></script>
+    <script src="/js/perfect-scrollbar/perfect-scrollbar.min.js?1795512735" defer></script>
+    <script src="/js/theme.min.js?1795512735" defer></script>
+  </body>
+</html>
