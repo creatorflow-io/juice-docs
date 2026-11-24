@@ -38,6 +38,9 @@ The differences cost us:
   service-to-service calls (REST and gRPC), and logs and telemetry.
 - The **Identifier** (`acme` in `acme.example.com` or `/acme/...`) is for browser URLs and the UI only. It is turned into the Id once, where a
   browser request enters an app, and never sent further.
+- **The Id never depends on a name** (owner, 24 November 2026): not a hash of the tenant's name, and not a name-based UUID. A tenant known
+  only by a name from before this pattern (a Juice.Observability deployment's `JUICE_PLATFORM_TENANT_ID`, such as `local-dev`) gets a
+  random Id like any other, and keeps its old name only where it was already stored.
 
 ### 2. The token says which tenant a caller belongs to
 
@@ -145,7 +148,11 @@ juice-tenants' gRPC store plugs into it. It holds:
    - Add the tenant-status check (403 `tenant_inactive`), and skip deliveries for inactive tenants.
    - React to the lifecycle events.
 4. **Juice.Observability:** keep the single-tenant deployment, using the shared package's fixed-tenant mode for the claim check and the
-   tenant tests. Its telemetry stamp, `juice.platform_tenant_id`, already carries the Id.
+   tenant tests.
+   - **Its tenant:** until now a free-form name (`JUICE_PLATFORM_TENANT_ID`, such as `local-dev`), stamped on all its telemetry. It is
+     replaced by the tenant's Id (owner, 24 November 2026).
+   - **The data:** the API renames the tenant at start, and a script rewrites the telemetry stamped with the old name.
+   - **Enrolled agents:** they are told the new tenant, signed by a command key they trust.
 5. **The other services under `services/`:** adopt the package as each is next released, Id-keyed from the start.
 6. **`@juice-js` libraries:** each library takes the tenant Id from the token's claim by default (`@juice-js/notifications` already does).
    `@juice-js/tenant` keeps resolving the URL's Identifier for the app and exposes the matching Id.
